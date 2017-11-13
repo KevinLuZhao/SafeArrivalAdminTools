@@ -1,0 +1,5 @@
+E:\AWS Study\Projects\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\bin\Release\SafeArrival.AdminTools.Model.dll
+E:\AWS Study\Projects\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\bin\Release\SafeArrival.AdminTools.Model.pdb
+E:\AWS Study\Projects\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\obj\Release\SafeArrival.AdminTools.Model.dll
+E:\AWS Study\Projects\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\obj\Release\SafeArrival.AdminTools.Model.pdb
+E:\AWS Study\Projects\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\obj\Release\SafeArrival.AdminTools.Model.csprojResolveAssemblyReference.cache

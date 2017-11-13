@@ -1,0 +1,4 @@
+E:\AWS Study\Projects\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\bin\Debug\SafeArrival.AdminTools.Model.dll
+E:\AWS Study\Projects\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\bin\Debug\SafeArrival.AdminTools.Model.pdb
+E:\AWS Study\Projects\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\obj\Debug\SafeArrival.AdminTools.Model.dll
+E:\AWS Study\Projects\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\obj\Debug\SafeArrival.AdminTools.Model.pdb
