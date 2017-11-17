@@ -44,6 +44,16 @@ namespace SafeArrival.AdminTools.Presentation
                 listView1.Columns.Add("Min Size", 70);
                 listView1.Columns.Add("Running Instances", 120);
 
+                listView2.View = View.Details;
+                listView2.Columns.Add("Name", 200);
+                listView2.Columns.Add("Desired Capacity", 120);
+                listView2.Columns.Add("Max Size", 70);
+                listView2.Columns.Add("Min Size", 70);
+                listView2.Columns.Add("Recurrence", 120);
+                listView2.Columns.Add("Start Time", 150);
+                listView2.Columns.Add("End Time", 150);
+                listView2.Columns.Add("Suspend", 70);
+
                 PopulateSystemStatus();
                 dataGridView1.AutoGenerateColumns = false;
             }
@@ -130,6 +140,7 @@ namespace SafeArrival.AdminTools.Presentation
                 this.Enabled = true;
             }
             PopulateAutoScalingGroup();
+            PopulateScheduleActions();
             PopulateRDS();
             LoadAutoScalingGroupSettings();
         }
@@ -149,6 +160,26 @@ namespace SafeArrival.AdminTools.Presentation
                 item.SubItems.Add(group.MinSize.ToString());
                 item.SubItems.Add(group.RunningInstances.ToString());
                 listView1.Items.Add(item);
+            }
+        }
+
+        private void PopulateScheduleActions()
+        {
+            listView2.Items.Clear();
+            SystemManagement service = new SystemManagement();
+            var lstAction = service.GetApiScheduledActions();
+            foreach (var action in lstAction)
+            {
+                ListViewItem item = new ListViewItem();
+                item.Text = action.Name;
+                item.SubItems.Add(action.DesiredCapacity);
+                item.SubItems.Add(action.MaxSize);
+                item.SubItems.Add(action.MinSize);
+                item.SubItems.Add(action.Recurrence);
+                item.SubItems.Add(action.StartTime);
+                item.SubItems.Add(action.EndTime);
+                item.SubItems.Add(action.Suspend);
+                listView2.Items.Add(item);
             }
         }
 

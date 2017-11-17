@@ -52,6 +52,7 @@ namespace SafeArrival.AdminTools.Presentation
             {
                 OpendFormList.Add(frm);
                 frm.MdiParent = this;
+                frm.FormClosed += new FormClosedEventHandler(MDIChildFormClosed);
                 //frm.Activate();
                 frm.Show();
                 frm.WindowState = FormWindowState.Maximized;
@@ -128,6 +129,12 @@ namespace SafeArrival.AdminTools.Presentation
                     menu.BackColor = System.Drawing.Color.Transparent;
                 }
             }
+        }
+
+        private void MDIChildFormClosed(object sender, FormClosedEventArgs e)
+        {
+            var s = sender;
+            OpendFormList.Remove((FormMdiChildBase)sender);// OpendFormList.Find(o=>o.GetType().FullName == sender.GetType().FullName))
         }
     }
 }

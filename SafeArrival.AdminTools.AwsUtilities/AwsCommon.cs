@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SafeArrival.AdminTools.Model;
 using Amazon.Runtime.CredentialManagement;
+using System.Reflection;
 
 namespace SafeArrival.AdminTools.AwsUtilities
 {

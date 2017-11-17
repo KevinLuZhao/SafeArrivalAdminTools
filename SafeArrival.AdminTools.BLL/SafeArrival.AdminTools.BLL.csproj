@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ElasticBeanstalkServices.cs" />
     <Compile Include="EnvironmentAccountService.cs" />
     <Compile Include="LogServices.cs" />
     <Compile Include="SystemManagement.cs" />

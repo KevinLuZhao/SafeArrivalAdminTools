@@ -2,3 +2,8 @@ E:\AWS Study\Projects\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\bin\Deb
 E:\AWS Study\Projects\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\bin\Debug\SafeArrival.AdminTools.Model.pdb
 E:\AWS Study\Projects\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\obj\Debug\SafeArrival.AdminTools.Model.dll
 E:\AWS Study\Projects\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\obj\Debug\SafeArrival.AdminTools.Model.pdb
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\bin\Debug\SafeArrival.AdminTools.Model.dll
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\bin\Debug\SafeArrival.AdminTools.Model.pdb
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\obj\Debug\SafeArrival.AdminTools.Model.csprojResolveAssemblyReference.cache
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\obj\Debug\SafeArrival.AdminTools.Model.dll
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\obj\Debug\SafeArrival.AdminTools.Model.pdb

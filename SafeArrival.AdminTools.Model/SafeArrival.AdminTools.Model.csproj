@@ -48,6 +48,7 @@
     <Compile Include="AwsRdsInstance.cs" />
     <Compile Include="AwsS3Object.cs" />
     <Compile Include="Color.cs" />
+    <Compile Include="ConfigurationOptionSettingModel.cs" />
     <Compile Include="Environment.cs" />
     <Compile Include="EnvironmentAccount.cs" />
     <Compile Include="GlobalVariables.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="LogType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Region.cs" />
+    <Compile Include="ScheduledAction.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
