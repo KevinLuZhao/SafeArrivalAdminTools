@@ -34,7 +34,7 @@ namespace SafeArrival.AdminTools.Presentation
             }
         }
 
-        private void FormSystemManager_Load(object sender, EventArgs e)
+        private async void FormSystemManager_Load(object sender, EventArgs e)
         {
             try
             {
@@ -52,9 +52,9 @@ namespace SafeArrival.AdminTools.Presentation
                 listView2.Columns.Add("Recurrence", 120);
                 listView2.Columns.Add("Start Time", 150);
                 listView2.Columns.Add("End Time", 150);
-                listView2.Columns.Add("Suspend", 70);
+                listView2.Columns.Add("Suspended", 70);
 
-                PopulateSystemStatus();
+                await PopulateSystemStatus();
                 dataGridView1.AutoGenerateColumns = false;
             }
             catch (Exception ex)
@@ -83,7 +83,7 @@ namespace SafeArrival.AdminTools.Presentation
                 {
                     var manager = new SystemManagement();
                     await manager.StartSystem(GlobalVariables.Enviroment, GlobalVariables.Region, lstAutoScalingGroupSettings);
-                    PopulateSystemStatus();
+                    await PopulateSystemStatus();
                     WriteNotification(String.Format("{0} system is starting!", GlobalVariables.Enviroment.ToString()));
                 }
             }
@@ -106,7 +106,7 @@ namespace SafeArrival.AdminTools.Presentation
                 {
                     var manager = new SystemManagement();
                     await manager.ShutDownSystem(GlobalVariables.Enviroment, GlobalVariables.Region);
-                    PopulateSystemStatus();
+                    await PopulateSystemStatus();
                     WriteNotification(String.Format("{0} system is stoping!", GlobalVariables.Enviroment.ToString()));
                 }
             }
@@ -116,11 +116,11 @@ namespace SafeArrival.AdminTools.Presentation
             }
         }
 
-        private void btnRefresh_Click(object sender, EventArgs e)
+        private async void btnRefresh_Click(object sender, EventArgs e)
         {
             try
             {
-                PopulateSystemStatus();
+                await PopulateSystemStatus();
             }
             catch (Exception ex)
             {
@@ -128,7 +128,7 @@ namespace SafeArrival.AdminTools.Presentation
             }
         }
 
-        private void PopulateSystemStatus()
+        private async Task PopulateSystemStatus()
         {
             if (GlobalVariables.Enviroment.ToString().IndexOf("production") >= 0)
             {
@@ -139,19 +139,20 @@ namespace SafeArrival.AdminTools.Presentation
             {
                 this.Enabled = true;
             }
-            PopulateAutoScalingGroup();
-            PopulateScheduleActions();
-            PopulateRDS();
+            await PopulateAutoScalingGroup();
+            await PopulateScheduleActions();
+            await PopulateRDS();
             LoadAutoScalingGroupSettings();
+            await PopulatePeeringConnection();
         }
 
-        private void PopulateAutoScalingGroup()
+        private async Task PopulateAutoScalingGroup()
         {
             listView1.Items.Clear();
             AwsUtilities.AutoScalingHelper helper = new AwsUtilities.AutoScalingHelper(
                 GlobalVariables.Enviroment,
                 GlobalVariables.Region);
-            var lstGroup = helper.GetAutoScalingGroupList();
+            var lstGroup = await helper.GetAutoScalingGroupList();
             foreach (var group in lstGroup)
             {
                 ListViewItem item = new ListViewItem();
@@ -163,11 +164,11 @@ namespace SafeArrival.AdminTools.Presentation
             }
         }
 
-        private void PopulateScheduleActions()
+        private async Task PopulateScheduleActions()
         {
             listView2.Items.Clear();
             SystemManagement service = new SystemManagement();
-            var lstAction = service.GetApiScheduledActions();
+            var lstAction = await service.GetApiScheduledActions();
             foreach (var action in lstAction)
             {
                 ListViewItem item = new ListViewItem();
@@ -190,22 +191,57 @@ namespace SafeArrival.AdminTools.Presentation
             dataGridView1.DataSource = lstAutoScalingGroupSettings;
         }
 
-        private void PopulateRDS()
+        private async Task PopulateRDS()
         {
             AwsUtilities.RDSHelper helper = new AwsUtilities.RDSHelper(
                 GlobalVariables.Enviroment,
                 GlobalVariables.Region);
-            var instance = helper.GetRDSInstance();
+            var instance = await helper.GetRDSInstance();
             lblRdsIdentifier.Text = instance.DBInstanceIdentifier;
             lblRdsArn.Text = instance.DBInstanceArn;
             lblRdsStatus.Text = instance.Status;
             lblRdsMutlAZ.Text = instance.MultiAZ.ToString();
         }
 
+        private async Task PopulatePeeringConnection()
+        {
+            var helper = new AwsUtilities.EC2Helper(
+                GlobalVariables.Enviroment,
+                GlobalVariables.Region);
+            var connection = await helper.GetPeeringConnection(Utils.FormatresourceName(AwsResourceTypeName.RdsPeeringConnection));
+            pnlNonExistRpc.Hide();
+            pnlExistRpc.Hide();
+            if (connection == null || connection.Status.ToLower() == "deleted")
+            {
+                pnlNonExistRpc.Show();
+                //pnlExistRpc.Visible = false;
+                pnlExistRpc.Hide();
+                pnlNonExistRpc.Location = pnlExistRpc.Location;
+            }
+            else
+            {
+                pnlNonExistRpc.Hide();
+                //pnlVPCPeeringConnection.Visible = false;
+                pnlExistRpc.Show();
+                pnlExistRpc.Visible = true;
+                lblRpcId.Text = connection.VpcPeeringConnectionId;
+                lblRpcReuestVpc.Text = connection.RequesterVpc;
+                lblRpcAcceptVpc.Text = connection.AccepterVpc;
+                lblRpcStatus.Text = connection.Status;
+            }
+        }
+
         private void btnSave_ASG_Settings_Click(object sender, EventArgs e)
         {
             SystemManagement service = new SystemManagement();
             service.SaveAllAutoScalingGroupSettings(lstAutoScalingGroupSettings);
+        }
+
+        private async void btnRpcCreate_Click(object sender, EventArgs e)
+        {
+            var services = new VpcPeeringConnectionServices();
+            await services.CreatePeeringConnection();
+            await PopulatePeeringConnection();
         }
     }
 }

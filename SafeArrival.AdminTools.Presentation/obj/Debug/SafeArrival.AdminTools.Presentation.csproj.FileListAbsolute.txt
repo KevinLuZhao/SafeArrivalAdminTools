@@ -83,3 +83,7 @@ C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Pres
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Presentation\bin\Debug\AWSSDK.ElasticBeanstalk.dll
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Presentation\bin\Debug\AWSSDK.ElasticBeanstalk.pdb
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Presentation\bin\Debug\AWSSDK.ElasticBeanstalk.xml
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Presentation\obj\Debug\SafeArrival.AdminTools.Presentation.FormLogDetails.resources
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Presentation\bin\Debug\AWSSDK.EC2.dll
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Presentation\bin\Debug\AWSSDK.EC2.pdb
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Presentation\bin\Debug\AWSSDK.EC2.xml

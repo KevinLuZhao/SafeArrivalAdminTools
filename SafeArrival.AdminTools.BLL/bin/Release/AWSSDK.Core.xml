@@ -2695,6 +2695,52 @@
             </summary>
             <param name="collection"></param>
         </member>
+        <member name="T:Amazon.Runtime.Internal.RuntimePipelineCustomizerRegistry">
+            <summary>
+            A registry of object that will manipulate the runtime pipeline used by service clients.
+            </summary>
+        </member>
+        <member name="M:Amazon.Runtime.Internal.RuntimePipelineCustomizerRegistry.Register(Amazon.Runtime.Internal.IRuntimePipelineCustomizer)">
+            <summary>
+            Registers a customizer that will be applied for all service clients created. Each customizer has a unique name associated with it. If a customizer is registered more 
+            than once with the same unique name then the calls after the first will be ignored.
+            </summary>
+            <param name="customizer"></param>
+        </member>
+        <member name="M:Amazon.Runtime.Internal.RuntimePipelineCustomizerRegistry.Deregister(Amazon.Runtime.Internal.IRuntimePipelineCustomizer)">
+            <summary>
+            Deregistered the runtime pipeline customizer
+            </summary>
+            <param name="customizer"></param>
+        </member>
+        <member name="M:Amazon.Runtime.Internal.RuntimePipelineCustomizerRegistry.Deregister(System.String)">
+            <summary>
+            Deregistered the runtime pipeline customizer
+            </summary>
+            <param name="uniqueName"></param>
+        </member>
+        <member name="M:Amazon.Runtime.Internal.RuntimePipelineCustomizerRegistry.ApplyCustomizations(Amazon.Runtime.Internal.RuntimePipeline)">
+            <summary>
+            Applies all of the registered customizers on the runtime pipeline
+            </summary>
+            <param name="pipeline">The service clients runtime pipeline.</param>
+        </member>
+        <member name="T:Amazon.Runtime.Internal.IRuntimePipelineCustomizer">
+            <summary>
+            Interface for objects that will customize the runtime pipleine for newly created service clients.
+            </summary>
+        </member>
+        <member name="P:Amazon.Runtime.Internal.IRuntimePipelineCustomizer.UniqueName">
+            <summary>
+            The unique name for the customizer that identifies the customizer in the registry. The name is also used to identify the customizer on the SDK logs.
+            </summary>
+        </member>
+        <member name="M:Amazon.Runtime.Internal.IRuntimePipelineCustomizer.Customize(Amazon.Runtime.Internal.RuntimePipeline)">
+            <summary>
+            Called on service clients as they are being constructed to customize their runtime pipeline.
+            </summary>
+            <param name="pipeline"></param>
+        </member>
         <member name="T:Amazon.Runtime.Internal.Transform.ErrorResponseUnmarshaller">
             <summary>
                Response Unmarshaller for all Errors

@@ -46,6 +46,7 @@
             this.gvLogs.ReadOnly = true;
             this.gvLogs.Size = new System.Drawing.Size(1250, 646);
             this.gvLogs.TabIndex = 0;
+            this.gvLogs.RowHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gvLogs_RowHeaderMouseDoubleClick);
             // 
             // btnRefresh
             // 

@@ -45,6 +45,8 @@
     <Compile Include="LogServices.cs" />
     <Compile Include="SystemManagement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils.cs" />
+    <Compile Include="VpcPeeringConnectionServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SafeArrival.AdminTools.AwsUtilities\SafeArrival.AdminTools.AwsUtilities.csproj">

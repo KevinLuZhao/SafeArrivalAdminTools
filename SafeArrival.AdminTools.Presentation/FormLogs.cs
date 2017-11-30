@@ -13,6 +13,7 @@ namespace SafeArrival.AdminTools.Presentation
 {
     public partial class FormLogs : FormMdiChildBase
     {
+        List<Model.Log> dataSource;
         public FormLogs()
         {
             InitializeComponent();
@@ -20,7 +21,7 @@ namespace SafeArrival.AdminTools.Presentation
 
         private void FormLogs_Load(object sender, EventArgs e)
         {
-            gvLogs.DataSource = LogServices.GetLogList();
+            BindData();
             gvLogs.Columns[0].Visible = gvLogs.Columns[4].Visible= false;
             gvLogs.Columns[3].Width = 680;
             gvLogs.Columns[5].Width = 60;
@@ -29,7 +30,19 @@ namespace SafeArrival.AdminTools.Presentation
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            gvLogs.DataSource = LogServices.GetLogList();
+            BindData();
+        }
+
+        private void BindData()
+        {
+            gvLogs.DataSource = dataSource = LogServices.GetLogList();
+        }
+
+        private void gvLogs_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            var log = dataSource.Find(o => o.Id == gvLogs.Rows[e.RowIndex].Cells[0].Value.ToString());
+            var form = new FormLogDetails(log);
+            form.ShowDialog();
         }
     }
 }

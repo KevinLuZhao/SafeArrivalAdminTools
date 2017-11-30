@@ -45,6 +45,8 @@
     <Compile Include="ApplicationServer.cs" />
     <Compile Include="AutoScalingGroupSettings.cs" />
     <Compile Include="AwsAutoScalingGroup.cs" />
+    <Compile Include="AwsResourceTypeName.cs" />
+    <Compile Include="AwsPeeringConnection.cs" />
     <Compile Include="AwsRdsInstance.cs" />
     <Compile Include="AwsS3Object.cs" />
     <Compile Include="Color.cs" />

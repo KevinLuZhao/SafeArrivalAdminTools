@@ -3,3 +3,7 @@ E:\AWS Study\Projects\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\bin\Rel
 E:\AWS Study\Projects\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\obj\Release\SafeArrival.AdminTools.Model.dll
 E:\AWS Study\Projects\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\obj\Release\SafeArrival.AdminTools.Model.pdb
 E:\AWS Study\Projects\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\obj\Release\SafeArrival.AdminTools.Model.csprojResolveAssemblyReference.cache
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\bin\Release\SafeArrival.AdminTools.Model.dll
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\bin\Release\SafeArrival.AdminTools.Model.pdb
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\obj\Release\SafeArrival.AdminTools.Model.dll
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\obj\Release\SafeArrival.AdminTools.Model.pdb

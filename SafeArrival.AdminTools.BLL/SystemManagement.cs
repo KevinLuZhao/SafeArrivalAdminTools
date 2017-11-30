@@ -23,20 +23,32 @@ namespace SafeArrival.AdminTools.BLL
             {
                 ElasticBeanstalkServices service = new ElasticBeanstalkServices(GlobalVariables.Enviroment, GlobalVariables.Region);
                 service.DisableScheduleActions(false);
-                ////Start RDS
-                //RDSHelper rdsHelper = new RDSHelper(profile, region);
-                //await rdsHelper.StartRdsInstance(rdsHelper.GetRDSInstance().DBInstanceIdentifier);
-
-                ////Start applications by changing the auto scaling group
-                //var autoScalingHelper = new AutoScalingHelper(profile, region);
-                //var lstGroup = autoScalingHelper.GetAutoScalingGroupList();
-                //foreach (var group in lstGroup)
-                //{
-                //    var settings = lstSettings.Find(o => group.Name.IndexOf(o.Environment.ToString()) == 0 &&
-                //    group.Name.IndexOf(o.Application.ToString()) > 0);
-                //    if (settings != null)
-                //        await autoScalingHelper.ChangeScalingGroup(group.AutoScalingGroupName, settings);
-                //}
+                //Start RDS
+                RDSHelper rdsHelper = new RDSHelper(profile, region);
+                try
+                {
+                    var response = await rdsHelper.GetRDSInstance();
+                    await rdsHelper.StartRdsInstance(response.DBInstanceIdentifier);
+                }
+                catch (Exception ex)
+                {
+                    if (ex.GetType().Name == "InvalidDBInstanceStateException")
+                    {
+                        LogServices.WriteLog(
+                            $"RDS instance is not stopped, system starting will continue. Detailed message: {ex.Message}", 
+                            LogType.Warn, GlobalVariables.Enviroment.ToString());
+                    }
+                }
+                //Start applications by changing the auto scaling group
+                var autoScalingHelper = new AutoScalingHelper(profile, region);
+                var lstGroup = await autoScalingHelper.GetAutoScalingGroupList();
+                foreach (var group in lstGroup)
+                {
+                    var settings = lstSettings.Find(o => group.Name.IndexOf(o.Environment.ToString()) == 0 &&
+                    group.Name.IndexOf(o.Application.ToString()) > 0);
+                    if (settings != null)
+                        await autoScalingHelper.ChangeScalingGroup(group.AutoScalingGroupName, settings);
+                }
             }
             catch (Exception ex)
             {
@@ -45,19 +57,20 @@ namespace SafeArrival.AdminTools.BLL
         }
         public async Task ShutDownSystem(Model.Environment profile, string region)
         {
-            //var autoScalingHelper = new AutoScalingHelper(profile, region);
-            //var lstGroup = autoScalingHelper.GetAutoScalingGroupList();
-            //foreach (var group in lstGroup)
-            //{
-            //    await autoScalingHelper.StopScalingGroup(group.AutoScalingGroupName);
-            //}
+            var autoScalingHelper = new AutoScalingHelper(profile, region);
+            var lstGroup = await autoScalingHelper.GetAutoScalingGroupList();
+            foreach (var group in lstGroup)
+            {
+                await autoScalingHelper.StopScalingGroup(group.AutoScalingGroupName);
+            }
 
             ElasticBeanstalkServices service = new ElasticBeanstalkServices(GlobalVariables.Enviroment, GlobalVariables.Region);
             service.DisableScheduleActions(true);
 
-            ////helper.ShutdownSystem();
-            //RDSHelper rdsHelper = new RDSHelper(profile, region);
-            //await rdsHelper.StopRdsInstance(rdsHelper.GetRDSInstance().DBInstanceIdentifier);
+            //helper.ShutdownSystem();
+            RDSHelper rdsHelper = new RDSHelper(profile, region);
+            var response = await rdsHelper.GetRDSInstance();
+            await rdsHelper.StopRdsInstance(response.DBInstanceIdentifier);
         }
 
         public void SaveAllAutoScalingGroupSettings(List<AutoScalingGroupSettings> settings)
@@ -91,10 +104,10 @@ namespace SafeArrival.AdminTools.BLL
             return db.GetSettingsByEnv(env);
         }
 
-        public List<ScheduledAction> GetApiScheduledActions()
+        public async Task<List<ScheduledAction>> GetApiScheduledActions()
         {
             ElasticBeanstalkServices service = new ElasticBeanstalkServices(GlobalVariables.Enviroment, GlobalVariables.Region);
-            return service.GetScheduledActions();
+            return await service.GetScheduledActions();
         }
     }
 }

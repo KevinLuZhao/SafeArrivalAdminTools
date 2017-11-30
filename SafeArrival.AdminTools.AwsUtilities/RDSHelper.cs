@@ -24,9 +24,10 @@ namespace SafeArrival.AdminTools.AwsUtilities
                 AwsCommon.GetRetionEndpoint(region));
         }
 
-        public AwsRdsInstance GetRDSInstance()
+        public async Task<AwsRdsInstance> GetRDSInstance()
         {
-            var lstInstance = client.DescribeDBInstances().DBInstances;
+            var response = await client.DescribeDBInstancesAsync();
+            var lstInstance = response.DBInstances;
             foreach (var instance in lstInstance)
             {
                 if (instance.DBSubnetGroup.DBSubnetGroupName.IndexOf(this.Environment.ToString()) >= 0)
@@ -48,7 +49,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
 
         public async Task StopRdsInstance(string instanceIdentifier)
         {
-            var instance = GetRDSInstance();
+            var instance = await GetRDSInstance();
             var isMultiAZ = instance.MultiAZ;
             if (isMultiAZ)
             {
@@ -63,7 +64,8 @@ namespace SafeArrival.AdminTools.AwsUtilities
                     while (isMultiAZ)
                     {
                         System.Threading.Thread.Sleep(30000);
-                        isMultiAZ = GetRDSInstance().MultiAZ;
+                        var newResponse = await GetRDSInstance();
+                        isMultiAZ = newResponse.MultiAZ;
                     }
                 }
                 catch (Exception ex)

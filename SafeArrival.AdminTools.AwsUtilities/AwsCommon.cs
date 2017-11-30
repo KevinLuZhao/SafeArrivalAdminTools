@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +8,7 @@ using System.Reflection;
 
 namespace SafeArrival.AdminTools.AwsUtilities
 {
-    internal class AwsCommon
+    public class AwsCommon
     {
         public static Amazon.RegionEndpoint GetRetionEndpoint(string region)
         {
@@ -27,6 +26,23 @@ namespace SafeArrival.AdminTools.AwsUtilities
                     return Amazon.RegionEndpoint.CACentral1;
                 default:
                     return Amazon.RegionEndpoint.USEast2;
+            }
+        }
+
+        public static string GetAwsAccountByEnvironment(Environment env)
+        {
+            switch (env)
+            {
+                case Environment.staging:
+                    return "383514732995";
+                case Environment.stagingca:
+                    return "189582403580";
+                case Environment.production:
+                    return "683281545121";
+                case Environment.productionca:
+                    return "944027855121";
+                default:
+                    return "125237747044";
             }
         }
     }

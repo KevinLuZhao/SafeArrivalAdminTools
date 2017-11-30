@@ -35,10 +35,10 @@ namespace SafeArrival.AdminTools.BLL
             helper.DisableScheduleActions(command);
         }
 
-        public List<ScheduledAction> GetScheduledActions()
+        public async Task<List<ScheduledAction>> GetScheduledActions()
         {
             var ret = new List<ScheduledAction>();
-            var lstSettingItems = helper.GetScheduledActionSettingItems();
+            var lstSettingItems = await helper.GetScheduledActionSettingItems();
             HashSet<string> actionNames = new HashSet<string>();
             foreach (var setting in lstSettingItems)
             {

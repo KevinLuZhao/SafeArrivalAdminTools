@@ -132,7 +132,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
             client.UpdateEnvironment(request);
         }
 
-        public List<ConfigurationOptionSettingModel> GetScheduledActionSettingItems()
+        public async Task<List<ConfigurationOptionSettingModel>> GetScheduledActionSettingItems()
         {
             var ret = new List<ConfigurationOptionSettingModel>();
             var requestSettings = new DescribeConfigurationSettingsRequest()
@@ -140,7 +140,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
                 ApplicationName = $"Safe-Arrival-{ GlobalVariables.Enviroment.ToString()}-{GlobalVariables.Color}",
                 EnvironmentName = $"{ GlobalVariables.Enviroment.ToString()}-{GlobalVariables.Color}-API",
             };
-            var response = client.DescribeConfigurationSettings(requestSettings);
+            var response = await client.DescribeConfigurationSettingsAsync(requestSettings);
 
             var sourceSettings = response.ConfigurationSettings[0].OptionSettings.FindAll(
                 o => o.Namespace == "aws:autoscaling:scheduledaction");

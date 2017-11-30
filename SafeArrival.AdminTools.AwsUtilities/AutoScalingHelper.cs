@@ -20,15 +20,11 @@ namespace SafeArrival.AdminTools.AwsUtilities
                 AwsCommon.GetRetionEndpoint(region));
         }
 
-        public void GetList()
-        {
-            GetAutoScalingGroupList();
-        }
-
-        public List<AwsAutoScalingGroup> GetAutoScalingGroupList()
+        public async Task<List<AwsAutoScalingGroup>> GetAutoScalingGroupList()
         {
             var lstSaGroups = new List<AwsAutoScalingGroup>();
-            var lstGroups = client.DescribeAutoScalingGroups().AutoScalingGroups.FindAll(o => o.Tags[0].Value.IndexOf(GlobalVariables.Enviroment.ToString()) >= 0);
+            var response = await client.DescribeAutoScalingGroupsAsync();
+            var lstGroups = response.AutoScalingGroups.FindAll(o => o.Tags[0].Value.IndexOf(GlobalVariables.Enviroment.ToString()) >= 0);
             foreach (var group in lstGroups)
             {
                 var saGroup = new AwsAutoScalingGroup()
