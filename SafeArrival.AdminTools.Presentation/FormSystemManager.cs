@@ -16,6 +16,8 @@ namespace SafeArrival.AdminTools.Presentation
     {
 
         private List<AutoScalingGroupSettings> lstAutoScalingGroupSettings = new List<AutoScalingGroupSettings>();
+        private List<AwsVpc> lstVpcs = new List<AwsVpc>();
+        private AwsPeeringConnection vpcPeeringConnection;
 
         public FormSystemManager()
         {
@@ -144,6 +146,7 @@ namespace SafeArrival.AdminTools.Presentation
             await PopulateRDS();
             LoadAutoScalingGroupSettings();
             await PopulatePeeringConnection();
+            await PopulateeeringConnectionVpcDropdownLists();
         }
 
         private async Task PopulateAutoScalingGroup()
@@ -205,18 +208,17 @@ namespace SafeArrival.AdminTools.Presentation
 
         private async Task PopulatePeeringConnection()
         {
-            var helper = new AwsUtilities.EC2Helper(
-                GlobalVariables.Enviroment,
-                GlobalVariables.Region);
-            var connection = await helper.GetPeeringConnection(Utils.FormatresourceName(AwsResourceTypeName.RdsPeeringConnection));
-            pnlNonExistRpc.Hide();
-            pnlExistRpc.Hide();
-            if (connection == null || connection.Status.ToLower() == "deleted")
+            var service = new VpcPeeringConnectionServices();
+            vpcPeeringConnection = await service.GetRdsPeeringConnection();
+            if (vpcPeeringConnection == null || vpcPeeringConnection.Status.ToLower() == "deleted")
             {
                 pnlNonExistRpc.Show();
                 //pnlExistRpc.Visible = false;
                 pnlExistRpc.Hide();
                 pnlNonExistRpc.Location = pnlExistRpc.Location;
+                //The peering connection which is under status of "deleted", 
+                //should be considered as null when create a new one.
+                vpcPeeringConnection = null;
             }
             else
             {
@@ -224,10 +226,23 @@ namespace SafeArrival.AdminTools.Presentation
                 //pnlVPCPeeringConnection.Visible = false;
                 pnlExistRpc.Show();
                 pnlExistRpc.Visible = true;
-                lblRpcId.Text = connection.VpcPeeringConnectionId;
-                lblRpcReuestVpc.Text = connection.RequesterVpc;
-                lblRpcAcceptVpc.Text = connection.AccepterVpc;
-                lblRpcStatus.Text = connection.Status;
+                lblRpcId.Text = vpcPeeringConnection.VpcPeeringConnectionId;
+                lblRpcReuestVpc.Text = vpcPeeringConnection.RequesterVpc;
+                lblRpcAcceptVpc.Text = vpcPeeringConnection.AccepterVpc;
+                lblRpcStatus.Text = vpcPeeringConnection.Status;
+            }
+        }
+
+        private async Task PopulateeeringConnectionVpcDropdownLists()
+        {
+            var service = new VpcPeeringConnectionServices();
+            lstVpcs = await service.GetAvailablePeeringVpcList();
+            ddlRequesterVpc.Items.Add("Please select");
+            ddlAccepterVpc.Items.Add("Please select");
+            foreach (var vpc in lstVpcs)
+            {
+                ddlRequesterVpc.Items.Add($"{vpc.VpcId}|{vpc.Name}");
+                ddlAccepterVpc.Items.Add($"{vpc.VpcId}|{vpc.Name}");
             }
         }
 
@@ -239,9 +254,66 @@ namespace SafeArrival.AdminTools.Presentation
 
         private async void btnRpcCreate_Click(object sender, EventArgs e)
         {
-            var services = new VpcPeeringConnectionServices();
-            await services.CreatePeeringConnection();
-            await PopulatePeeringConnection();
+            try
+            {
+                if (vpcPeeringConnection != null)
+                {
+                    MessageBox.Show("RDS VPC Peering Connection exists!");
+                    return;
+                }
+
+                var confirmResult = MessageBox.Show(
+                        "Are you sure to create a new RDS VPC Peering Connection?",
+                        "Create RDS Peering Connection",
+                        MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    var services = new VpcPeeringConnectionServices();
+                    var strRequesterItem = ddlRequesterVpc.SelectedItem.ToString()
+                        .Substring(0, ddlRequesterVpc.SelectedItem.ToString().IndexOf("|"));
+                    var strAccepterItem = ddlAccepterVpc.SelectedItem.ToString()
+                        .Substring(0, ddlAccepterVpc.SelectedItem.ToString().IndexOf("|"));
+                    var response = await services.CreatePeeringConnection(
+                        lstVpcs.Find(o => o.VpcId == strRequesterItem),
+                        lstVpcs.Find(o => o.VpcId == strAccepterItem));
+                    WriteNotification($"RDS VPC Peering Connection {response} is created.");
+                    System.Threading.Thread.Sleep(3000);
+                    await PopulatePeeringConnection();
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+        }
+
+        private async void btnRpcDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (vpcPeeringConnection == null)
+                    throw new Exception("There is no existing RDS VPC Peering Connection");
+
+                var confirmResult = MessageBox.Show(
+                        "Are you sure to delete the VPC Peering Connection?",
+                        "Warn: Delete Peering Connection",
+                        MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    var service = new VpcPeeringConnectionServices();
+                    await service.DeletePeeringConnection(
+                        vpcPeeringConnection.VpcPeeringConnectionId,
+                        lstVpcs.Find(o => o.VpcId == lblRpcReuestVpc.Text),
+                        lstVpcs.Find(o => o.VpcId == lblRpcAcceptVpc.Text));
+                    WriteNotification($"RDS VPC Peering Connection {vpcPeeringConnection.VpcPeeringConnectionId} is deleted.");
+                    System.Threading.Thread.Sleep(3000);
+                    await PopulatePeeringConnection();
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
         }
     }
 }

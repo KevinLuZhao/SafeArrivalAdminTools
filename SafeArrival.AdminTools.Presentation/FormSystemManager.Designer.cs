@@ -55,10 +55,14 @@
             this.MinSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DesiredCapacity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tPagePeeringConnection = new System.Windows.Forms.TabPage();
-            this.pnlExistRpc = new System.Windows.Forms.Panel();
             this.pnlNonExistRpc = new System.Windows.Forms.Panel();
+            this.ddlAccepterVpc = new System.Windows.Forms.ComboBox();
+            this.ddlRequesterVpc = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             this.btnRpcCreate = new System.Windows.Forms.Button();
             this.lblRpcNotExists = new System.Windows.Forms.Label();
+            this.pnlExistRpc = new System.Windows.Forms.Panel();
             this.btnRpcDelete = new System.Windows.Forms.Button();
             this.lblRpcStatus = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
@@ -77,13 +81,13 @@
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tPagePeeringConnection.SuspendLayout();
-            this.pnlExistRpc.SuspendLayout();
             this.pnlNonExistRpc.SuspendLayout();
+            this.pnlExistRpc.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnInit
             // 
-            this.btnInit.Location = new System.Drawing.Point(988, 482);
+            this.btnInit.Location = new System.Drawing.Point(985, 538);
             this.btnInit.Name = "btnInit";
             this.btnInit.Size = new System.Drawing.Size(114, 23);
             this.btnInit.TabIndex = 4;
@@ -99,12 +103,14 @@
             this.tabControl1.Location = new System.Drawing.Point(2, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1113, 537);
+            this.tabControl1.Size = new System.Drawing.Size(1113, 593);
             this.tabControl1.TabIndex = 3;
             // 
             // tPageStatus
             // 
+            this.tPageStatus.Controls.Add(this.btnStart);
             this.tPageStatus.Controls.Add(this.label4);
+            this.tPageStatus.Controls.Add(this.btnStop);
             this.tPageStatus.Controls.Add(this.listView2);
             this.tPageStatus.Controls.Add(this.btnRefresh);
             this.tPageStatus.Controls.Add(this.panel1);
@@ -114,7 +120,7 @@
             this.tPageStatus.Location = new System.Drawing.Point(4, 22);
             this.tPageStatus.Name = "tPageStatus";
             this.tPageStatus.Padding = new System.Windows.Forms.Padding(3);
-            this.tPageStatus.Size = new System.Drawing.Size(1105, 511);
+            this.tPageStatus.Size = new System.Drawing.Size(1105, 567);
             this.tPageStatus.TabIndex = 0;
             this.tPageStatus.Text = "Status";
             this.tPageStatus.UseVisualStyleBackColor = true;
@@ -276,14 +282,14 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1105, 511);
+            this.tabPage2.Size = new System.Drawing.Size(1105, 567);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Auto-Scaling Settings";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // btnSave_ASG_Settings
             // 
-            this.btnSave_ASG_Settings.Location = new System.Drawing.Point(7, 482);
+            this.btnSave_ASG_Settings.Location = new System.Drawing.Point(7, 538);
             this.btnSave_ASG_Settings.Name = "btnSave_ASG_Settings";
             this.btnSave_ASG_Settings.Size = new System.Drawing.Size(75, 23);
             this.btnSave_ASG_Settings.TabIndex = 1;
@@ -302,7 +308,7 @@
             this.DesiredCapacity});
             this.dataGridView1.Location = new System.Drawing.Point(7, 17);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1092, 451);
+            this.dataGridView1.Size = new System.Drawing.Size(1092, 515);
             this.dataGridView1.TabIndex = 0;
             // 
             // Environment
@@ -353,34 +359,60 @@
             this.tPagePeeringConnection.Text = "VPC Peering Connection";
             this.tPagePeeringConnection.UseVisualStyleBackColor = true;
             // 
-            // pnlExistRpc
-            // 
-            this.pnlExistRpc.Controls.Add(this.btnRpcDelete);
-            this.pnlExistRpc.Controls.Add(this.lblRpcStatus);
-            this.pnlExistRpc.Controls.Add(this.label14);
-            this.pnlExistRpc.Controls.Add(this.lblRpcAcceptVpc);
-            this.pnlExistRpc.Controls.Add(this.label13);
-            this.pnlExistRpc.Controls.Add(this.lblRpcReuestVpc);
-            this.pnlExistRpc.Controls.Add(this.label12);
-            this.pnlExistRpc.Controls.Add(this.lblRpcId);
-            this.pnlExistRpc.Controls.Add(this.label10);
-            this.pnlExistRpc.Location = new System.Drawing.Point(26, 52);
-            this.pnlExistRpc.Name = "pnlExistRpc";
-            this.pnlExistRpc.Size = new System.Drawing.Size(784, 70);
-            this.pnlExistRpc.TabIndex = 1;
-            // 
             // pnlNonExistRpc
             // 
+            this.pnlNonExistRpc.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlNonExistRpc.Controls.Add(this.ddlAccepterVpc);
+            this.pnlNonExistRpc.Controls.Add(this.ddlRequesterVpc);
+            this.pnlNonExistRpc.Controls.Add(this.label8);
+            this.pnlNonExistRpc.Controls.Add(this.label11);
             this.pnlNonExistRpc.Controls.Add(this.btnRpcCreate);
             this.pnlNonExistRpc.Controls.Add(this.lblRpcNotExists);
-            this.pnlNonExistRpc.Location = new System.Drawing.Point(26, 138);
+            this.pnlNonExistRpc.Location = new System.Drawing.Point(26, 191);
             this.pnlNonExistRpc.Name = "pnlNonExistRpc";
-            this.pnlNonExistRpc.Size = new System.Drawing.Size(787, 100);
+            this.pnlNonExistRpc.Size = new System.Drawing.Size(809, 163);
             this.pnlNonExistRpc.TabIndex = 4;
+            this.pnlNonExistRpc.Visible = false;
+            // 
+            // ddlAccepterVpc
+            // 
+            this.ddlAccepterVpc.FormattingEnabled = true;
+            this.ddlAccepterVpc.Location = new System.Drawing.Point(434, 43);
+            this.ddlAccepterVpc.Name = "ddlAccepterVpc";
+            this.ddlAccepterVpc.Size = new System.Drawing.Size(191, 21);
+            this.ddlAccepterVpc.TabIndex = 8;
+            // 
+            // ddlRequesterVpc
+            // 
+            this.ddlRequesterVpc.FormattingEnabled = true;
+            this.ddlRequesterVpc.Location = new System.Drawing.Point(124, 43);
+            this.ddlRequesterVpc.Name = "ddlRequesterVpc";
+            this.ddlRequesterVpc.Size = new System.Drawing.Size(191, 21);
+            this.ddlRequesterVpc.TabIndex = 7;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(338, 47);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(90, 13);
+            this.label8.TabIndex = 6;
+            this.label8.Text = "Accepter VPC:";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(20, 47);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(97, 13);
+            this.label11.TabIndex = 5;
+            this.label11.Text = "Requester VPC:";
             // 
             // btnRpcCreate
             // 
-            this.btnRpcCreate.Location = new System.Drawing.Point(16, 63);
+            this.btnRpcCreate.Location = new System.Drawing.Point(16, 124);
             this.btnRpcCreate.Name = "btnRpcCreate";
             this.btnRpcCreate.Size = new System.Drawing.Size(108, 23);
             this.btnRpcCreate.TabIndex = 3;
@@ -397,14 +429,33 @@
             this.lblRpcNotExists.TabIndex = 2;
             this.lblRpcNotExists.Text = "RDS-Application VPC peering connection is not existing";
             // 
+            // pnlExistRpc
+            // 
+            this.pnlExistRpc.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlExistRpc.Controls.Add(this.btnRpcDelete);
+            this.pnlExistRpc.Controls.Add(this.lblRpcStatus);
+            this.pnlExistRpc.Controls.Add(this.label14);
+            this.pnlExistRpc.Controls.Add(this.lblRpcAcceptVpc);
+            this.pnlExistRpc.Controls.Add(this.label13);
+            this.pnlExistRpc.Controls.Add(this.lblRpcReuestVpc);
+            this.pnlExistRpc.Controls.Add(this.label12);
+            this.pnlExistRpc.Controls.Add(this.lblRpcId);
+            this.pnlExistRpc.Controls.Add(this.label10);
+            this.pnlExistRpc.Location = new System.Drawing.Point(26, 52);
+            this.pnlExistRpc.Name = "pnlExistRpc";
+            this.pnlExistRpc.Size = new System.Drawing.Size(809, 109);
+            this.pnlExistRpc.TabIndex = 1;
+            this.pnlExistRpc.Visible = false;
+            // 
             // btnRpcDelete
             // 
-            this.btnRpcDelete.Location = new System.Drawing.Point(630, 44);
+            this.btnRpcDelete.Location = new System.Drawing.Point(9, 74);
             this.btnRpcDelete.Name = "btnRpcDelete";
             this.btnRpcDelete.Size = new System.Drawing.Size(122, 23);
             this.btnRpcDelete.TabIndex = 8;
             this.btnRpcDelete.Text = "Delete Connection";
             this.btnRpcDelete.UseVisualStyleBackColor = true;
+            this.btnRpcDelete.Click += new System.EventHandler(this.btnRpcDelete_Click);
             // 
             // lblRpcStatus
             // 
@@ -494,7 +545,7 @@
             // 
             // btnStop
             // 
-            this.btnStop.Location = new System.Drawing.Point(6, 564);
+            this.btnStop.Location = new System.Drawing.Point(10, 522);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(75, 23);
             this.btnStop.TabIndex = 0;
@@ -504,7 +555,7 @@
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(115, 564);
+            this.btnStart.Location = new System.Drawing.Point(119, 522);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(75, 23);
             this.btnStart.TabIndex = 4;
@@ -517,9 +568,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1120, 608);
-            this.Controls.Add(this.btnStart);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.btnStop);
             this.Name = "FormSystemManager";
             this.Text = "System Manager";
             this.Load += new System.EventHandler(this.FormSystemManager_Load);
@@ -532,10 +581,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tPagePeeringConnection.ResumeLayout(false);
             this.tPagePeeringConnection.PerformLayout();
-            this.pnlExistRpc.ResumeLayout(false);
-            this.pnlExistRpc.PerformLayout();
             this.pnlNonExistRpc.ResumeLayout(false);
             this.pnlNonExistRpc.PerformLayout();
+            this.pnlExistRpc.ResumeLayout(false);
+            this.pnlExistRpc.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -585,5 +634,9 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button btnRpcCreate;
         private System.Windows.Forms.Panel pnlNonExistRpc;
+        private System.Windows.Forms.ComboBox ddlAccepterVpc;
+        private System.Windows.Forms.ComboBox ddlRequesterVpc;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label11;
     }
 }

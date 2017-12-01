@@ -49,6 +49,7 @@
     <Compile Include="AwsPeeringConnection.cs" />
     <Compile Include="AwsRdsInstance.cs" />
     <Compile Include="AwsS3Object.cs" />
+    <Compile Include="AwsVpc.cs" />
     <Compile Include="Color.cs" />
     <Compile Include="ConfigurationOptionSettingModel.cs" />
     <Compile Include="Environment.cs" />
