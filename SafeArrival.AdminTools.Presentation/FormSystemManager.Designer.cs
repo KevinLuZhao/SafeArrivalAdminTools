@@ -28,10 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSystemManager));
             this.btnInit = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tPageStatus = new System.Windows.Forms.TabPage();
+            this.btnStart = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.btnStop = new System.Windows.Forms.Button();
             this.listView2 = new System.Windows.Forms.ListView();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -55,6 +58,7 @@
             this.MinSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DesiredCapacity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tPagePeeringConnection = new System.Windows.Forms.TabPage();
+            this.btnRpcRefresh = new System.Windows.Forms.Button();
             this.pnlNonExistRpc = new System.Windows.Forms.Panel();
             this.ddlAccepterVpc = new System.Windows.Forms.ComboBox();
             this.ddlRequesterVpc = new System.Windows.Forms.ComboBox();
@@ -73,8 +77,6 @@
             this.lblRpcId = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.btnStop = new System.Windows.Forms.Button();
-            this.btnStart = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tPageStatus.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -125,19 +127,39 @@
             this.tPageStatus.Text = "Status";
             this.tPageStatus.UseVisualStyleBackColor = true;
             // 
+            // btnStart
+            // 
+            this.btnStart.Location = new System.Drawing.Point(116, 523);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(75, 23);
+            this.btnStart.TabIndex = 4;
+            this.btnStart.Text = "Start System";
+            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(7, 208);
+            this.label4.Location = new System.Drawing.Point(7, 222);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(142, 17);
             this.label4.TabIndex = 15;
             this.label4.Text = "Scheduled Actions";
             // 
+            // btnStop
+            // 
+            this.btnStop.Location = new System.Drawing.Point(7, 523);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(75, 23);
+            this.btnStop.TabIndex = 0;
+            this.btnStop.Text = "Stop System";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            // 
             // listView2
             // 
-            this.listView2.Location = new System.Drawing.Point(7, 233);
+            this.listView2.Location = new System.Drawing.Point(7, 247);
             this.listView2.Name = "listView2";
             this.listView2.Size = new System.Drawing.Size(1083, 84);
             this.listView2.TabIndex = 14;
@@ -145,11 +167,14 @@
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(7, 479);
+            this.btnRefresh.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnRefresh.FlatAppearance.BorderSize = 0;
+            this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRefresh.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Reload;
+            this.btnRefresh.Location = new System.Drawing.Point(232, 513);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(75, 23);
+            this.btnRefresh.Size = new System.Drawing.Size(45, 42);
             this.btnRefresh.TabIndex = 13;
-            this.btnRefresh.Text = "Refresh";
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
@@ -165,7 +190,7 @@
             this.panel1.Controls.Add(this.lblRdsStatus);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.lblRdsArn);
-            this.panel1.Location = new System.Drawing.Point(7, 363);
+            this.panel1.Location = new System.Drawing.Point(7, 388);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1083, 100);
             this.panel1.TabIndex = 12;
@@ -250,7 +275,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(7, 334);
+            this.label2.Location = new System.Drawing.Point(7, 359);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(40, 17);
             this.label2.TabIndex = 3;
@@ -348,16 +373,29 @@
             // 
             // tPagePeeringConnection
             // 
+            this.tPagePeeringConnection.Controls.Add(this.btnRpcRefresh);
             this.tPagePeeringConnection.Controls.Add(this.pnlNonExistRpc);
             this.tPagePeeringConnection.Controls.Add(this.pnlExistRpc);
             this.tPagePeeringConnection.Controls.Add(this.label6);
             this.tPagePeeringConnection.Location = new System.Drawing.Point(4, 22);
             this.tPagePeeringConnection.Name = "tPagePeeringConnection";
             this.tPagePeeringConnection.Padding = new System.Windows.Forms.Padding(3);
-            this.tPagePeeringConnection.Size = new System.Drawing.Size(1105, 511);
+            this.tPagePeeringConnection.Size = new System.Drawing.Size(1105, 567);
             this.tPagePeeringConnection.TabIndex = 2;
             this.tPagePeeringConnection.Text = "VPC Peering Connection";
             this.tPagePeeringConnection.UseVisualStyleBackColor = true;
+            // 
+            // btnRpcRefresh
+            // 
+            this.btnRpcRefresh.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnRpcRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRpcRefresh.Image = ((System.Drawing.Image)(resources.GetObject("btnRpcRefresh.Image")));
+            this.btnRpcRefresh.Location = new System.Drawing.Point(797, 6);
+            this.btnRpcRefresh.Name = "btnRpcRefresh";
+            this.btnRpcRefresh.Size = new System.Drawing.Size(38, 40);
+            this.btnRpcRefresh.TabIndex = 5;
+            this.btnRpcRefresh.UseVisualStyleBackColor = true;
+            this.btnRpcRefresh.Click += new System.EventHandler(this.btnRpcRefresh_Click);
             // 
             // pnlNonExistRpc
             // 
@@ -368,7 +406,7 @@
             this.pnlNonExistRpc.Controls.Add(this.label11);
             this.pnlNonExistRpc.Controls.Add(this.btnRpcCreate);
             this.pnlNonExistRpc.Controls.Add(this.lblRpcNotExists);
-            this.pnlNonExistRpc.Location = new System.Drawing.Point(26, 191);
+            this.pnlNonExistRpc.Location = new System.Drawing.Point(26, 196);
             this.pnlNonExistRpc.Name = "pnlNonExistRpc";
             this.pnlNonExistRpc.Size = new System.Drawing.Size(809, 163);
             this.pnlNonExistRpc.TabIndex = 4;
@@ -441,7 +479,7 @@
             this.pnlExistRpc.Controls.Add(this.label12);
             this.pnlExistRpc.Controls.Add(this.lblRpcId);
             this.pnlExistRpc.Controls.Add(this.label10);
-            this.pnlExistRpc.Location = new System.Drawing.Point(26, 52);
+            this.pnlExistRpc.Location = new System.Drawing.Point(26, 57);
             this.pnlExistRpc.Name = "pnlExistRpc";
             this.pnlExistRpc.Size = new System.Drawing.Size(809, 109);
             this.pnlExistRpc.TabIndex = 1;
@@ -543,26 +581,6 @@
             this.label6.TabIndex = 0;
             this.label6.Text = "Peering Connection of RDS VPC and Application VPC";
             // 
-            // btnStop
-            // 
-            this.btnStop.Location = new System.Drawing.Point(10, 522);
-            this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(75, 23);
-            this.btnStop.TabIndex = 0;
-            this.btnStop.Text = "Stop System";
-            this.btnStop.UseVisualStyleBackColor = true;
-            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
-            // 
-            // btnStart
-            // 
-            this.btnStart.Location = new System.Drawing.Point(119, 522);
-            this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(75, 23);
-            this.btnStart.TabIndex = 4;
-            this.btnStart.Text = "Start System";
-            this.btnStart.UseVisualStyleBackColor = true;
-            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
-            // 
             // FormSystemManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -638,5 +656,6 @@
         private System.Windows.Forms.ComboBox ddlRequesterVpc;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button btnRpcRefresh;
     }
 }

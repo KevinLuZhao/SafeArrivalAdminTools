@@ -31,6 +31,10 @@ namespace SafeArrival.AdminTools.AwsUtilities
             var ret = new List<AwsVpc>();
             foreach (var vpc in response.Vpcs)
             {
+                if (vpc.IsDefault)
+                {
+                    continue;
+                }
                 ret.Add(new AwsVpc()
                 {
                     CidrBlock = vpc.CidrBlock,
@@ -48,7 +52,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
             var response = await client.DescribeVpcPeeringConnectionsAsync(request);
             var connection = response.VpcPeeringConnections.
                 FindAll(o => (o.Tags.FindIndex(p => p.Key == "Name" && p.Value == name) >= 0)).
-                Find(o=>o.Status.Code == VpcPeeringConnectionStateReasonCode.Active);
+                Find(o => o.Status.Code == VpcPeeringConnectionStateReasonCode.Active);
             if (connection != null)
             {
                 var connectionModel = new AwsPeeringConnection()
@@ -127,7 +131,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
             var response = await client.DescribeRouteTablesAsync(request);
             foreach (var routeTable in response.RouteTables)
             {
-                if (routeTable.VpcId == vpcId && routeTable.Associations.Count > 0)
+                if (routeTable.VpcId == vpcId && routeTable.Tags.Find(o => o.Key == "Name") != null)
                     ret.Add(routeTable.RouteTableId);
             }
             return ret;

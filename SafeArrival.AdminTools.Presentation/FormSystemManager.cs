@@ -1,14 +1,9 @@
-﻿using System;
+﻿using SafeArrival.AdminTools.BLL;
+using SafeArrival.AdminTools.Model;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using SafeArrival.AdminTools.Model;
-using SafeArrival.AdminTools.BLL;
 
 namespace SafeArrival.AdminTools.Presentation
 {
@@ -134,13 +129,22 @@ namespace SafeArrival.AdminTools.Presentation
         {
             if (GlobalVariables.Enviroment.ToString().IndexOf("production") >= 0)
             {
-                MessageBox.Show("This function is not supported in Production envirnment!");
-                this.Enabled = false;
+                MessageBox.Show("Starting/Stopping System is not supported in Production envirnment!");
+                //this.Enabled = false;
+                btnStart.Visible = false;
+                btnStop.Visible = false;
+                btnRefresh.Visible = false;
+                btnInit.Enabled = btnSave_ASG_Settings.Enabled = false;
             }
             else
             {
-                this.Enabled = true;
+                //this.Enabled = true;
+                btnStart.Visible = true;
+                btnStop.Visible = true;
+                btnRefresh.Visible = true;
+                btnInit.Enabled = btnSave_ASG_Settings.Enabled = true;
             }
+
             await PopulateAutoScalingGroup();
             await PopulateScheduleActions();
             await PopulateRDS();
@@ -235,10 +239,10 @@ namespace SafeArrival.AdminTools.Presentation
 
         private async Task PopulateeeringConnectionVpcDropdownLists()
         {
+            ddlRequesterVpc.Items.Clear();
+            ddlAccepterVpc.Items.Clear();
             var service = new VpcPeeringConnectionServices();
             lstVpcs = await service.GetAvailablePeeringVpcList();
-            ddlRequesterVpc.Items.Add("Please select");
-            ddlAccepterVpc.Items.Add("Please select");
             foreach (var vpc in lstVpcs)
             {
                 ddlRequesterVpc.Items.Add($"{vpc.VpcId}|{vpc.Name}");
@@ -259,6 +263,19 @@ namespace SafeArrival.AdminTools.Presentation
                 if (vpcPeeringConnection != null)
                 {
                     MessageBox.Show("RDS VPC Peering Connection exists!");
+                    return;
+                }
+
+                if (ddlAccepterVpc.SelectedItem == null ||
+                    ddlRequesterVpc.SelectedItem == null)
+                {
+                    MessageBox.Show("Both Requester VPC and Accepter VPC are required!");
+                    return;
+                }
+
+                if (ddlAccepterVpc.SelectedItem.ToString() == ddlRequesterVpc.SelectedItem.ToString())
+                {
+                    MessageBox.Show("VPC cannot create peering connection to itself, please pick another VPC");
                     return;
                 }
 
@@ -314,6 +331,11 @@ namespace SafeArrival.AdminTools.Presentation
             {
                 HandleException(ex);
             }
+        }
+
+        private async void btnRpcRefresh_Click(object sender, EventArgs e)
+        {
+            await PopulatePeeringConnection();
         }
     }
 }
