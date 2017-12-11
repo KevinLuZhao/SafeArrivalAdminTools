@@ -34,6 +34,11 @@ namespace SafeArrival.AdminTools.Presentation
             tsComboRegion.Enabled = false;
 
             MainStatusStrip = toolStripStatusLabel1;
+
+            if (ConfigurationSettings.AppSettings["Role"] != "SAFE-Admin_role")
+            {
+                parameterEditToolStripMenuItem.Visible = false;
+            }
         }
 
         private void OpenFormMenu_Click(object sender, EventArgs e)

@@ -81,7 +81,7 @@ namespace SafeArrival.AdminTools.Presentation
                     var manager = new SystemManagement();
                     await manager.StartSystem(GlobalVariables.Enviroment, GlobalVariables.Region, lstAutoScalingGroupSettings);
                     await PopulateSystemStatus();
-                    WriteNotification(String.Format("{0} system is starting!", GlobalVariables.Enviroment.ToString()));
+                    WriteNotification(String.Format("{0} system is started!", GlobalVariables.Enviroment.ToString()));
                 }
             }
             catch (Exception ex)
@@ -104,7 +104,7 @@ namespace SafeArrival.AdminTools.Presentation
                     var manager = new SystemManagement();
                     await manager.ShutDownSystem(GlobalVariables.Enviroment, GlobalVariables.Region);
                     await PopulateSystemStatus();
-                    WriteNotification(String.Format("{0} system is stoping!", GlobalVariables.Enviroment.ToString()));
+                    WriteNotification(String.Format("{0} system is stopped!", GlobalVariables.Enviroment.ToString()));
                 }
             }
             catch (Exception ex)

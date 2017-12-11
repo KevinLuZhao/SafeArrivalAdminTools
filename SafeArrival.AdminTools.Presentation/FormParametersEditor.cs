@@ -7,6 +7,7 @@ using System.IO.Compression;
 using SafeArrival.AdminTools.Model;
 using SafeArrival.AdminTools.AwsUtilities;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace SafeArrival.AdminTools.Presentation
 {
@@ -84,17 +85,18 @@ namespace SafeArrival.AdminTools.Presentation
             }
         }
 
-        private void btnExport_Click(object sender, EventArgs e)
+        private async void btnExport_Click(object sender, EventArgs e)
         {
             try
             {
                 var confirmResult = MessageBox.Show(
-                    string.Format("Are you sure to upload Parameters.zip to S3 bucket '{0}'", GenerationS3BucketName()),
+                    $"Are you sure to upload parameter.zip to S3 bucket '{GenerationS3BucketName()}'",
                     "Confirm Export to S3 Bucket",
                     MessageBoxButtons.YesNo);
                 if (confirmResult == DialogResult.Yes)
                 {
-                    GenerateParameterZip();
+                    await GenerateParameterZip();
+                    WriteNotification("File parameter.zip updated at " + GenerationS3BucketName());
                 }
             }
             catch (Exception ex)
@@ -123,7 +125,7 @@ namespace SafeArrival.AdminTools.Presentation
             p.Start();
         }
 
-        private void GenerateParameterZip()
+        private async Task GenerateParameterZip()
         {
             if (!Directory.Exists(@"c:\temp"))
             {
@@ -149,10 +151,10 @@ namespace SafeArrival.AdminTools.Presentation
                 }
                 zipToOpen.Close();
             }
-            UploadParameterZipToS3();
+            await UploadParameterZipToS3();
         }
 
-        private void UploadParameterZipToS3()
+        private async Task UploadParameterZipToS3()
         {
             S3Helper s3Helper = new S3Helper(
                 GlobalVariables.Enviroment,
@@ -160,9 +162,8 @@ namespace SafeArrival.AdminTools.Presentation
                 GenerationS3BucketName()
                 );
 
-            s3Helper.UploadFile("parameter.zip", new FileStream(@"c:\temp\parameter.zip", FileMode.Open));
-            WriteNotification("File parameter.zip updated at " + GenerationS3BucketName());
-        }
+            await s3Helper.UploadFile("parameter.zip", new FileStream(@"c:\temp\parameter.zip", FileMode.Open));
+        } 
 
         private string GetJsonFilesFolder()
         {

@@ -15,26 +15,26 @@ namespace SafeArrival.AdminTools.AwsUtilities
         public string BucketName { get; set; }
         private AmazonS3Client client;
 
-        public S3Helper(string awsAccessKeyId, string awsSecretAccessKey, string serviceUrl, string bucketName)
-        {
-            //AwsAccessKeyId = awsAccessKeyId;
-            //AwsSecretAccessKey = awsSecretAccessKey;
-            //ServiceUrl = serviceUrl;
-            //BucketName = bucketName;
+        //public S3Helper(string awsAccessKeyId, string awsSecretAccessKey, string serviceUrl, string bucketName)
+        //{
+        //    //AwsAccessKeyId = awsAccessKeyId;
+        //    //AwsSecretAccessKey = awsSecretAccessKey;
+        //    //ServiceUrl = serviceUrl;
+        //    //BucketName = bucketName;
 
-            if (string.IsNullOrEmpty(serviceUrl))
-            {
-                client = new AmazonS3Client();
-            }
-            else
-            {
-                var s3Config = new AmazonS3Config { ServiceURL = serviceUrl };
-                //client = new AmazonS3Client(awsAccessKeyId, awsSecretAccessKey, s3Config);
-                client = new AmazonS3Client(
-                    CredentiaslManager.GetDynamoDbCredential(), s3Config);
-            }
-            BucketName = bucketName;
-        }
+        //    if (string.IsNullOrEmpty(serviceUrl))
+        //    {
+        //        client = new AmazonS3Client();
+        //    }
+        //    else
+        //    {
+        //        var s3Config = new AmazonS3Config { ServiceURL = serviceUrl };
+        //        //client = new AmazonS3Client(awsAccessKeyId, awsSecretAccessKey, s3Config);
+        //        client = new AmazonS3Client(
+        //            CredentiaslManager.GetDynamoDbCredential(), s3Config);
+        //    }
+        //    BucketName = bucketName;
+        //}
 
         public S3Helper(Model.Environment profile, string region, string bucketName)
         {
