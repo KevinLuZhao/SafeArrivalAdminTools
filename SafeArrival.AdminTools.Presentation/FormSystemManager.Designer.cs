@@ -102,10 +102,10 @@
             this.tabControl1.Controls.Add(this.tPageStatus);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tPagePeeringConnection);
-            this.tabControl1.Location = new System.Drawing.Point(2, 12);
+            this.tabControl1.Location = new System.Drawing.Point(2, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1113, 593);
+            this.tabControl1.Size = new System.Drawing.Size(1113, 602);
             this.tabControl1.TabIndex = 3;
             // 
             // tPageStatus
@@ -122,14 +122,14 @@
             this.tPageStatus.Location = new System.Drawing.Point(4, 22);
             this.tPageStatus.Name = "tPageStatus";
             this.tPageStatus.Padding = new System.Windows.Forms.Padding(3);
-            this.tPageStatus.Size = new System.Drawing.Size(1105, 567);
+            this.tPageStatus.Size = new System.Drawing.Size(1105, 576);
             this.tPageStatus.TabIndex = 0;
             this.tPageStatus.Text = "Status";
             this.tPageStatus.UseVisualStyleBackColor = true;
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(116, 523);
+            this.btnStart.Location = new System.Drawing.Point(116, 533);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(75, 23);
             this.btnStart.TabIndex = 4;
@@ -149,7 +149,7 @@
             // 
             // btnStop
             // 
-            this.btnStop.Location = new System.Drawing.Point(7, 523);
+            this.btnStop.Location = new System.Drawing.Point(7, 533);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(75, 23);
             this.btnStop.TabIndex = 0;
@@ -161,7 +161,7 @@
             // 
             this.listView2.Location = new System.Drawing.Point(7, 247);
             this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(1083, 84);
+            this.listView2.Size = new System.Drawing.Size(1083, 126);
             this.listView2.TabIndex = 14;
             this.listView2.UseCompatibleStateImageBehavior = false;
             // 
@@ -171,7 +171,7 @@
             this.btnRefresh.FlatAppearance.BorderSize = 0;
             this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRefresh.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Reload;
-            this.btnRefresh.Location = new System.Drawing.Point(232, 513);
+            this.btnRefresh.Location = new System.Drawing.Point(232, 523);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(45, 42);
             this.btnRefresh.TabIndex = 13;
@@ -190,7 +190,7 @@
             this.panel1.Controls.Add(this.lblRdsStatus);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.lblRdsArn);
-            this.panel1.Location = new System.Drawing.Point(7, 388);
+            this.panel1.Location = new System.Drawing.Point(7, 419);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1083, 100);
             this.panel1.TabIndex = 12;
@@ -275,7 +275,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(7, 359);
+            this.label2.Location = new System.Drawing.Point(7, 390);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(40, 17);
             this.label2.TabIndex = 3;

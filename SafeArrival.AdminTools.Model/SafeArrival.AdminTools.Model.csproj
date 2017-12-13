@@ -52,6 +52,8 @@
     <Compile Include="AwsVpc.cs" />
     <Compile Include="Color.cs" />
     <Compile Include="ConfigurationOptionSettingModel.cs" />
+    <Compile Include="DynamodbScanCondition.cs" />
+    <Compile Include="DynamodbScanOperator.cs" />
     <Compile Include="Environment.cs" />
     <Compile Include="EnvironmentAccount.cs" />
     <Compile Include="GlobalVariables.cs" />

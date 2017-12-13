@@ -3,8 +3,6 @@ using SafeArrival.AdminTools.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SafeArrival.AdminTools.BLL
 {
@@ -26,9 +24,9 @@ namespace SafeArrival.AdminTools.BLL
             db.Add(log);
         }
 
-        public static List<Log> GetLogList()
+        public static List<Log> GetLogList(string env, string logType, string message)
         {
-            List<Log> ret = db.GetLogList();
+            List<Log> ret = db.GetLogList(env, logType, message);
             ret.Sort((a, b) => b.Date.CompareTo(a.Date));
             return ret.Take(100).ToList();
         }

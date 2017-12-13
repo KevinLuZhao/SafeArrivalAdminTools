@@ -1,14 +1,9 @@
 ﻿using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DocumentModel;
 using Amazon.DynamoDBv2.Model;
-using Amazon.Runtime;
-using Amazon.Runtime.CredentialManagement;
 using SafeArrival.AdminTools.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SafeArrival.AdminTools.AwsUtilities
 {
@@ -75,12 +70,31 @@ namespace SafeArrival.AdminTools.AwsUtilities
             return retValue;
         }
 
-        public List<T> ScanTable(string tableName)
+        public List<T> ScanTable(string tableName, List<DynamodbScanCondition> saScanConditions = null)
         {
             var retValue = new List<T>();
-            //var client = new AmazonDynamoDBClient(CredentiaslManager.GetDynamoDbCredential(), AwsCommon.GetRetionEndpoint("us-east-2"));
-            var request = new ScanRequest(tableName);
-            var response = client.Scan(request);
+            ScanResponse response;
+            if (saScanConditions != null)
+            {
+                var filterConditions = new Dictionary<string, Condition>();
+                foreach (var saCondition in saScanConditions)
+                {
+                    List<AttributeValue> val = new List<AttributeValue>();
+                    val.Add(new AttributeValue(saCondition.Value.ToString()));
+                    Condition condition = new Condition()
+                    {
+                        AttributeValueList = val,
+                        ComparisonOperator = ComparisonOperator.FindValue(saCondition.Operator.ToString())
+                    };
+                    filterConditions.Add(saCondition.AttributeName, condition);
+                }
+                //var request = new ScanRequest(tableName);
+                response = client.Scan(tableName, filterConditions);
+            }
+            else
+            {
+                response = client.Scan(tableName, new Dictionary<string, Condition>());
+            }
             foreach (var item in response.Items)
             {
                 retValue.Add(ConvertTableItemToInstance(item));
