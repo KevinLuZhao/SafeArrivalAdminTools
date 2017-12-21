@@ -79,9 +79,11 @@ namespace SafeArrival.AdminTools.Presentation
                 if (confirmResult == DialogResult.Yes)
                 {
                     var manager = new SystemManagement();
-                    await manager.StartSystem(GlobalVariables.Enviroment, GlobalVariables.Region, lstAutoScalingGroupSettings);
+                    await manager.StartSystem(
+                        GlobalVariables.Enviroment, GlobalVariables.Region,
+                        lstAutoScalingGroupSettings, cboxRdsMutlAZ.Checked);
                     await PopulateSystemStatus();
-                    WriteNotification(String.Format("{0} system is started!", GlobalVariables.Enviroment.ToString()));
+                    WriteNotification($"{GlobalVariables.Enviroment.ToString()} system is started!");
                 }
             }
             catch (Exception ex)
@@ -207,7 +209,7 @@ namespace SafeArrival.AdminTools.Presentation
             lblRdsIdentifier.Text = instance.DBInstanceIdentifier;
             lblRdsArn.Text = instance.DBInstanceArn;
             lblRdsStatus.Text = instance.Status;
-            lblRdsMutlAZ.Text = instance.MultiAZ.ToString();
+            cboxRdsMutlAZ.Checked = instance.MultiAZ;
         }
 
         private async Task PopulatePeeringConnection()

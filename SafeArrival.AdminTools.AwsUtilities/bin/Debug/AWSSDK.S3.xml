@@ -499,6 +499,25 @@
             </param>
             <returns>The task object representing the asynchronous operation.</returns>
         </member>
+        <member name="M:Amazon.S3.AmazonS3Client.DeleteBucketEncryption(Amazon.S3.Model.DeleteBucketEncryptionRequest)">
+            <summary>
+            Deletes the server-side encryption configuration from the bucket.
+            </summary>
+            <param name="request">Container for the necessary parameters to execute the DeleteBucketEncryption service method.</param>
+            
+            <returns>The response from the DeleteBucketEncryption service method, as returned by S3.</returns>
+        </member>
+        <member name="M:Amazon.S3.AmazonS3Client.DeleteBucketEncryptionAsync(Amazon.S3.Model.DeleteBucketEncryptionRequest,System.Threading.CancellationToken)">
+            <summary>
+            Initiates the asynchronous execution of the DeleteBucketEncryption operation.
+            </summary>
+            
+            <param name="request">Container for the necessary parameters to execute the DeleteBucketEncryption operation.</param>
+            <param name="cancellationToken">
+                A cancellation token that can be used by other objects or threads to receive notice of cancellation.
+            </param>
+            <returns>The task object representing the asynchronous operation.</returns>
+        </member>
         <member name="M:Amazon.S3.AmazonS3Client.DeleteBucketInventoryConfiguration(Amazon.S3.Model.DeleteBucketInventoryConfigurationRequest)">
             <summary>
             Deletes an inventory configuration (identified by the inventory ID) from the bucket.
@@ -950,6 +969,25 @@
             </summary>
             
             <param name="request">Container for the necessary parameters to execute the GetBucketAnalyticsConfiguration operation.</param>
+            <param name="cancellationToken">
+                A cancellation token that can be used by other objects or threads to receive notice of cancellation.
+            </param>
+            <returns>The task object representing the asynchronous operation.</returns>
+        </member>
+        <member name="M:Amazon.S3.AmazonS3Client.GetBucketEncryption(Amazon.S3.Model.GetBucketEncryptionRequest)">
+            <summary>
+            Returns the server-side encryption configuration of a bucket.
+            </summary>
+            <param name="request">Container for the necessary parameters to execute the GetBucketEncryption service method.</param>
+            
+            <returns>The response from the GetBucketEncryption service method, as returned by S3.</returns>
+        </member>
+        <member name="M:Amazon.S3.AmazonS3Client.GetBucketEncryptionAsync(Amazon.S3.Model.GetBucketEncryptionRequest,System.Threading.CancellationToken)">
+            <summary>
+            Initiates the asynchronous execution of the GetBucketEncryption operation.
+            </summary>
+            
+            <param name="request">Container for the necessary parameters to execute the GetBucketEncryption operation.</param>
             <param name="cancellationToken">
                 A cancellation token that can be used by other objects or threads to receive notice of cancellation.
             </param>
@@ -2091,6 +2129,26 @@
             </param>
             <returns>The task object representing the asynchronous operation.</returns>
         </member>
+        <member name="M:Amazon.S3.AmazonS3Client.PutBucketEncryption(Amazon.S3.Model.PutBucketEncryptionRequest)">
+            <summary>
+            Creates a new server-side encryption configuration (or replaces an existing one, if
+            present).
+            </summary>
+            <param name="request">Container for the necessary parameters to execute the PutBucketEncryption service method.</param>
+            
+            <returns>The response from the PutBucketEncryption service method, as returned by S3.</returns>
+        </member>
+        <member name="M:Amazon.S3.AmazonS3Client.PutBucketEncryptionAsync(Amazon.S3.Model.PutBucketEncryptionRequest,System.Threading.CancellationToken)">
+            <summary>
+            Initiates the asynchronous execution of the PutBucketEncryption operation.
+            </summary>
+            
+            <param name="request">Container for the necessary parameters to execute the PutBucketEncryption operation.</param>
+            <param name="cancellationToken">
+                A cancellation token that can be used by other objects or threads to receive notice of cancellation.
+            </param>
+            <returns>The task object representing the asynchronous operation.</returns>
+        </member>
         <member name="M:Amazon.S3.AmazonS3Client.PutBucketInventoryConfiguration(Amazon.S3.Model.PutBucketInventoryConfigurationRequest)">
             <summary>
             Adds an inventory configuration (identified by the inventory ID) from the bucket.
@@ -3044,6 +3102,16 @@
             The accelerate status of the bucket.
             </summary>
         </member>
+        <member name="T:Amazon.S3.Model.AccessControlTranslation">
+            <summary>
+            AccessControlTranslation class
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.AccessControlTranslation.Owner">
+            <summary>
+            The override value for the owner of the replica object.
+            </summary>
+        </member>
         <member name="T:Amazon.S3.Model.AnalyticsAndOperator">
             <summary>
             Class for AnalyticsAndOperator
@@ -3641,6 +3709,11 @@
               InventoryDestination Unmarshaller
             </summary>
         </member>
+        <member name="T:Amazon.S3.Model.Internal.MarshallTransformations.InventoryEncryptionUnmarshaller">
+            <summary>
+              InventoryEncryption Unmarshaller
+            </summary>
+        </member>
         <member name="T:Amazon.S3.Model.Internal.MarshallTransformations.InventoryFilterUnmarshaller">
             <summary>
               InventoryFilter Unmarshaller
@@ -4055,6 +4128,11 @@
             <returns>
             True if a node was read, false if there are no more elements to read./
             </returns>
+        </member>
+        <member name="T:Amazon.S3.Model.Internal.MarshallTransformations.SSEKMSUnmarshaller">
+            <summary>
+              SSEKMS Unmarshaller
+            </summary>
         </member>
         <member name="T:Amazon.S3.Model.Internal.MarshallTransformations.StorageClassAnalysisDataExportUnmarshaller">
             <summary>
@@ -5138,6 +5216,71 @@
             </summary>
             <returns>true if AllowedHeaders property is set.</returns>
         </member>
+        <member name="T:Amazon.S3.Model.CSVInput">
+            <summary>
+            Describes how a CSV-formatted input object is formatted.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.CSVInput.FileHeaderInfo">
+            <summary>
+            Describes the first line of input. Valid values: None, Ignore, Use.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.CSVInput.Comments">
+            <summary>
+            Single character used to indicate a row should be ignored when present at the start of a row.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.CSVInput.QuoteEscapeCharacter">
+            <summary>
+            Single character used for escaping the quote character inside an already escaped value.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.CSVInput.RecordDelimiter">
+            <summary>
+            Value used to separate individual records.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.CSVInput.FieldDelimiter">
+            <summary>
+            Value used to separate individual fields in a record.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.CSVInput.QuoteCharacter">
+            <summary>
+            Value used for escaping where the field delimiter is part of the value.
+            </summary>
+        </member>
+        <member name="T:Amazon.S3.Model.CSVOutput">
+            <summary>
+            Describes how CSV-formatted results are formatted.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.CSVOutput.QuoteFields">
+            <summary>
+            Indicates whether or not all output fields should be quoted.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.CSVOutput.QuoteEscapeCharacter">
+            <summary>
+            Single character used for escaping the quote character inside an already escaped value.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.CSVOutput.RecordDelimiter">
+            <summary>
+            Value used to separate individual records.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.CSVOutput.FieldDelimiter">
+            <summary>
+            Value used to separate individual fields in a record.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.CSVOutput.QuoteCharacter">
+            <summary>
+            Value used for escaping where the field delimiter is part of the value.
+            </summary>
+        </member>
         <member name="T:Amazon.S3.Model.DeleteBucketAnalyticsConfigurationRequest">
             <summary>
             Container for the parameters to the DeleteBucketAnalyticsConfiguration operation.
@@ -5158,6 +5301,23 @@
             <summary>
             Returns information about the DeleteBucketAnalyticsConfiguration response metadata.
             The DeleteBucketAnalyticsConfiguration operation has a void result type.
+            </summary>
+        </member>
+        <member name="T:Amazon.S3.Model.DeleteBucketEncryptionRequest">
+            <summary>
+            Request object for the DeleteBucketEncryption operation.
+            Request Deletes the server-side encryption configuration from the bucket.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.DeleteBucketEncryptionRequest.BucketName">
+            <summary>
+            The name of the bucket containing the server-side encryption configuration to delete.
+            </summary>
+        </member>
+        <member name="T:Amazon.S3.Model.DeleteBucketEncryptionResponse">
+            <summary>
+            Returns information about the DeleteBucketEncryption response metadata.
+            The DeleteBucketEncryption operation has a void result type.
             </summary>
         </member>
         <member name="T:Amazon.S3.Model.DeleteBucketInventoryConfigurationRequest">
@@ -5690,6 +5850,16 @@
             Check to see if VersionId property is set
             </summary>
         </member>
+        <member name="T:Amazon.S3.Model.EncryptionConfiguration">
+            <summary>
+            EncryptionConfiguration class
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.EncryptionConfiguration.ReplicaKmsKeyID">
+            <summary>
+            The id of the KMS key used to encrypt the replica object.
+            </summary>
+        </member>
         <member name="T:Amazon.S3.Model.Expiration">
             <summary>
             Defines the expiration policy for a given object.
@@ -5823,6 +5993,27 @@
         <member name="P:Amazon.S3.Model.GetBucketAnalyticsConfigurationResponse.AnalyticsConfiguration">
             <summary>
             The configuration and any analyses for the analytics filter.
+            </summary>
+        </member>
+        <member name="T:Amazon.S3.Model.GetBucketEncryptionRequest">
+            <summary>
+            Container for the parameters to the GetBucketEncryptionRequest operation.
+            <para>Returns the server-side encryption configuration of a bucket.</para>
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.GetBucketEncryptionRequest.BucketName">
+            <summary>
+            The name of the bucket.
+            </summary>
+        </member>
+        <member name="T:Amazon.S3.Model.GetBucketEncryptionResponse">
+            <summary>
+            GetBucketEncryptionResponse Response
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.GetBucketEncryptionResponse.ServerSideEncryptionConfiguration">
+            <summary>
+            Container for server-side encryption configuration rules. Currently S3 supports one rule only.
             </summary>
         </member>
         <member name="T:Amazon.S3.Model.GetBucketInventoryConfigurationRequest">
@@ -7020,6 +7211,12 @@
              
             </summary>
         </member>
+        <member name="P:Amazon.S3.Model.GetPreSignedUrlRequest.RequestPayer">
+            <summary>
+            Confirms that the requester knows that she or he will be charged for the request.
+            Bucket owners need not specify this parameter in their requests.
+            </summary>
+        </member>
         <member name="P:Amazon.S3.Model.GetPreSignedUrlRequest.ResponseHeaderOverrides">
             <summary>
             A set of response headers that should be returned with the pre-signed url creation response.
@@ -7371,6 +7568,16 @@
              
             </summary>
         </member>
+        <member name="T:Amazon.S3.Model.InputSerialization">
+            <summary>
+            Describes the serialization format of the object.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.InputSerialization.CSV">
+            <summary>
+            Describes the serialization of a CSV-encoded object.
+            </summary>
+        </member>
         <member name="T:Amazon.S3.Model.InventoryConfiguration">
             <summary>
             Class for MetricsConfiguration
@@ -7421,6 +7628,21 @@
             Contains the bucket name, file format, bucket owner (optional), and prefix (optional) where inventory results are published.
             </summary>
         </member>
+        <member name="T:Amazon.S3.Model.InventoryEncryption">
+            <summary>
+            InventoryEncryption class
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.InventoryEncryption.SSES3">
+            <summary>
+            Specifies the use of SSE-S3 to encrypt delievered Inventory reports.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.InventoryEncryption.SSEKMS">
+            <summary>
+            Specifies the use of SSE-KMS to encrypt delievered Inventory reports.
+            </summary>
+        </member>
         <member name="T:Amazon.S3.Model.InventoryFilter">
             <summary>
             Class for InventoryFilter
@@ -7460,6 +7682,11 @@
         <member name="P:Amazon.S3.Model.InventoryS3BucketDestination.InventoryFormat">
             <summary>
             Specifies the output format of the inventory results.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.InventoryS3BucketDestination.InventoryEncryption">
+            <summary>
+            Contains the type of server-side encryption used to encrypt the inventory results.
             </summary>
         </member>
         <member name="T:Amazon.S3.Model.InventorySchedule">
@@ -8638,6 +8865,21 @@
             Gets the names of the meta data elements.
             </summary>
         </member>
+        <member name="T:Amazon.S3.Model.MetadataEntry">
+            <summary>
+            A metadata key-value pair to store with an object.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.MetadataEntry.Name">
+            <summary>
+            Key of metadata key-value pair
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.MetadataEntry.Value">
+            <summary>
+            Value of metadata key-value pair
+            </summary>
+        </member>
         <member name="T:Amazon.S3.Model.MetricsAndOperator">
             <summary>
             Class for MetricsAndOperatorPredicate
@@ -8771,6 +9013,26 @@
             <summary>
             Filter criteria for determining which S3 objects trigger event notifications.
              
+            </summary>
+        </member>
+        <member name="T:Amazon.S3.Model.OutputLocation">
+            <summary>
+            Describes the location where the restore job's output is stored.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.OutputLocation.S3">
+            <summary>
+            Describes an S3 location that will receive the results of the restore request.
+            </summary>
+        </member>
+        <member name="T:Amazon.S3.Model.OutputSerialization">
+            <summary>
+            Describes how results of the Select job are serialized.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.OutputSerialization.CSV">
+            <summary>
+            Describes the serialization of CSV-encoded Select results.
             </summary>
         </member>
         <member name="T:Amazon.S3.Model.Owner">
@@ -8974,6 +9236,31 @@
             The PutBucketAnalyticsConfigurationResponse operation has a void result type.
             </summary>
         </member>
+        <member name="T:Amazon.S3.Model.PutBucketEncryptionRequest">
+            <summary>
+            Container for the parameters to the PutBucketRequestPayment operation.
+            <para>Creates a new server-side encryption configuration (or replaces an existing one, if present).</para>
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.PutBucketEncryptionRequest.BucketName">
+            <summary>
+            The name of the bucket for which the server-side encryption configuration is set.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.PutBucketEncryptionRequest.ContentMD5">
+            <summary>
+            The base64-encoded 128-bit MD5 digest of the server-side encryption configuration.
+            </summary>
+            <remarks>
+            This header can be used as a message integrity check to verify that the data is the same data that was originally sent. 
+            Although it is optional, we recommend using the Content-MD5 mechanism as an end-to-end integrity check. 
+            </remarks>
+        </member>
+        <member name="P:Amazon.S3.Model.PutBucketEncryptionRequest.ServerSideEncryptionConfiguration">
+            <summary>
+            Container for server-side encryption configuration rules. Currently S3 supports one rule only.
+            </summary>
+        </member>
         <member name="T:Amazon.S3.Model.PutBucketInventoryConfigurationRequest">
             <summary>
             Container for the parameters to the PutBucketRequestPayment operation.
@@ -9109,6 +9396,12 @@
         <member name="P:Amazon.S3.Model.PutBucketPolicyRequest.Policy">
             <summary>
             The bucket policy as a JSON document.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.PutBucketPolicyRequest.ConfirmRemoveSelfBucketAccess">
+            <summary>
+            Set this parameter to true to confirm that you want to remove your 
+            permissions to change this bucket policy in the future.
             </summary>
         </member>
         <member name="P:Amazon.S3.Model.PutBucketPolicyRequest.IncludeSHA256Header">
@@ -9793,6 +10086,21 @@
              
             </summary>
         </member>
+        <member name="P:Amazon.S3.Model.ReplicationDestination.AccountId">
+            <summary>
+            Account ID of the destination bucket. Currently this is only being verified if Access Control Translation is enabled.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.ReplicationDestination.AccessControlTranslation">
+            <summary>
+            Container for information regarding the access control for replicas.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.ReplicationDestination.EncryptionConfiguration">
+            <summary>
+            Container for information regarding encryption based configuration for replicas.
+            </summary>
+        </member>
         <member name="T:Amazon.S3.Model.ReplicationRule">
             <summary>
             Rule that specifies the replication configuration.
@@ -9841,6 +10149,11 @@
             Checks to see if Destination property is set.
             </summary>
             <returns>true if Destination property is set.</returns>
+        </member>
+        <member name="P:Amazon.S3.Model.ReplicationRule.SourceSelectionCriteria">
+            <summary>
+            Container for filters that define which source objects should be replicated.
+            </summary>
         </member>
         <member name="T:Amazon.S3.Model.RequestPaymentConfiguration">
             <summary>
@@ -9911,7 +10224,7 @@
         <member name="P:Amazon.S3.Model.RestoreObjectRequest.Days">
             <summary>
             Lifetime of the active copy in days
-             
+            ** Do not use with restores that specify OutputLocation **
             </summary>
         </member>
         <member name="P:Amazon.S3.Model.RestoreObjectRequest.VersionId">
@@ -9935,7 +10248,33 @@
         <member name="P:Amazon.S3.Model.RestoreObjectRequest.Tier">
             <summary>
             Glacier retrieval tier at which the restore will be processed.
-            Glacier related prameters pertaining to this job.
+            ** Do not use with restores that specify OutputLocation **
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.RestoreObjectRequest.RetrievalTier">
+            <summary>
+            Glacier retrieval tier at which the restore will be processed.
+            ** Only use with restores that require OutputLocation **
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.RestoreObjectRequest.RestoreRequestType">
+            <summary>
+            Type of restore request.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.RestoreObjectRequest.Description">
+            <summary>
+            The optional description for the job.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.RestoreObjectRequest.SelectParameters">
+            <summary>
+            Describes the parameters for Select job types.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.RestoreObjectRequest.OutputLocation">
+            <summary>
+            Describes the location where the restore job's output is stored.
             </summary>
         </member>
         <member name="T:Amazon.S3.Model.RestoreObjectResponse">
@@ -9954,6 +10293,11 @@
             Checks to see if RequestCharged is set.
             </summary>
             <returns>true, if RequestCharged property is set.</returns>
+        </member>
+        <member name="P:Amazon.S3.Model.RestoreObjectResponse.RestoreOutputPath">
+            <summary>
+            Indicates the path in the provided S3 output location where Select results will be restored to.
+            </summary>
         </member>
         <member name="T:Amazon.S3.Model.RoutingRule">
             <summary>Routing Rule
@@ -10224,6 +10568,28 @@
             </summary>
             <returns>true if Status property is set</returns>
         </member>
+        <member name="T:Amazon.S3.Model.S3Encryption">
+            <summary>
+            Describes the server-side encryption that will be applied to the restore results.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.S3Encryption.EncryptionType">
+            <summary>
+            The server-side encryption algorithm used when storing job results in Amazon S3 (e.g., AES256, aws:kms).
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.S3Encryption.KMSKeyId">
+            <summary>
+            Specifies the AWS KMS key ID to use for object encryption. All GET and PUT requests for an object protected by
+            AWS KMS will fail if not made via SSL or using SigV4. Documentation on configuring any of the officially supported AWS SDKs and CLI can be found at
+            http://docs.aws.amazon.com/AmazonS3/latest/dev/UsingAWSSDK.html#specify-signature-version
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.S3Encryption.KMSContext">
+            <summary>
+            If the encryption type is aws:kms, this optional value can be used to specify the encryption context for the restore results.
+            </summary>
+        </member>
         <member name="T:Amazon.S3.Model.S3Grant">
             <summary>Grant
             </summary>
@@ -10282,6 +10648,46 @@
             <summary>
             Gets and sets the filterRules property.
             These are the filter rules for this filter.
+            </summary>
+        </member>
+        <member name="T:Amazon.S3.Model.S3Location">
+            <summary>
+            Describes an S3 location that will receive the results of the restore request.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.S3Location.BucketName">
+            <summary>
+            The name of the bucket where the restore results will be placed.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.S3Location.Prefix">
+            <summary>
+            The prefix that is prepended to the restore results for this request.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.S3Location.CannedACL">
+            <summary>
+            The canned ACL to apply to the restore results.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.S3Location.AccessControlList">
+            <summary>
+            A list of grants that control access to the staged results.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.S3Location.Tagging">
+            <summary>
+            The tag-set that is applied to the restore results.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.S3Location.UserMetadata">
+            <summary>
+            A map of metadata to store with the restore results in S3.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.S3Location.StorageClass">
+            <summary>
+            The class of storage used to store the restore results.
             </summary>
         </member>
         <member name="T:Amazon.S3.Model.S3Object">
@@ -10350,6 +10756,106 @@
         <member name="P:Amazon.S3.Model.S3ObjectVersion.IsDeleteMarker">
             <summary>
             If true, the object is a delete marker for a deleted object.
+            </summary>
+        </member>
+        <member name="T:Amazon.S3.Model.SelectParameters">
+            <summary>
+            Describes the parameters for Select job types.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.SelectParameters.InputSerialization">
+            <summary>
+            Describes the serialization format of the object.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.SelectParameters.ExpressionType">
+            <summary>
+            The type of the provided expression (e.g., SQL).
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.SelectParameters.Expression">
+            <summary>
+            The expression that is used to query the object.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.SelectParameters.OutputSerialization">
+            <summary>
+            Describes how the results of the Select job are serialized.
+            </summary>
+        </member>
+        <member name="T:Amazon.S3.Model.ServerSideEncryptionByDefault">
+            <summary>
+            ServerSideEncryptionByDefault class
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.ServerSideEncryptionByDefault.ServerSideEncryptionAlgorithm">
+            <summary>
+            Server-side encryption algorithm to use for the default encryption.
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.ServerSideEncryptionByDefault.ServerSideEncryptionKeyManagementServiceKeyId">
+            <summary>
+            KMS master key ID to use for the default encryption. 
+            This parameter is allowed if SSEAlgorithm is aws:kms.
+            </summary>
+        </member>
+        <member name="T:Amazon.S3.Model.ServerSideEncryptionConfiguration">
+            <summary>
+            ServerSideEncryptionConfiguration class
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.ServerSideEncryptionConfiguration.ServerSideEncryptionRules">
+            <summary>
+            Container for information about a particular server-side encryption configuration rule.
+            </summary>
+        </member>
+        <member name="T:Amazon.S3.Model.ServerSideEncryptionRule">
+            <summary>
+            ServerSideEncryptionRule class
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.ServerSideEncryptionRule.ServerSideEncryptionByDefault">
+            <summary>
+            Describes the default server-side encryption to apply to 
+            new objects in the bucket. If Put Object request 
+            does not specify any server-side encryption, 
+            this default encryption will be applied.
+            </summary>
+        </member>
+        <member name="T:Amazon.S3.Model.SourceSelectionCriteria">
+            <summary>
+            SourceSelectionCriteria class
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.SourceSelectionCriteria.SseKmsEncryptedObjects">
+            <summary>
+            Container for filter information of selection of KMS Encrypted S3 objects.
+            </summary>
+        </member>
+        <member name="T:Amazon.S3.Model.SSEKMS">
+            <summary>
+            SSEKMS class
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.SSEKMS.KeyId">
+            <summary>
+            Specifies the ID of the AWS Key Management Service (KMS) 
+            master encryption key to use for encrypting Inventory reports.
+            </summary>
+        </member>
+        <member name="T:Amazon.S3.Model.SseKmsEncryptedObjects">
+            <summary>
+            SseKmsEncryptedObjects class
+            </summary>
+        </member>
+        <member name="P:Amazon.S3.Model.SseKmsEncryptedObjects.SseKmsEncryptedObjectsStatus">
+            <summary>
+            The replication for KMS encrypted S3 objects is disabled if status is not Enabled.
+            </summary>
+        </member>
+        <member name="T:Amazon.S3.Model.SSES3">
+            <summary>
+            SSES3 class
             </summary>
         </member>
         <member name="T:Amazon.S3.Model.StorageClassAnalysis">
@@ -11115,6 +11621,11 @@
             Specifies that the S3 Bucket should use the EU-WEST-2 locality.
             </summary>
         </member>
+        <member name="F:Amazon.S3.S3Region.EUW3">
+            <summary>
+            Specifies that the S3 Bucket should use the EU-WEST-3 locality.
+            </summary>
+        </member>
         <member name="F:Amazon.S3.S3Region.EUC1">
             <summary>
             Specifies that the S3 Bucket should use the EU-CENTRAL-1 locality.
@@ -11168,6 +11679,11 @@
         <member name="F:Amazon.S3.S3Region.CN1">
             <summary>
             Specifies that the S3 Bucket should use CN-NORTH-1 locality.
+            </summary>
+        </member>
+        <member name="F:Amazon.S3.S3Region.CNW1">
+            <summary>
+            Specifies that the S3 Bucket should use CN-NORTHWEST-1 locality.
             </summary>
         </member>
         <member name="F:Amazon.S3.S3Region.CAN1">
@@ -11718,6 +12234,11 @@
              CSV inventory format
             </summary>
         </member>
+        <member name="F:Amazon.S3.InventoryFormat.ORC">
+            <summary>
+             CSV inventory format
+            </summary>
+        </member>
         <member name="M:Amazon.S3.InventoryFormat.#ctor(System.String)">
             <summary>
             Construct instance of InventoryFormat.
@@ -11841,6 +12362,11 @@
         <member name="F:Amazon.S3.InventoryOptionalField.ReplicationStatus">
             <summary>
              InventoryOptionalField for ReplicationStatus
+            </summary>
+        </member>
+        <member name="F:Amazon.S3.InventoryOptionalField.EncryptionStatus">
+            <summary>
+             InventoryOptionalField for EncryptionStatus
             </summary>
         </member>
         <member name="M:Amazon.S3.InventoryOptionalField.#ctor(System.String)">
@@ -12083,6 +12609,152 @@
         <member name="M:Amazon.S3.RequestCharged.op_Implicit(System.String)~Amazon.S3.RequestCharged">
             <summary>
              converts the string to RequestCharged instance
+            </summary>
+        </member>
+        <member name="T:Amazon.S3.OwnerOverride">
+            <summary>
+            The override value for the owner of the replica object.
+            </summary>
+        </member>
+        <member name="F:Amazon.S3.OwnerOverride.Destination">
+            <summary>
+            Overrides destination bucket's owner.
+            </summary>
+        </member>
+        <member name="M:Amazon.S3.OwnerOverride.FindValue(System.String)">
+            <summary>
+            Finds the OwnerOverride instance for the string value
+            </summary>
+        </member>
+        <member name="M:Amazon.S3.OwnerOverride.op_Implicit(System.String)~Amazon.S3.OwnerOverride">
+            <summary>
+             converts the string to OwnerOverride instance
+            </summary>
+        </member>
+        <member name="T:Amazon.S3.SseKmsEncryptedObjectsStatus">
+            <summary>
+            The replication for KMS encrypted S3 objects is disabled if status is not Enabled.
+            </summary>
+        </member>
+        <member name="F:Amazon.S3.SseKmsEncryptedObjectsStatus.Enabled">
+            <summary>
+            The replication for KMS encrypted S3 objects is enabled.
+            </summary>
+        </member>
+        <member name="F:Amazon.S3.SseKmsEncryptedObjectsStatus.Disabled">
+            <summary>
+            The replication for KMS encrypted S3 objects is disabled.
+            </summary>
+        </member>
+        <member name="M:Amazon.S3.SseKmsEncryptedObjectsStatus.#ctor(System.String)">
+            <summary>
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:Amazon.S3.SseKmsEncryptedObjectsStatus.FindValue(System.String)">
+            <summary>
+            Finds the SseKmsEncryptedObjectsStatus instance for the string value
+            </summary>
+        </member>
+        <member name="M:Amazon.S3.SseKmsEncryptedObjectsStatus.op_Implicit(System.String)~Amazon.S3.SseKmsEncryptedObjectsStatus">
+            <summary>
+            Converts the string to SseKmsEncryptedObjectsStatus instance
+            </summary>
+        </member>
+        <member name="T:Amazon.S3.FileHeaderInfo">
+            <summary>
+            Specify how headers will be handled.
+            </summary>
+        </member>
+        <member name="F:Amazon.S3.FileHeaderInfo.Use">
+            <summary>
+            Headers will be usable in SELECT clause. 
+            </summary>
+        </member>
+        <member name="F:Amazon.S3.FileHeaderInfo.Ignore">
+            <summary>
+            Headers will be skipped
+            </summary>
+        </member>
+        <member name="F:Amazon.S3.FileHeaderInfo.None">
+            <summary>
+            No header is present.
+            </summary>
+        </member>
+        <member name="M:Amazon.S3.FileHeaderInfo.FindValue(System.String)">
+            <summary>
+            Finds the FileHeaderInfo instance for the string value
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Amazon.S3.FileHeaderInfo.op_Implicit(System.String)~Amazon.S3.FileHeaderInfo">
+            <summary>
+            Converts the string to FileHeaderInfo instance
+            </summary>
+        </member>
+        <member name="T:Amazon.S3.QuoteFields">
+            <summary>
+            Describes when fields in output should be surrounded with quotes.
+            </summary>
+        </member>
+        <member name="F:Amazon.S3.QuoteFields.Always">
+            <summary>
+            Specifies that fields in output should always be surrounded in quotes.
+            </summary>
+        </member>
+        <member name="F:Amazon.S3.QuoteFields.AsNeeded">
+            <summary>
+            Specifies that fields in output should be surrounded in quotes as necessary.
+            </summary>
+        </member>
+        <member name="M:Amazon.S3.QuoteFields.FindValue(System.String)">
+            <summary>
+            Finds the QuoteFields instance for the string value
+            </summary>
+            <param name="value">string value that maps to QuoteFields enum</param>
+            <returns>QuoteFields enum</returns>
+        </member>
+        <member name="M:Amazon.S3.QuoteFields.op_Implicit(System.String)~Amazon.S3.QuoteFields">
+            <summary>
+            Converts the string to QuoteFields instance
+            </summary>
+        </member>
+        <member name="T:Amazon.S3.ExpressionType">
+            <summary>
+            Type of the expression provided in the Expression member.
+            </summary>
+        </member>
+        <member name="F:Amazon.S3.ExpressionType.SQL">
+            <summary>
+            SQL expression
+            </summary>
+        </member>
+        <member name="M:Amazon.S3.ExpressionType.FindValue(System.String)">
+            <summary>
+            Finds the ExpressionType instance for the string value
+            </summary>
+            <param name="value">string value that maps to ExpressionType enum</param>
+            <returns>ExpressionType enum</returns>
+        </member>
+        <member name="M:Amazon.S3.ExpressionType.op_Implicit(System.String)~Amazon.S3.ExpressionType">
+            <summary>
+            Converts the string to ExpressionType instance
+            </summary>
+        </member>
+        <member name="T:Amazon.S3.RestoreRequestType">
+            <summary>
+            Indicates what type of job is being initiated.
+            </summary>
+        </member>
+        <member name="M:Amazon.S3.RestoreRequestType.FindValue(System.String)">
+            <summary>
+            Finds the RestoreRequestType instance for the string value
+            </summary>
+        </member>
+        <member name="M:Amazon.S3.RestoreRequestType.op_Implicit(System.String)~Amazon.S3.RestoreRequestType">
+            <summary>
+            Converts the string to RestoreRequestType instance
             </summary>
         </member>
         <member name="T:Amazon.S3.Util.AmazonS3Uri">
@@ -13591,6 +14263,25 @@
             </param>
             <returns>The task object representing the asynchronous operation.</returns>
         </member>
+        <member name="M:Amazon.S3.IAmazonS3.DeleteBucketEncryption(Amazon.S3.Model.DeleteBucketEncryptionRequest)">
+            <summary>
+            Deletes the server-side encryption configuration from the bucket.
+            </summary>
+            <param name="request">Container for the necessary parameters to execute the DeleteBucketEncryption service method.</param>
+            
+            <returns>The response from the DeleteBucketEncryption service method, as returned by S3.</returns>
+        </member>
+        <member name="M:Amazon.S3.IAmazonS3.DeleteBucketEncryptionAsync(Amazon.S3.Model.DeleteBucketEncryptionRequest,System.Threading.CancellationToken)">
+            <summary>
+            Initiates the asynchronous execution of the DeleteBucketEncryption operation.
+            </summary>
+            
+            <param name="request">Container for the necessary parameters to execute the DeleteBucketEncryption operation.</param>
+            <param name="cancellationToken">
+                A cancellation token that can be used by other objects or threads to receive notice of cancellation.
+            </param>
+            <returns>The task object representing the asynchronous operation.</returns>
+        </member>
         <member name="M:Amazon.S3.IAmazonS3.DeleteBucketInventoryConfiguration(Amazon.S3.Model.DeleteBucketInventoryConfigurationRequest)">
             <summary>
             Deletes an inventory configuration (identified by the inventory ID) from the bucket.
@@ -14042,6 +14733,25 @@
             </summary>
             
             <param name="request">Container for the necessary parameters to execute the GetBucketAnalyticsConfiguration operation.</param>
+            <param name="cancellationToken">
+                A cancellation token that can be used by other objects or threads to receive notice of cancellation.
+            </param>
+            <returns>The task object representing the asynchronous operation.</returns>
+        </member>
+        <member name="M:Amazon.S3.IAmazonS3.GetBucketEncryption(Amazon.S3.Model.GetBucketEncryptionRequest)">
+            <summary>
+            Returns the server-side encryption configuration of a bucket.
+            </summary>
+            <param name="request">Container for the necessary parameters to execute the GetBucketEncryption service method.</param>
+            
+            <returns>The response from the GetBucketEncryption service method, as returned by S3.</returns>
+        </member>
+        <member name="M:Amazon.S3.IAmazonS3.GetBucketEncryptionAsync(Amazon.S3.Model.GetBucketEncryptionRequest,System.Threading.CancellationToken)">
+            <summary>
+            Initiates the asynchronous execution of the GetBucketEncryption operation.
+            </summary>
+            
+            <param name="request">Container for the necessary parameters to execute the GetBucketEncryption operation.</param>
             <param name="cancellationToken">
                 A cancellation token that can be used by other objects or threads to receive notice of cancellation.
             </param>
@@ -15158,6 +15868,26 @@
             </summary>
             
             <param name="request">Container for the necessary parameters to execute the PutBucketAnalyticsConfiguration operation.</param>
+            <param name="cancellationToken">
+                A cancellation token that can be used by other objects or threads to receive notice of cancellation.
+            </param>
+            <returns>The task object representing the asynchronous operation.</returns>
+        </member>
+        <member name="M:Amazon.S3.IAmazonS3.PutBucketEncryption(Amazon.S3.Model.PutBucketEncryptionRequest)">
+            <summary>
+            Creates a new server-side encryption configuration (or replaces an existing one, if
+            present).
+            </summary>
+            <param name="request">Container for the necessary parameters to execute the PutBucketEncryption service method.</param>
+            
+            <returns>The response from the PutBucketEncryption service method, as returned by S3.</returns>
+        </member>
+        <member name="M:Amazon.S3.IAmazonS3.PutBucketEncryptionAsync(Amazon.S3.Model.PutBucketEncryptionRequest,System.Threading.CancellationToken)">
+            <summary>
+            Initiates the asynchronous execution of the PutBucketEncryption operation.
+            </summary>
+            
+            <param name="request">Container for the necessary parameters to execute the PutBucketEncryption operation.</param>
             <param name="cancellationToken">
                 A cancellation token that can be used by other objects or threads to receive notice of cancellation.
             </param>

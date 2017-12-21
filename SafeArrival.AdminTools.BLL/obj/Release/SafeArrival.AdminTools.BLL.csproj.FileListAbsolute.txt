@@ -53,3 +53,6 @@ C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.BLL\
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.BLL\obj\Release\SafeArrival.AdminTools.BLL.csprojResolveAssemblyReference.cache
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.BLL\obj\Release\SafeArrival.AdminTools.BLL.dll
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.BLL\obj\Release\SafeArrival.AdminTools.BLL.pdb
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.BLL\bin\Release\AWSSDK.EC2.dll
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.BLL\bin\Release\AWSSDK.EC2.pdb
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.BLL\bin\Release\AWSSDK.EC2.xml

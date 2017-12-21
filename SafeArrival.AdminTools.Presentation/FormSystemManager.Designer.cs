@@ -38,10 +38,9 @@
             this.listView2 = new System.Windows.Forms.ListView();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cboxRdsMutlAZ = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.lblRdsMutlAZ = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
             this.lblRdsIdentifier = new System.Windows.Forms.Label();
             this.lblRdsStatus = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -182,10 +181,9 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.Transparent;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.cboxRdsMutlAZ);
             this.panel1.Controls.Add(this.label7);
-            this.panel1.Controls.Add(this.lblRdsMutlAZ);
             this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.label9);
             this.panel1.Controls.Add(this.lblRdsIdentifier);
             this.panel1.Controls.Add(this.lblRdsStatus);
             this.panel1.Controls.Add(this.label5);
@@ -195,24 +193,26 @@
             this.panel1.Size = new System.Drawing.Size(1083, 100);
             this.panel1.TabIndex = 12;
             // 
+            // cboxRdsMutlAZ
+            // 
+            this.cboxRdsMutlAZ.AutoSize = true;
+            this.cboxRdsMutlAZ.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cboxRdsMutlAZ.Location = new System.Drawing.Point(156, 64);
+            this.cboxRdsMutlAZ.Name = "cboxRdsMutlAZ";
+            this.cboxRdsMutlAZ.Size = new System.Drawing.Size(73, 17);
+            this.cboxRdsMutlAZ.TabIndex = 12;
+            this.cboxRdsMutlAZ.Text = "Multi AZ";
+            this.cboxRdsMutlAZ.UseVisualStyleBackColor = true;
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(18, 61);
+            this.label7.Location = new System.Drawing.Point(18, 66);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(47, 13);
             this.label7.TabIndex = 8;
             this.label7.Text = "Status:";
-            // 
-            // lblRdsMutlAZ
-            // 
-            this.lblRdsMutlAZ.AutoSize = true;
-            this.lblRdsMutlAZ.Location = new System.Drawing.Point(278, 61);
-            this.lblRdsMutlAZ.Name = "lblRdsMutlAZ";
-            this.lblRdsMutlAZ.Size = new System.Drawing.Size(35, 13);
-            this.lblRdsMutlAZ.TabIndex = 11;
-            this.lblRdsMutlAZ.Text = "label4";
             // 
             // label3
             // 
@@ -224,39 +224,29 @@
             this.label3.TabIndex = 4;
             this.label3.Text = "DB Instance Identifier:";
             // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(214, 61);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(58, 13);
-            this.label9.TabIndex = 10;
-            this.label9.Text = "Multi AZ:";
-            // 
             // lblRdsIdentifier
             // 
             this.lblRdsIdentifier.AutoSize = true;
             this.lblRdsIdentifier.Location = new System.Drawing.Point(158, 15);
             this.lblRdsIdentifier.Name = "lblRdsIdentifier";
-            this.lblRdsIdentifier.Size = new System.Drawing.Size(35, 13);
+            this.lblRdsIdentifier.Size = new System.Drawing.Size(13, 13);
             this.lblRdsIdentifier.TabIndex = 5;
-            this.lblRdsIdentifier.Text = "label4";
+            this.lblRdsIdentifier.Text = "  ";
             // 
             // lblRdsStatus
             // 
             this.lblRdsStatus.AutoSize = true;
-            this.lblRdsStatus.Location = new System.Drawing.Point(67, 61);
+            this.lblRdsStatus.Location = new System.Drawing.Point(67, 66);
             this.lblRdsStatus.Name = "lblRdsStatus";
-            this.lblRdsStatus.Size = new System.Drawing.Size(35, 13);
+            this.lblRdsStatus.Size = new System.Drawing.Size(13, 13);
             this.lblRdsStatus.TabIndex = 9;
-            this.lblRdsStatus.Text = "label4";
+            this.lblRdsStatus.Text = "  ";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(18, 37);
+            this.label5.Location = new System.Drawing.Point(18, 40);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(104, 13);
             this.label5.TabIndex = 6;
@@ -265,11 +255,11 @@
             // lblRdsArn
             // 
             this.lblRdsArn.AutoSize = true;
-            this.lblRdsArn.Location = new System.Drawing.Point(128, 37);
+            this.lblRdsArn.Location = new System.Drawing.Point(128, 40);
             this.lblRdsArn.Name = "lblRdsArn";
-            this.lblRdsArn.Size = new System.Drawing.Size(35, 13);
+            this.lblRdsArn.Size = new System.Drawing.Size(13, 13);
             this.lblRdsArn.TabIndex = 7;
-            this.lblRdsArn.Text = "label4";
+            this.lblRdsArn.Text = "  ";
             // 
             // label2
             // 
@@ -307,7 +297,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1105, 567);
+            this.tabPage2.Size = new System.Drawing.Size(1105, 576);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Auto-Scaling Settings";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -380,7 +370,7 @@
             this.tPagePeeringConnection.Location = new System.Drawing.Point(4, 22);
             this.tPagePeeringConnection.Name = "tPagePeeringConnection";
             this.tPagePeeringConnection.Padding = new System.Windows.Forms.Padding(3);
-            this.tPagePeeringConnection.Size = new System.Drawing.Size(1105, 567);
+            this.tPagePeeringConnection.Size = new System.Drawing.Size(1105, 576);
             this.tPagePeeringConnection.TabIndex = 2;
             this.tPagePeeringConnection.Text = "VPC Peering Connection";
             this.tPagePeeringConnection.UseVisualStyleBackColor = true;
@@ -619,8 +609,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblRdsIdentifier;
-        private System.Windows.Forms.Label lblRdsMutlAZ;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label lblRdsStatus;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label lblRdsArn;
@@ -657,5 +645,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button btnRpcRefresh;
+        private System.Windows.Forms.CheckBox cboxRdsMutlAZ;
     }
 }

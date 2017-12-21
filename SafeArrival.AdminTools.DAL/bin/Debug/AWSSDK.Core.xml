@@ -2719,11 +2719,12 @@
             </summary>
             <param name="uniqueName"></param>
         </member>
-        <member name="M:Amazon.Runtime.Internal.RuntimePipelineCustomizerRegistry.ApplyCustomizations(Amazon.Runtime.Internal.RuntimePipeline)">
+        <member name="M:Amazon.Runtime.Internal.RuntimePipelineCustomizerRegistry.ApplyCustomizations(System.Type,Amazon.Runtime.Internal.RuntimePipeline)">
             <summary>
             Applies all of the registered customizers on the runtime pipeline
             </summary>
             <param name="pipeline">The service clients runtime pipeline.</param>
+            <param name="type">Type object for the service client being created</param>
         </member>
         <member name="T:Amazon.Runtime.Internal.IRuntimePipelineCustomizer">
             <summary>
@@ -2735,11 +2736,12 @@
             The unique name for the customizer that identifies the customizer in the registry. The name is also used to identify the customizer on the SDK logs.
             </summary>
         </member>
-        <member name="M:Amazon.Runtime.Internal.IRuntimePipelineCustomizer.Customize(Amazon.Runtime.Internal.RuntimePipeline)">
+        <member name="M:Amazon.Runtime.Internal.IRuntimePipelineCustomizer.Customize(System.Type,Amazon.Runtime.Internal.RuntimePipeline)">
             <summary>
             Called on service clients as they are being constructed to customize their runtime pipeline.
             </summary>
             <param name="pipeline"></param>
+            <param name="type">Type object for the service client being created</param>
         </member>
         <member name="T:Amazon.Runtime.Internal.Transform.ErrorResponseUnmarshaller">
             <summary>
@@ -6131,6 +6133,21 @@
             else returns client timeout value.
             </summary>        
         </member>
+        <member name="P:Amazon.Runtime.ClientConfig.ReadWriteTimeout">
+            <summary>
+            Overrides the default read-write timeout value.
+            On Unity platform, this value is not used as Unity HTTP client does not support timeouts, so 
+            </summary>
+            <remarks>
+            <para>
+            If the value is set, the value is assigned to the ReadWriteTimeout property of the HttpWebRequest object used
+            to send requests.
+            </para>
+            <exception cref="T:System.ArgumentNullException">The timeout specified is null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">The timeout specified is less than or equal to zero and is not Infinite.</exception>
+            </remarks>
+            <seealso cref="P:System.Net.HttpWebRequest.ReadWriteTimeout"/>
+        </member>
         <member name="P:Amazon.Runtime.ClientConfig.ProxyHost">
             <summary>
             Gets and sets of the ProxyHost property.
@@ -6192,21 +6209,6 @@
             for requests to AWS. This is defaulted to false for lower latency with responses that return small amount of data. This is the opposite
             default than ServicePoint.UseNagleAlgorithm which is optimized for large responses like web pages or images.
             </summary>
-        </member>
-        <member name="P:Amazon.Runtime.ClientConfig.ReadWriteTimeout">
-            <summary>
-            Overrides the default read-write timeout value.
-            On Unity platform, this value is not used as Unity HTTP client does not support timeouts, so 
-            </summary>
-            <remarks>
-            <para>
-            If the value is set, the value is assigned to the ReadWriteTimeout property of the HttpWebRequest object used
-            to send requests.
-            </para>
-            <exception cref="T:System.ArgumentNullException">The timeout specified is null.</exception>
-            <exception cref="T:System.ArgumentOutOfRangeException">The timeout specified is less than or equal to zero and is not Infinite.</exception>
-            </remarks>
-            <seealso cref="P:System.Net.HttpWebRequest.ReadWriteTimeout"/>
         </member>
         <member name="T:Amazon.Runtime.ConstantClass">
             <summary>
@@ -11202,6 +11204,11 @@
             The EU West (London) endpoint.
             </summary>
         </member>
+        <member name="F:Amazon.RegionEndpoint.EUWest3">
+            <summary>
+            The EU West (Paris) endpoint.
+            </summary>
+        </member>
         <member name="F:Amazon.RegionEndpoint.EUCentral1">
             <summary>
             The EU Central (Frankfurt) endpoint.
@@ -11245,6 +11252,11 @@
         <member name="F:Amazon.RegionEndpoint.CNNorth1">
             <summary>
             The China (Beijing) endpoint.
+            </summary>
+        </member>
+        <member name="F:Amazon.RegionEndpoint.CNNorthWest1">
+            <summary>
+            The China (Ningxia) endpoint.
             </summary>
         </member>
         <member name="F:Amazon.RegionEndpoint.CACentral1">

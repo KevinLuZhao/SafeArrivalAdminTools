@@ -52,3 +52,6 @@ C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.DAL\
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.DAL\bin\Debug\AWSSDK.EC2.dll
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.DAL\bin\Debug\AWSSDK.EC2.pdb
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.DAL\bin\Debug\AWSSDK.EC2.xml
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.DAL\bin\Debug\AWSSDK.Lambda.dll
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.DAL\bin\Debug\AWSSDK.Lambda.pdb
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.DAL\bin\Debug\AWSSDK.Lambda.xml

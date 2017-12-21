@@ -9,18 +9,15 @@ using SafeArrival.AdminTools.Model;
 
 namespace SafeArrival.AdminTools.AwsUtilities
 {
-    public class RDSHelper
+    public class RDSHelper: AwsHelperBase
     {
-        public SafeArrival.AdminTools.Model.Environment Environment { get; }
+        
         private AmazonRDSClient client;
 
-        public RDSHelper(Model.Environment profile, string region)
+        public RDSHelper(SafeArrival.AdminTools.Model.Environment profile, string region) :base(profile, region)
         {
-            //Amazon.Runtime.AWSCredentials credentials = new Amazon.Runtime.StoredProfileAWSCredentials(profile.ToString());
-            this.Environment = profile;
-            //client = new AmazonRDSClient(credentials, AwsCommon.GetRetionEndpoint(region));
             client = new AmazonRDSClient(
-                CredentiaslManager.GetCredential(profile),
+                CredentiaslManager.GetCredential(environment),
                 AwsCommon.GetRetionEndpoint(region));
         }
 
@@ -30,13 +27,13 @@ namespace SafeArrival.AdminTools.AwsUtilities
             var lstInstance = response.DBInstances;
             foreach (var instance in lstInstance)
             {
-                if (instance.DBSubnetGroup.DBSubnetGroupName.IndexOf(this.Environment.ToString()) >= 0)
+                if (instance.DBSubnetGroup.DBSubnetGroupName.IndexOf(environment.ToString()) >= 0)
                 {
                     AwsRdsInstance objInstance = new AwsRdsInstance
                     {
                         DBInstanceIdentifier = instance.DBInstanceIdentifier,
                         DBInstanceArn = instance.DBInstanceArn,
-                        RdsEnvinronment = this.Environment,
+                        RdsEnvinronment = environment,
                         Status = instance.DBInstanceStatus,
                         MultiAZ = instance.MultiAZ
                     };
@@ -82,16 +79,16 @@ namespace SafeArrival.AdminTools.AwsUtilities
             await client.StopDBInstanceAsync(stopRequest);
         }
 
-        public async Task StartRdsInstance(string instanceIdentifier)
+        public async Task StartRdsInstance(string instanceIdentifier, bool isMultyAz)
         {
             var startRequest = new StartDBInstanceRequest()
             {
-                DBInstanceIdentifier = instanceIdentifier
+                DBInstanceIdentifier = instanceIdentifier,
             };
             await client.StartDBInstanceAsync(startRequest);
 
             ModifyDBInstanceRequest request = new ModifyDBInstanceRequest();
-            request.MultiAZ = true;
+            request.MultiAZ = isMultyAz;
             request.DBInstanceIdentifier = instanceIdentifier;
             var response = await client.ModifyDBInstanceAsync(request);
         }

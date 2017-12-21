@@ -17,7 +17,7 @@ namespace SafeArrival.AdminTools.BLL
         //}
         AutoScaleGroupSettingsDb db = new AutoScaleGroupSettingsDb();
 
-        public async Task StartSystem(Model.Environment profile, string region, List<AutoScalingGroupSettings> lstSettings)
+        public async Task StartSystem(Model.Environment profile, string region, List<AutoScalingGroupSettings> lstSettings, bool isRdsMultyAz)
         {
             try
             {
@@ -27,8 +27,8 @@ namespace SafeArrival.AdminTools.BLL
                 RDSHelper rdsHelper = new RDSHelper(profile, region);
                 try
                 {
-                    var response = await rdsHelper.GetRDSInstance();
-                    await rdsHelper.StartRdsInstance(response.DBInstanceIdentifier);
+                    var response = await rdsHelper.GetRDSInstance();                  
+                    await rdsHelper.StartRdsInstance(response.DBInstanceIdentifier, isRdsMultyAz);
                 }
                 catch (Exception ex)
                 {
@@ -100,6 +100,8 @@ namespace SafeArrival.AdminTools.BLL
 
         public List<AutoScalingGroupSettings> GetAutoScalingGroupSettingsByEnv(Model.Environment env)
         {
+            LambdaHelper helper = new LambdaHelper(env, GlobalVariables.Region);
+            helper.SetEventTrigger();
             AutoScaleGroupSettingsDb db = new AutoScaleGroupSettingsDb();
             return db.GetSettingsByEnv(env);
         }

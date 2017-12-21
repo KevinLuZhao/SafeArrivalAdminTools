@@ -84,3 +84,6 @@ C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Pres
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Presentation\obj\Release\SafeArrival.AdminTools.Presentation.Properties.Resources.resources
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Presentation\obj\Release\SafeArrival.AdminTools.Presentation.csproj.GenerateResource.Cache
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Presentation\obj\Release\SafeArrival.AdminTools.Presentation.FormLogDetails.resources
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Presentation\bin\Release\AWSSDK.EC2.dll
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Presentation\bin\Release\AWSSDK.EC2.pdb
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Presentation\bin\Release\AWSSDK.EC2.xml

@@ -7,3 +7,4 @@ C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Mode
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\bin\Release\SafeArrival.AdminTools.Model.pdb
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\obj\Release\SafeArrival.AdminTools.Model.dll
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\obj\Release\SafeArrival.AdminTools.Model.pdb
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Model\obj\Release\SafeArrival.AdminTools.Model.csprojResolveAssemblyReference.cache

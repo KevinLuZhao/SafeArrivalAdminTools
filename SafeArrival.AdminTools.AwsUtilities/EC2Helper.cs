@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Amazon.EC2;
+﻿using Amazon.EC2;
 using Amazon.EC2.Model;
 using SafeArrival.AdminTools.Model;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SafeArrival.AdminTools.AwsUtilities
 {
-    public class EC2Helper
+    public class EC2Helper: AwsHelperBase
     {
-        private SafeArrival.AdminTools.Model.Environment Environment { get; }
         private AmazonEC2Client client;
 
-        public EC2Helper(Model.Environment profile, string region)
+        public EC2Helper(Model.Environment profile, string region):base(profile, region)
         {
-            //Amazon.Runtime.AWSCredentials credentials = new Amazon.Runtime.StoredProfileAWSCredentials(profile.ToString());
-            this.Environment = profile;
             //client = new AmazonRDSClient(credentials, AwsCommon.GetRetionEndpoint(region));
             client = new AmazonEC2Client(
                 CredentiaslManager.GetCredential(profile),
