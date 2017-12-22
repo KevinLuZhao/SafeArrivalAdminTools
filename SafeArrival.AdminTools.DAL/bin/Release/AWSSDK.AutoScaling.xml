@@ -296,7 +296,7 @@
             <summary>
             Gets and sets the property AutoScalingGroupName. 
             <para>
-            The name of the group.
+            The name of the Auto Scaling group.
             </para>
             </summary>
         </member>
@@ -338,7 +338,7 @@
             <summary>
             Gets and sets the property AutoScalingGroupName. 
             <para>
-            The name of the group.
+            The name of the Auto Scaling group.
             </para>
             </summary>
         </member>
@@ -402,7 +402,7 @@
             <summary>
             Gets and sets the property AutoScalingGroupARN. 
             <para>
-            The Amazon Resource Name (ARN) of the group.
+            The Amazon Resource Name (ARN) of the Auto Scaling group.
             </para>
             </summary>
         </member>
@@ -410,7 +410,7 @@
             <summary>
             Gets and sets the property AutoScalingGroupName. 
             <para>
-            The name of the group.
+            The name of the Auto Scaling group.
             </para>
             </summary>
         </member>
@@ -486,6 +486,14 @@
             Gets and sets the property LaunchConfigurationName. 
             <para>
             The name of the associated launch configuration.
+            </para>
+            </summary>
+        </member>
+        <member name="P:Amazon.AutoScaling.Model.AutoScalingGroup.LaunchTemplate">
+            <summary>
+            Gets and sets the property LaunchTemplate. 
+            <para>
+            The launch template for the group.
             </para>
             </summary>
         </member>
@@ -594,7 +602,7 @@
             <summary>
             Gets and sets the property AutoScalingGroupName. 
             <para>
-            The name of the Auto Scaling group associated with the instance.
+            The name of the Auto Scaling group for the instance.
             </para>
             </summary>
         </member>
@@ -630,6 +638,14 @@
             <para>
             The launch configuration used to launch the instance. This value is not available
             if you attached the instance to the Auto Scaling group.
+            </para>
+            </summary>
+        </member>
+        <member name="P:Amazon.AutoScaling.Model.AutoScalingInstanceDetails.LaunchTemplate">
+            <summary>
+            Gets and sets the property LaunchTemplate. 
+            <para>
+            The launch template for the instance.
             </para>
             </summary>
         </member>
@@ -743,7 +759,7 @@
             <summary>
             Gets and sets the property AutoScalingGroupName. 
             <para>
-            The name of the group for the lifecycle hook.
+            The name of the Auto Scaling group.
             </para>
             </summary>
         </member>
@@ -809,7 +825,8 @@
             <summary>
             Gets and sets the property AutoScalingGroupName. 
             <para>
-            The name of the group. This name must be unique within the scope of your AWS account.
+            The name of the Auto Scaling group. This name must be unique within the scope of your
+            AWS account.
             </para>
             </summary>
         </member>
@@ -885,8 +902,9 @@
             <summary>
             Gets and sets the property InstanceId. 
             <para>
-            The ID of the instance used to create a launch configuration for the group. Alternatively,
-            specify a launch configuration instead of an EC2 instance.
+            The ID of the instance used to create a launch configuration for the group. You must
+            specify one of the following: an EC2 instance, a launch configuration, or a launch
+            template.
             </para>
              
             <para>
@@ -905,8 +923,17 @@
             <summary>
             Gets and sets the property LaunchConfigurationName. 
             <para>
-            The name of the launch configuration. Alternatively, specify an EC2 instance instead
-            of a launch configuration.
+            The name of the launch configuration. You must specify one of the following: a launch
+            configuration, a launch template, or an EC2 instance.
+            </para>
+            </summary>
+        </member>
+        <member name="P:Amazon.AutoScaling.Model.CreateAutoScalingGroupRequest.LaunchTemplate">
+            <summary>
+            Gets and sets the property LaunchTemplate. 
+            <para>
+            The launch template to use to launch instances. You must specify one of the following:
+            a launch template, a launch configuration, or an EC2 instance.
             </para>
             </summary>
         </member>
@@ -1413,7 +1440,7 @@
             <summary>
             Gets and sets the property AutoScalingGroupName. 
             <para>
-            The name of the group to delete.
+            The name of the Auto Scaling group.
             </para>
             </summary>
         </member>
@@ -1473,7 +1500,7 @@
             <summary>
             Gets and sets the property AutoScalingGroupName. 
             <para>
-            The name of the Auto Scaling group for the lifecycle hook.
+            The name of the Auto Scaling group.
             </para>
             </summary>
         </member>
@@ -1676,7 +1703,8 @@
             <summary>
             Gets and sets the property AutoScalingGroupNames. 
             <para>
-            The group names. If you omit this parameter, all Auto Scaling groups are described.
+            The names of the Auto Scaling groups. If you omit this parameter, all Auto Scaling
+            groups are described.
             </para>
             </summary>
         </member>
@@ -1860,7 +1888,7 @@
             <summary>
             Gets and sets the property AutoScalingGroupName. 
             <para>
-            The name of the group.
+            The name of the Auto Scaling group.
             </para>
             </summary>
         </member>
@@ -1921,7 +1949,7 @@
             <summary>
             Gets and sets the property AutoScalingGroupName. 
             <para>
-            The name of the group.
+            The name of the Auto Scaling group.
             </para>
             </summary>
         </member>
@@ -2062,7 +2090,7 @@
             <summary>
             Gets and sets the property AutoScalingGroupNames. 
             <para>
-            The name of the group.
+            The name of the Auto Scaling group.
             </para>
             </summary>
         </member>
@@ -2116,7 +2144,7 @@
             <summary>
             Gets and sets the property AutoScalingGroupName. 
             <para>
-            The name of the group.
+            The name of the Auto Scaling group.
             </para>
             </summary>
         </member>
@@ -2142,10 +2170,10 @@
             <summary>
             Gets and sets the property PolicyNames. 
             <para>
-            One or more policy names or policy ARNs to be described. If you omit this parameter,
-            all policy names are described. If an group name is provided, the results are limited
-            to that group. This list is limited to 50 items. If you specify an unknown policy
-            name, it is ignored with no error.
+            The names of one or more policies. If you omit this parameter, all policies are described.
+            If an group name is provided, the results are limited to that group. This list is
+            limited to 50 items. If you specify an unknown policy name, it is ignored with no
+            error.
             </para>
             </summary>
         </member>
@@ -2201,7 +2229,7 @@
             <summary>
             Gets and sets the property AutoScalingGroupName. 
             <para>
-            The name of the group.
+            The name of the Auto Scaling group.
             </para>
             </summary>
         </member>
@@ -2275,7 +2303,7 @@
             <summary>
             Gets and sets the property AutoScalingGroupName. 
             <para>
-            The name of the group.
+            The name of the Auto Scaling group.
             </para>
             </summary>
         </member>
@@ -2472,7 +2500,7 @@
             <summary>
             Gets and sets the property AutoScalingGroupName. 
             <para>
-            The name of the group.
+            The name of the Auto Scaling group.
             </para>
             </summary>
         </member>
@@ -2583,7 +2611,7 @@
             <summary>
             Gets and sets the property AutoScalingGroupName. 
             <para>
-            The name or Amazon Resource Name (ARN) of the group.
+            The name of the Auto Scaling group.
             </para>
             </summary>
         </member>
@@ -2783,7 +2811,7 @@
             <summary>
             Gets and sets the property AutoScalingGroupName. 
             <para>
-            The name or ARN of the Auto Scaling group.
+            The name of the Auto Scaling group.
             </para>
             </summary>
         </member>
@@ -2906,7 +2934,7 @@
             <summary>
             Gets and sets the property AutoScalingGroupName. 
             <para>
-            The name or Amazon Resource Name (ARN) of the Auto Scaling group.
+            The name of the Auto Scaling group.
             </para>
             </summary>
         </member>
@@ -3075,6 +3103,14 @@
             Gets and sets the property LaunchConfigurationName. 
             <para>
             The launch configuration associated with the instance.
+            </para>
+            </summary>
+        </member>
+        <member name="P:Amazon.AutoScaling.Model.Instance.LaunchTemplate">
+            <summary>
+            Gets and sets the property LaunchTemplate. 
+            <para>
+            The launch template for the instance.
             </para>
             </summary>
         </member>
@@ -5198,6 +5234,30 @@
             Gets the singleton.
             </summary>  
         </member>
+        <member name="T:Amazon.AutoScaling.Model.Internal.MarshallTransformations.LaunchTemplateSpecificationUnmarshaller">
+            <summary>
+            Response Unmarshaller for LaunchTemplateSpecification Object
+            </summary>  
+        </member>
+        <member name="M:Amazon.AutoScaling.Model.Internal.MarshallTransformations.LaunchTemplateSpecificationUnmarshaller.Unmarshall(Amazon.Runtime.Internal.Transform.XmlUnmarshallerContext)">
+            <summary>
+            Unmarshaller the response from the service to the response class.
+            </summary>  
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Amazon.AutoScaling.Model.Internal.MarshallTransformations.LaunchTemplateSpecificationUnmarshaller.Unmarshall(Amazon.Runtime.Internal.Transform.JsonUnmarshallerContext)">
+            <summary>
+            Unmarshaller error response to exception.
+            </summary>  
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Amazon.AutoScaling.Model.Internal.MarshallTransformations.LaunchTemplateSpecificationUnmarshaller.Instance">
+            <summary>
+            Gets the singleton.
+            </summary>  
+        </member>
         <member name="T:Amazon.AutoScaling.Model.Internal.MarshallTransformations.LifecycleHookUnmarshaller">
             <summary>
             Response Unmarshaller for LifecycleHook Object
@@ -6323,6 +6383,37 @@
             </para>
             </summary>
         </member>
+        <member name="T:Amazon.AutoScaling.Model.LaunchTemplateSpecification">
+            <summary>
+            Describes a launch template.
+            </summary>
+        </member>
+        <member name="P:Amazon.AutoScaling.Model.LaunchTemplateSpecification.LaunchTemplateId">
+            <summary>
+            Gets and sets the property LaunchTemplateId. 
+            <para>
+            The ID of the launch template. You must specify either a template ID or a template
+            name.
+            </para>
+            </summary>
+        </member>
+        <member name="P:Amazon.AutoScaling.Model.LaunchTemplateSpecification.LaunchTemplateName">
+            <summary>
+            Gets and sets the property LaunchTemplateName. 
+            <para>
+            The name of the launch template. You must specify either a template name or a template
+            ID.
+            </para>
+            </summary>
+        </member>
+        <member name="P:Amazon.AutoScaling.Model.LaunchTemplateSpecification.Version">
+            <summary>
+            Gets and sets the property Version. 
+            <para>
+            The version number. By default, the default version of the launch template is used.
+            </para>
+            </summary>
+        </member>
         <member name="T:Amazon.AutoScaling.Model.LifecycleHook">
             <summary>
             Describes a lifecycle hook, which tells Auto Scaling that you want to perform an action
@@ -6436,7 +6527,7 @@
             <para>
             Defines the action the Auto Scaling group should take when the lifecycle hook timeout
             elapses or if an unexpected failure occurs. The valid values are <code>CONTINUE</code>
-            and <code>ABANDON</code>. The default value is <code>CONTINUE</code>.
+            and <code>ABANDON</code>.
             </para>
             </summary>
         </member>
@@ -6760,7 +6851,7 @@
             <summary>
             Gets and sets the property AutoScalingGroupName. 
             <para>
-            The name of the group.
+            The name of the Auto Scaling group.
             </para>
             </summary>
         </member>
@@ -6843,7 +6934,7 @@
             </para>
              </li> </ul> 
             <para>
-            For predefined metric types <code>ASGAverageCPUUtilization</code>, <code>ASGAverageNetworkIn</code>
+            For predefined metric types <code>ASGAverageCPUUtilization</code>, <code>ASGAverageNetworkIn</code>,
             and <code>ASGAverageNetworkOut</code>, the parameter must not be specified as the
             resource associated with the metric type is the Auto Scaling group. For predefined
             metric type <code>ALBRequestCountPerTarget</code>, the parameter must be specified
@@ -6965,7 +7056,7 @@
             <summary>
             Gets and sets the property AutoScalingGroupName. 
             <para>
-            The name of the Auto Scaling group to which you want to assign the lifecycle hook.
+            The name of the Auto Scaling group.
             </para>
             </summary>
         </member>
@@ -7151,7 +7242,7 @@
             <summary>
             Gets and sets the property AutoScalingGroupName. 
             <para>
-            The name or ARN of the group.
+            The name of the Auto Scaling group.
             </para>
             </summary>
         </member>
@@ -7322,7 +7413,7 @@
             <summary>
             Gets and sets the property AutoScalingGroupName. 
             <para>
-            The name or Amazon Resource Name (ARN) of the Auto Scaling group.
+            The name of the Auto Scaling group.
             </para>
             </summary>
         </member>
@@ -7454,7 +7545,7 @@
             <summary>
             Gets and sets the property AutoScalingGroupName. 
             <para>
-            The name of the Auto Scaling group for the hook.
+            The name of the Auto Scaling group.
             </para>
             </summary>
         </member>
@@ -7620,7 +7711,7 @@
             <summary>
             Gets and sets the property AutoScalingGroupName. 
             <para>
-            The name or Amazon Resource Name (ARN) of the Auto Scaling group.
+            The name of the Auto Scaling group.
             </para>
             </summary>
         </member>
@@ -7754,7 +7845,7 @@
             <summary>
             Gets and sets the property AutoScalingGroupName. 
             <para>
-            The name of the Auto Scaling group associated with this scaling policy.
+            The name of the Auto Scaling group.
             </para>
             </summary>
         </member>
@@ -7862,7 +7953,7 @@
             <summary>
             Gets and sets the property AutoScalingGroupName. 
             <para>
-            The name of the group.
+            The name of the Auto Scaling group.
             </para>
             </summary>
         </member>
@@ -8055,7 +8146,7 @@
             <summary>
             Gets and sets the property AutoScalingGroupName. 
             <para>
-            The name of the group.
+            The name of the Auto Scaling group.
             </para>
             </summary>
         </member>
@@ -8211,7 +8302,7 @@
             <summary>
             Gets and sets the property AutoScalingGroupName. 
             <para>
-            The name or Amazon Resource Name (ARN) of the Auto Scaling group.
+            The name of the Auto Scaling group.
             </para>
             </summary>
         </member>
@@ -8543,7 +8634,17 @@
             <summary>
             Gets and sets the property LaunchConfigurationName. 
             <para>
-            The name of the launch configuration.
+            The name of the launch configuration. You must specify either a launch configuration
+            or a launch template.
+            </para>
+            </summary>
+        </member>
+        <member name="P:Amazon.AutoScaling.Model.UpdateAutoScalingGroupRequest.LaunchTemplate">
+            <summary>
+            Gets and sets the property LaunchTemplate. 
+            <para>
+            The launch template to use to specify the updates. You must specify a launch configuration
+            or a launch template.
             </para>
             </summary>
         </member>

@@ -60,7 +60,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
                     isMultiAZ = response.DBInstance.MultiAZ;
                     while (isMultiAZ)
                     {
-                        System.Threading.Thread.Sleep(30000);
+                        await Task.Delay(3000);
                         var newResponse = await GetRDSInstance();
                         isMultiAZ = newResponse.MultiAZ;
                     }

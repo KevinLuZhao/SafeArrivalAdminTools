@@ -13,6 +13,7 @@ namespace SafeArrival.AdminTools.Model
         staging = 2,
         stagingca = 3,
         production = 4,
-        productionca = 5
+        productionca = 5,
+        devmarconi = 6
     }
 }

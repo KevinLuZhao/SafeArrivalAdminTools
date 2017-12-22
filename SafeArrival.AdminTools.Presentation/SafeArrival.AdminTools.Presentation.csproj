@@ -209,6 +209,15 @@
     <Analyzer Include="..\packages\AWSSDK.AutoScaling.3.3.3\analyzers\dotnet\cs\AWSSDK.AutoScaling.CodeAnalysis.dll" />
     <Analyzer Include="..\packages\AWSSDK.SecurityToken.3.3.3.3\analyzers\dotnet\cs\AWSSDK.SecurityToken.CodeAnalysis.dll" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\Button-Blank-Gray-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\Button-Blank-Green-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\Button-Blank-Red-icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

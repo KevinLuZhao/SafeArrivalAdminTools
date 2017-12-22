@@ -16,7 +16,14 @@ namespace SafeArrival.AdminTools.Presentation
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmMain());
+            try
+            {
+                Application.Run(new FrmMain());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}/n/r Stack trace: {ex.StackTrace}");
+            }
         }
     }
 }

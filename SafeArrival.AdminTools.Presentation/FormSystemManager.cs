@@ -78,17 +78,22 @@ namespace SafeArrival.AdminTools.Presentation
                             MessageBoxButtons.YesNo);
                 if (confirmResult == DialogResult.Yes)
                 {
+                    this.imgAppStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Red_icon;
+                    this.imgRdsStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Red_icon;
                     var manager = new SystemManagement();
                     await manager.StartSystem(
                         GlobalVariables.Enviroment, GlobalVariables.Region,
                         lstAutoScalingGroupSettings, cboxRdsMutlAZ.Checked);
-                    await PopulateSystemStatus();
                     WriteNotification($"{GlobalVariables.Enviroment.ToString()} system is started!");
                 }
             }
             catch (Exception ex)
             {
                 HandleException(ex);
+            }
+            finally
+            {
+                await PopulateSystemStatus();
             }
         }
 
@@ -103,15 +108,20 @@ namespace SafeArrival.AdminTools.Presentation
                         MessageBoxButtons.YesNo);
                 if (confirmResult == DialogResult.Yes)
                 {
+                    this.imgAppStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Red_icon;
+                    this.imgRdsStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Red_icon;
                     var manager = new SystemManagement();
                     await manager.ShutDownSystem(GlobalVariables.Enviroment, GlobalVariables.Region);
-                    await PopulateSystemStatus();
                     WriteNotification(String.Format("{0} system is stopped!", GlobalVariables.Enviroment.ToString()));
                 }
             }
             catch (Exception ex)
             {
                 HandleException(ex);
+            }
+            finally
+            {
+                await PopulateSystemStatus();
             }
         }
 
@@ -162,6 +172,7 @@ namespace SafeArrival.AdminTools.Presentation
                 GlobalVariables.Enviroment,
                 GlobalVariables.Region);
             var lstGroup = await helper.GetAutoScalingGroupList();
+            int stoppedGroupCounter = 0;
             foreach (var group in lstGroup)
             {
                 ListViewItem item = new ListViewItem();
@@ -170,6 +181,24 @@ namespace SafeArrival.AdminTools.Presentation
                 item.SubItems.Add(group.MinSize.ToString());
                 item.SubItems.Add(group.RunningInstances.ToString());
                 listView1.Items.Add(item);
+                if (group.RunningInstances == 0)
+                    stoppedGroupCounter++;
+            }
+            if (stoppedGroupCounter == 0)
+            {
+                this.imgAppStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Green_icon;
+                //return SystemStauts.Running;
+            }
+                
+            else if (stoppedGroupCounter == lstGroup.Count)
+            {
+                this.imgAppStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Gray_icon;
+                //return SystemStauts.Terminated;
+            }
+            else
+            {
+                this.imgAppStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Red_icon;
+                //return SystemStauts.Abnormal;
             }
         }
 
@@ -200,7 +229,7 @@ namespace SafeArrival.AdminTools.Presentation
             dataGridView1.DataSource = lstAutoScalingGroupSettings;
         }
 
-        private async Task PopulateRDS()
+        private async Task<SystemStauts> PopulateRDS()
         {
             AwsUtilities.RDSHelper helper = new AwsUtilities.RDSHelper(
                 GlobalVariables.Enviroment,
@@ -210,6 +239,22 @@ namespace SafeArrival.AdminTools.Presentation
             lblRdsArn.Text = instance.DBInstanceArn;
             lblRdsStatus.Text = instance.Status;
             cboxRdsMutlAZ.Checked = instance.MultiAZ;
+            if (instance.Status == "available")
+            {
+                this.imgRdsStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Green_icon;
+                return SystemStauts.Running;
+            }
+                
+            else if (instance.Status == "stopped")
+            {
+                this.imgRdsStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Gray_icon;
+                return SystemStauts.Terminated;
+            }
+            else
+            {
+                this.imgRdsStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Red_icon;
+                return SystemStauts.Abnormal;
+            }
         }
 
         private async Task PopulatePeeringConnection()
@@ -296,7 +341,7 @@ namespace SafeArrival.AdminTools.Presentation
                         lstVpcs.Find(o => o.VpcId == strRequesterItem),
                         lstVpcs.Find(o => o.VpcId == strAccepterItem));
                     WriteNotification($"RDS VPC Peering Connection {response} is created.");
-                    System.Threading.Thread.Sleep(3000);
+                    await Task.Delay(3000);
                     await PopulatePeeringConnection();
                 }
             }
@@ -325,7 +370,7 @@ namespace SafeArrival.AdminTools.Presentation
                         lstVpcs.Find(o => o.VpcId == lblRpcReuestVpc.Text),
                         lstVpcs.Find(o => o.VpcId == lblRpcAcceptVpc.Text));
                     WriteNotification($"RDS VPC Peering Connection {vpcPeeringConnection.VpcPeeringConnectionId} is deleted.");
-                    System.Threading.Thread.Sleep(3000);
+                    await Task.Delay(3000);
                     await PopulatePeeringConnection();
                 }
             }

@@ -23,7 +23,7 @@ namespace SafeArrival.AdminTools.BLL
                 AwsCommon.GetAwsAccountByEnvironment(GlobalVariables.Enviroment) ,
                 requesterVpc.VpcId, accepterVpc.VpcId,
                 Utils.FormatresourceName(AwsResourceTypeName.RdsPeeringConnection));
-            System.Threading.Thread.Sleep(5000);
+            await Task.Delay(5000);
             await ec2Helper.AcceptPeeringConnection(peeringConnectionId);
             await AddPeeringConnectionToRouteTables(requesterVpc, accepterVpc, peeringConnectionId);
             return peeringConnectionId;

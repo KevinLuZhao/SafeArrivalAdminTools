@@ -32,6 +32,8 @@
             this.btnInit = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tPageStatus = new System.Windows.Forms.TabPage();
+            this.imgRdsStatus = new System.Windows.Forms.PictureBox();
+            this.imgAppStatus = new System.Windows.Forms.PictureBox();
             this.btnStart = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.btnStop = new System.Windows.Forms.Button();
@@ -78,6 +80,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tPageStatus.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgRdsStatus)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgAppStatus)).BeginInit();
             this.panel1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -109,6 +113,8 @@
             // 
             // tPageStatus
             // 
+            this.tPageStatus.Controls.Add(this.imgRdsStatus);
+            this.tPageStatus.Controls.Add(this.imgAppStatus);
             this.tPageStatus.Controls.Add(this.btnStart);
             this.tPageStatus.Controls.Add(this.label4);
             this.tPageStatus.Controls.Add(this.btnStop);
@@ -125,6 +131,22 @@
             this.tPageStatus.TabIndex = 0;
             this.tPageStatus.Text = "Status";
             this.tPageStatus.UseVisualStyleBackColor = true;
+            // 
+            // imgRdsStatus
+            // 
+            this.imgRdsStatus.Location = new System.Drawing.Point(58, 390);
+            this.imgRdsStatus.Name = "imgRdsStatus";
+            this.imgRdsStatus.Size = new System.Drawing.Size(17, 17);
+            this.imgRdsStatus.TabIndex = 17;
+            this.imgRdsStatus.TabStop = false;
+            // 
+            // imgAppStatus
+            // 
+            this.imgAppStatus.Location = new System.Drawing.Point(165, 12);
+            this.imgAppStatus.Name = "imgAppStatus";
+            this.imgAppStatus.Size = new System.Drawing.Size(17, 17);
+            this.imgAppStatus.TabIndex = 16;
+            this.imgAppStatus.TabStop = false;
             // 
             // btnStart
             // 
@@ -583,6 +605,8 @@
             this.tabControl1.ResumeLayout(false);
             this.tPageStatus.ResumeLayout(false);
             this.tPageStatus.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgRdsStatus)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgAppStatus)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
@@ -646,5 +670,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button btnRpcRefresh;
         private System.Windows.Forms.CheckBox cboxRdsMutlAZ;
+        private System.Windows.Forms.PictureBox imgAppStatus;
+        private System.Windows.Forms.PictureBox imgRdsStatus;
     }
 }
