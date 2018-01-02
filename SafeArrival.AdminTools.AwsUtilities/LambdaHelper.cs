@@ -7,7 +7,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
     {
         private AmazonLambdaClient client;
 
-        public LambdaHelper(Model.Environment profile, string region) : base(profile, region)
+        public LambdaHelper(Model.Environment profile, string region, string color) : base(profile, region, color)
         {
             client = new AmazonLambdaClient(
                 CredentiaslManager.GetCredential(environment),

@@ -13,7 +13,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
     {
         private AmazonElasticBeanstalkClient client;
 
-        public ElasticBeanstalkHelper(Model.Environment profile, string region) : base(profile, region)
+        public ElasticBeanstalkHelper(Model.Environment profile, string region, string color) : base(profile, region, color)
         {
             //client = new AmazonRDSClient(credentials, AwsCommon.GetRetionEndpoint(region));
             client = new AmazonElasticBeanstalkClient(

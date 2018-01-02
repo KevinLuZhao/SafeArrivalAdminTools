@@ -11,7 +11,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
     {
         private AmazonEC2Client client;
 
-        public EC2Helper(Model.Environment profile, string region):base(profile, region)
+        public EC2Helper(Model.Environment profile, string region, string color) : base(profile, region, color)
         {
             //client = new AmazonRDSClient(credentials, AwsCommon.GetRetionEndpoint(region));
             client = new AmazonEC2Client(

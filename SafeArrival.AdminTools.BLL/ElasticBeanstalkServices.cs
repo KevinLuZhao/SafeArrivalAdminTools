@@ -13,9 +13,9 @@ namespace SafeArrival.AdminTools.BLL
     {
         ElasticBeanstalkHelper helper;
 
-        public ElasticBeanstalkServices(Model.Environment profile, string region)
+        public ElasticBeanstalkServices()
         {
-            helper = new AwsUtilities.ElasticBeanstalkHelper(profile, region);
+            helper = new AwsUtilities.ElasticBeanstalkHelper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
         }
 
         public void CleanScheduledActionConfig()

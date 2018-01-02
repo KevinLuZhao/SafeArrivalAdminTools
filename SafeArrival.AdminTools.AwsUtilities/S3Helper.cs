@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SafeArrival.AdminTools.AwsUtilities
 {
-    public class S3Helper
+    public class S3Helper 
     {
         public string BucketName { get; set; }
         private AmazonS3Client client;

@@ -10,7 +10,7 @@ namespace SafeArrival.AdminTools.BLL
 {
     public class VpcPeeringConnectionServices
     {
-        EC2Helper ec2Helper = new EC2Helper(GlobalVariables.Enviroment, GlobalVariables.Region);
+        EC2Helper ec2Helper = new EC2Helper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
         public async Task<AwsPeeringConnection> GetRdsPeeringConnection()
         {
             var response = await ec2Helper.GetPeeringConnection(Utils.FormatresourceName(AwsResourceTypeName.RdsPeeringConnection));

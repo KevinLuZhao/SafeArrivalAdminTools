@@ -80,10 +80,9 @@ namespace SafeArrival.AdminTools.Presentation
                 {
                     this.imgAppStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Red_icon;
                     this.imgRdsStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Red_icon;
+                    this.imgScheduleStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Red_icon;
                     var manager = new SystemManagement();
-                    await manager.StartSystem(
-                        GlobalVariables.Enviroment, GlobalVariables.Region,
-                        lstAutoScalingGroupSettings, cboxRdsMutlAZ.Checked);
+                    await manager.StartSystem(lstAutoScalingGroupSettings, cboxRdsMutlAZ.Checked);
                     WriteNotification($"{GlobalVariables.Enviroment.ToString()} system is started!");
                 }
             }
@@ -110,8 +109,9 @@ namespace SafeArrival.AdminTools.Presentation
                 {
                     this.imgAppStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Red_icon;
                     this.imgRdsStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Red_icon;
+                    this.imgScheduleStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Red_icon;
                     var manager = new SystemManagement();
-                    await manager.ShutDownSystem(GlobalVariables.Enviroment, GlobalVariables.Region);
+                    await manager.ShutDownSystem(cboxStopJumpbox.Checked);
                     WriteNotification(String.Format("{0} system is stopped!", GlobalVariables.Enviroment.ToString()));
                 }
             }
@@ -167,12 +167,13 @@ namespace SafeArrival.AdminTools.Presentation
 
         private async Task PopulateAutoScalingGroup()
         {
-            listView1.Items.Clear();
-            AwsUtilities.AutoScalingHelper helper = new AwsUtilities.AutoScalingHelper(
+            var helper = new AwsUtilities.AutoScalingHelper(
                 GlobalVariables.Enviroment,
-                GlobalVariables.Region);
+                GlobalVariables.Region,
+                GlobalVariables.Color);
             var lstGroup = await helper.GetAutoScalingGroupList();
             int stoppedGroupCounter = 0;
+            listView1.Items.Clear();
             foreach (var group in lstGroup)
             {
                 ListViewItem item = new ListViewItem();
@@ -207,6 +208,7 @@ namespace SafeArrival.AdminTools.Presentation
             listView2.Items.Clear();
             SystemManagement service = new SystemManagement();
             var lstAction = await service.GetApiScheduledActions();
+            var counterSuspended = 0;
             foreach (var action in lstAction)
             {
                 ListViewItem item = new ListViewItem();
@@ -219,6 +221,22 @@ namespace SafeArrival.AdminTools.Presentation
                 item.SubItems.Add(action.EndTime);
                 item.SubItems.Add(action.Suspend);
                 listView2.Items.Add(item);
+                if (action.Suspend == "True")
+                {
+                    counterSuspended++;
+                }
+            }
+            if (0 == counterSuspended)
+            {
+                this.imgScheduleStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Green_icon;
+            }
+            else if (lstAction.Count == counterSuspended)
+            {
+                this.imgScheduleStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Gray_icon;
+            }
+            else
+            {
+                this.imgScheduleStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Red_icon;
             }
         }
 
@@ -233,7 +251,8 @@ namespace SafeArrival.AdminTools.Presentation
         {
             AwsUtilities.RDSHelper helper = new AwsUtilities.RDSHelper(
                 GlobalVariables.Enviroment,
-                GlobalVariables.Region);
+                GlobalVariables.Region,
+                GlobalVariables.Color);
             var instance = await helper.GetRDSInstance();
             lblRdsIdentifier.Text = instance.DBInstanceIdentifier;
             lblRdsArn.Text = instance.DBInstanceArn;

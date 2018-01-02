@@ -32,6 +32,8 @@
             this.btnInit = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tPageStatus = new System.Windows.Forms.TabPage();
+            this.cboxStopJumpbox = new System.Windows.Forms.CheckBox();
+            this.imgScheduleStatus = new System.Windows.Forms.PictureBox();
             this.imgRdsStatus = new System.Windows.Forms.PictureBox();
             this.imgAppStatus = new System.Windows.Forms.PictureBox();
             this.btnStart = new System.Windows.Forms.Button();
@@ -80,6 +82,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tPageStatus.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgScheduleStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgRdsStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgAppStatus)).BeginInit();
             this.panel1.SuspendLayout();
@@ -113,6 +116,8 @@
             // 
             // tPageStatus
             // 
+            this.tPageStatus.Controls.Add(this.cboxStopJumpbox);
+            this.tPageStatus.Controls.Add(this.imgScheduleStatus);
             this.tPageStatus.Controls.Add(this.imgRdsStatus);
             this.tPageStatus.Controls.Add(this.imgAppStatus);
             this.tPageStatus.Controls.Add(this.btnStart);
@@ -132,9 +137,30 @@
             this.tPageStatus.Text = "Status";
             this.tPageStatus.UseVisualStyleBackColor = true;
             // 
+            // cboxStopJumpbox
+            // 
+            this.cboxStopJumpbox.AutoSize = true;
+            this.cboxStopJumpbox.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.cboxStopJumpbox.Location = new System.Drawing.Point(184, 12);
+            this.cboxStopJumpbox.Name = "cboxStopJumpbox";
+            this.cboxStopJumpbox.Size = new System.Drawing.Size(236, 17);
+            this.cboxStopJumpbox.TabIndex = 19;
+            this.cboxStopJumpbox.Text = "Stop Jump Box When Shuting Down System";
+            this.cboxStopJumpbox.UseVisualStyleBackColor = true;
+            // 
+            // imgScheduleStatus
+            // 
+            this.imgScheduleStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.imgScheduleStatus.Location = new System.Drawing.Point(1071, 222);
+            this.imgScheduleStatus.Name = "imgScheduleStatus";
+            this.imgScheduleStatus.Size = new System.Drawing.Size(17, 17);
+            this.imgScheduleStatus.TabIndex = 18;
+            this.imgScheduleStatus.TabStop = false;
+            // 
             // imgRdsStatus
             // 
-            this.imgRdsStatus.Location = new System.Drawing.Point(58, 390);
+            this.imgRdsStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.imgRdsStatus.Location = new System.Drawing.Point(1071, 390);
             this.imgRdsStatus.Name = "imgRdsStatus";
             this.imgRdsStatus.Size = new System.Drawing.Size(17, 17);
             this.imgRdsStatus.TabIndex = 17;
@@ -142,7 +168,8 @@
             // 
             // imgAppStatus
             // 
-            this.imgAppStatus.Location = new System.Drawing.Point(165, 12);
+            this.imgAppStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.imgAppStatus.Location = new System.Drawing.Point(1071, 12);
             this.imgAppStatus.Name = "imgAppStatus";
             this.imgAppStatus.Size = new System.Drawing.Size(17, 17);
             this.imgAppStatus.TabIndex = 16;
@@ -605,6 +632,7 @@
             this.tabControl1.ResumeLayout(false);
             this.tPageStatus.ResumeLayout(false);
             this.tPageStatus.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgScheduleStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgRdsStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgAppStatus)).EndInit();
             this.panel1.ResumeLayout(false);
@@ -672,5 +700,7 @@
         private System.Windows.Forms.CheckBox cboxRdsMutlAZ;
         private System.Windows.Forms.PictureBox imgAppStatus;
         private System.Windows.Forms.PictureBox imgRdsStatus;
+        private System.Windows.Forms.PictureBox imgScheduleStatus;
+        private System.Windows.Forms.CheckBox cboxStopJumpbox;
     }
 }

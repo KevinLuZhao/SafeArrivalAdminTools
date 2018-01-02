@@ -35,7 +35,7 @@ namespace SafeArrival.AdminTools.Presentation
 
             MainStatusStrip = toolStripStatusLabel1;
 
-            if (ConfigurationSettings.AppSettings["Role"] != "SAFE-Admin_role")
+            if (ConfigurationManager.AppSettings["Role"] != "SAFE-Admin_role")
             {
                 parameterEditToolStripMenuItem.Visible = false;
             }
@@ -70,11 +70,11 @@ namespace SafeArrival.AdminTools.Presentation
             switch (formName)
             {
                 case "parameterEditToolStripMenuItem":
-                    if (!Directory.Exists(ConfigurationSettings.AppSettings["ParammeterFilesFolder"]))
+                    if (!Directory.Exists(ConfigurationManager.AppSettings["ParammeterFilesFolder"]))
                     {
                         MainStatusStrip.Text = string.Format(
                             "Parameter Editor need the system directory {0}. This directory is defined at config file",
-                            ConfigurationSettings.AppSettings["ParammeterFilesFolder"]);
+                            ConfigurationManager.AppSettings["ParammeterFilesFolder"]);
                     }
                     frm = new FormParametersEditor();
                     break;
@@ -111,6 +111,10 @@ namespace SafeArrival.AdminTools.Presentation
         private void tsComboColor_SelectedIndexChanged(object sender, EventArgs e)
         {
             GlobalVariables.Color = tsComboColor.SelectedItem.ToString();
+            foreach (var frm in OpendFormList)
+            {
+                frm.OnEnvironmentChanged();
+            }
         }
 
         private void FrmMain_MdiChildActivate(object sender, EventArgs e)

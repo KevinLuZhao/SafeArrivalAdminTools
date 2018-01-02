@@ -8,12 +8,12 @@ using Amazon.Runtime;
 
 namespace SafeArrival.AdminTools.AwsUtilities
 {
-    public class AutoScalingHelper
+    public class AutoScalingHelper : AwsHelperBase
     {
-        public string Environment { get; }
+        //public string Environment { get; }
         private AmazonAutoScalingClient client;
 
-        public AutoScalingHelper(Model.Environment profile, string region)
+        public AutoScalingHelper(Model.Environment profile, string region, string color) : base(profile, region, color)
         {
             client = new AmazonAutoScalingClient(
                 CredentiaslManager.GetCredential(profile),
@@ -24,7 +24,11 @@ namespace SafeArrival.AdminTools.AwsUtilities
         {
             var lstSaGroups = new List<AwsAutoScalingGroup>();
             var response = await client.DescribeAutoScalingGroupsAsync();
-            var lstGroups = response.AutoScalingGroups.FindAll(o => o.Tags[0].Value.IndexOf(GlobalVariables.Enviroment.ToString()) >= 0);
+            var lstGroups = response.AutoScalingGroups.FindAll(o => o.Tags[0].Value.IndexOf(environment + "-" + color) >= 0);
+            var jumpBox = response.AutoScalingGroups.Find(
+                o => o.Tags[0].Value.IndexOf(environment.ToString()) >= 0 && o.Tags[0].Value.IndexOf("Jump") > 0);
+            if (jumpBox != null)
+                lstGroups.Add(jumpBox);
             foreach (var group in lstGroups)
             {
                 var saGroup = new AwsAutoScalingGroup()
@@ -45,7 +49,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
         }
 
         public async Task StopScalingGroup(string groupName)
-        { 
+        {
             UpdateAutoScalingGroupRequest request = new UpdateAutoScalingGroupRequest();
             request.MaxSize = request.MinSize = request.DesiredCapacity = 0;
             request.AutoScalingGroupName = groupName;
