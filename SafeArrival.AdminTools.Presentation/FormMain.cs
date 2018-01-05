@@ -30,7 +30,7 @@ namespace SafeArrival.AdminTools.Presentation
             tsComboRegion.ComboBox.DataSource = lstRegions;
             tsComboRegion.ComboBox.DisplayMember = "Value";
             tsComboRegion.ComboBox.ValueMember = "Key";
-            tsComboRegion.ComboBox.SelectedIndex = 1;
+            //tsComboRegion.ComboBox.SelectedIndex = 1;
             tsComboRegion.Enabled = false;
 
             MainStatusStrip = toolStripStatusLabel1;

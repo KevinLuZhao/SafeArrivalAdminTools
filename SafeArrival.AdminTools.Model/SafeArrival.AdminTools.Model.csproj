@@ -42,10 +42,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationLoadBalancerModel.cs" />
     <Compile Include="ApplicationServer.cs" />
     <Compile Include="AutoScalingGroupSettings.cs" />
     <Compile Include="SA_AutoScalingGroup.cs" />
     <Compile Include="SA_Listener.cs" />
+    <Compile Include="SA_LoadBalancer.cs" />
     <Compile Include="SA_ResourceTypeName.cs" />
     <Compile Include="SA_PeeringConnection.cs" />
     <Compile Include="SA_RdsInstance.cs" />

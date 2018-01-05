@@ -38,6 +38,16 @@ namespace SafeArrival.AdminTools.AwsUtilities
             return response.LoadBalancers[0].LoadBalancerArn;
         }
 
+        public async Task<List<SA_LoadBalancer>> GetLoadBalancerList()
+        {
+            var request = new DescribeLoadBalancersRequest();
+            var response = await client.DescribeLoadBalancersAsync(request);
+            var lstLoadBalancers = ModelTransformer<LoadBalancer, SA_LoadBalancer>.
+                TransformAwsModelListToSafeArrivalModelList(response.LoadBalancers);
+            lstLoadBalancers = lstLoadBalancers.FindAll(o => o.LoadBalancerName.Contains($"{environment}-"));
+            return lstLoadBalancers;
+        }
+
         public async Task<SA_TargetGroup> CreateTargetGroup(
             string name, string vpcId, string protocol, int port)
         {
@@ -53,8 +63,21 @@ namespace SafeArrival.AdminTools.AwsUtilities
             return ModelTransformer<TargetGroup, SA_TargetGroup>.TransformAwsModelToSafeArrivalModel(response.TargetGroups[0]);
         }
 
+        public async Task<List<SA_TargetGroup>> GetTargetGroupList(bool ignorColor = false)
+        {
+            var request = new DescribeTargetGroupsRequest();
+            var response = await client.DescribeTargetGroupsAsync(request);
+            var lstTargetGroups = ModelTransformer<TargetGroup, SA_TargetGroup>.
+                TransformAwsModelListToSafeArrivalModelList(response.TargetGroups);
+            if (ignorColor)
+                lstTargetGroups = lstTargetGroups.FindAll(o => o.TargetGroupName.Contains($"{environment}-"));
+            else
+                lstTargetGroups = lstTargetGroups.FindAll(o => o.TargetGroupName.Contains($"{environment}-{color}-"));
+            return lstTargetGroups;
+        }
+
         public async Task<SA_Listener> CreatListener(
-            string loadBalancerArn, string targetGroupArn, 
+            string loadBalancerArn, string targetGroupArn,
             string strProtocol, int port, string certificateArn = "")
         {
             var actions = new List<Amazon.ElasticLoadBalancingV2.Model.Action>();
@@ -80,8 +103,32 @@ namespace SafeArrival.AdminTools.AwsUtilities
 
             var response = await client.CreateListenerAsync(request);
             var listener = response.Listeners[0];
-            
-            return ModelTransformer<Listener, SA_Listener>.TransformAwsModelToSafeArrivalModel(response.Listeners[0]);
+
+            return ConvertListener(response.Listeners[0]);
+        }
+
+        public async Task<List<SA_Listener>> GetListenerList(string loadBalancerArn)
+        {
+            var request = new DescribeListenersRequest()
+            {
+                LoadBalancerArn= loadBalancerArn
+            };
+            var response = await client.DescribeListenersAsync(request);
+            var lstListeners = new List<SA_Listener>();
+            foreach (var listener in response.Listeners)
+            {
+                lstListeners.Add(ConvertListener(listener));
+            }
+            return lstListeners;
+        }
+
+        private SA_Listener ConvertListener(Listener awsListener)
+        {
+            var saListener = ModelTransformer<Listener, SA_Listener>.
+                TransformAwsModelToSafeArrivalModel(awsListener);
+            saListener.Rule = awsListener.DefaultActions[0].Type.ToString() + 
+                " to " + awsListener.DefaultActions[0].TargetGroupArn;
+            return saListener;
         }
     }
 }

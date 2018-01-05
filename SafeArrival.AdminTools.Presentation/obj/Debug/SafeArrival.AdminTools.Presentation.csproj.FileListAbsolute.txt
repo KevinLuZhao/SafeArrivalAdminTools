@@ -94,3 +94,4 @@ C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Pres
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Presentation\bin\Debug\AWSSDK.ElasticLoadBalancingV2.pdb
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Presentation\bin\Debug\AWSSDK.ElasticLoadBalancingV2.xml
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Presentation\obj\Debug\SafeArrival.AdminTools.Presentation.FormDeploymentSwitch.resources
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Presentation\obj\Debug\SafeArrival.AdminTools.Presentation.Controls.CtrlApplicationLoadBalancer.resources

@@ -82,6 +82,12 @@
     <Compile Include="Controls\CtrlApplication.Designer.cs">
       <DependentUpon>CtrlApplication.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CtrlApplicationLoadBalancer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CtrlApplicationLoadBalancer.Designer.cs">
+      <DependentUpon>CtrlApplicationLoadBalancer.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormDeploymentSwitch.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -137,6 +143,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Controls\CtrlApplication.resx">
       <DependentUpon>CtrlApplication.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CtrlApplicationLoadBalancer.resx">
+      <DependentUpon>CtrlApplicationLoadBalancer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormDeploymentSwitch.resx">
       <DependentUpon>FormDeploymentSwitch.cs</DependentUpon>
