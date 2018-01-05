@@ -44,12 +44,16 @@
   <ItemGroup>
     <Compile Include="ApplicationServer.cs" />
     <Compile Include="AutoScalingGroupSettings.cs" />
-    <Compile Include="AwsAutoScalingGroup.cs" />
-    <Compile Include="AwsResourceTypeName.cs" />
-    <Compile Include="AwsPeeringConnection.cs" />
-    <Compile Include="AwsRdsInstance.cs" />
-    <Compile Include="AwsS3Object.cs" />
-    <Compile Include="AwsVpc.cs" />
+    <Compile Include="SA_AutoScalingGroup.cs" />
+    <Compile Include="SA_Listener.cs" />
+    <Compile Include="SA_ResourceTypeName.cs" />
+    <Compile Include="SA_PeeringConnection.cs" />
+    <Compile Include="SA_RdsInstance.cs" />
+    <Compile Include="SA_S3Object.cs" />
+    <Compile Include="SA_SecurityGroup.cs" />
+    <Compile Include="SA_Subnet.cs" />
+    <Compile Include="SA_TargetGroup.cs" />
+    <Compile Include="SA_Vpc.cs" />
     <Compile Include="Color.cs" />
     <Compile Include="ConfigurationOptionSettingModel.cs" />
     <Compile Include="DynamodbScanCondition.cs" />

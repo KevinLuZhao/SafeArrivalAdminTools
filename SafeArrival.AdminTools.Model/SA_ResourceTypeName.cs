@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SafeArrival.AdminTools.Model
 {
-    public static class AwsResourceTypeName
+    public static class SA_ResourceTypeName
     {
         public static string RdsPeeringConnection
         {

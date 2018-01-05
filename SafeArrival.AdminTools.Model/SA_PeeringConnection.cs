@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SafeArrival.AdminTools.Model
 {
-    public class AwsPeeringConnection
+    public class SA_PeeringConnection
     {
         public string VpcPeeringConnectionId { get; set; }
         public string AccepterVpc { get; set; }

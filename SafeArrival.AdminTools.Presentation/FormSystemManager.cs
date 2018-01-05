@@ -11,8 +11,8 @@ namespace SafeArrival.AdminTools.Presentation
     {
 
         private List<AutoScalingGroupSettings> lstAutoScalingGroupSettings = new List<AutoScalingGroupSettings>();
-        private List<AwsVpc> lstVpcs = new List<AwsVpc>();
-        private AwsPeeringConnection vpcPeeringConnection;
+        private List<SA_Vpc> lstVpcs = new List<SA_Vpc>();
+        private SA_PeeringConnection vpcPeeringConnection;
 
         public FormSystemManager()
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SafeArrival.AdminTools.Model
 {
-    public class AwsAutoScalingGroup
+    public class SA_AutoScalingGroup
     {
         public string AutoScalingGroupName { get; set; }
         public string AutoScalingGroupARN { get; set; }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SafeArrival.AdminTools.Model
 {
-    public class AwsVpc
+    public class SA_Vpc
     {
         public string VpcId { get; set; }
         public string Name { get; set; }

@@ -84,6 +84,9 @@ namespace SafeArrival.AdminTools.Presentation
                 case "systemManagerToolStripMenuItem":
                     frm = new FormSystemManager();
                     break;
+                case "greenBlueDeploymentToolStripMenuItem":
+                    frm = new FormDeploymentSwitch();
+                    break;
                 case "viewLogsToolStripMenuItem":
                     frm = new FormLogs();
                     break;

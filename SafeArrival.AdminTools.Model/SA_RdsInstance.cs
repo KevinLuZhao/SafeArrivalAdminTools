@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SafeArrival.AdminTools.Model
 {
-    public class AwsRdsInstance
+    public class SA_RdsInstance
     {
         public string DBInstanceIdentifier { get; set; }
         public string DBInstanceArn { get; set; }

@@ -20,18 +20,20 @@ namespace SafeArrival.AdminTools.AwsUtilities
                 AwsCommon.GetRetionEndpoint(region));
         }
 
-        public async Task<List<AwsAutoScalingGroup>> GetAutoScalingGroupList()
+        public async Task<List<SA_AutoScalingGroup>> GetAutoScalingGroupList(bool ignorColor = false)
         {
-            var lstSaGroups = new List<AwsAutoScalingGroup>();
+            var lstSaGroups = new List<SA_AutoScalingGroup>();
             var response = await client.DescribeAutoScalingGroupsAsync();
-            var lstGroups = response.AutoScalingGroups.FindAll(o => o.Tags[0].Value.IndexOf(environment + "-" + color) >= 0);
+            var lstGroups = ignorColor ?
+                response.AutoScalingGroups.FindAll(o => o.Tags[0].Value.IndexOf(environment.ToString()) >= 0) :
+                response.AutoScalingGroups.FindAll(o => o.Tags[0].Value.IndexOf(environment + "-" + color) >= 0);
             var jumpBox = response.AutoScalingGroups.Find(
                 o => o.Tags[0].Value.IndexOf(environment.ToString()) >= 0 && o.Tags[0].Value.IndexOf("Jump") > 0);
             if (jumpBox != null)
                 lstGroups.Add(jumpBox);
             foreach (var group in lstGroups)
             {
-                var saGroup = new AwsAutoScalingGroup()
+                var saGroup = new SA_AutoScalingGroup()
                 {
                     AutoScalingGroupName = group.AutoScalingGroupName,
                     AutoScalingGroupARN = group.AutoScalingGroupARN,
@@ -64,6 +66,16 @@ namespace SafeArrival.AdminTools.AwsUtilities
             request.DesiredCapacity = settings.DesiredCapacity;
             request.AutoScalingGroupName = groupName;
             await client.UpdateAutoScalingGroupAsync(request);
+        }
+
+        public async Task AttachLoadBalancerTargetGroups(string autoScalingGroupName, List<string> targetGroupARNs)
+        {
+            var request = new AttachLoadBalancerTargetGroupsRequest()
+            {
+                AutoScalingGroupName = autoScalingGroupName,
+                TargetGroupARNs = targetGroupARNs
+            };
+            await client.AttachLoadBalancerTargetGroupsAsync(request);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
                 AwsCommon.GetRetionEndpoint(region));
         }
 
-        public async Task<AwsRdsInstance> GetRDSInstance()
+        public async Task<SA_RdsInstance> GetRDSInstance()
         {
             var response = await client.DescribeDBInstancesAsync();
             var lstInstance = response.DBInstances;
@@ -29,7 +29,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
             {
                 if (instance.DBSubnetGroup.DBSubnetGroupName.IndexOf(environment.ToString()) >= 0)
                 {
-                    AwsRdsInstance objInstance = new AwsRdsInstance
+                    SA_RdsInstance objInstance = new SA_RdsInstance
                     {
                         DBInstanceIdentifier = instance.DBInstanceIdentifier,
                         DBInstanceArn = instance.DBInstanceArn,

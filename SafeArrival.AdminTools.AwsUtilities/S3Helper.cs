@@ -155,9 +155,9 @@ DeleteFile(string fullFileName)
             }
         }
 
-        public List<AwsS3Object> GetBucketFileList(string prefix = "")
+        public List<SA_S3Object> GetBucketFileList(string prefix = "")
         {
-            var output = new List<AwsS3Object>();
+            var output = new List<SA_S3Object>();
             var request = new ListObjectsRequest();
             request.BucketName = BucketName;
             ListObjectsResponse listResponse;
@@ -166,7 +166,7 @@ DeleteFile(string fullFileName)
                 listResponse = client.ListObjects(request);
                 foreach (S3Object obj in listResponse.S3Objects)
                 {
-                    output.Add(new AwsS3Object(obj.Key, BucketName, obj.LastModified, obj.Size));
+                    output.Add(new SA_S3Object(obj.Key, BucketName, obj.LastModified, obj.Size));
                 }
                 request.Marker = listResponse.NextMarker;
             } while (listResponse.IsTruncated);

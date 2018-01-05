@@ -34,6 +34,8 @@
             this.parameterEditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.s3MonitorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.systemManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.greenBlueDeploymentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
@@ -46,7 +48,6 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.tsComboColor = new System.Windows.Forms.ToolStripComboBox();
-            this.viewLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -58,6 +59,7 @@
             this.parameterEditToolStripMenuItem,
             this.s3MonitorToolStripMenuItem,
             this.systemManagerToolStripMenuItem,
+            this.greenBlueDeploymentToolStripMenuItem,
             this.viewLogsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -88,6 +90,22 @@
             this.systemManagerToolStripMenuItem.Tag = "FormSystemManager";
             this.systemManagerToolStripMenuItem.Text = "System Manager";
             this.systemManagerToolStripMenuItem.Click += new System.EventHandler(this.OpenFormMenu_Click);
+            // 
+            // greenBlueDeploymentToolStripMenuItem
+            // 
+            this.greenBlueDeploymentToolStripMenuItem.Name = "greenBlueDeploymentToolStripMenuItem";
+            this.greenBlueDeploymentToolStripMenuItem.Size = new System.Drawing.Size(146, 20);
+            this.greenBlueDeploymentToolStripMenuItem.Tag = "FormDeploymentSwitch";
+            this.greenBlueDeploymentToolStripMenuItem.Text = "Green/Blue Deployment";
+            this.greenBlueDeploymentToolStripMenuItem.Click += new System.EventHandler(this.OpenFormMenu_Click);
+            // 
+            // viewLogsToolStripMenuItem
+            // 
+            this.viewLogsToolStripMenuItem.Name = "viewLogsToolStripMenuItem";
+            this.viewLogsToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
+            this.viewLogsToolStripMenuItem.Tag = "FormLogs";
+            this.viewLogsToolStripMenuItem.Text = "View Logs";
+            this.viewLogsToolStripMenuItem.Click += new System.EventHandler(this.OpenFormMenu_Click);
             // 
             // statusStrip1
             // 
@@ -175,14 +193,6 @@
             this.tsComboColor.Size = new System.Drawing.Size(75, 25);
             this.tsComboColor.SelectedIndexChanged += new System.EventHandler(this.tsComboColor_SelectedIndexChanged);
             // 
-            // viewLogsToolStripMenuItem
-            // 
-            this.viewLogsToolStripMenuItem.Name = "viewLogsToolStripMenuItem";
-            this.viewLogsToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
-            this.viewLogsToolStripMenuItem.Tag = "FormLogs";
-            this.viewLogsToolStripMenuItem.Text = "View Logs";
-            this.viewLogsToolStripMenuItem.Click += new System.EventHandler(this.OpenFormMenu_Click);
-            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -228,6 +238,7 @@
         private System.Windows.Forms.ToolStripMenuItem s3MonitorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem systemManagerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewLogsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem greenBlueDeploymentToolStripMenuItem;
     }
 }
 

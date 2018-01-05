@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SafeArrival.AdminTools.AwsUtilities
 {
-    public class EC2Helper: AwsHelperBase
+    public class EC2Helper : AwsHelperBase
     {
         private AmazonEC2Client client;
 
@@ -19,18 +19,18 @@ namespace SafeArrival.AdminTools.AwsUtilities
                 AwsCommon.GetRetionEndpoint(region));
         }
         /****************************************** VPC  ******************************************/
-        public async Task<List<AwsVpc>> GetVPCList()
+        public async Task<List<SA_Vpc>> GetVPCList()
         {
             var request = new DescribeVpcsRequest();
             var response = await client.DescribeVpcsAsync(request);
-            var ret = new List<AwsVpc>();
+            var ret = new List<SA_Vpc>();
             foreach (var vpc in response.Vpcs)
             {
                 if (vpc.IsDefault)
                 {
                     continue;
                 }
-                ret.Add(new AwsVpc()
+                ret.Add(new SA_Vpc()
                 {
                     CidrBlock = vpc.CidrBlock,
                     Name = vpc.Tags.Find(o => o.Key == "Name").Value,
@@ -40,8 +40,88 @@ namespace SafeArrival.AdminTools.AwsUtilities
             }
             return ret;
         }
+
+        public async Task<SA_Vpc> GetVPC()
+        {
+            //var filters = new List<Filter>();
+            //var filter = new Filter("Name", new List<string> { environment.ToString() });
+            //filters.Add(filter);
+            //var request = new DescribeVpcsRequest()
+            //{
+            //    Filters = filters
+            //};
+            //Vpc
+            var response = await client.DescribeVpcsAsync();
+            var vpc = response.Vpcs.Find(o=>o.Tags.Find(p=>p.Key=="Name").Value==environment.ToString());
+            if (vpc == null)
+                return null;
+            var awsVpc = new SA_Vpc()
+            {
+                CidrBlock = vpc.CidrBlock,
+                Name = vpc.Tags.Find(o => o.Key == "Name").Value,
+                State = vpc.State,
+                VpcId = vpc.VpcId
+            };
+            return awsVpc;
+        }
+
+        public async Task<List<SA_Subnet>> GetSubnetList()
+        {
+            var saSubnets = new List<SA_Subnet>();
+            var request = new DescribeSubnetsRequest();
+            var response = await client.DescribeSubnetsAsync();
+            foreach (var awsSubnet in response.Subnets)
+            {
+                if (awsSubnet.Tags.Find(o => o.Key == "Name").Value.IndexOf(environment.ToString()) == 0)
+                {
+                    saSubnets.Add(ConvertSubnet(awsSubnet));
+                }
+            }
+            return saSubnets;
+        }
+
+        private SA_Subnet ConvertSubnet(Subnet awsSubnet)
+        {
+            SA_Subnet saSubnet = ModelTransformer<Subnet, SA_Subnet>.TransformAwsModelToSafeArrivalModel(awsSubnet);
+            saSubnet.DisplayName = awsSubnet.Tags.Find(o => o.Key == "Name").Value;
+            return saSubnet;
+        }
+
+        public async Task<List<SA_SecurityGroup>> GetSecurityGroupList()
+        {
+
+            var saSecurityGroups = new List<SA_SecurityGroup>();
+            var request = new DescribeSecurityGroupsRequest();
+            var response = await client.DescribeSecurityGroupsAsync(request);
+            foreach (var securityGroup in response.SecurityGroups)
+            {
+                //Only Security group name follow naming convention and in current environment will be selected
+                if (securityGroup.Tags.Find(o => o.Key == "Name") == null)
+                    continue;
+                if (securityGroup.Tags.Find(o => o.Key == "Name").Value.IndexOf(environment.ToString()) == 0)
+                {
+                    saSecurityGroups.Add(ConvertSecurityGroup(securityGroup));
+                }
+            }
+            return saSecurityGroups;
+        }
+
+        private SA_SecurityGroup ConvertSecurityGroup(SecurityGroup awsSecurityGroup)
+        {
+            try
+            {
+                SA_SecurityGroup saSecurityGroup = ModelTransformer<SecurityGroup, SA_SecurityGroup>.TransformAwsModelToSafeArrivalModel(awsSecurityGroup);
+                saSecurityGroup.DisplayName = awsSecurityGroup.Tags.Find(o => o.Key == "Name").Value;
+                return saSecurityGroup;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
         /****************************************** VPC Peering Connection ******************************************/
-        public async Task<AwsPeeringConnection> GetPeeringConnection(string name)
+        public async Task<SA_PeeringConnection> GetPeeringConnection(string name)
         {
             var request = new DescribeVpcPeeringConnectionsRequest();
             var response = await client.DescribeVpcPeeringConnectionsAsync(request);
@@ -50,7 +130,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
                 Find(o => o.Status.Code == VpcPeeringConnectionStateReasonCode.Active);
             if (connection != null)
             {
-                var connectionModel = new AwsPeeringConnection()
+                var connectionModel = new SA_PeeringConnection()
                 {
                     AccepterVpc = connection.AccepterVpcInfo.VpcId,
                     RequesterVpc = connection.RequesterVpcInfo.VpcId,

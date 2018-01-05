@@ -11,7 +11,7 @@ namespace SafeArrival.AdminTools.Presentation
 {
     public partial class FormS3Monitor : FormMdiChildBase
     {
-        Dictionary<string, List<AwsS3Object>> _envAwsS3ObjectList = new Dictionary<string, List<AwsS3Object>>();
+        Dictionary<string, List<SA_S3Object>> _envAwsS3ObjectList = new Dictionary<string, List<SA_S3Object>>();
         TreeNode _currentNode = null;
         TreeNode _prevNode = null;
 
@@ -211,7 +211,7 @@ namespace SafeArrival.AdminTools.Presentation
             {
                 TreeNode bucketRootNode = new TreeNode(s3BucketName);
                 tvS3Folders.Nodes.Add(bucketRootNode);
-                _envAwsS3ObjectList.Add(s3BucketName, new List<AwsS3Object>());
+                _envAwsS3ObjectList.Add(s3BucketName, new List<SA_S3Object>());
             }
         }
 
@@ -236,7 +236,7 @@ namespace SafeArrival.AdminTools.Presentation
             PopulateGvFileList(_currentNode);
         }
 
-        private List<AwsS3Object> RefreshS3BucketObjectList(string s3BucketName)
+        private List<SA_S3Object> RefreshS3BucketObjectList(string s3BucketName)
         {
             S3Helper s3Helper = new S3Helper(
                                GlobalVariables.Enviroment,
@@ -256,12 +256,12 @@ namespace SafeArrival.AdminTools.Presentation
             var selectedObjList = _envAwsS3ObjectList[s3BucketName].FindAll(o =>
                 string.Join("/", o.S3BucketName, o.FullName).IndexOf(selectedFolder) == 0 &&
                 string.Join("/", o.S3BucketName, o.FullName).Replace(selectedFolder, "").IndexOf("/") < 0);
-            var bindingList = new BindingList<AwsS3Object>(selectedObjList);
+            var bindingList = new BindingList<SA_S3Object>(selectedObjList);
             dgViewS3Files.DataSource = bindingList;
             dgViewS3Files.Columns[1].Visible = false;
         }
 
-        private void BuildTreeviewNode(List<AwsS3Object> s3ObjList, string parentFolder, TreeNode parentNode)
+        private void BuildTreeviewNode(List<SA_S3Object> s3ObjList, string parentFolder, TreeNode parentNode)
         {
             List<string> lstFolders = new List<string>();
             //All item list under the parent folder. For example: under application/, may have item like application/api/api1.zip 

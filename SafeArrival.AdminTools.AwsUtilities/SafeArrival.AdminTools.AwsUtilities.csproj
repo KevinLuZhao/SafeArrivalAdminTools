@@ -50,6 +50,10 @@
       <HintPath>..\packages\AWSSDK.ElasticBeanstalk.3.3.6.3\lib\net45\AWSSDK.ElasticBeanstalk.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="AWSSDK.ElasticLoadBalancingV2, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
+      <HintPath>..\packages\AWSSDK.ElasticLoadBalancingV2.3.3.7.2\lib\net45\AWSSDK.ElasticLoadBalancingV2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="AWSSDK.IdentityManagement, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
       <HintPath>..\packages\AWSSDK.IdentityManagement.3.3.5.3\lib\net45\AWSSDK.IdentityManagement.dll</HintPath>
       <Private>True</Private>
@@ -93,6 +97,7 @@
     <Compile Include="EC2Helper.cs" />
     <Compile Include="ElasticBeanstalkHelper.cs" />
     <Compile Include="LambdaHelper.cs" />
+    <Compile Include="LoadBalancerHelper.cs" />
     <Compile Include="ModelTransformer.cs" />
     <Compile Include="RDSHelper.cs" />
     <Compile Include="S3Helper.cs" />
@@ -112,6 +117,7 @@
     <Analyzer Include="..\packages\AWSSDK.DynamoDBv2.3.3.5\analyzers\dotnet\cs\AWSSDK.DynamoDBv2.CodeAnalysis.dll" />
     <Analyzer Include="..\packages\AWSSDK.EC2.3.3.40\analyzers\dotnet\cs\AWSSDK.EC2.CodeAnalysis.dll" />
     <Analyzer Include="..\packages\AWSSDK.ElasticBeanstalk.3.3.6.3\analyzers\dotnet\cs\AWSSDK.ElasticBeanstalk.CodeAnalysis.dll" />
+    <Analyzer Include="..\packages\AWSSDK.ElasticLoadBalancingV2.3.3.7.2\analyzers\dotnet\cs\AWSSDK.ElasticLoadBalancingV2.CodeAnalysis.dll" />
     <Analyzer Include="..\packages\AWSSDK.IdentityManagement.3.3.5.3\analyzers\dotnet\cs\AWSSDK.IdentityManagement.CodeAnalysis.dll" />
     <Analyzer Include="..\packages\AWSSDK.Lambda.3.3.10\analyzers\dotnet\cs\AWSSDK.Lambda.CodeAnalysis.dll" />
     <Analyzer Include="..\packages\AWSSDK.RDS.3.3.18\analyzers\dotnet\cs\AWSSDK.RDS.CodeAnalysis.dll" />

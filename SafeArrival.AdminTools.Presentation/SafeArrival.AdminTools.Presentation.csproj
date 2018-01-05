@@ -82,6 +82,12 @@
     <Compile Include="Controls\CtrlApplication.Designer.cs">
       <DependentUpon>CtrlApplication.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormDeploymentSwitch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDeploymentSwitch.Designer.cs">
+      <DependentUpon>FormDeploymentSwitch.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormLogDetails.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -131,6 +137,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Controls\CtrlApplication.resx">
       <DependentUpon>CtrlApplication.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDeploymentSwitch.resx">
+      <DependentUpon>FormDeploymentSwitch.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLogDetails.resx">
       <DependentUpon>FormLogDetails.cs</DependentUpon>

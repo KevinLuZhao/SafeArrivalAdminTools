@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SafeArrival.AdminTools.Model
 {
-    public class AwsS3Object
+    public class SA_S3Object
     {
         public string FullName { get; }
 
@@ -16,7 +16,7 @@ namespace SafeArrival.AdminTools.Model
 
         public long Size { get; }
 
-        public AwsS3Object(string fullName, string s3BucketName, DateTime lastModified, long size)
+        public SA_S3Object(string fullName, string s3BucketName, DateTime lastModified, long size)
         {
             FullName = fullName;
             S3BucketName = s3BucketName;
