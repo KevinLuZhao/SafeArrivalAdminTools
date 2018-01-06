@@ -50,9 +50,39 @@ namespace SafeArrival.AdminTools.Presentation
         {
             try
             {
-                SwitchDeploymentService service = new SwitchDeploymentService();
-                await service.GenerateExternalLoadBalancers();
-                await PopulateLoadBalancerControls();
+                var confirmResult = MessageBox.Show(
+                    $"Are you sure to create {GlobalVariables.Enviroment.ToString()} Application Load Balancers?",
+                    "Confirm Creating Application Load Balancers",
+                    MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    SwitchDeploymentService service = new SwitchDeploymentService();
+                    await service.GenerateExternalLoadBalancers();
+                    await PopulateLoadBalancerControls();
+                    WriteNotification($"{GlobalVariables.Enviroment.ToString()} Application Load Balancers are created!");
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+        }
+
+        private async void btnSwitch_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var confirmResult = MessageBox.Show(
+                    $"Are you sure to switch {GlobalVariables.Enviroment.ToString()} deployments?",
+                    "Confirm Switching Deployments",
+                    MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    SwitchDeploymentService service = new SwitchDeploymentService();
+                    await service.SwitchDeployment();
+                    await PopulateLoadBalancerControls();
+                    WriteNotification($"{GlobalVariables.Enviroment.ToString()} deployments are switched!");
+                }
             }
             catch (Exception ex)
             {

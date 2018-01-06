@@ -39,9 +39,9 @@ namespace SafeArrival.AdminTools.Presentation.Controls
                 lblProtocol.Text = "Protocol: " + listener.Protocol;
                 lblProtocol.Location = new Point(pointX + 100, pointY + counter * 22);
                 Label lblDefaultAction = new Label();
-                lblDefaultAction.Text = "Default Action: " + listener.Rule;
+                lblDefaultAction.Text = "Default Action: forwad to " + listener.TargetArn;
                 lblDefaultAction.Width = 1000;
-                lblDefaultAction.ForeColor = listener.Rule.Contains("green") ? 
+                lblDefaultAction.ForeColor = listener.TargetArn.Contains("green") ? 
                     System.Drawing.Color.Green : System.Drawing.Color.Blue;
                 lblDefaultAction.Location = new Point(pointX + 200, pointY + counter * 22);
                 panel1.Controls.Add(lblPort);

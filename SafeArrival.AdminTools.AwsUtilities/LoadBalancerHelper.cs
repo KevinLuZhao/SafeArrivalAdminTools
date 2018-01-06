@@ -107,11 +107,28 @@ namespace SafeArrival.AdminTools.AwsUtilities
             return ConvertListener(response.Listeners[0]);
         }
 
+        public async Task ChangeListenerTargets(string listenerArn, string targetGroupArn)
+        {
+            var requestGet = new DescribeListenersRequest()
+            {
+                ListenerArns = new List<string>() { listenerArn }
+            };
+            var responseGet = await client.DescribeListenersAsync(requestGet);
+            Listener listener = responseGet.Listeners[0];
+            listener.DefaultActions[0].TargetGroupArn = targetGroupArn;
+            var request = new ModifyListenerRequest()
+            {
+                ListenerArn = listenerArn,
+                DefaultActions = listener.DefaultActions
+            };
+            await client.ModifyListenerAsync(request);
+        }
+
         public async Task<List<SA_Listener>> GetListenerList(string loadBalancerArn)
         {
             var request = new DescribeListenersRequest()
             {
-                LoadBalancerArn= loadBalancerArn
+                LoadBalancerArn = loadBalancerArn
             };
             var response = await client.DescribeListenersAsync(request);
             var lstListeners = new List<SA_Listener>();
@@ -126,8 +143,9 @@ namespace SafeArrival.AdminTools.AwsUtilities
         {
             var saListener = ModelTransformer<Listener, SA_Listener>.
                 TransformAwsModelToSafeArrivalModel(awsListener);
-            saListener.Rule = awsListener.DefaultActions[0].Type.ToString() + 
-                " to " + awsListener.DefaultActions[0].TargetGroupArn;
+            //saListener.Rule = awsListener.DefaultActions[0].Type.ToString() + 
+            //    " to " + awsListener.DefaultActions[0].TargetGroupArn;
+            saListener.TargetArn = awsListener.DefaultActions[0].TargetGroupArn;
             return saListener;
         }
     }

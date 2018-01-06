@@ -10,10 +10,14 @@ namespace SafeArrival.AdminTools.BLL
 {
     public class SwitchDeploymentService
     {
-        LoadBalancerHelper loadBalancerHelper = new LoadBalancerHelper(
-            GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
+        const int PRODUCTION_HTTP_PORT = 80;
+        const int PRODUCTION_HTTPS_PORT = 443;
+        const int PRE_PRODUCTION_HTTP_PORT = 8080;
+        const int PRE_PRODUCTION_HTTPS_PORT = 4343;
         public async Task GenerateExternalLoadBalancers()
         {
+            LoadBalancerHelper loadBalancerHelper = new LoadBalancerHelper(
+                GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
             var scalingGroupHelper = new AutoScalingHelper(
                 GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
             var apps = Enum.GetNames(typeof(ApplicationServer)).ToList();
@@ -48,23 +52,25 @@ namespace SafeArrival.AdminTools.BLL
 
                 await loadBalancerHelper.CreatListener(loadBalancerArn,
                     tGroups.Find(o => o.TargetGroupName.Contains(Color.green.ToString())).TargetGroupArn,
-                    "HTTP", 80);
+                    "HTTP", PRODUCTION_HTTP_PORT);
                 await loadBalancerHelper.CreatListener(loadBalancerArn,
                     tGroups.Find(o => o.TargetGroupName.Contains(Color.green.ToString())).TargetGroupArn,
-                    "HTTPS", 443,
+                    "HTTPS", PRODUCTION_HTTPS_PORT,
                     "arn:aws:acm:us-east-2:125237747044:certificate/abb607ce-4090-45cb-bf29-923e08106664");
                 await loadBalancerHelper.CreatListener(loadBalancerArn,
                     tGroups.Find(o => o.TargetGroupName.Contains(Color.blue.ToString())).TargetGroupArn,
-                    "HTTP", 8080);
+                    "HTTP", PRE_PRODUCTION_HTTP_PORT);
                 await loadBalancerHelper.CreatListener(loadBalancerArn,
                     tGroups.Find(o => o.TargetGroupName.Contains(Color.blue.ToString())).TargetGroupArn,
-                    "HTTPS", 4343,
+                    "HTTPS", PRE_PRODUCTION_HTTPS_PORT,
                     "arn:aws:acm:us-east-2:125237747044:certificate/abb607ce-4090-45cb-bf29-923e08106664");
             }
         }
 
         public async Task<List<ApplicationLoadBalancerModel>> GetApplicationLoadBalancers()
         {
+            LoadBalancerHelper loadBalancerHelper = new LoadBalancerHelper(
+                GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
             var applicationLoadBalancers = new List<ApplicationLoadBalancerModel>();
             var loadBalancers = await loadBalancerHelper.GetLoadBalancerList();
             foreach (var loadBalancer in loadBalancers)
@@ -76,6 +82,26 @@ namespace SafeArrival.AdminTools.BLL
                 applicationLoadBalancers.Add(applicationLoadBalancer);
             }
             return applicationLoadBalancers;
+        }
+
+        public async Task SwitchDeployment()
+        {
+            LoadBalancerHelper loadBalancerHelper = new LoadBalancerHelper(
+                GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
+            var loadBalancers = await loadBalancerHelper.GetLoadBalancerList();
+            foreach (var loadBalancer in loadBalancers)
+            {
+                var listeners = await loadBalancerHelper.GetListenerList(loadBalancer.LoadBalancerArn);
+                var prodHttpListener = listeners.Find(o => o.Port == PRODUCTION_HTTP_PORT);
+                var prodHttpsListener = listeners.Find(o => o.Port == PRODUCTION_HTTPS_PORT);
+                var preProdHttpListener = listeners.Find(o => o.Port == PRE_PRODUCTION_HTTP_PORT);
+                var preProdHttpsListener = listeners.Find(o => o.Port == PRE_PRODUCTION_HTTPS_PORT);
+
+                await loadBalancerHelper.ChangeListenerTargets(prodHttpListener.ListenerArn, preProdHttpListener.TargetArn);
+                await loadBalancerHelper.ChangeListenerTargets(preProdHttpListener.ListenerArn, prodHttpListener.TargetArn);
+                await loadBalancerHelper.ChangeListenerTargets(prodHttpsListener.ListenerArn, preProdHttpsListener.TargetArn);
+                await loadBalancerHelper.ChangeListenerTargets(preProdHttpsListener.ListenerArn, prodHttpsListener.TargetArn);
+            }
         }
     }
 }
