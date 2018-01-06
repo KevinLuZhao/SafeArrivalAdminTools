@@ -40,7 +40,7 @@ namespace SafeArrival.AdminTools.Presentation.Controls
                 Label lblDefaultAction = new Label();
                 lblDefaultAction.Text = "Default Action: " + listener.Rule;
                 lblDefaultAction.Width = 1000;
-                lblDefaultAction.Location = new Point(pointX + 300, pointY + counter * 22);
+                lblDefaultAction.Location = new Point(pointX + 200, pointY + counter * 22);
                 panel1.Controls.Add(lblPort);
                 panel1.Controls.Add(lblProtocol);
                 panel1.Controls.Add(lblDefaultAction);

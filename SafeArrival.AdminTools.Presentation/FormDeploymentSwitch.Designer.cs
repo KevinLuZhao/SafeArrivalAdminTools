@@ -42,7 +42,7 @@
             this.panel1.Controls.Add(this.lblWarn);
             this.panel1.Location = new System.Drawing.Point(12, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1096, 599);
+            this.panel1.Size = new System.Drawing.Size(1096, 608);
             this.panel1.TabIndex = 1;
             // 
             // lblWarn
@@ -60,7 +60,7 @@
             // btnCreate
             // 
             this.btnCreate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnCreate.Location = new System.Drawing.Point(12, 608);
+            this.btnCreate.Location = new System.Drawing.Point(12, 617);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(135, 23);
             this.btnCreate.TabIndex = 0;
@@ -72,7 +72,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1120, 634);
+            this.ClientSize = new System.Drawing.Size(1120, 643);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnCreate);
             this.Name = "FormDeploymentSwitch";

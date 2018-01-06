@@ -61,6 +61,7 @@ namespace SafeArrival.AdminTools.Presentation
 
         private async Task PopulateLoadBalancerControls()
         {
+            btnCreate.Visible = false;
             SwitchDeploymentService service = new SwitchDeploymentService();
             applicationLoadBalancers = await service.GetApplicationLoadBalancers();
             if (applicationLoadBalancers == null || applicationLoadBalancers.Count == 0)
@@ -80,7 +81,7 @@ namespace SafeArrival.AdminTools.Presentation
             foreach (var alb in applicationLoadBalancers)
             {
                 var ctrl = new CtrlApplicationLoadBalancer(alb);
-                ctrl.Location = new Point(0, 10 + counter * 120);
+                ctrl.Location = new Point(0, counter * 120);
                 panel1.Controls.Add(ctrl);
                 counter++;
             }
