@@ -41,7 +41,7 @@ namespace SafeArrival.AdminTools.BLL
                         $"{GlobalVariables.Enviroment.ToString()}-{color}-{appName}-TG",
                         vpc.VpcId, "HTTP", 80);
                     await scalingGroupHelper.AttachLoadBalancerTargetGroups(
-                        sGroups.Find(o => o.Name.Contains($"{GlobalVariables.Enviroment}-{color}")).Name,
+                        sGroups.Find(o => o.Name.Contains($"{GlobalVariables.Enviroment}-{color}")).AutoScalingGroupName,
                         new List<string>() { tGroup.TargetGroupArn });
                     tGroups.Add(tGroup);
                 }
@@ -72,6 +72,7 @@ namespace SafeArrival.AdminTools.BLL
                 var applicationLoadBalancer = new ApplicationLoadBalancerModel();
                 applicationLoadBalancer.LoadBalancer = loadBalancer;
                 applicationLoadBalancer.Listeners = await loadBalancerHelper.GetListenerList(loadBalancer.LoadBalancerArn);
+                applicationLoadBalancer.Listeners = applicationLoadBalancer.Listeners.OrderBy(o => o.Port).ToList();
                 applicationLoadBalancers.Add(applicationLoadBalancer);
             }
             return applicationLoadBalancers;

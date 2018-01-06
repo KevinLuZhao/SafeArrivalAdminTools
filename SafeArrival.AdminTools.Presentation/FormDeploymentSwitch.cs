@@ -52,6 +52,7 @@ namespace SafeArrival.AdminTools.Presentation
             {
                 SwitchDeploymentService service = new SwitchDeploymentService();
                 await service.GenerateExternalLoadBalancers();
+                await PopulateLoadBalancerControls();
             }
             catch (Exception ex)
             {
@@ -61,6 +62,7 @@ namespace SafeArrival.AdminTools.Presentation
 
         private async Task PopulateLoadBalancerControls()
         {
+            panel1.Controls.Clear();
             btnCreate.Visible = false;
             lblWarn.Visible = false;
             SwitchDeploymentService service = new SwitchDeploymentService();
