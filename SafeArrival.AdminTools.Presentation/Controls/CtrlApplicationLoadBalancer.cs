@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 using System.Windows.Forms;
 using SafeArrival.AdminTools.Model;
 
@@ -32,7 +33,7 @@ namespace SafeArrival.AdminTools.Presentation.Controls
                 Label lblPort = new Label();
                 lblPort.Text = "Port: " + listener.Port.ToString();
                 //var font = new Font(null,FontStyle.Bold  );
-                //lblPort.Font = font;
+                lblPort.Font = new Font("Arial", 9, FontStyle.Bold);
                 lblPort.Location = new Point(pointX, pointY + counter * 22);
                 Label lblProtocol = new Label();
                 lblProtocol.Text = "Protocol: " + listener.Protocol;
@@ -40,6 +41,8 @@ namespace SafeArrival.AdminTools.Presentation.Controls
                 Label lblDefaultAction = new Label();
                 lblDefaultAction.Text = "Default Action: " + listener.Rule;
                 lblDefaultAction.Width = 1000;
+                lblDefaultAction.ForeColor = listener.Rule.Contains("green") ? 
+                    System.Drawing.Color.Green : System.Drawing.Color.Blue;
                 lblDefaultAction.Location = new Point(pointX + 200, pointY + counter * 22);
                 panel1.Controls.Add(lblPort);
                 panel1.Controls.Add(lblProtocol);

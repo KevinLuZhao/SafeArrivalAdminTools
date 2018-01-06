@@ -62,6 +62,7 @@ namespace SafeArrival.AdminTools.Presentation
         private async Task PopulateLoadBalancerControls()
         {
             btnCreate.Visible = false;
+            lblWarn.Visible = false;
             SwitchDeploymentService service = new SwitchDeploymentService();
             applicationLoadBalancers = await service.GetApplicationLoadBalancers();
             if (applicationLoadBalancers == null || applicationLoadBalancers.Count == 0)

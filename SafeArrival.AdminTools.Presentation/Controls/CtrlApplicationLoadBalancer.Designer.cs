@@ -48,7 +48,7 @@
             // lblDns
             // 
             this.lblDns.AutoSize = true;
-            this.lblDns.Location = new System.Drawing.Point(351, 8);
+            this.lblDns.Location = new System.Drawing.Point(241, 5);
             this.lblDns.Name = "lblDns";
             this.lblDns.Size = new System.Drawing.Size(35, 13);
             this.lblDns.TabIndex = 1;
