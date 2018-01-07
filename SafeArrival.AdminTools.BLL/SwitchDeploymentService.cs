@@ -45,7 +45,7 @@ namespace SafeArrival.AdminTools.BLL
                         $"{GlobalVariables.Enviroment.ToString()}-{color}-{appName}-TG",
                         vpc.VpcId, "HTTP", 80);
                     await scalingGroupHelper.AttachLoadBalancerTargetGroups(
-                        sGroups.Find(o => o.Name.Contains($"{GlobalVariables.Enviroment}-{color}")).AutoScalingGroupName,
+                        sGroups.Find(o => o.Name.Contains($"{GlobalVariables.Enviroment}-{color}-{appName}")).AutoScalingGroupName,
                         new List<string>() { tGroup.TargetGroupArn });
                     tGroups.Add(tGroup);
                 }

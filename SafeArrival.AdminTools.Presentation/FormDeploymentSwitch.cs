@@ -93,7 +93,7 @@ namespace SafeArrival.AdminTools.Presentation
         private async Task PopulateLoadBalancerControls()
         {
             panel1.Controls.Clear();
-            btnCreate.Visible = false;
+            //btnCreate.Visible = false;
             lblWarn.Visible = false;
             SwitchDeploymentService service = new SwitchDeploymentService();
             applicationLoadBalancers = await service.GetApplicationLoadBalancers();
