@@ -68,14 +68,31 @@ namespace SafeArrival.AdminTools.AwsUtilities
             await client.UpdateAutoScalingGroupAsync(request);
         }
 
-        public async Task AttachLoadBalancerTargetGroups(string autoScalingGroupName, List<string> targetGroupARNs)
+        public async Task AttachLoadBalancerTargetGroups(SA_AutoScalingGroup autoScalingGroup, List<string> targetGroupARNs)
         {
             var request = new AttachLoadBalancerTargetGroupsRequest()
             {
-                AutoScalingGroupName = autoScalingGroupName,
+                AutoScalingGroupName = autoScalingGroup.AutoScalingGroupName,
                 TargetGroupARNs = targetGroupARNs
             };
+            //client.DetachLoadBalancerTargetGroupsAsync()
             await client.AttachLoadBalancerTargetGroupsAsync(request);
+        }
+
+        public async Task ClearAutoScalingGroupAttachedTargetGroups(SA_AutoScalingGroup autoScalingGroup)
+        {
+            var getRequest = new DescribeLoadBalancerTargetGroupsRequest()
+            {
+                AutoScalingGroupName = autoScalingGroup.AutoScalingGroupName
+            };
+            var getResponse = await client.DescribeLoadBalancerTargetGroupsAsync(getRequest);
+
+            var removeRequest = new DetachLoadBalancerTargetGroupsRequest()
+            {
+                AutoScalingGroupName = autoScalingGroup.AutoScalingGroupName,
+                TargetGroupARNs = getResponse.LoadBalancerTargetGroups.ConvertAll(o=>o.LoadBalancerTargetGroupARN)
+            };
+            await client.DetachLoadBalancerTargetGroupsAsync(removeRequest);   
         }
     }
 }

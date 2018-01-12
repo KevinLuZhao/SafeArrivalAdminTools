@@ -9011,6 +9011,11 @@
             a subnet, it's automatically associated with the default network ACL. For more information
             about network ACLs, see <a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ACLs.html">Network
             ACLs</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.
+            
+             
+            <para>
+            This is an idempotent operation.
+            </para>
             </summary>
             <param name="request">Container for the necessary parameters to execute the ReplaceNetworkAclAssociation service method.</param>
             
@@ -10261,8 +10266,8 @@
             <summary>
             Gets and sets the property PrefixListIds. 
             <para>
-            (Valid for <a>AuthorizeSecurityGroupEgress</a>, <a>RevokeSecurityGroupEgress</a> and
-            <a>DescribeSecurityGroups</a> only) One or more prefix list IDs for an AWS service.
+            (EC2-VPC only; valid for <a>AuthorizeSecurityGroupEgress</a>, <a>RevokeSecurityGroupEgress</a>
+            and <a>DescribeSecurityGroups</a> only) One or more prefix list IDs for an AWS service.
             In an <a>AuthorizeSecurityGroupEgress</a> request, this is the AWS service that you
             want to access through a VPC endpoint from instances associated with the security
             group.
@@ -10574,6 +10579,14 @@
             Gets and sets the property PublicIp. 
             <para>
             The Elastic IP address.
+            </para>
+            </summary>
+        </member>
+        <member name="P:Amazon.EC2.Model.Address.Tags">
+            <summary>
+            Gets and sets the property Tags. 
+            <para>
+            Any tags assigned to the Elastic IP address.
             </para>
             </summary>
         </member>
@@ -23987,21 +24000,21 @@
             </para>
              <ul> <li> 
             <para>
-             <code>customer-account-id</code> - The AWS account number of the owner of the endpoint.
+             <code>service-id</code> - The ID of the service.
             </para>
              </li> <li> 
             <para>
-             <code>endpoint-connection-state</code> - The state of the endpoint (<code>PendingAcceptance</code>
-            | <code>Pending</code> | <code>Available</code> | <code>Deleting</code> | <code>Deleted</code>
-            | <code>Rejected</code> | <code>Failed</code>).
+             <code>vpc-endpoint-owner</code> - The AWS account number of the owner of the endpoint.
+            </para>
+             </li> <li> 
+            <para>
+             <code>vpc-endpoint-state</code> - The state of the endpoint (<code>pendingAcceptance</code>
+            | <code>pending</code> | <code>available</code> | <code>deleting</code> | <code>deleted</code>
+            | <code>rejected</code> | <code>failed</code>).
             </para>
              </li> <li> 
             <para>
              <code>vpc-endpoint-id</code> - The ID of the endpoint.
-            </para>
-             </li> <li> 
-            <para>
-             <code>vpc-endpoint-service-id</code> - The ID of the service.
             </para>
              </li> </ul>
             </summary>
@@ -24061,17 +24074,16 @@
             </para>
              <ul> <li> 
             <para>
-             <code>service-name</code> - The ARN of the service.
+             <code>service-name</code> - The name of the service.
             </para>
              </li> <li> 
             <para>
-             <code>vpc-endpoint-service-id</code> - The ID of the service.
+             <code>service-id</code> - The ID of the service.
             </para>
              </li> <li> 
             <para>
-             <code>vpc-endpoint-service-state</code> - The state of the service (<code>Pending</code>
-            | <code>Available</code> | <code>Deleting</code> | <code>Deleted</code> | <code>Failed</code>).
-            
+             <code>service-state</code> - The state of the service (<code>Pending</code> | <code>Available</code>
+            | <code>Deleting</code> | <code>Deleted</code> | <code>Failed</code>). 
             </para>
              </li> </ul>
             </summary>
@@ -51412,7 +51424,7 @@
         </member>
         <member name="T:Amazon.EC2.Model.PrefixListId">
             <summary>
-            The ID of the prefix.
+            [EC2-VPC only] The ID of the prefix.
             </summary>
         </member>
         <member name="P:Amazon.EC2.Model.PrefixListId.Description">
@@ -52470,6 +52482,11 @@
             a subnet, it's automatically associated with the default network ACL. For more information
             about network ACLs, see <a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ACLs.html">Network
             ACLs</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.
+            
+             
+            <para>
+            This is an idempotent operation.
+            </para>
             </summary>
         </member>
         <member name="P:Amazon.EC2.Model.ReplaceNetworkAclAssociationRequest.AssociationId">
@@ -76643,6 +76660,11 @@
             a subnet, it's automatically associated with the default network ACL. For more information
             about network ACLs, see <a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ACLs.html">Network
             ACLs</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.
+            
+             
+            <para>
+            This is an idempotent operation.
+            </para>
             </summary>
             <param name="request">Container for the necessary parameters to execute the ReplaceNetworkAclAssociation service method.</param>
             

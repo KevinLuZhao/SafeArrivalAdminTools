@@ -38,6 +38,16 @@ namespace SafeArrival.AdminTools.Presentation
         {
             try
             {
+                var helper1 = new AwsUtilities.CloudFormationHelper(
+                GlobalVariables.Enviroment,
+                GlobalVariables.Region,
+                GlobalVariables.Color);
+                await helper1.Get();
+                var helper = new AwsUtilities.CodePipelineHelper(
+                GlobalVariables.Enviroment,
+                GlobalVariables.Region,
+                GlobalVariables.Color);
+                await helper.Get();
                 await PopulateLoadBalancerControls();
             }
             catch (Exception ex)
@@ -118,6 +128,12 @@ namespace SafeArrival.AdminTools.Presentation
                 panel1.Controls.Add(ctrl);
                 counter++;
             }
+        }
+
+        private async void btnClearTargetGroups_Click(object sender, EventArgs e)
+        {
+            SwitchDeploymentService service = new SwitchDeploymentService();
+            await service.ClearTargetGroupAttachments();
         }
     }
 }

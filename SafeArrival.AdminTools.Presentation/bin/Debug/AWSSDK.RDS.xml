@@ -836,7 +836,8 @@
             </para>
              
             <para>
-             Default: <code>3306</code> 
+             Default: <code>3306</code> if engine is set as aurora or <code>5432</code> if set
+            to aurora-postgresql. 
             </para>
             </summary>
         </member>
@@ -989,28 +990,25 @@
             Container for the parameters to the CreateDBInstanceReadReplica operation.
             Creates a new DB instance that acts as a Read Replica for an existing source DB instance.
             You can create a Read Replica for a DB instance running MySQL, MariaDB, or PostgreSQL.
+            For more information, see <a href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html">Working
+            with PostgreSQL, MySQL, and MariaDB Read Replicas</a>. 
             
-            
-             <note> 
+             
             <para>
             Amazon Aurora does not support this action. You must call the <code>CreateDBInstance</code>
             action to create a DB instance for an Aurora DB cluster. 
             </para>
-             </note> 
+             
             <para>
-            All Read Replica DB instances are created as Single-AZ deployments with backups disabled.
-            All other DB instance attributes (including DB security groups and DB parameter groups)
-            are inherited from the source DB instance, except as specified below. 
+            All Read Replica DB instances are created with backups disabled. All other DB instance
+            attributes (including DB security groups and DB parameter groups) are inherited from
+            the source DB instance, except as specified below. 
             </para>
              <important> 
             <para>
-            The source DB instance must have backup retention enabled. 
+            Your source DB instance must have backup retention enabled. 
             </para>
-             </important> 
-            <para>
-            For more information, see <a href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html">Working
-            with PostgreSQL, MySQL, and MariaDB Read Replicas</a>. 
-            </para>
+             </important>
             </summary>
         </member>
         <member name="P:Amazon.RDS.Model.CreateDBInstanceReadReplicaRequest.SourceRegion">
@@ -1248,6 +1246,14 @@
             <para>
             If <code>MonitoringInterval</code> is set to a value other than 0, then you must supply
             a <code>MonitoringRoleArn</code> value.
+            </para>
+            </summary>
+        </member>
+        <member name="P:Amazon.RDS.Model.CreateDBInstanceReadReplicaRequest.MultiAZ">
+            <summary>
+            Gets and sets the property MultiAZ. 
+            <para>
+            Specifies whether the read replica is in a Multi-AZ deployment. 
             </para>
             </summary>
         </member>
@@ -2576,7 +2582,7 @@
             Instantiates CreateDBInstanceRequest with the parameterized properties
             </summary>
             <param name="dbInstanceIdentifier">The DB instance identifier. This parameter is stored as a lowercase string. Constraints: <ul> <li> Must contain from 1 to 63 letters, numbers, or hyphens. </li> <li> First character must be a letter. </li> <li> Cannot end with a hyphen or contain two consecutive hyphens. </li> </ul> Example: <code>mydbinstance</code> </param>
-            <param name="allocatedStorage">The amount of storage (in gigabytes) to be initially allocated for the DB instance. Type: Integer  <b>Amazon Aurora</b>  Not applicable. Aurora cluster volumes automatically grow as the amount of data in your database increases, though you are only charged for the space that you use in an Aurora cluster volume.  <b>MySQL</b>  Constraints to the amount of storage for each storage type are the following:  <ul> <li> General Purpose (SSD) storage (gp2): Must be an integer from 5 to 6144. </li> <li> Provisioned IOPS storage (io1): Must be an integer from 100 to 6144. </li> <li> Magnetic storage (standard): Must be an integer from 5 to 3072. </li> </ul>  <b>MariaDB</b>  Constraints to the amount of storage for each storage type are the following:  <ul> <li> General Purpose (SSD) storage (gp2): Must be an integer from 5 to 6144. </li> <li> Provisioned IOPS storage (io1): Must be an integer from 100 to 6144. </li> <li> Magnetic storage (standard): Must be an integer from 5 to 3072. </li> </ul>  <b>PostgreSQL</b>  Constraints to the amount of storage for each storage type are the following:  <ul> <li> General Purpose (SSD) storage (gp2): Must be an integer from 5 to 6144. </li> <li> Provisioned IOPS storage (io1): Must be an integer from 100 to 6144. </li> <li> Magnetic storage (standard): Must be an integer from 5 to 3072. </li> </ul>  <b>Oracle</b>  Constraints to the amount of storage for each storage type are the following:  <ul> <li> General Purpose (SSD) storage (gp2): Must be an integer from 10 to 6144. </li> <li> Provisioned IOPS storage (io1): Must be an integer from 100 to 6144. </li> <li> Magnetic storage (standard): Must be an integer from 10 to 3072. </li> </ul>  <b>SQL Server</b>  Constraints to the amount of storage for each storage type are the following:  <ul> <li> General Purpose (SSD) storage (gp2): <ul> <li> Enterprise and Standard editions: Must be an integer from 200 to 16384. </li> <li> Web and Express editions: Must be an integer from 20 to 16384. </li> </ul> </li> <li> Provisioned IOPS storage (io1): <ul> <li> Enterprise and Standard editions: Must be an integer from 200 to 16384. </li> <li> Web and Express editions: Must be an integer from 100 to 16384. </li> </ul> </li> <li> Magnetic storage (standard): <ul> <li> Enterprise and Standard editions: Must be an integer from 200 to 1024. </li> <li> Web and Express editions: Must be an integer from 20 to 1024. </li> </ul> </li> </ul></param>
+            <param name="allocatedStorage">The amount of storage (in gibibytes) to allocate for the DB instance. Type: Integer  <b>Amazon Aurora</b>  Not applicable. Aurora cluster volumes automatically grow as the amount of data in your database increases, though you are only charged for the space that you use in an Aurora cluster volume.  <b>MySQL</b>  Constraints to the amount of storage for each storage type are the following:  <ul> <li> General Purpose (SSD) storage (gp2): Must be an integer from 20 to 16384. </li> <li> Provisioned IOPS storage (io1): Must be an integer from 100 to 16384. </li> <li> Magnetic storage (standard): Must be an integer from 5 to 3072. </li> </ul>  <b>MariaDB</b>  Constraints to the amount of storage for each storage type are the following:  <ul> <li> General Purpose (SSD) storage (gp2): Must be an integer from 20 to 16384. </li> <li> Provisioned IOPS storage (io1): Must be an integer from 100 to 16384. </li> <li> Magnetic storage (standard): Must be an integer from 5 to 3072. </li> </ul>  <b>PostgreSQL</b>  Constraints to the amount of storage for each storage type are the following:  <ul> <li> General Purpose (SSD) storage (gp2): Must be an integer from 20 to 16384. </li> <li> Provisioned IOPS storage (io1): Must be an integer from 100 to 16384. </li> <li> Magnetic storage (standard): Must be an integer from 5 to 3072. </li> </ul>  <b>Oracle</b>  Constraints to the amount of storage for each storage type are the following:  <ul> <li> General Purpose (SSD) storage (gp2): Must be an integer from 20 to 16384. </li> <li> Provisioned IOPS storage (io1): Must be an integer from 100 to 16384. </li> <li> Magnetic storage (standard): Must be an integer from 10 to 3072. </li> </ul>  <b>SQL Server</b>  Constraints to the amount of storage for each storage type are the following:  <ul> <li> General Purpose (SSD) storage (gp2): <ul> <li> Enterprise and Standard editions: Must be an integer from 200 to 16384. </li> <li> Web and Express editions: Must be an integer from 20 to 16384. </li> </ul> </li> <li> Provisioned IOPS storage (io1): <ul> <li> Enterprise and Standard editions: Must be an integer from 200 to 16384. </li> <li> Web and Express editions: Must be an integer from 100 to 16384. </li> </ul> </li> <li> Magnetic storage (standard): <ul> <li> Enterprise and Standard editions: Must be an integer from 200 to 1024. </li> <li> Web and Express editions: Must be an integer from 20 to 1024. </li> </ul> </li> </ul></param>
             <param name="dbInstanceClass">The compute and memory capacity of the DB instance, for example, <code>db.m4.large</code>. Not all DB instance classes are available in all AWS Regions, or for all database engines. For the full list of DB instance classes, and availability for your engine, see <a href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html">DB Instance Class</a> in the Amazon RDS User Guide. </param>
             <param name="engine">The name of the database engine to be used for this instance.  Not every database engine is available for every AWS Region.  Valid Values:  <ul> <li>  <code>aurora</code>  </li> <li>  <code>aurora-postgresql</code>  </li> <li>  <code>mariadb</code>  </li> <li>  <code>mysql</code>  </li> <li>  <code>oracle-ee</code>  </li> <li>  <code>oracle-se2</code>  </li> <li>  <code>oracle-se1</code>  </li> <li>  <code>oracle-se</code>  </li> <li>  <code>postgres</code>  </li> <li>  <code>sqlserver-ee</code>  </li> <li>  <code>sqlserver-se</code>  </li> <li>  <code>sqlserver-ex</code>  </li> <li>  <code>sqlserver-web</code>  </li> </ul></param>
             <param name="masterUsername">The name for the master user.  <b>Amazon Aurora</b>  Not applicable. The name for the master user is managed by the DB cluster. For more information, see <a>CreateDBCluster</a>.   <b>MariaDB</b>  Constraints: <ul> <li> Required for MariaDB. </li> <li> Must be 1 to 16 letters or numbers. </li> <li> Cannot be a reserved word for the chosen database engine. </li> </ul>  <b>Microsoft SQL Server</b>  Constraints: <ul> <li> Required for SQL Server. </li> <li> Must be 1 to 128 letters or numbers. </li> <li> The first character must be a letter. </li> <li> Cannot be a reserved word for the chosen database engine. </li> </ul>  <b>MySQL</b>  Constraints: <ul> <li> Required for MySQL. </li> <li> Must be 1 to 16 letters or numbers. </li> <li> First character must be a letter. </li> <li> Cannot be a reserved word for the chosen database engine. </li> </ul>  <b>Oracle</b>  Constraints: <ul> <li> Required for Oracle. </li> <li> Must be 1 to 30 letters or numbers. </li> <li> First character must be a letter. </li> <li> Cannot be a reserved word for the chosen database engine. </li> </ul>  <b>PostgreSQL</b>  Constraints: <ul> <li> Required for PostgreSQL. </li> <li> Must be 1 to 63 letters or numbers. </li> <li> First character must be a letter. </li> <li> Cannot be a reserved word for the chosen database engine. </li> </ul></param>
@@ -2586,7 +2592,7 @@
             <summary>
             Gets and sets the property AllocatedStorage. 
             <para>
-            The amount of storage (in gigabytes) to be initially allocated for the DB instance.
+            The amount of storage (in gibibytes) to allocate for the DB instance.
             </para>
              
             <para>
@@ -2612,11 +2618,11 @@
             </para>
              <ul> <li> 
             <para>
-            General Purpose (SSD) storage (gp2): Must be an integer from 5 to 6144.
+            General Purpose (SSD) storage (gp2): Must be an integer from 20 to 16384.
             </para>
              </li> <li> 
             <para>
-            Provisioned IOPS storage (io1): Must be an integer from 100 to 6144.
+            Provisioned IOPS storage (io1): Must be an integer from 100 to 16384.
             </para>
              </li> <li> 
             <para>
@@ -2632,11 +2638,11 @@
             </para>
              <ul> <li> 
             <para>
-            General Purpose (SSD) storage (gp2): Must be an integer from 5 to 6144.
+            General Purpose (SSD) storage (gp2): Must be an integer from 20 to 16384.
             </para>
              </li> <li> 
             <para>
-            Provisioned IOPS storage (io1): Must be an integer from 100 to 6144.
+            Provisioned IOPS storage (io1): Must be an integer from 100 to 16384.
             </para>
              </li> <li> 
             <para>
@@ -2652,11 +2658,11 @@
             </para>
              <ul> <li> 
             <para>
-            General Purpose (SSD) storage (gp2): Must be an integer from 5 to 6144.
+            General Purpose (SSD) storage (gp2): Must be an integer from 20 to 16384.
             </para>
              </li> <li> 
             <para>
-            Provisioned IOPS storage (io1): Must be an integer from 100 to 6144.
+            Provisioned IOPS storage (io1): Must be an integer from 100 to 16384.
             </para>
              </li> <li> 
             <para>
@@ -2672,11 +2678,11 @@
             </para>
              <ul> <li> 
             <para>
-            General Purpose (SSD) storage (gp2): Must be an integer from 10 to 6144.
+            General Purpose (SSD) storage (gp2): Must be an integer from 20 to 16384.
             </para>
              </li> <li> 
             <para>
-            Provisioned IOPS storage (io1): Must be an integer from 100 to 6144.
+            Provisioned IOPS storage (io1): Must be an integer from 100 to 16384.
             </para>
              </li> <li> 
             <para>
@@ -3225,6 +3231,14 @@
             </para>
              <ul> <li> 
             <para>
+             <code>10.2.11</code> (supported in all AWS Regions)
+            </para>
+             </li> </ul>  <ul> <li> 
+            <para>
+             <code>10.1.26</code> (supported in all AWS Regions)
+            </para>
+             </li> <li> 
+            <para>
              <code>10.1.23</code> (supported in all AWS Regions)
             </para>
              </li> <li> 
@@ -3236,6 +3250,10 @@
              <code>10.1.14</code> (supported in all AWS Regions except us-east-2)
             </para>
              </li> </ul>  <ul> <li> 
+            <para>
+             <code>10.0.32</code> (supported in all AWS Regions)
+            </para>
+             </li> <li> 
             <para>
              <code>10.0.31</code> (supported in all AWS Regions)
             </para>
@@ -3254,9 +3272,21 @@
             </para>
              </li> </ul> 
             <para>
+             <b>Microsoft SQL Server 2017</b> 
+            </para>
+             <ul> <li> 
+            <para>
+             <code>14.00.1000.169.v1</code> (supported for all editions, and all AWS Regions)
+            </para>
+             </li> </ul> 
+            <para>
              <b>Microsoft SQL Server 2016</b> 
             </para>
              <ul> <li> 
+            <para>
+             <code>13.00.4451.0.v1</code> (supported for all editions, and all AWS Regions)
+            </para>
+             </li> <li> 
             <para>
              <code>13.00.4422.0.v1</code> (supported for all editions, and all AWS Regions)
             </para>
@@ -3510,9 +3540,9 @@
             </para>
              
             <para>
-            Constraints: Must be a multiple between 3 and 10 of the storage amount for the DB
+            Constraints: Must be a multiple between 1 and 50 of the storage amount for the DB
             instance. Must also be an integer multiple of 1000. For example, if the size of your
-            DB instance is 500 GB, then your <code>Iops</code> value can be 2000, 3000, 4000,
+            DB instance is 500 GiB, then your <code>Iops</code> value can be 2000, 3000, 4000,
             or 5000. 
             </para>
             </summary>
@@ -4691,7 +4721,7 @@
             Gets and sets the property AllocatedStorage. 
             <para>
             For all database engines except Amazon Aurora, <code>AllocatedStorage</code> specifies
-            the allocated storage size in gigabytes (GB). For Aurora, <code>AllocatedStorage</code>
+            the allocated storage size in gibibytes (GiB). For Aurora, <code>AllocatedStorage</code>
             always returns 1, because Aurora DB cluster storage size is not fixed, but instead
             automatically adjusts as needed.
             </para>
@@ -5555,7 +5585,7 @@
             <summary>
             Gets and sets the property AllocatedStorage. 
             <para>
-            Specifies the allocated storage size in gigabytes (GB).
+            Specifies the allocated storage size in gibibytes (GiB).
             </para>
             </summary>
         </member>
@@ -6002,7 +6032,7 @@
             <summary>
             Gets and sets the property AllocatedStorage. 
             <para>
-            Specifies the allocated storage size specified in gigabytes.
+            Specifies the allocated storage size specified in gibibytes.
             </para>
             </summary>
         </member>
@@ -7334,7 +7364,7 @@
             <summary>
             Gets and sets the property AllocatedStorage. 
             <para>
-            Specifies the allocated storage size in gigabytes (GB).
+            Specifies the allocated storage size in gibibytes (GiB).
             </para>
             </summary>
         </member>
@@ -19352,115 +19382,19 @@
             <summary>
             Gets and sets the property AllocatedStorage. 
             <para>
-             The new storage capacity of the RDS instance. Changing this setting does not result
-            in an outage and the change is applied during the next maintenance window unless <code>ApplyImmediately</code>
-            is set to <code>true</code> for this request. 
+            The new amount of storage (in gibibytes) to allocate for the DB instance. 
             </para>
              
             <para>
-             <b>MySQL</b> 
+            For MariaDB, MySQL, Oracle, and PostgreSQL, the value supplied must be at least 10%
+            greater than the current value. Values that are not at least 10% greater than the
+            existing value are rounded up so that they are 10% greater than the current value.
+            
             </para>
              
             <para>
-            Default: Uses existing setting
-            </para>
-             
-            <para>
-            Valid Values: 5-6144
-            </para>
-             
-            <para>
-            Constraints: Value supplied must be at least 10% greater than the current value. Values
-            that are not at least 10% greater than the existing value are rounded up so that they
-            are 10% greater than the current value.
-            </para>
-             
-            <para>
-            Type: Integer
-            </para>
-             
-            <para>
-             <b>MariaDB</b> 
-            </para>
-             
-            <para>
-            Default: Uses existing setting
-            </para>
-             
-            <para>
-            Valid Values: 5-6144
-            </para>
-             
-            <para>
-            Constraints: Value supplied must be at least 10% greater than the current value. Values
-            that are not at least 10% greater than the existing value are rounded up so that they
-            are 10% greater than the current value.
-            </para>
-             
-            <para>
-            Type: Integer
-            </para>
-             
-            <para>
-             <b>PostgreSQL</b> 
-            </para>
-             
-            <para>
-            Default: Uses existing setting
-            </para>
-             
-            <para>
-            Valid Values: 5-6144
-            </para>
-             
-            <para>
-            Constraints: Value supplied must be at least 10% greater than the current value. Values
-            that are not at least 10% greater than the existing value are rounded up so that they
-            are 10% greater than the current value.
-            </para>
-             
-            <para>
-            Type: Integer
-            </para>
-             
-            <para>
-             <b>Oracle</b> 
-            </para>
-             
-            <para>
-            Default: Uses existing setting
-            </para>
-             
-            <para>
-            Valid Values: 10-6144
-            </para>
-             
-            <para>
-            Constraints: Value supplied must be at least 10% greater than the current value. Values
-            that are not at least 10% greater than the existing value are rounded up so that they
-            are 10% greater than the current value.
-            </para>
-             
-            <para>
-             <b>SQL Server</b> 
-            </para>
-             
-            <para>
-            Cannot be modified.
-            </para>
-             
-            <para>
-            If you choose to migrate your DB instance from using standard storage to using Provisioned
-            IOPS, or from using Provisioned IOPS to using standard storage, the process can take
-            time. The duration of the migration depends on several factors such as database load,
-            storage size, storage type (standard or Provisioned IOPS), amount of IOPS provisioned
-            (if any), and the number of prior scale storage operations. Typical migration times
-            are under 24 hours, but the process can take up to several days in some cases. During
-            the migration, the DB instance is available for use, but might experience performance
-            degradation. While the migration takes place, nightly backups for the instance are
-            suspended. No other Amazon RDS operations can take place for the instance, including
-            modifying the instance, rebooting the instance, deleting the instance, creating a
-            Read Replica for the instance, and creating a DB snapshot of the instance.
+            For the valid values for allocated storage for each engine, see <a>CreateDBInstance</a>.
+            
             </para>
             </summary>
         </member>
@@ -19875,34 +19809,15 @@
             <summary>
             Gets and sets the property Iops. 
             <para>
-             The new Provisioned IOPS (I/O operations per second) value for the RDS instance.
+            The new Provisioned IOPS (I/O operations per second) value for the RDS instance. 
+            </para>
+             
+            <para>
             Changing this setting does not result in an outage and the change is applied during
             the next maintenance window unless the <code>ApplyImmediately</code> parameter is
-            set to <code>true</code> for this request. 
-            </para>
-             
-            <para>
-            Default: Uses existing setting
-            </para>
-             
-            <para>
-            Constraints: Value supplied must be at least 10% greater than the current value. Values
-            that are not at least 10% greater than the existing value are rounded up so that they
-            are 10% greater than the current value. If you are migrating from Provisioned IOPS
+            set to <code>true</code> for this request. If you are migrating from Provisioned IOPS
             to standard storage, set this value to 0. The DB instance will require a reboot for
-            the change in storage type to take effect.
-            </para>
-             
-            <para>
-             <b>SQL Server</b> 
-            </para>
-             
-            <para>
-            Setting the IOPS value for the SQL Server database engine is not supported.
-            </para>
-             
-            <para>
-            Type: Integer
+            the change in storage type to take effect. 
             </para>
              
             <para>
@@ -19916,7 +19831,18 @@
             degradation. While the migration takes place, nightly backups for the instance are
             suspended. No other Amazon RDS operations can take place for the instance, including
             modifying the instance, rebooting the instance, deleting the instance, creating a
-            Read Replica for the instance, and creating a DB snapshot of the instance.
+            Read Replica for the instance, and creating a DB snapshot of the instance. 
+            </para>
+             
+            <para>
+            Constraints: For MariaDB, MySQL, Oracle, and PostgreSQL, the value supplied must be
+            at least 10% greater than the current value. Values that are not at least 10% greater
+            than the existing value are rounded up so that they are 10% greater than the current
+            value. 
+            </para>
+             
+            <para>
+            Default: Uses existing setting
             </para>
             </summary>
         </member>
@@ -20048,14 +19974,10 @@
             <summary>
             Gets and sets the property MultiAZ. 
             <para>
-             Specifies if the DB instance is a Multi-AZ deployment. Changing this parameter does
+            Specifies if the DB instance is a Multi-AZ deployment. Changing this parameter does
             not result in an outage and the change is applied during the next maintenance window
             unless the <code>ApplyImmediately</code> parameter is set to <code>true</code> for
             this request. 
-            </para>
-             
-            <para>
-            Constraints: Cannot be specified if the DB instance is a Read Replica.
             </para>
             </summary>
         </member>
@@ -20242,7 +20164,26 @@
             <summary>
             Gets and sets the property StorageType. 
             <para>
-            Specifies the storage type to be associated with the DB instance.
+            Specifies the storage type to be associated with the DB instance. 
+            </para>
+             
+            <para>
+            If you specify Provisioned IOPS (<code>io1</code>), you must also include a value
+            for the <code>Iops</code> parameter. 
+            </para>
+             
+            <para>
+            If you choose to migrate your DB instance from using standard storage to using Provisioned
+            IOPS, or from using Provisioned IOPS to using standard storage, the process can take
+            time. The duration of the migration depends on several factors such as database load,
+            storage size, storage type (standard or Provisioned IOPS), amount of IOPS provisioned
+            (if any), and the number of prior scale storage operations. Typical migration times
+            are under 24 hours, but the process can take up to several days in some cases. During
+            the migration, the DB instance is available for use, but might experience performance
+            degradation. While the migration takes place, nightly backups for the instance are
+            suspended. No other Amazon RDS operations can take place for the instance, including
+            modifying the instance, rebooting the instance, deleting the instance, creating a
+            Read Replica for the instance, and creating a DB snapshot of the instance. 
             </para>
              
             <para>
@@ -20250,12 +20191,7 @@
             </para>
              
             <para>
-             If you specify <code>io1</code>, you must also include a value for the <code>Iops</code>
-            parameter. 
-            </para>
-             
-            <para>
-             Default: <code>io1</code> if the <code>Iops</code> parameter is specified, otherwise
+            Default: <code>io1</code> if the <code>Iops</code> parameter is specified, otherwise
             <code>standard</code> 
             </para>
             </summary>
@@ -22277,26 +22213,21 @@
         <member name="T:Amazon.RDS.Model.RebootDBInstanceRequest">
             <summary>
             Container for the parameters to the RebootDBInstance operation.
-            Rebooting a DB instance restarts the database engine service. A reboot also applies
-            to the DB instance any modifications to the associated DB parameter group that were
-            pending. Rebooting a DB instance results in a momentary outage of the instance, during
-            which the DB instance status is set to rebooting. If the RDS instance is configured
-            for MultiAZ, it is possible that the reboot is conducted through a failover. An Amazon
-            RDS event is created when the reboot is completed.
+            You might need to reboot your DB instance, usually for maintenance reasons. For example,
+            if you make certain modifications, or if you change the DB parameter group associated
+            with the DB instance, you must reboot the instance for the changes to take effect.
+            
             
              
             <para>
-            If your DB instance is deployed in multiple Availability Zones, you can force a failover
-            from one AZ to the other during the reboot. You might force a failover to test the
-            availability of your DB instance deployment or to restore operations to the original
-            AZ after a failover occurs.
+            Rebooting a DB instance restarts the database engine service. Rebooting a DB instance
+            results in a momentary outage, during which the DB instance status is set to rebooting.
+            
             </para>
              
             <para>
-            The time required to reboot is a function of the specific database engine's crash
-            recovery process. To improve the reboot time, we recommend that you reduce database
-            activities as much as possible during the reboot process to reduce rollback activity
-            for in-transit transactions.
+            For more information about rebooting, see <a href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_RebootInstance.html">Rebooting
+            a DB Instance</a>. 
             </para>
             </summary>
         </member>
@@ -24322,8 +24253,8 @@
             </para>
              
             <para>
-            Constraint: Must be compatible with the engine of the source. You can restore a MariaDB
-            10.1 DB instance from a MySQL 5.6 snapshot.
+            Constraint: Must be compatible with the engine of the source. For example, you can
+            restore a MariaDB 10.1 DB instance from a MySQL 5.6 snapshot.
             </para>
              
             <para>
@@ -26048,7 +25979,13 @@
             Container for the parameters to the StartDBInstance operation.
             Starts a DB instance that was stopped using the AWS console, the stop-db-instance
             AWS CLI command, or the StopDBInstance action. For more information, see Stopping
-            and Starting a DB instance in the AWS RDS user guide.
+            and Starting a DB instance in the AWS RDS user guide. 
+            
+             <note> 
+            <para>
+            This command does not apply to Aurora MySQL and Aurora PostgreSQL.
+            </para>
+             </note>
             </summary>
         </member>
         <member name="P:Amazon.RDS.Model.StartDBInstanceRequest.DBInstanceIdentifier">
@@ -26076,7 +26013,13 @@
             metadata, including its endpoint, DB parameter group, and option group membership.
             Amazon RDS also retains the transaction logs so you can do a point-in-time restore
             if necessary. For more information, see Stopping and Starting a DB instance in the
-            AWS RDS user guide.
+            AWS RDS user guide. 
+            
+             <note> 
+            <para>
+            This command does not apply to Aurora MySQL and Aurora PostgreSQL.
+            </para>
+             </note>
             </summary>
         </member>
         <member name="P:Amazon.RDS.Model.StopDBInstanceRequest.DBInstanceIdentifier">
@@ -26589,7 +26532,7 @@
             <summary>
             Gets and sets the property IopsToStorageRatio. 
             <para>
-            The valid range of Provisioned IOPS to gigabytes of storage multiplier. For example,
+            The valid range of Provisioned IOPS to gibibytes of storage multiplier. For example,
             3-10, which means that provisioned IOPS can be between 3 and 10 times storage. 
             </para>
             </summary>
@@ -26606,7 +26549,7 @@
             <summary>
             Gets and sets the property StorageSize. 
             <para>
-            The valid range of storage in gigabytes. For example, 100 to 6144. 
+            The valid range of storage in gibibytes. For example, 100 to 16384. 
             </para>
             </summary>
         </member>
@@ -27830,28 +27773,25 @@
             <summary>
             Creates a new DB instance that acts as a Read Replica for an existing source DB instance.
             You can create a Read Replica for a DB instance running MySQL, MariaDB, or PostgreSQL.
+            For more information, see <a href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html">Working
+            with PostgreSQL, MySQL, and MariaDB Read Replicas</a>. 
             
-            
-             <note> 
+             
             <para>
             Amazon Aurora does not support this action. You must call the <code>CreateDBInstance</code>
             action to create a DB instance for an Aurora DB cluster. 
             </para>
-             </note> 
+             
             <para>
-            All Read Replica DB instances are created as Single-AZ deployments with backups disabled.
-            All other DB instance attributes (including DB security groups and DB parameter groups)
-            are inherited from the source DB instance, except as specified below. 
+            All Read Replica DB instances are created with backups disabled. All other DB instance
+            attributes (including DB security groups and DB parameter groups) are inherited from
+            the source DB instance, except as specified below. 
             </para>
              <important> 
             <para>
-            The source DB instance must have backup retention enabled. 
+            Your source DB instance must have backup retention enabled. 
             </para>
-             </important> 
-            <para>
-            For more information, see <a href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html">Working
-            with PostgreSQL, MySQL, and MariaDB Read Replicas</a>. 
-            </para>
+             </important>
             </summary>
             <param name="request">Container for the necessary parameters to execute the CreateDBInstanceReadReplica service method.</param>
             
@@ -30399,26 +30339,21 @@
         </member>
         <member name="M:Amazon.RDS.AmazonRDSClient.RebootDBInstance(Amazon.RDS.Model.RebootDBInstanceRequest)">
             <summary>
-            Rebooting a DB instance restarts the database engine service. A reboot also applies
-            to the DB instance any modifications to the associated DB parameter group that were
-            pending. Rebooting a DB instance results in a momentary outage of the instance, during
-            which the DB instance status is set to rebooting. If the RDS instance is configured
-            for MultiAZ, it is possible that the reboot is conducted through a failover. An Amazon
-            RDS event is created when the reboot is completed.
+            You might need to reboot your DB instance, usually for maintenance reasons. For example,
+            if you make certain modifications, or if you change the DB parameter group associated
+            with the DB instance, you must reboot the instance for the changes to take effect.
+            
             
              
             <para>
-            If your DB instance is deployed in multiple Availability Zones, you can force a failover
-            from one AZ to the other during the reboot. You might force a failover to test the
-            availability of your DB instance deployment or to restore operations to the original
-            AZ after a failover occurs.
+            Rebooting a DB instance restarts the database engine service. Rebooting a DB instance
+            results in a momentary outage, during which the DB instance status is set to rebooting.
+            
             </para>
              
             <para>
-            The time required to reboot is a function of the specific database engine's crash
-            recovery process. To improve the reboot time, we recommend that you reduce database
-            activities as much as possible during the reboot process to reduce rollback activity
-            for in-transit transactions.
+            For more information about rebooting, see <a href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_RebootInstance.html">Rebooting
+            a DB Instance</a>. 
             </para>
             </summary>
             <param name="request">Container for the necessary parameters to execute the RebootDBInstance service method.</param>
@@ -31217,7 +31152,13 @@
             <summary>
             Starts a DB instance that was stopped using the AWS console, the stop-db-instance
             AWS CLI command, or the StopDBInstance action. For more information, see Stopping
-            and Starting a DB instance in the AWS RDS user guide.
+            and Starting a DB instance in the AWS RDS user guide. 
+            
+             <note> 
+            <para>
+            This command does not apply to Aurora MySQL and Aurora PostgreSQL.
+            </para>
+             </note>
             </summary>
             <param name="request">Container for the necessary parameters to execute the StartDBInstance service method.</param>
             
@@ -31284,7 +31225,13 @@
             metadata, including its endpoint, DB parameter group, and option group membership.
             Amazon RDS also retains the transaction logs so you can do a point-in-time restore
             if necessary. For more information, see Stopping and Starting a DB instance in the
-            AWS RDS user guide.
+            AWS RDS user guide. 
+            
+             <note> 
+            <para>
+            This command does not apply to Aurora MySQL and Aurora PostgreSQL.
+            </para>
+             </note>
             </summary>
             <param name="request">Container for the necessary parameters to execute the StopDBInstance service method.</param>
             
@@ -32119,28 +32066,25 @@
             <summary>
             Creates a new DB instance that acts as a Read Replica for an existing source DB instance.
             You can create a Read Replica for a DB instance running MySQL, MariaDB, or PostgreSQL.
+            For more information, see <a href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html">Working
+            with PostgreSQL, MySQL, and MariaDB Read Replicas</a>. 
             
-            
-             <note> 
+             
             <para>
             Amazon Aurora does not support this action. You must call the <code>CreateDBInstance</code>
             action to create a DB instance for an Aurora DB cluster. 
             </para>
-             </note> 
+             
             <para>
-            All Read Replica DB instances are created as Single-AZ deployments with backups disabled.
-            All other DB instance attributes (including DB security groups and DB parameter groups)
-            are inherited from the source DB instance, except as specified below. 
+            All Read Replica DB instances are created with backups disabled. All other DB instance
+            attributes (including DB security groups and DB parameter groups) are inherited from
+            the source DB instance, except as specified below. 
             </para>
              <important> 
             <para>
-            The source DB instance must have backup retention enabled. 
+            Your source DB instance must have backup retention enabled. 
             </para>
-             </important> 
-            <para>
-            For more information, see <a href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html">Working
-            with PostgreSQL, MySQL, and MariaDB Read Replicas</a>. 
-            </para>
+             </important>
             </summary>
             <param name="request">Container for the necessary parameters to execute the CreateDBInstanceReadReplica service method.</param>
             
@@ -34688,26 +34632,21 @@
         </member>
         <member name="M:Amazon.RDS.IAmazonRDS.RebootDBInstance(Amazon.RDS.Model.RebootDBInstanceRequest)">
             <summary>
-            Rebooting a DB instance restarts the database engine service. A reboot also applies
-            to the DB instance any modifications to the associated DB parameter group that were
-            pending. Rebooting a DB instance results in a momentary outage of the instance, during
-            which the DB instance status is set to rebooting. If the RDS instance is configured
-            for MultiAZ, it is possible that the reboot is conducted through a failover. An Amazon
-            RDS event is created when the reboot is completed.
+            You might need to reboot your DB instance, usually for maintenance reasons. For example,
+            if you make certain modifications, or if you change the DB parameter group associated
+            with the DB instance, you must reboot the instance for the changes to take effect.
+            
             
              
             <para>
-            If your DB instance is deployed in multiple Availability Zones, you can force a failover
-            from one AZ to the other during the reboot. You might force a failover to test the
-            availability of your DB instance deployment or to restore operations to the original
-            AZ after a failover occurs.
+            Rebooting a DB instance restarts the database engine service. Rebooting a DB instance
+            results in a momentary outage, during which the DB instance status is set to rebooting.
+            
             </para>
              
             <para>
-            The time required to reboot is a function of the specific database engine's crash
-            recovery process. To improve the reboot time, we recommend that you reduce database
-            activities as much as possible during the reboot process to reduce rollback activity
-            for in-transit transactions.
+            For more information about rebooting, see <a href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_RebootInstance.html">Rebooting
+            a DB Instance</a>. 
             </para>
             </summary>
             <param name="request">Container for the necessary parameters to execute the RebootDBInstance service method.</param>
@@ -35506,7 +35445,13 @@
             <summary>
             Starts a DB instance that was stopped using the AWS console, the stop-db-instance
             AWS CLI command, or the StopDBInstance action. For more information, see Stopping
-            and Starting a DB instance in the AWS RDS user guide.
+            and Starting a DB instance in the AWS RDS user guide. 
+            
+             <note> 
+            <para>
+            This command does not apply to Aurora MySQL and Aurora PostgreSQL.
+            </para>
+             </note>
             </summary>
             <param name="request">Container for the necessary parameters to execute the StartDBInstance service method.</param>
             
@@ -35573,7 +35518,13 @@
             metadata, including its endpoint, DB parameter group, and option group membership.
             Amazon RDS also retains the transaction logs so you can do a point-in-time restore
             if necessary. For more information, see Stopping and Starting a DB instance in the
-            AWS RDS user guide.
+            AWS RDS user guide. 
+            
+             <note> 
+            <para>
+            This command does not apply to Aurora MySQL and Aurora PostgreSQL.
+            </para>
+             </note>
             </summary>
             <param name="request">Container for the necessary parameters to execute the StopDBInstance service method.</param>
             

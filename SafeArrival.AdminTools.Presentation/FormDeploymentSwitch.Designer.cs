@@ -28,16 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDeploymentSwitch));
+            this.btnSwitch = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblWarn = new System.Windows.Forms.Label();
             this.btnCreate = new System.Windows.Forms.Button();
-            this.btnSwitch = new System.Windows.Forms.Button();
+            this.btnClearTargetGroups = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
+            // btnSwitch
+            // 
+            this.btnSwitch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSwitch.Location = new System.Drawing.Point(11, 615);
+            this.btnSwitch.Name = "btnSwitch";
+            this.btnSwitch.Size = new System.Drawing.Size(147, 23);
+            this.btnSwitch.TabIndex = 2;
+            this.btnSwitch.Text = "Switch Deployment";
+            this.btnSwitch.UseVisualStyleBackColor = true;
+            this.btnSwitch.Click += new System.EventHandler(this.btnSwitch_Click);
+            // 
             // panel1
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.lblWarn);
@@ -60,8 +74,8 @@
             // 
             // btnCreate
             // 
-            this.btnCreate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnCreate.Location = new System.Drawing.Point(963, 617);
+            this.btnCreate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCreate.Location = new System.Drawing.Point(974, 615);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(135, 23);
             this.btnCreate.TabIndex = 0;
@@ -69,24 +83,27 @@
             this.btnCreate.UseVisualStyleBackColor = true;
             this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
             // 
-            // btnSwitch
+            // btnClearTargetGroups
             // 
-            this.btnSwitch.Location = new System.Drawing.Point(13, 616);
-            this.btnSwitch.Name = "btnSwitch";
-            this.btnSwitch.Size = new System.Drawing.Size(147, 23);
-            this.btnSwitch.TabIndex = 2;
-            this.btnSwitch.Text = "Switch Deployment";
-            this.btnSwitch.UseVisualStyleBackColor = true;
-            this.btnSwitch.Click += new System.EventHandler(this.btnSwitch_Click);
+            this.btnClearTargetGroups.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClearTargetGroups.Location = new System.Drawing.Point(751, 615);
+            this.btnClearTargetGroups.Name = "btnClearTargetGroups";
+            this.btnClearTargetGroups.Size = new System.Drawing.Size(180, 23);
+            this.btnClearTargetGroups.TabIndex = 3;
+            this.btnClearTargetGroups.Text = "Clear Target Group Attachments";
+            this.btnClearTargetGroups.UseVisualStyleBackColor = true;
+            this.btnClearTargetGroups.Click += new System.EventHandler(this.btnClearTargetGroups_Click);
             // 
             // FormDeploymentSwitch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1120, 643);
+            this.Controls.Add(this.btnClearTargetGroups);
             this.Controls.Add(this.btnSwitch);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnCreate);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormDeploymentSwitch";
             this.Text = "Green/Blue Deployment Services";
             this.Load += new System.EventHandler(this.FormDeploymentSwitch_Load);
@@ -102,5 +119,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label lblWarn;
         private System.Windows.Forms.Button btnSwitch;
+        private System.Windows.Forms.Button btnClearTargetGroups;
     }
 }

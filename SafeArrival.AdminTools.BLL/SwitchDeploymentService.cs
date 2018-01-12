@@ -45,7 +45,7 @@ namespace SafeArrival.AdminTools.BLL
                         $"{GlobalVariables.Enviroment.ToString()}-{color}-{appName}-TG",
                         vpc.VpcId, "HTTP", 80);
                     await scalingGroupHelper.AttachLoadBalancerTargetGroups(
-                        sGroups.Find(o => o.Name.Contains($"{GlobalVariables.Enviroment}-{color}-{appName}")).AutoScalingGroupName,
+                        sGroups.Find(o => o.Name.Contains($"{GlobalVariables.Enviroment}-{color}-{appName}")),
                         new List<string>() { tGroup.TargetGroupArn });
                     tGroups.Add(tGroup);
                 }
@@ -101,6 +101,19 @@ namespace SafeArrival.AdminTools.BLL
                 await loadBalancerHelper.ChangeListenerTargets(preProdHttpListener.ListenerArn, prodHttpListener.TargetArn);
                 await loadBalancerHelper.ChangeListenerTargets(prodHttpsListener.ListenerArn, preProdHttpsListener.TargetArn);
                 await loadBalancerHelper.ChangeListenerTargets(preProdHttpsListener.ListenerArn, prodHttpsListener.TargetArn);
+            }
+        }
+
+        public async Task ClearTargetGroupAttachments()
+        {
+            var loadBalancerHelper = new LoadBalancerHelper(
+                GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
+            var scalingGroupHelper = new AutoScalingHelper(
+                GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
+            var autoScalingGroups = await scalingGroupHelper.GetAutoScalingGroupList(true);
+            foreach (var autoScalingGroup in autoScalingGroups)
+            {
+                await scalingGroupHelper.ClearAutoScalingGroupAttachedTargetGroups(autoScalingGroup);
             }
         }
     }

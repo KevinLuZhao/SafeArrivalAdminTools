@@ -95,3 +95,9 @@ C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Pres
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Presentation\bin\Debug\AWSSDK.ElasticLoadBalancingV2.xml
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Presentation\obj\Debug\SafeArrival.AdminTools.Presentation.FormDeploymentSwitch.resources
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Presentation\obj\Debug\SafeArrival.AdminTools.Presentation.Controls.CtrlApplicationLoadBalancer.resources
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Presentation\bin\Debug\AWSSDK.CodePipeline.dll
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Presentation\bin\Debug\AWSSDK.CodePipeline.pdb
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Presentation\bin\Debug\AWSSDK.CodePipeline.xml
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Presentation\bin\Debug\AWSSDK.CloudFormation.dll
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Presentation\bin\Debug\AWSSDK.CloudFormation.pdb
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.Presentation\bin\Debug\AWSSDK.CloudFormation.xml
