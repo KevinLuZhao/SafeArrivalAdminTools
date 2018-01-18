@@ -90,6 +90,9 @@ namespace SafeArrival.AdminTools.Presentation
                 case "viewLogsToolStripMenuItem":
                     frm = new FormLogs();
                     break;
+                case "infrastructureManagerToolStripMenuItem":
+                    frm = new FormInfraManager();
+                    break;
             }
             return frm;
         }

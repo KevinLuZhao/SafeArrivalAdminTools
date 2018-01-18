@@ -53,6 +53,7 @@
     <Compile Include="SA_RdsInstance.cs" />
     <Compile Include="SA_S3Object.cs" />
     <Compile Include="SA_SecurityGroup.cs" />
+    <Compile Include="SA_Stack.cs" />
     <Compile Include="SA_Subnet.cs" />
     <Compile Include="SA_TargetGroup.cs" />
     <Compile Include="SA_Vpc.cs" />

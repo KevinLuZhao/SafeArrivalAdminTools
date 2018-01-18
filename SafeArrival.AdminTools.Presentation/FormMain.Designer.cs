@@ -48,6 +48,7 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.tsComboColor = new System.Windows.Forms.ToolStripComboBox();
+            this.infrastructureManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -59,6 +60,7 @@
             this.parameterEditToolStripMenuItem,
             this.s3MonitorToolStripMenuItem,
             this.systemManagerToolStripMenuItem,
+            this.infrastructureManagerToolStripMenuItem,
             this.greenBlueDeploymentToolStripMenuItem,
             this.viewLogsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -193,6 +195,14 @@
             this.tsComboColor.Size = new System.Drawing.Size(75, 25);
             this.tsComboColor.SelectedIndexChanged += new System.EventHandler(this.tsComboColor_SelectedIndexChanged);
             // 
+            // infrastructureManagerToolStripMenuItem
+            // 
+            this.infrastructureManagerToolStripMenuItem.Name = "infrastructureManagerToolStripMenuItem";
+            this.infrastructureManagerToolStripMenuItem.Size = new System.Drawing.Size(140, 20);
+            this.infrastructureManagerToolStripMenuItem.Tag = "FormInfraManager";
+            this.infrastructureManagerToolStripMenuItem.Text = "Infrastructure Manager";
+            this.infrastructureManagerToolStripMenuItem.Click += new System.EventHandler(this.OpenFormMenu_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -239,6 +249,7 @@
         private System.Windows.Forms.ToolStripMenuItem systemManagerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewLogsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem greenBlueDeploymentToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem infrastructureManagerToolStripMenuItem;
     }
 }
 

@@ -21,12 +21,12 @@ namespace SafeArrival.AdminTools.AwsUtilities
         }
 
         //public async Task<PipelineDeclaration> Get()
-        public async Task Get()
-        {           
-            var response = await client.GetPipelineAsync($"{environment}-level-1");
-            var a = await client.GetPipelineStateAsync($"{environment}-level-1");
-            //var b = await client.
-            //return response.Pipeline;
+        public async Task GetCodePipelineList()
+        {
+            PipelineSummary summary;
+            //summary.   
+            var response = await client.ListPipelinesAsync();
+            //response.
         }
     }
 }

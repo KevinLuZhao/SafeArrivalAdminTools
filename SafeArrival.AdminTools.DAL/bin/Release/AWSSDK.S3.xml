@@ -12224,6 +12224,21 @@
             <param name="value"></param>
             <returns></returns>
         </member>
+        <member name="M:Amazon.S3.EventType.Equals(Amazon.Runtime.ConstantClass)">
+            <summary>
+            Compares if the ConstantClass instances are equals.
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Amazon.S3.EventType.Equals(System.String)">
+            <summary>
+            Compares if the ConstantClass instances are equals. This is ovewritten to handle the 
+            discrepancy with S3 events coming from Lambda that don't have the prefix "s3:".
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
         <member name="T:Amazon.S3.InventoryFormat">
             <summary>
             A list of all Inventory Formats.
