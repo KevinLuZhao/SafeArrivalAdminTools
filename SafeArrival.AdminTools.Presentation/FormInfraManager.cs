@@ -35,33 +35,70 @@ namespace SafeArrival.AdminTools.Presentation
 
         private async void FormInfraManager_Load(object sender, EventArgs e)
         {
-            btnSuspend.Enabled = false;
-            await PopulateStacks();
-            PopulateCodePipelineInfo();
-        }
-
-        private async Task PopulateStacks()
-        {
-            var stacks = await service.GetStackList();
-
-            gvStacks.AutoGenerateColumns = false;
-            gvStacks.ReadOnly = false;
-            gvStacks.DataSource = stacks;
-
-            this.stacks = stacks;
-        }
-
-        private void PopulateCodePipelineInfo()
-        {
-            string path = ConfigurationManager.AppSettings["InfraFileFolder"];
-            if (LibGit2Sharp.Repository.IsValid(path))
+            try
             {
-                var repo = new Repository(path);
-                lblBranchName.Text = repo.Head.FriendlyName;
+                btnSuspend.Enabled = false;
+                await PopulateStacks();
+                PopulateCodePipelineInfo();
             }
-            else
+            catch (Exception ex)
             {
-                lblBranchName.Text = $"No repository is found from the path of {path}, please check your config file";
+                HandleException(ex);
+            }
+        }
+
+        private void btnSuspend_Click(object sender, EventArgs e)
+        {
+            stopFlag = true;
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                Process.Start(ConfigurationManager.AppSettings["InfraFileFolder"]);
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+        }
+
+        private void btnCmd_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Process p = new Process();
+                p.StartInfo.FileName = "cmd.exe";
+                p.StartInfo.WorkingDirectory = ConfigurationManager.AppSettings["InfraFileFolder"];
+                p.StartInfo.UseShellExecute = false;
+                p.Start();
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+        }
+
+        private async void btnCreate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (ConfigurationManager.AppSettings["GithubToken"].Trim() == string.Empty)
+                {
+                    MessageBox.Show("Please set value to GithubToken in config file.");
+                }
+                var radioLevels = new List<RadioButton>();
+                radioLevels.Add(radioButton1);
+                radioLevels.Add(radioButton2);
+                radioLevels.Add(radioButton3);
+                await service.BuildCodePipelinelevel1(
+                    int.Parse(radioLevels.Find(o => o.Checked).Tag.ToString()),
+                    ConfigurationManager.AppSettings["GithubToken"]);
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
             }
         }
 
@@ -109,39 +146,34 @@ namespace SafeArrival.AdminTools.Presentation
             }
         }
 
+        private async Task PopulateStacks()
+        {
+            var stacks = await service.GetStackList();
+
+            gvStacks.AutoGenerateColumns = false;
+            gvStacks.ReadOnly = false;
+            gvStacks.DataSource = stacks;
+
+            this.stacks = stacks;
+        }
+
+        private void PopulateCodePipelineInfo()
+        {
+            string path = ConfigurationManager.AppSettings["InfraFileFolder"];
+            if (LibGit2Sharp.Repository.IsValid(path))
+            {
+                var repo = new Repository(path);
+                lblBranchName.Text = repo.Head.FriendlyName;
+            }
+            else
+            {
+                lblBranchName.Text = $"No repository is found from the path of {path}, please check your config file";
+            }
+        }
+
         private async void DeleteCallBack(System.IAsyncResult result)
         {
             await PopulateStacks();
-        }
-
-        private void btnSuspend_Click(object sender, EventArgs e)
-        {
-            stopFlag = true;
-        }
-
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Process.Start(ConfigurationManager.AppSettings["InfraFileFolder"]);
-        }
-
-        private void btnCmd_Click(object sender, EventArgs e)
-        {
-            Process p = new Process();
-            p.StartInfo.FileName = "cmd.exe";
-            p.StartInfo.WorkingDirectory = ConfigurationManager.AppSettings["InfraFileFolder"];
-            p.StartInfo.UseShellExecute = false;
-            p.Start();
-        }
-
-        private async void btnCreate_Click(object sender, EventArgs e)
-        {
-            var radioLevels = new List<RadioButton>();
-            radioLevels.Add(radioButton1);
-            radioLevels.Add(radioButton2);
-            radioLevels.Add(radioButton3);
-            await service.BuildCodePipelinelevel1(
-                int.Parse(radioLevels.Find(o => o.Checked).Tag.ToString()), 
-                ConfigurationManager.AppSettings["GithubToken"]);
         }
     }
 }
