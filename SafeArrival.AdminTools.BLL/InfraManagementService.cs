@@ -25,7 +25,7 @@ namespace SafeArrival.AdminTools.BLL
             return await helper.GetStackList();
         }
 
-        public async Task BuildCodePipelinelevel(int level, string oAuthToken)
+        public async Task BuildCodePipelinelevel1(int level, string oAuthToken)
         {
             var helper = new CloudFormationHelper(
                 GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
@@ -35,13 +35,33 @@ namespace SafeArrival.AdminTools.BLL
                 return;
             }
             var content = File.ReadAllText(filePath);
+            var sa_parameters = new List<KeyValuePair<string, string>>();
+            sa_parameters.Add(new KeyValuePair<string, string>("OAuthToken", oAuthToken));
+            sa_parameters.Add(new KeyValuePair<string, string>("Environment", GlobalVariables.Enviroment.ToString()));
             await helper.CreateStack
             (
-                ConfigurationManager.AppSettings["InfraFileFolder"],
-                $"{GlobalVariables.Enviroment}-level-{level}",
-                content,
-                oAuthToken
+            ConfigurationManager.AppSettings["InfraFileFolder"],
+            $"{GlobalVariables.Enviroment}-level-{level}",
+            content,
+            sa_parameters
             );
+        }
+
+        private List<KeyValuePair<string,string>> GetCodePipelingParameters(int level)
+        {
+            var parameters = new List<KeyValuePair<string, string>>();
+            switch (level)
+            {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                default:
+                    throw new Exception($"{level} is an invalid infrastructure level");
+            }
+            return parameters;
         }
     }
 }
