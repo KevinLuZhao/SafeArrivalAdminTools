@@ -141,7 +141,7 @@ namespace SafeArrival.AdminTools.Presentation
             radioLevels.Add(radioButton3);
             await service.BuildCodePipelinelevel1(
                 int.Parse(radioLevels.Find(o => o.Checked).Tag.ToString()), 
-                "41da8de32ef6571ad77f9da10b38ef09dfdd1259");
+                ConfigurationManager.AppSettings["GithubToken"]);
         }
     }
 }
