@@ -26,6 +26,7 @@ namespace SafeArrival.AdminTools.Presentation
             try
             {
                 PopulateStacks();
+                PopulateCodePipelineInfo();
             }
             catch (Exception ex)
             {
@@ -37,9 +38,15 @@ namespace SafeArrival.AdminTools.Presentation
         {
             try
             {
+                int counter = 0;
+                while (counter<cListBoxApps.Items.Count)
+                {
+                    cListBoxApps.SetItemChecked(counter, true);
+                    counter++;
+                }
                 btnSuspend.Enabled = false;
                 await PopulateStacks();
-                PopulateCodePipelineInfo();
+                await PopulateCodePipelineInfo();
             }
             catch (Exception ex)
             {
@@ -92,9 +99,36 @@ namespace SafeArrival.AdminTools.Presentation
                 radioLevels.Add(radioButton1);
                 radioLevels.Add(radioButton2);
                 radioLevels.Add(radioButton3);
-                await service.BuildCodePipelinelevel1(
-                    int.Parse(radioLevels.Find(o => o.Checked).Tag.ToString()),
-                    ConfigurationManager.AppSettings["GithubToken"]);
+                radioLevels.Add(radioButtonDNS);
+                int level = int.Parse(radioLevels.Find(o => o.Checked).Tag.ToString());
+                if (level <= 2)
+                {
+                    await service.BuildCodePipelinelevel_1And2(
+                        level,
+                        ConfigurationManager.AppSettings["GithubToken"]);
+                    NotifyToMainStatus(
+                        $"{GlobalVariables.Enviroment}-level-{level}-{GlobalVariables.Color} is created.",
+                        System.Drawing.Color.Green);
+                }
+                else if (level == 3)
+                {
+                    var apps = new List<string>();
+                    if (cListBoxApps.CheckedItems.Count == 0)
+                        return;
+                    foreach (var item in cListBoxApps.CheckedItems)
+                    {
+                        apps.Add(item.ToString());
+                    }
+                    await service.BuildCodePipelinelevel_3(apps);
+                    NotifyToMainStatus(
+                        $"{GlobalVariables.Enviroment}-level-{level}-{GlobalVariables.Color} is created.", 
+                        System.Drawing.Color.Green);
+                }
+                else if (level == 4)
+                {
+                    await service.SetDNS();
+                    WriteNotification($"{GlobalVariables.Enviroment} DNS is set.");
+                }
             }
             catch (Exception ex)
             {
@@ -137,6 +171,7 @@ namespace SafeArrival.AdminTools.Presentation
                             btnSuspend.Enabled = false;
                             return;
                         }
+                        await PopulateStacks();
                     }
                 }
             }
@@ -157,7 +192,7 @@ namespace SafeArrival.AdminTools.Presentation
             this.stacks = stacks;
         }
 
-        private void PopulateCodePipelineInfo()
+        private async Task PopulateCodePipelineInfo()
         {
             string path = ConfigurationManager.AppSettings["InfraFileFolder"];
             if (LibGit2Sharp.Repository.IsValid(path))
@@ -169,9 +204,16 @@ namespace SafeArrival.AdminTools.Presentation
             {
                 lblBranchName.Text = $"No repository is found from the path of {path}, please check your config file";
             }
+            gvCodePiplines.AutoGenerateColumns = false;
+            gvCodePiplines.DataSource = await service.GetCodePipelinList();
         }
 
         private async void DeleteCallBack(System.IAsyncResult result)
+        {
+            await PopulateStacks();
+        }
+
+        private async void btnRefresh_Click(object sender, EventArgs e)
         {
             await PopulateStacks();
         }

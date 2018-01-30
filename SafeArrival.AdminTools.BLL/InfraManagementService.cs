@@ -25,29 +25,85 @@ namespace SafeArrival.AdminTools.BLL
             return await helper.GetStackList();
         }
 
-        public async Task BuildCodePipelinelevel1(int level, string oAuthToken)
+        public async Task<List<SA_PipelineSummary>> GetCodePipelinList()
+        {
+            var helper = new CodePipelineHelper(
+                GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
+            return await helper.GetCodePipelineList();
+        }
+
+        public async Task BuildCodePipelinelevel_1And2(int level, string oAuthToken)
         {
             var helper = new CloudFormationHelper(
                 GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
-            var filePath = Path.Combine(ConfigurationManager.AppSettings["InfraFileFolder"], "master", $"Level-{level}.yaml");
-            if (!File.Exists(filePath))
-            {
-                return;
-            }
-            var content = File.ReadAllText(filePath);
+
             var sa_parameters = new List<KeyValuePair<string, string>>();
-            sa_parameters.Add(new KeyValuePair<string, string>("OAuthToken", oAuthToken));
             sa_parameters.Add(new KeyValuePair<string, string>("Environment", GlobalVariables.Enviroment.ToString()));
+            sa_parameters.Add(new KeyValuePair<string, string>("OAuthToken", oAuthToken));
+
+            string stackName = $"{GlobalVariables.Enviroment}-level-{level}";
+            if (level == 2)
+            {
+                sa_parameters.Add(new KeyValuePair<string, string>("Color", GlobalVariables.Color));
+                stackName += $"-{GlobalVariables.Color}";
+            }
+
             await helper.CreateStack
             (
-            ConfigurationManager.AppSettings["InfraFileFolder"],
-            $"{GlobalVariables.Enviroment}-level-{level}",
-            content,
-            sa_parameters
+                ConfigurationManager.AppSettings["InfraFileFolder"],
+                stackName,
+                ReadCodePipelineConfigs(level),
+                sa_parameters
+            );
+            LogServices.WriteLog($"{GlobalVariables.Enviroment}-level-{level}-{GlobalVariables.Color} is created.",
+                    LogType.Information, GlobalVariables.Enviroment.ToString());
+        }
+
+        public async Task BuildCodePipelinelevel_3(List<string> apps)
+        {
+            var helper = new CloudFormationHelper(
+                GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
+
+            foreach (string app in apps)
+            {
+                var sa_parameters = new List<KeyValuePair<string, string>>();
+                sa_parameters.Add(new KeyValuePair<string, string>("Environment", GlobalVariables.Enviroment.ToString()));
+                sa_parameters.Add(new KeyValuePair<string, string>("Color", GlobalVariables.Color));
+                sa_parameters.Add(new KeyValuePair<string, string>("Application", app));
+
+                await helper.CreateStack
+                (
+                    ConfigurationManager.AppSettings["InfraFileFolder"],
+                    $"{GlobalVariables.Enviroment}-level-3-{app}-{GlobalVariables.Color}",
+                    ReadCodePipelineConfigs(3),
+                    sa_parameters
+                );
+                LogServices.WriteLog($"{GlobalVariables.Enviroment}-level-3-{GlobalVariables.Color}-{app} is created.",
+                    LogType.Information, GlobalVariables.Enviroment.ToString());
+            }
+        }
+
+        //No color for now.
+        public async Task SetDNS()
+        {
+            var helper = new CloudFormationHelper(
+               GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
+
+            var sa_parameters = new List<KeyValuePair<string, string>>();
+            sa_parameters.Add(new KeyValuePair<string, string>("Environment", GlobalVariables.Enviroment.ToString()));
+            sa_parameters.Add(new KeyValuePair<string, string>("Color", GlobalVariables.Color));
+            string stackName = $"{GlobalVariables.Enviroment}-DNS";
+
+            await helper.CreateStack
+            (
+                ConfigurationManager.AppSettings["InfraFileFolder"],
+                stackName,
+                ReadCodePipelineConfigs(4),
+                sa_parameters
             );
         }
 
-        private List<KeyValuePair<string,string>> GetCodePipelingParameters(int level)
+        private List<KeyValuePair<string, string>> GetCodePipelingParameters(int level)
         {
             var parameters = new List<KeyValuePair<string, string>>();
             switch (level)
@@ -62,6 +118,20 @@ namespace SafeArrival.AdminTools.BLL
                     throw new Exception($"{level} is an invalid infrastructure level");
             }
             return parameters;
+        }
+
+        private string ReadCodePipelineConfigs(int level)
+        {
+            var filePath = Path.Combine(ConfigurationManager.AppSettings["InfraFileFolder"], "master", $"Level-{level}.yaml");
+            if (level == 4)
+            {
+                filePath = Path.Combine(ConfigurationManager.AppSettings["InfraFileFolder"], "cloudformation", "DNS.yaml");
+            }
+            if (!File.Exists(filePath))
+            {
+                throw new Exception($"Can't find file {filePath}!");
+            }
+            return File.ReadAllText(filePath);
         }
     }
 }

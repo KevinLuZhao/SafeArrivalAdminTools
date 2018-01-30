@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Amazon.CodePipeline;
 using Amazon.CodePipeline.Model;
+using SafeArrival.AdminTools.Model;
 
 namespace SafeArrival.AdminTools.AwsUtilities
 {
@@ -21,12 +22,11 @@ namespace SafeArrival.AdminTools.AwsUtilities
         }
 
         //public async Task<PipelineDeclaration> Get()
-        public async Task GetCodePipelineList()
+        public async Task<List<SA_PipelineSummary>> GetCodePipelineList()
         {
-            PipelineSummary summary;
-            //summary.   
             var response = await client.ListPipelinesAsync();
-            //response.
+            return ModelTransformer<PipelineSummary, SA_PipelineSummary>.
+                TransformAwsModelListToSafeArrivalModelList(response.Pipelines).FindAll(o=>o.Name.Contains(environment.ToString()));
         }
     }
 }

@@ -52,16 +52,25 @@ namespace SafeArrival.AdminTools.AwsUtilities
             while (true)
             {
                 await Task.Delay(5000);
-                var getResponse = await client.DescribeStacksAsync(getRequest);
-                if (getResponse.Stacks == null || getResponse.Stacks.Count == 0)
-                    return "DELETE_COMPLETE";
-                var stack = getResponse.Stacks[0];
-                if (stack.StackStatus == StackStatus.DELETE_FAILED)
-                    return "DELETE_FAILED";
-                else if (stack.StackStatus == StackStatus.DELETE_COMPLETE)
-                    return "DELETE_COMPLETE";
-                else
-                    continue;
+                try
+                {
+                    var getResponse = await client.DescribeStacksAsync(getRequest);
+                    if (getResponse.Stacks == null || getResponse.Stacks.Count == 0)
+                        return "DELETE_COMPLETE";
+                    var stack = getResponse.Stacks[0];
+                    if (stack.StackStatus == StackStatus.DELETE_FAILED)
+                        return "DELETE_FAILED";
+                    else if (stack.StackStatus == StackStatus.DELETE_COMPLETE)
+                        return "DELETE_COMPLETE";
+                    else
+                        continue;
+                }
+                catch (Amazon.CloudFormation.AmazonCloudFormationException ex)
+                {
+                    if (ex.Message.Trim() == $"Stack with id {stackName} does not exist".Trim())
+                        return "DELETE_COMPLETE";
+                    throw ex;
+                }               
             }
         }
 
