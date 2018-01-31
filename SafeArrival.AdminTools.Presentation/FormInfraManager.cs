@@ -39,7 +39,7 @@ namespace SafeArrival.AdminTools.Presentation
             try
             {
                 int counter = 0;
-                while (counter<cListBoxApps.Items.Count)
+                while (counter < cListBoxApps.Items.Count)
                 {
                     cListBoxApps.SetItemChecked(counter, true);
                     counter++;
@@ -99,7 +99,7 @@ namespace SafeArrival.AdminTools.Presentation
                 radioLevels.Add(radioButton1);
                 radioLevels.Add(radioButton2);
                 radioLevels.Add(radioButton3);
-                radioLevels.Add(radioButtonDNS);
+                //radioLevels.Add(radioButtonDNS);
                 int level = int.Parse(radioLevels.Find(o => o.Checked).Tag.ToString());
                 if (level <= 2)
                 {
@@ -121,13 +121,8 @@ namespace SafeArrival.AdminTools.Presentation
                     }
                     await service.BuildCodePipelinelevel_3(apps);
                     NotifyToMainStatus(
-                        $"{GlobalVariables.Enviroment}-level-{level}-{GlobalVariables.Color} is created.", 
+                        $"{GlobalVariables.Enviroment}-level-{level}-{GlobalVariables.Color} is created.",
                         System.Drawing.Color.Green);
-                }
-                else if (level == 4)
-                {
-                    await service.SetDNS();
-                    WriteNotification($"{GlobalVariables.Enviroment} DNS is set.");
                 }
             }
             catch (Exception ex)
@@ -181,6 +176,42 @@ namespace SafeArrival.AdminTools.Presentation
             }
         }
 
+        private async void DeleteCallBack(System.IAsyncResult result)
+        {
+            await PopulateStacks();
+        }
+
+        private async void btnRefresh_Click(object sender, EventArgs e)
+        {
+            await PopulateStacks();
+        }
+
+        private async void btnCreateSisEvent_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                await service.SetSisEventTrigger();
+                WriteNotification($"{GlobalVariables.Enviroment} SIS event trigger has been successfully created.");
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+        }
+
+        private async void btnSetDns_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                await service.SetDNS();
+                WriteNotification($"{GlobalVariables.Enviroment} DNS is set.");
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+        }
+
         private async Task PopulateStacks()
         {
             var stacks = await service.GetStackList();
@@ -206,16 +237,6 @@ namespace SafeArrival.AdminTools.Presentation
             }
             gvCodePiplines.AutoGenerateColumns = false;
             gvCodePiplines.DataSource = await service.GetCodePipelinList();
-        }
-
-        private async void DeleteCallBack(System.IAsyncResult result)
-        {
-            await PopulateStacks();
-        }
-
-        private async void btnRefresh_Click(object sender, EventArgs e)
-        {
-            await PopulateStacks();
-        }
+        } 
     }
 }

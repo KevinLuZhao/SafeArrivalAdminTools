@@ -159,6 +159,7 @@ namespace SafeArrival.AdminTools.Presentation
             S3Helper s3Helper = new S3Helper(
                 GlobalVariables.Enviroment,
                 GlobalVariables.Region,
+                GlobalVariables.Color,
                 GenerationS3BucketName()
                 );
 

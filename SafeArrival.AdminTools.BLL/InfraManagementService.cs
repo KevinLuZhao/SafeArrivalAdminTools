@@ -1,5 +1,6 @@
 ﻿using SafeArrival.AdminTools.AwsUtilities;
 using SafeArrival.AdminTools.Model;
+using SafeArrival.AdminTools.DAL;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -81,6 +82,26 @@ namespace SafeArrival.AdminTools.BLL
                 LogServices.WriteLog($"{GlobalVariables.Enviroment}-level-3-{GlobalVariables.Color}-{app} is created.",
                     LogType.Information, GlobalVariables.Enviroment.ToString());
             }
+        }
+
+        public async Task SetSisEventTrigger()
+        {
+            var s3Helper = new S3Helper(
+               GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color, 
+               $"safe-arrival-{GlobalVariables.Region}-{GlobalVariables.Enviroment}-sisbucket");
+            var lambdaHelper = new LambdaHelper(
+               GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
+            var db = new EnvironmentAccountDb();
+            var account = db.GetRoleByEnv(GlobalVariables.Enviroment);
+            await s3Helper.PutNotification();
+            await lambdaHelper.AddPolicy(account.Account);
+            await Task.Delay(1000);
+            await s3Helper.PutNotification
+            (
+                $"sis-raw-event-{GlobalVariables.Enviroment.ToString()}",
+                $"arn:aws:lambda:{GlobalVariables.Region}:{account.Account}:function:SafeArrival-SIS-{GlobalVariables.Enviroment.ToString()}-{GlobalVariables.Color}",
+                "s3:ObjectCreated:Put"
+            );
         }
 
         //No color for now.

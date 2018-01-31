@@ -43,6 +43,7 @@
             this.btnSuspend = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnCreateSisEvent = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.cListBoxApps = new System.Windows.Forms.CheckedListBox();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
@@ -58,13 +59,15 @@
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.lblBranchName = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.radioButtonDNS = new System.Windows.Forms.RadioButton();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.btnSetDns = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gvStacks)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gvCodePiplines)).BeginInit();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -209,6 +212,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.panel2);
             this.tabPage2.Controls.Add(this.panel1);
             this.tabPage2.Controls.Add(this.gvCodePiplines);
             this.tabPage2.Controls.Add(this.btnCmd);
@@ -223,10 +227,19 @@
             this.tabPage2.Text = "Code Pipeline";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // btnCreateSisEvent
+            // 
+            this.btnCreateSisEvent.Location = new System.Drawing.Point(3, 31);
+            this.btnCreateSisEvent.Name = "btnCreateSisEvent";
+            this.btnCreateSisEvent.Size = new System.Drawing.Size(147, 23);
+            this.btnCreateSisEvent.TabIndex = 16;
+            this.btnCreateSisEvent.Text = "Create SIS Event Trigger";
+            this.btnCreateSisEvent.UseVisualStyleBackColor = true;
+            this.btnCreateSisEvent.Click += new System.EventHandler(this.btnCreateSisEvent_Click);
+            // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.radioButtonDNS);
             this.panel1.Controls.Add(this.cListBoxApps);
             this.panel1.Controls.Add(this.radioButton1);
             this.panel1.Controls.Add(this.radioButton2);
@@ -234,7 +247,7 @@
             this.panel1.Controls.Add(this.btnCreate);
             this.panel1.Location = new System.Drawing.Point(9, 61);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(452, 121);
+            this.panel1.Size = new System.Drawing.Size(282, 121);
             this.panel1.TabIndex = 15;
             // 
             // cListBoxApps
@@ -246,7 +259,7 @@
             "API",
             "Worker",
             "Customer"});
-            this.cListBoxApps.Location = new System.Drawing.Point(222, 3);
+            this.cListBoxApps.Location = new System.Drawing.Point(193, 3);
             this.cListBoxApps.Name = "cListBoxApps";
             this.cListBoxApps.Size = new System.Drawing.Size(82, 109);
             this.cListBoxApps.TabIndex = 15;
@@ -254,7 +267,7 @@
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(12, 3);
+            this.radioButton1.Location = new System.Drawing.Point(8, 3);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(60, 17);
             this.radioButton1.TabIndex = 2;
@@ -265,7 +278,7 @@
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(87, 3);
+            this.radioButton2.Location = new System.Drawing.Point(70, 3);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(60, 17);
             this.radioButton2.TabIndex = 3;
@@ -277,7 +290,7 @@
             // 
             this.radioButton3.AutoSize = true;
             this.radioButton3.Checked = true;
-            this.radioButton3.Location = new System.Drawing.Point(165, 3);
+            this.radioButton3.Location = new System.Drawing.Point(132, 3);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(60, 17);
             this.radioButton3.TabIndex = 4;
@@ -386,22 +399,29 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(11, 15);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(160, 13);
+            this.label1.Size = new System.Drawing.Size(151, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Current Repository Branch:";
+            this.label1.Text = "Current Git Local Branch:";
             // 
-            // radioButtonDNS
+            // panel2
             // 
-            this.radioButtonDNS.AutoSize = true;
-            this.radioButtonDNS.Checked = true;
-            this.radioButtonDNS.Location = new System.Drawing.Point(324, 3);
-            this.radioButtonDNS.Name = "radioButtonDNS";
-            this.radioButtonDNS.Size = new System.Drawing.Size(48, 17);
-            this.radioButtonDNS.TabIndex = 16;
-            this.radioButtonDNS.TabStop = true;
-            this.radioButtonDNS.Tag = "4";
-            this.radioButtonDNS.Text = "DNS";
-            this.radioButtonDNS.UseVisualStyleBackColor = true;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.btnSetDns);
+            this.panel2.Controls.Add(this.btnCreateSisEvent);
+            this.panel2.Location = new System.Drawing.Point(306, 61);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(155, 121);
+            this.panel2.TabIndex = 16;
+            // 
+            // btnSetDns
+            // 
+            this.btnSetDns.Location = new System.Drawing.Point(3, 3);
+            this.btnSetDns.Name = "btnSetDns";
+            this.btnSetDns.Size = new System.Drawing.Size(147, 23);
+            this.btnSetDns.TabIndex = 17;
+            this.btnSetDns.Text = "Set DNS";
+            this.btnSetDns.UseVisualStyleBackColor = true;
+            this.btnSetDns.Click += new System.EventHandler(this.btnSetDns_Click);
             // 
             // FormInfraManager
             // 
@@ -420,6 +440,7 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gvCodePiplines)).EndInit();
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -455,6 +476,8 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.CheckedListBox cListBoxApps;
         private System.Windows.Forms.Button btnRefresh;
-        private System.Windows.Forms.RadioButton radioButtonDNS;
+        private System.Windows.Forms.Button btnCreateSisEvent;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button btnSetDns;
     }
 }

@@ -76,6 +76,7 @@ namespace SafeArrival.AdminTools.Presentation
                 S3Helper s3Helper = new S3Helper(
                            GlobalVariables.Enviroment,
                            GlobalVariables.Region,
+                           GlobalVariables.Color,
                            s3BucketName
                            );
                 if (dgViewS3Files.SelectedRows.Count > 0)
@@ -111,6 +112,7 @@ namespace SafeArrival.AdminTools.Presentation
                 S3Helper s3Helper = new S3Helper(
                            GlobalVariables.Enviroment,
                            GlobalVariables.Region,
+                           GlobalVariables.Color,
                            s3BucketName
                            );
                 DialogResult result = openFileDialog1.ShowDialog();
@@ -139,6 +141,7 @@ namespace SafeArrival.AdminTools.Presentation
             S3Helper s3Helper = new S3Helper(
                        GlobalVariables.Enviroment,
                        GlobalVariables.Region,
+                       GlobalVariables.Color,
                        s3BucketName
                        );
             try
@@ -239,10 +242,11 @@ namespace SafeArrival.AdminTools.Presentation
         private List<SA_S3Object> RefreshS3BucketObjectList(string s3BucketName)
         {
             S3Helper s3Helper = new S3Helper(
-                               GlobalVariables.Enviroment,
-                               GlobalVariables.Region,
-                               s3BucketName
-                               );
+                GlobalVariables.Enviroment,
+                GlobalVariables.Region,
+                GlobalVariables.Color,
+                s3BucketName
+                );
             var s3ObjList = s3Helper.GetBucketFileList();
             _envAwsS3ObjectList[s3BucketName].Clear();
             _envAwsS3ObjectList[s3BucketName].AddRange(s3ObjList);

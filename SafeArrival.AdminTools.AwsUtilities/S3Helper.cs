@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SafeArrival.AdminTools.AwsUtilities
 {
-    public class S3Helper 
+    public class S3Helper : AwsHelperBase
     {
         public string BucketName { get; set; }
         private AmazonS3Client client;
@@ -35,7 +35,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
         //    BucketName = bucketName;
         //}
 
-        public S3Helper(Model.Environment profile, string region, string bucketName)
+        public S3Helper(Model.Environment profile, string region, string color, string bucketName) : base(profile, region, color)
         {
             //Amazon.Runtime.AWSCredentials credentials = new Amazon.Runtime.StoredProfileAWSCredentials(profile.ToString());
             //client = new AmazonS3Client(credentials, AwsCommon.GetRetionEndpoint(region));
@@ -45,10 +45,10 @@ namespace SafeArrival.AdminTools.AwsUtilities
             BucketName = bucketName;
         }
 
-        public S3Helper(string bucketName)
-        {
-            BucketName = bucketName;
-        }
+        //public S3Helper(string bucketName)
+        //{
+        //    BucketName = bucketName;
+        //}
 
         /// <summary>
         /// Upload the File to AWS S3
@@ -193,6 +193,29 @@ DeleteFile(string fullFileName)
                 request.Marker = listResponse.NextMarker;
             } while (listResponse.IsTruncated);
             return output.ToString();
+        }
+
+        public async Task PutNotification(string id = "", string functionArn = "", string s3Event = "")
+        {
+            LambdaFunctionConfiguration lambdaConfig = null;
+            if (id!="")
+            {
+                var events = new List<EventType>();
+                events.Add(new EventType(s3Event));
+                lambdaConfig = new LambdaFunctionConfiguration()
+                {
+                    FunctionArn = functionArn,
+                    Id = id,
+                    Events = events
+                };
+            }
+            
+            var request = new PutBucketNotificationRequest()
+            {
+                BucketName = BucketName,
+                LambdaFunctionConfigurations = new List<LambdaFunctionConfiguration>() { lambdaConfig }
+            };
+            var response = await client.PutBucketNotificationAsync(request);
         }
     }
 }
