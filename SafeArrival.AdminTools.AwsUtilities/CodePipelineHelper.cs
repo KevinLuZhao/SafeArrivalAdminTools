@@ -13,7 +13,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
     {
         private AmazonCodePipelineClient client;
 
-        public CodePipelineHelper(Model.Environment profile, string region, string color) : base(profile, region, color)
+        public CodePipelineHelper(string profile, string region, string color) : base(profile, region, color)
         {
             //client = new AmazonRDSClient(credentials, AwsCommon.GetRetionEndpoint(region));
             client = new AmazonCodePipelineClient(
@@ -25,8 +25,12 @@ namespace SafeArrival.AdminTools.AwsUtilities
         public async Task<List<SA_PipelineSummary>> GetCodePipelineList()
         {
             var response = await client.ListPipelinesAsync();
-            return ModelTransformer<PipelineSummary, SA_PipelineSummary>.
-                TransformAwsModelListToSafeArrivalModelList(response.Pipelines).FindAll(o=>o.Name.Contains(environment.ToString()));
+            var lst = ModelTransformer<PipelineSummary, SA_PipelineSummary>.
+                TransformAwsModelListToSafeArrivalModelList(response.Pipelines).FindAll(o =>
+                (o.Name.Contains(environment.ToString()) &&
+                (o.Name.Contains(color) || (!o.Name.Contains("green") && (!o.Name.Contains("blue"))))));
+            lst.Sort((a, b) => b.Created.CompareTo(a.Created));
+            return lst.ToList();
         }
     }
 }

@@ -21,7 +21,7 @@ namespace SafeArrival.AdminTools.DAL
             helper.CreateItem(tableName, obj);
         }
 
-        public List<AutoScalingGroupSettings> GetSettingsByEnv(Model.Environment env)
+        public List<AutoScalingGroupSettings> GetSettingsByEnv(string env)
         {
             return helper.QueryItems(tableName, "Environment", ":v_Environment", env.ToString());
         }

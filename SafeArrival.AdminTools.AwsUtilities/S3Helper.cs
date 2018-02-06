@@ -35,7 +35,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
         //    BucketName = bucketName;
         //}
 
-        public S3Helper(Model.Environment profile, string region, string color, string bucketName) : base(profile, region, color)
+        public S3Helper(string profile, string region, string color, string bucketName) : base(profile, region, color)
         {
             //Amazon.Runtime.AWSCredentials credentials = new Amazon.Runtime.StoredProfileAWSCredentials(profile.ToString());
             //client = new AmazonS3Client(credentials, AwsCommon.GetRetionEndpoint(region));

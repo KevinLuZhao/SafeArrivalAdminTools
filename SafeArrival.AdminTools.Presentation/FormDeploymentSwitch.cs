@@ -22,11 +22,11 @@ namespace SafeArrival.AdminTools.Presentation
             InitializeComponent();
         }
 
-        public override void OnEnvironmentChanged()
+        public override async void OnEnvironmentChanged()
         {
             try
             {
-                PopulateLoadBalancerControls();
+                await PopulateLoadBalancerControls();
             }
             catch (Exception ex)
             {

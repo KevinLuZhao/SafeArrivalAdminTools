@@ -19,11 +19,11 @@ namespace SafeArrival.AdminTools.Presentation
             InitializeComponent();
         }
 
-        public override void OnEnvironmentChanged()
+        public override async void OnEnvironmentChanged()
         {
             try
             {
-                PopulateSystemStatus();
+                await PopulateSystemStatus();
             }
             catch (Exception ex)
             {

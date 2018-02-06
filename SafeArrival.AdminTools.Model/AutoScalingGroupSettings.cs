@@ -8,7 +8,7 @@ namespace SafeArrival.AdminTools.Model
 {
     public class AutoScalingGroupSettings
     {
-        public Environment Environment { get; set; }
+        public string Environment { get; set; }
         public ApplicationServer Application { get; set; }
         public int MaxSize { get; set; }
         public int MinSize { get; set; }

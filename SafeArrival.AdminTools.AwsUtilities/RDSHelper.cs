@@ -14,7 +14,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
         
         private AmazonRDSClient client;
 
-        public RDSHelper(Model.Environment profile, string region, string color) : base(profile, region, color)
+        public RDSHelper(string profile, string region, string color) : base(profile, region, color)
         {
             client = new AmazonRDSClient(
                 CredentiaslManager.GetCredential(environment),

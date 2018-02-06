@@ -17,12 +17,16 @@ namespace SafeArrival.AdminTools.Presentation
             InitializeComponent();
             EnvironmentAccountService service = new EnvironmentAccountService();
             GlobalVariables.EnvironmentAccounts = service.GetEnvironmentAccounts();
+
+            string githubTokenPath = Path.Combine(
+                    System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile), "gittoken");
+            string gitToken = File.ReadAllText(githubTokenPath);
         }
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
-            tsComboEnv.ComboBox.DataSource = Enum.GetValues(typeof(Model.Environment));
-            tsComboEnv.SelectedIndex = 1;
+            tsComboEnv.ComboBox.DataSource = AwsUtilities.AwsCommon.GetEnvironmentList();
+            tsComboEnv.SelectedIndex = 0;
             tsComboColor.ComboBox.DataSource = Enum.GetValues(typeof(Model.Color));
             tsComboColor.SelectedIndex = 0;
 
@@ -99,7 +103,7 @@ namespace SafeArrival.AdminTools.Presentation
 
         private void tsComboEnv_SelectedIndexChanged(object sender, EventArgs e)
         {
-            GlobalVariables.Enviroment = (Model.Environment)Enum.Parse(typeof(Model.Environment), tsComboEnv.SelectedItem.ToString(), true);
+            GlobalVariables.Enviroment = AwsUtilities.AwsCommon.GetEnvironmentList().Find(o => o == tsComboEnv.SelectedItem.ToString());
             GlobalVariables.Region = GlobalVariables.EnvironmentAccounts[GlobalVariables.Enviroment.ToString()].Region;
             tsComboRegion.SelectedItem = Regions.GetRegionList().Find(o => o.Key == GlobalVariables.Region);
 

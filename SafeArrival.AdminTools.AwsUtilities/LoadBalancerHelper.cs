@@ -13,7 +13,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
     {
         private AmazonElasticLoadBalancingV2Client client;
 
-        public LoadBalancerHelper(Model.Environment profile, string region, string color) : base(profile, region, color)
+        public LoadBalancerHelper(string profile, string region, string color) : base(profile, region, color)
         {
             //client = new AmazonRDSClient(credentials, AwsCommon.GetRetionEndpoint(region));
             client = new AmazonElasticLoadBalancingV2Client(

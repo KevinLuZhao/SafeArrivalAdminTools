@@ -10,7 +10,7 @@ namespace SafeArrival.AdminTools.Model
     {
         public string DBInstanceIdentifier { get; set; }
         public string DBInstanceArn { get; set; }
-        public Environment RdsEnvinronment { get; set; }
+        public string RdsEnvinronment { get; set; }
         public string Status { get; set; }
         public bool MultiAZ { get; set; }
     }

@@ -14,9 +14,9 @@ namespace SafeArrival.AdminTools.DAL
             helper = new DynamoDBHelper<EnvironmentAccount>();
         }
 
-        public EnvironmentAccount GetRoleByEnv(Model.Environment env)
+        public EnvironmentAccount GetRoleByEnv(string env)
         {
-            return helper.QueryItems(tableName, "Environment", ":v_Environment", env.ToString()).First();
+            return helper.QueryItems(tableName, "Environment", ":v_Environment", env).First();
         }
 
         public Dictionary<string, EnvironmentAccount> GetEnvironmentAccounts()

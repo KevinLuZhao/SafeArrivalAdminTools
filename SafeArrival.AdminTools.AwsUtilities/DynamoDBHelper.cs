@@ -19,7 +19,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
                 AwsCommon.GetRetionEndpoint("us-east-2"));
         }
 
-        //public DynamoDBHelper(Model.Environment profile, string region)
+        //public DynamoDBHelper(string profile, string region)
         //{
         //    Amazon.Runtime.AWSCredentials credentials = new Amazon.Runtime.StoredProfileAWSCredentials(profile.ToString());
         //    //this.Environment = profile.ToString();

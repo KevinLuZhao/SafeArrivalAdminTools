@@ -103,9 +103,9 @@
             this.btnRefresh.FlatAppearance.BorderSize = 0;
             this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRefresh.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Reload;
-            this.btnRefresh.Location = new System.Drawing.Point(239, 583);
+            this.btnRefresh.Location = new System.Drawing.Point(239, 582);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(45, 42);
+            this.btnRefresh.Size = new System.Drawing.Size(43, 39);
             this.btnRefresh.TabIndex = 14;
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
@@ -128,7 +128,7 @@
             this.StackName});
             this.gvStacks.Location = new System.Drawing.Point(6, 6);
             this.gvStacks.Name = "gvStacks";
-            this.gvStacks.Size = new System.Drawing.Size(1016, 579);
+            this.gvStacks.Size = new System.Drawing.Size(1016, 575);
             this.gvStacks.TabIndex = 0;
             // 
             // Select
@@ -363,7 +363,7 @@
             // 
             this.btnCmd.Image = ((System.Drawing.Image)(resources.GetObject("btnCmd.Image")));
             this.btnCmd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCmd.Location = new System.Drawing.Point(348, 10);
+            this.btnCmd.Location = new System.Drawing.Point(348, 5);
             this.btnCmd.Name = "btnCmd";
             this.btnCmd.Size = new System.Drawing.Size(113, 23);
             this.btnCmd.TabIndex = 6;
@@ -375,7 +375,7 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(254, 15);
+            this.linkLabel1.Location = new System.Drawing.Point(254, 10);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(85, 13);
             this.linkLabel1.TabIndex = 7;
@@ -387,7 +387,7 @@
             // 
             this.lblBranchName.AutoSize = true;
             this.lblBranchName.ForeColor = System.Drawing.Color.Red;
-            this.lblBranchName.Location = new System.Drawing.Point(174, 15);
+            this.lblBranchName.Location = new System.Drawing.Point(174, 10);
             this.lblBranchName.Name = "lblBranchName";
             this.lblBranchName.Size = new System.Drawing.Size(10, 13);
             this.lblBranchName.TabIndex = 1;
@@ -397,7 +397,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(11, 15);
+            this.label1.Location = new System.Drawing.Point(11, 10);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(151, 13);
             this.label1.TabIndex = 0;
@@ -419,7 +419,7 @@
             this.btnSetDns.Name = "btnSetDns";
             this.btnSetDns.Size = new System.Drawing.Size(147, 23);
             this.btnSetDns.TabIndex = 17;
-            this.btnSetDns.Text = "Set DNS";
+            this.btnSetDns.Text = "Set Environment DNS";
             this.btnSetDns.UseVisualStyleBackColor = true;
             this.btnSetDns.Click += new System.EventHandler(this.btnSetDns_Click);
             // 

@@ -20,7 +20,7 @@ namespace SafeArrival.AdminTools.BLL
         public async Task<string> CreatePeeringConnection(SA_Vpc requesterVpc, SA_Vpc accepterVpc)
         {
             var peeringConnectionId = await ec2Helper.CreatePeeringConnection(
-                AwsCommon.GetAwsAccountByEnvironment(GlobalVariables.Enviroment) ,
+                AwsCommon.GetEnvironmentAccounts()[GlobalVariables.Enviroment].Account ,
                 requesterVpc.VpcId, accepterVpc.VpcId,
                 Utils.FormatresourceName(SA_ResourceTypeName.RdsPeeringConnection));
             await Task.Delay(5000);

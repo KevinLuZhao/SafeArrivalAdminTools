@@ -11,12 +11,12 @@ namespace SafeArrival.AdminTools.AwsUtilities
     {
         public static Dictionary<string, AssumeRoleAWSCredentials> GlobalRoleCredentialsCache { get; set; }
         public static Dictionary<string, string> GlobalRoleArnCache { get; set; }
-        public static AssumeRoleAWSCredentials GetCredential(Model.Environment env)
+        public static AssumeRoleAWSCredentials GetCredential(string env)
         {
             if (GlobalRoleCredentialsCache == null)
             {
                 GlobalRoleCredentialsCache = new Dictionary<string, AssumeRoleAWSCredentials>();
-                foreach (var strEnv in Enum.GetNames(typeof(Model.Environment)))
+                foreach (var strEnv in AwsCommon.GetEnvironmentList())
                 {
                     GlobalRoleCredentialsCache.Add(strEnv, null);
                 }

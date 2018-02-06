@@ -17,8 +17,7 @@ namespace SafeArrival.AdminTools.Presentation
 
         private void FormLogs_Load(object sender, EventArgs e)
         {
-            //var array = Enum.GetNames(typeof(Model.Environment));
-            List<string> lstEnv = new List<string>(Enum.GetNames(typeof(Model.Environment)));
+            List<string> lstEnv = AwsUtilities.AwsCommon.GetEnvironmentList();
             lstEnv.Insert(0, string.Empty);
             ddlEnvironment.DataSource = lstEnv;
             ddlEnvironment.SelectedItem = GlobalVariables.Enviroment.ToString();

@@ -9,10 +9,10 @@ namespace SafeArrival.AdminTools.AwsUtilities
 {
     public class AwsHelperBase
     {
-        protected Environment environment;
+        protected string environment;
         protected string region;
         protected string color;
-        public AwsHelperBase(Environment profile, string region, string color)
+        public AwsHelperBase(string profile, string region, string color)
         {
             environment = profile;
             this.region = region;

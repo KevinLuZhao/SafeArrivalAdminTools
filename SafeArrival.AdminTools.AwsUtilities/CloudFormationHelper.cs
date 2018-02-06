@@ -11,7 +11,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
     public class CloudFormationHelper : AwsHelperBase
     {
         AmazonCloudFormationClient client;
-        public CloudFormationHelper(Model.Environment profile, string region, string color) : base(profile, region, color)
+        public CloudFormationHelper(string profile, string region, string color) : base(profile, region, color)
         {
             //client = new AmazonRDSClient(credentials, AwsCommon.GetRetionEndpoint(region));
             client = new AmazonCloudFormationClient(
@@ -22,17 +22,45 @@ namespace SafeArrival.AdminTools.AwsUtilities
         public async Task<List<SA_Stack>> GetStackList()
         {
             var saStacks = new List<SA_Stack>();
-            var response = await client.DescribeStacksAsync();
-            foreach (Stack awsStack in response.Stacks)
+            string nextToken = null;
+            while(true)
             {
-                var saStack = ConvertStack(awsStack);
-                //Here is a problem, Level 1 does not have color, but we can't exclude color because we 
-                //dont want to select both green and blue.
-                if (saStack.DisplayName.Contains(environment.ToString()) && saStack.DisplayName.Contains(color))
-                    saStacks.Add(saStack);
+                var response = await GetStackListPage(nextToken);
+                foreach (Stack awsStack in response.Stacks)
+                {
+                    var saStack = ConvertStack(awsStack);
+                    //Here is a problem, Level 1 does not have color, but we can't exclude color because we 
+                    //dont want to select both green and blue.
+                    if (saStack.DisplayName.IndexOf($"{environment.ToString()}-") == 0 &&
+                        (saStack.DisplayName.Contains(color) ||
+                        (!saStack.DisplayName.Contains("blue") && !saStack.DisplayName.Contains("green"))))
+                        saStacks.Add(saStack);
+                }
+                nextToken = response.NextToken;
+                if (nextToken == null)
+                {
+                    break;
+                }
             }
+            
             saStacks.Sort((a, b) => b.CreationTime.CompareTo(a.CreationTime));
             return saStacks.ToList();
+        }
+
+        public async Task<DescribeStacksResponse> GetStackListPage(string nextToken = null)
+        {
+            DescribeStacksResponse response = null;
+            if (nextToken != null)
+            {
+                var request = new DescribeStacksRequest()
+                { NextToken = nextToken };
+                response = await client.DescribeStacksAsync(request);
+            }
+            else
+            {
+                response = await client.DescribeStacksAsync();
+            }
+            return response;
         }
 
         public async Task<string> DeleteStack(string stackName, AsyncCallback callBack)
@@ -70,11 +98,11 @@ namespace SafeArrival.AdminTools.AwsUtilities
                     if (ex.Message.Trim() == $"Stack with id {stackName} does not exist".Trim())
                         return "DELETE_COMPLETE";
                     throw ex;
-                }               
+                }
             }
         }
 
-        public async Task<string> CreateStack(string path, string stackName, 
+        public async Task<string> CreateStack(string path, string stackName,
             string templateContent, List<KeyValuePair<string, string>> saParameters)
         {
             List<Parameter> awsParameters = new List<Parameter>();
@@ -100,19 +128,28 @@ namespace SafeArrival.AdminTools.AwsUtilities
 
         private SA_Stack ConvertStack(Stack awsStack)
         {
-            var saStack = ModelTransformer<Stack, SA_Stack>.
-                TransformAwsModelToSafeArrivalModel(awsStack);
-            //saListener.Rule = awsListener.DefaultActions[0].Type.ToString() + 
-            //    " to " + awsListener.DefaultActions[0].TargetGroupArn;
-            if (awsStack.Tags.Count > 0)
+            try
             {
-                saStack.DisplayName = awsStack.Tags.Find(o => o.Key == "Name").Value;
+
+                var saStack = ModelTransformer<Stack, SA_Stack>.
+                    TransformAwsModelToSafeArrivalModel(awsStack);
+                //saListener.Rule = awsListener.DefaultActions[0].Type.ToString() + 
+                //    " to " + awsListener.DefaultActions[0].TargetGroupArn;
+                if (awsStack.Tags.Count > 0 && awsStack.Tags.Find(o => o.Key == "Name") != null)
+                {
+                    saStack.DisplayName = awsStack.Tags.Find(o => o.Key == "Name").Value;
+                }
+                else
+                {
+                    saStack.DisplayName = awsStack.StackName;
+                }
+                return saStack;
             }
-            else
+            catch (Exception ex)
             {
-                saStack.DisplayName = awsStack.StackName;
+                var x = awsStack;
+                throw;
             }
-            return saStack;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
         //public string Environment { get; }
         private AmazonAutoScalingClient client;
 
-        public AutoScalingHelper(Model.Environment profile, string region, string color) : base(profile, region, color)
+        public AutoScalingHelper(string profile, string region, string color) : base(profile, region, color)
         {
             client = new AmazonAutoScalingClient(
                 CredentiaslManager.GetCredential(profile),

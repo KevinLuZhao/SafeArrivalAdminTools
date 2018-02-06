@@ -29,21 +29,39 @@ namespace SafeArrival.AdminTools.AwsUtilities
             }
         }
 
-        public static string GetAwsAccountByEnvironment(Environment env)
+        //public static string GetAwsAccountByEnvironment(string env)
+        //{
+        //    var helper = new DynamoDBHelper<EnvironmentAccount>();
+        //    helper.ScanTable("");
+        //    switch (env)
+        //    {
+        //        case "staging:
+        //            return "383514732995";
+        //        case Environment.stagingca:
+        //            return "189582403580";
+        //        case Environment.production:
+        //            return "683281545121";
+        //        case Environment.productionca:
+        //            return "944027855121";
+        //        default:
+        //            return "125237747044";
+        //    }
+        //}
+
+        public static Dictionary<string, EnvironmentAccount> GetEnvironmentAccounts()
         {
-            switch (env)
+            var helper = new DynamoDBHelper<EnvironmentAccount>();
+            var ret = new Dictionary<string, EnvironmentAccount>();
+            foreach (var account in helper.ScanTable("sa_env_accounts"))
             {
-                case Environment.staging:
-                    return "383514732995";
-                case Environment.stagingca:
-                    return "189582403580";
-                case Environment.production:
-                    return "683281545121";
-                case Environment.productionca:
-                    return "944027855121";
-                default:
-                    return "125237747044";
+                ret.Add(account.Environment.ToString(), account);
             }
+            return ret;
+        }
+
+        public static List<string> GetEnvironmentList()
+        {
+            return GetEnvironmentAccounts().Keys.OrderBy(o=>o).ToList();
         }
     }
 }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -21,12 +22,12 @@ namespace SafeArrival.AdminTools.Presentation
             service = new InfraManagementService();
         }
 
-        public override void OnEnvironmentChanged()
+        public override async void OnEnvironmentChanged()
         {
             try
             {
-                PopulateStacks();
-                PopulateCodePipelineInfo();
+                await PopulateStacks();
+                await PopulateCodePipelineInfo();
             }
             catch (Exception ex)
             {
@@ -89,45 +90,57 @@ namespace SafeArrival.AdminTools.Presentation
 
         private async void btnCreate_Click(object sender, EventArgs e)
         {
-            try
+            if (!CheckGitRepository())
             {
-                if (ConfigurationManager.AppSettings["GithubToken"].Trim() == string.Empty)
-                {
-                    MessageBox.Show("Please set value to GithubToken in config file.");
-                }
-                var radioLevels = new List<RadioButton>();
-                radioLevels.Add(radioButton1);
-                radioLevels.Add(radioButton2);
-                radioLevels.Add(radioButton3);
-                //radioLevels.Add(radioButtonDNS);
-                int level = int.Parse(radioLevels.Find(o => o.Checked).Tag.ToString());
-                if (level <= 2)
-                {
-                    await service.BuildCodePipelinelevel_1And2(
-                        level,
-                        ConfigurationManager.AppSettings["GithubToken"]);
-                    NotifyToMainStatus(
-                        $"{GlobalVariables.Enviroment}-level-{level}-{GlobalVariables.Color} is created.",
-                        System.Drawing.Color.Green);
-                }
-                else if (level == 3)
-                {
-                    var apps = new List<string>();
-                    if (cListBoxApps.CheckedItems.Count == 0)
-                        return;
-                    foreach (var item in cListBoxApps.CheckedItems)
-                    {
-                        apps.Add(item.ToString());
-                    }
-                    await service.BuildCodePipelinelevel_3(apps);
-                    NotifyToMainStatus(
-                        $"{GlobalVariables.Enviroment}-level-{level}-{GlobalVariables.Color} is created.",
-                        System.Drawing.Color.Green);
-                }
+                return;
             }
-            catch (Exception ex)
+            var radioLevels = new List<RadioButton>();
+            radioLevels.Add(radioButton1);
+            radioLevels.Add(radioButton2);
+            radioLevels.Add(radioButton3);
+            int level = int.Parse(radioLevels.Find(o => o.Checked).Tag.ToString());
+
+            var confirmResult = MessageBox.Show(
+                        $"Are you sure to delete the stacks in level {level}?",
+                        "Confirm Creating Stacks",
+                        MessageBoxButtons.YesNo);
+            if (confirmResult == DialogResult.Yes)
             {
-                HandleException(ex);
+                try
+                {
+                    string githubTokenPath = Path.Combine(
+                        System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile), "gittoken");
+                    string gitToken = File.ReadAllText(githubTokenPath);
+
+                    //radioLevels.Add(radioButtonDNS);
+                    if (level <= 2)
+                    {
+                        await service.BuildCodePipelinelevel_1And2(level, gitToken);
+                        NotifyToMainStatus(
+                            $"{GlobalVariables.Enviroment}-level-{level}-{GlobalVariables.Color} is created.",
+                            System.Drawing.Color.Green);
+                    }
+                    else if (level == 3)
+                    {
+                        var apps = new List<string>();
+                        if (cListBoxApps.CheckedItems.Count == 0)
+                            return;
+                        foreach (var item in cListBoxApps.CheckedItems)
+                        {
+                            apps.Add(item.ToString());
+                        }
+                        await service.BuildCodePipelinelevel_3(apps);
+                        NotifyToMainStatus(
+                            $"{GlobalVariables.Enviroment}-level-{level}-{GlobalVariables.Color} is created.",
+                            System.Drawing.Color.Green);
+                    }
+                    await PopulateStacks();
+                    await PopulateCodePipelineInfo();
+                }
+                catch (Exception ex)
+                {
+                    HandleException(ex);
+                }
             }
         }
 
@@ -151,7 +164,7 @@ namespace SafeArrival.AdminTools.Presentation
                 }
                 var confirmResult = MessageBox.Show(
                         $"Are you sure to delete the {selectedStacks.Count} stacks: {string.Join(", ", selectedStacks)}?",
-                        "Confirm Switching Deployments",
+                        "Confirm Deleting Stacks",
                         MessageBoxButtons.YesNo);
                 if (confirmResult == DialogResult.Yes)
                 {
@@ -167,6 +180,7 @@ namespace SafeArrival.AdminTools.Presentation
                             return;
                         }
                         await PopulateStacks();
+                        await PopulateCodePipelineInfo();
                     }
                 }
             }
@@ -188,6 +202,14 @@ namespace SafeArrival.AdminTools.Presentation
 
         private async void btnCreateSisEvent_Click(object sender, EventArgs e)
         {
+            if (!CheckGitRepository())
+            {
+                return;
+            }
+            if (!CheckGitRepository())
+            {
+                return;
+            }
             try
             {
                 await service.SetSisEventTrigger();
@@ -201,10 +223,15 @@ namespace SafeArrival.AdminTools.Presentation
 
         private async void btnSetDns_Click(object sender, EventArgs e)
         {
+            if (!CheckGitRepository())
+            {
+                return;
+            }
             try
             {
                 await service.SetDNS();
                 WriteNotification($"{GlobalVariables.Enviroment} DNS is set.");
+                await PopulateStacks();
             }
             catch (Exception ex)
             {
@@ -225,18 +252,39 @@ namespace SafeArrival.AdminTools.Presentation
 
         private async Task PopulateCodePipelineInfo()
         {
+            lblBranchName.Text = GetLocalRepositoryBranch();
+            gvCodePiplines.AutoGenerateColumns = false;
+            gvCodePiplines.DataSource = await service.GetCodePipelinList();
+        }
+
+        private bool CheckGitRepository()
+        {
+            string githubTokenPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile), "gittoken");
+            if (!File.Exists(githubTokenPath))
+            {
+                MessageBox.Show($"Please set value to {githubTokenPath}.");
+                return false;
+            }
+
+            var gitBranch = GetLocalRepositoryBranch();
+            var ret = (GlobalVariables.Enviroment.ToString() == gitBranch);
+            if (!ret)
+                MessageBox.Show($"Current target environment is '{GlobalVariables.Enviroment.ToString().ToUpper()}', while the Github local branch is '{gitBranch.ToUpper()}'. Please check.");
+            return ret;
+        }
+
+        private string GetLocalRepositoryBranch()
+        {
             string path = ConfigurationManager.AppSettings["InfraFileFolder"];
             if (LibGit2Sharp.Repository.IsValid(path))
             {
                 var repo = new Repository(path);
-                lblBranchName.Text = repo.Head.FriendlyName;
+                return repo.Head.FriendlyName;
             }
             else
             {
-                lblBranchName.Text = $"No repository is found from the path of {path}, please check your config file";
+                return $"No repository is found from the path of {path}, please check your config file";
             }
-            gvCodePiplines.AutoGenerateColumns = false;
-            gvCodePiplines.DataSource = await service.GetCodePipelinList();
-        } 
+        }
     }
 }

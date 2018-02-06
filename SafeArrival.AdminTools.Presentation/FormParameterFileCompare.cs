@@ -16,9 +16,9 @@ namespace SafeArrival.AdminTools.Presentation
 
         private void FormParameterFileCompare_Load(object sender, EventArgs e)
         {
-            cboxLeft.DataSource = Enum.GetValues(typeof(Model.Environment));
+            cboxLeft.DataSource = AwsUtilities.AwsCommon.GetEnvironmentList();
             cboxLeft.SelectedIndex = 0;
-            cboxRight.DataSource = Enum.GetValues(typeof(Model.Environment));
+            cboxRight.DataSource = AwsUtilities.AwsCommon.GetEnvironmentList();
             cboxRight.SelectedIndex = 1;
         }
 

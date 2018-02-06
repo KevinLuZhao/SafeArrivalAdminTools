@@ -68,3 +68,13 @@ C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.BLL\
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.BLL\bin\Release\AWSSDK.CloudFormation.xml
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.BLL\bin\Release\AWSSDK.CodePipeline.pdb
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.BLL\bin\Release\AWSSDK.CodePipeline.xml
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.BLL\bin\Release\lib\win32\x64\git2-15e1193.dll
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.BLL\bin\Release\lib\win32\x64\git2-15e1193.pdb
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.BLL\bin\Release\lib\win32\x86\git2-15e1193.dll
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.BLL\bin\Release\lib\win32\x86\git2-15e1193.pdb
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.BLL\bin\Release\lib\osx\libgit2-15e1193.dylib
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.BLL\bin\Release\lib\linux\x86_64\libgit2-15e1193.so
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.BLL\bin\Release\LibGit2Sharp.dll.config
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.BLL\bin\Release\LibGit2Sharp.dll
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.BLL\bin\Release\LibGit2Sharp.pdb
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.BLL\bin\Release\LibGit2Sharp.xml

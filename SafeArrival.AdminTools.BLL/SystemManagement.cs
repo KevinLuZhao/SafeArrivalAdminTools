@@ -89,7 +89,7 @@ namespace SafeArrival.AdminTools.BLL
             }
         }
 
-        public void InitAutoScalingGroupSettings(Model.Environment env)
+        public void InitAutoScalingGroupSettings(string env)
         {
             AutoScaleGroupSettingsDb db = new AutoScaleGroupSettingsDb();
             foreach (var application in Enum.GetNames(typeof(ApplicationServer)))
@@ -106,10 +106,8 @@ namespace SafeArrival.AdminTools.BLL
             }
         }
 
-        public List<AutoScalingGroupSettings> GetAutoScalingGroupSettingsByEnv(Model.Environment env)
+        public List<AutoScalingGroupSettings> GetAutoScalingGroupSettingsByEnv(string env)
         {
-            LambdaHelper helper = new LambdaHelper(env, GlobalVariables.Region, GlobalVariables.Color);
-            helper.SetEventTrigger();
             AutoScaleGroupSettingsDb db = new AutoScaleGroupSettingsDb();
             return db.GetSettingsByEnv(GlobalVariables.Enviroment);
         }

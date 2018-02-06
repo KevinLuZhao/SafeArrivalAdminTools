@@ -8,7 +8,7 @@ namespace SafeArrival.AdminTools.Model
 {
     public static class GlobalVariables
     {
-        public static Environment Enviroment { get; set; }
+        public static string Enviroment { get; set; }
         public static string Region { get; set; }
         public static string Color { get; set; }
 
