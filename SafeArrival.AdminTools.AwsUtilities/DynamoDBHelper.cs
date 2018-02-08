@@ -80,7 +80,15 @@ namespace SafeArrival.AdminTools.AwsUtilities
                 foreach (var saCondition in saScanConditions)
                 {
                     List<AttributeValue> val = new List<AttributeValue>();
-                    val.Add(new AttributeValue(saCondition.Value.ToString()));
+                    if (saCondition.Value is List<string>)
+                    {
+                        foreach (string value in (List<string>)saCondition.Value)
+                        {
+                            val.Add(new AttributeValue(value));
+                        }
+                    }
+                    else
+                        val.Add(new AttributeValue(saCondition.Value.ToString()));
                     Condition condition = new Condition()
                     {
                         AttributeValueList = val,

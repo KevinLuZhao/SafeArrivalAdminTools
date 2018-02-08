@@ -26,6 +26,9 @@ namespace SafeArrival.AdminTools.Presentation
             lstLogType.Insert(0, string.Empty);
             ddlType.DataSource = lstLogType;
 
+            dtPickerFrom.Value = DateTime.Today.AddDays(-1);
+            dtPickerTo.Value = DateTime.Today.AddDays(1);
+
             BindData();
             gvLogs.Columns[1].HeaderText = "Type";
             gvLogs.Columns[2].HeaderText = "Environment";
@@ -47,7 +50,7 @@ namespace SafeArrival.AdminTools.Presentation
             gvLogs.DataSource = dataSource = LogServices.GetLogList(
                 ddlEnvironment.SelectedItem.ToString(),
                 ddlType.SelectedItem.ToString(), 
-                txtMessage.Text);
+                txtMessage.Text, dtPickerFrom.Value, dtPickerTo.Value);
         }
 
         private void gvLogs_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)

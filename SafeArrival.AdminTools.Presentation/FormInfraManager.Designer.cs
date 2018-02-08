@@ -43,6 +43,11 @@
             this.btnSuspend = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.linkLabelTeamcity = new System.Windows.Forms.LinkLabel();
+            this.pnlTcBuildConfigs = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.btnTcBuild = new System.Windows.Forms.Button();
+            this.btnSetDns = new System.Windows.Forms.Button();
             this.btnCreateSisEvent = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.cListBoxApps = new System.Windows.Forms.CheckedListBox();
@@ -59,15 +64,13 @@
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.lblBranchName = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.btnSetDns = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gvStacks)).BeginInit();
             this.tabPage2.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gvCodePiplines)).BeginInit();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -212,6 +215,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.linkLabelTeamcity);
+            this.tabPage2.Controls.Add(this.pnlTcBuildConfigs);
             this.tabPage2.Controls.Add(this.panel2);
             this.tabPage2.Controls.Add(this.panel1);
             this.tabPage2.Controls.Add(this.gvCodePiplines);
@@ -226,6 +231,55 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Code Pipeline";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // linkLabelTeamcity
+            // 
+            this.linkLabelTeamcity.AutoSize = true;
+            this.linkLabelTeamcity.Location = new System.Drawing.Point(11, 35);
+            this.linkLabelTeamcity.Name = "linkLabelTeamcity";
+            this.linkLabelTeamcity.Size = new System.Drawing.Size(120, 13);
+            this.linkLabelTeamcity.TabIndex = 18;
+            this.linkLabelTeamcity.TabStop = true;
+            this.linkLabelTeamcity.Text = "Open Teamcity Console";
+            this.linkLabelTeamcity.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelTeamcity_LinkClicked);
+            // 
+            // pnlTcBuildConfigs
+            // 
+            this.pnlTcBuildConfigs.Location = new System.Drawing.Point(9, 189);
+            this.pnlTcBuildConfigs.Name = "pnlTcBuildConfigs";
+            this.pnlTcBuildConfigs.Size = new System.Drawing.Size(1010, 225);
+            this.pnlTcBuildConfigs.TabIndex = 17;
+            // 
+            // panel2
+            // 
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.btnTcBuild);
+            this.panel2.Controls.Add(this.btnSetDns);
+            this.panel2.Controls.Add(this.btnCreateSisEvent);
+            this.panel2.Location = new System.Drawing.Point(306, 61);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(155, 121);
+            this.panel2.TabIndex = 16;
+            // 
+            // btnTcBuild
+            // 
+            this.btnTcBuild.Location = new System.Drawing.Point(4, 61);
+            this.btnTcBuild.Name = "btnTcBuild";
+            this.btnTcBuild.Size = new System.Drawing.Size(146, 23);
+            this.btnTcBuild.TabIndex = 18;
+            this.btnTcBuild.Text = "TC Build ZIP Files";
+            this.btnTcBuild.UseVisualStyleBackColor = true;
+            this.btnTcBuild.Click += new System.EventHandler(this.btnTcBuild_Click);
+            // 
+            // btnSetDns
+            // 
+            this.btnSetDns.Location = new System.Drawing.Point(3, 3);
+            this.btnSetDns.Name = "btnSetDns";
+            this.btnSetDns.Size = new System.Drawing.Size(147, 23);
+            this.btnSetDns.TabIndex = 17;
+            this.btnSetDns.Text = "Set Environment DNS";
+            this.btnSetDns.UseVisualStyleBackColor = true;
+            this.btnSetDns.Click += new System.EventHandler(this.btnSetDns_Click);
             // 
             // btnCreateSisEvent
             // 
@@ -387,7 +441,7 @@
             // 
             this.lblBranchName.AutoSize = true;
             this.lblBranchName.ForeColor = System.Drawing.Color.Red;
-            this.lblBranchName.Location = new System.Drawing.Point(174, 10);
+            this.lblBranchName.Location = new System.Drawing.Point(163, 10);
             this.lblBranchName.Name = "lblBranchName";
             this.lblBranchName.Size = new System.Drawing.Size(10, 13);
             this.lblBranchName.TabIndex = 1;
@@ -403,26 +457,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Current Git Local Branch:";
             // 
-            // panel2
-            // 
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.btnSetDns);
-            this.panel2.Controls.Add(this.btnCreateSisEvent);
-            this.panel2.Location = new System.Drawing.Point(306, 61);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(155, 121);
-            this.panel2.TabIndex = 16;
-            // 
-            // btnSetDns
-            // 
-            this.btnSetDns.Location = new System.Drawing.Point(3, 3);
-            this.btnSetDns.Name = "btnSetDns";
-            this.btnSetDns.Size = new System.Drawing.Size(147, 23);
-            this.btnSetDns.TabIndex = 17;
-            this.btnSetDns.Text = "Set Environment DNS";
-            this.btnSetDns.UseVisualStyleBackColor = true;
-            this.btnSetDns.Click += new System.EventHandler(this.btnSetDns_Click);
-            // 
             // FormInfraManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -437,10 +471,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.gvStacks)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.panel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gvCodePiplines)).EndInit();
-            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -479,5 +513,8 @@
         private System.Windows.Forms.Button btnCreateSisEvent;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnSetDns;
+        private System.Windows.Forms.Panel pnlTcBuildConfigs;
+        private System.Windows.Forms.Button btnTcBuild;
+        private System.Windows.Forms.LinkLabel linkLabelTeamcity;
     }
 }

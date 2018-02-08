@@ -21,7 +21,7 @@ namespace SafeArrival.AdminTools.DAL
             helper.CreateItem(tableName, obj);
         }
 
-        public List<Log> GetLogList(string env, string logType, string message)
+        public List<Log> GetLogList(string env, string logType, string message, DateTime from, DateTime to)
         {
             var conditions = new List<DynamodbScanCondition>();
             if (!string.IsNullOrEmpty(logType))
@@ -51,7 +51,25 @@ namespace SafeArrival.AdminTools.DAL
                     Value = message
                 });
             }
-            return helper.ScanTable("sa_logs",conditions);
+            if (from != null)
+            {
+                conditions.Add(new DynamodbScanCondition()
+                {
+                    AttributeName = "Date",
+                    Operator = "BETWEEN",
+                    Value = new List<string> { from.ToString(), to.ToString()}                    
+                });
+            }
+            //if (to != null)
+            //{
+            //    conditions.Add(new DynamodbScanCondition()
+            //    {
+            //        AttributeName = "Date",
+            //        Operator = "LT",
+            //        Value = to
+            //    });
+            //}
+            return helper.ScanTable("sa_logs", conditions);
         }
     }
 }

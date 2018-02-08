@@ -71,6 +71,8 @@
     <Compile Include="Region.cs" />
     <Compile Include="ScheduledAction.cs" />
     <Compile Include="SystemStauts.cs" />
+    <Compile Include="TeamCityCredencial.cs" />
+    <Compile Include="TeamCityProject.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

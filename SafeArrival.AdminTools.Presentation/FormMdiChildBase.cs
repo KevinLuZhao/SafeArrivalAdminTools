@@ -13,7 +13,7 @@ namespace SafeArrival.AdminTools.Presentation
 
         public virtual void HandleException(Exception ex)
         {
-            LogServices.WriteLog(ex.Message+ " Stack Trace: " + ex.StackTrace, Model.LogType.Error, GlobalVariables.Enviroment.ToString());
+            LogServices.WriteLog(ex.Message + " Stack Trace: " + ex.StackTrace, Model.LogType.Error, GlobalVariables.Enviroment.ToString());
             NotifyToMainStatus(ex.Message, System.Drawing.Color.Red);
         }
 
@@ -25,12 +25,19 @@ namespace SafeArrival.AdminTools.Presentation
 
         protected void NotifyToMainStatus(string message, System.Drawing.Color color)
         {
-            ((FrmMain)this.ParentForm).MainStatusStrip.Text = message;
-            ((FrmMain)this.ParentForm).MainStatusStrip.ForeColor = color;
+            try
+            {
+                ((FrmMain)this.ParentForm).MainStatusStrip.Text = message;
+                ((FrmMain)this.ParentForm).MainStatusStrip.ForeColor = color;
 
-            timer.Tick += TickerTicked;
-            timer.Interval = 30000;
-            timer.Start();
+                timer.Tick += TickerTicked;
+                timer.Interval = 30000;
+                timer.Start();
+            }
+            catch
+            {
+                ;
+            }
         }
 
         private void TickerTicked(object sender, EventArgs args)

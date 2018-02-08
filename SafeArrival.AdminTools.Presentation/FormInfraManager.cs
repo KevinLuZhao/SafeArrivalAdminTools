@@ -46,6 +46,18 @@ namespace SafeArrival.AdminTools.Presentation
                     counter++;
                 }
                 btnSuspend.Enabled = false;
+                //TeamCityService service = new TeamCityService();
+                //var configs = service.ListConfigruations();
+                //int rowCounter = 0;
+                //foreach (var config in configs)
+                //{
+                //    var radioButton = new RadioButton();
+                //    radioButton.Text = config;
+                //    radioButton.Width = 400;
+                //    radioButton.Top = 5 + 25 * rowCounter;
+                //    pnlTcBuildConfigs.Controls.Add(radioButton);
+                //    rowCounter++;
+                //}
                 await PopulateStacks();
                 await PopulateCodePipelineInfo();
             }
@@ -101,7 +113,7 @@ namespace SafeArrival.AdminTools.Presentation
             int level = int.Parse(radioLevels.Find(o => o.Checked).Tag.ToString());
 
             var confirmResult = MessageBox.Show(
-                        $"Are you sure to delete the stacks in level {level}?",
+                        $"Are you sure to create code pipeline level {level}?",
                         "Confirm Creating Stacks",
                         MessageBoxButtons.YesNo);
             if (confirmResult == DialogResult.Yes)
@@ -285,6 +297,33 @@ namespace SafeArrival.AdminTools.Presentation
             {
                 return $"No repository is found from the path of {path}, please check your config file";
             }
+        }
+
+        private void btnTcBuild_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var confirmResult = MessageBox.Show(
+                        $"Are you sure to run the Teamcity build on {GlobalVariables.Enviroment}?",
+                        "Teamcity Build",
+                        MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    var tcService = new TeamCityService();
+                    tcService.RunBuildConfig(GlobalVariables.EnvironmentAccounts[GlobalVariables.Enviroment].TCBuildConfig);
+                    WriteNotification($"Building the appliction zip file on {GlobalVariables.Enviroment}.");
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+        }
+
+        private void linkLabelTeamcity_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            string url = $"http://{Utils.GetTeamcityCredential().HostName}/project.html?projectId=AwsCompleteDeploy";
+            Process.Start(url);
         }
     }
 }

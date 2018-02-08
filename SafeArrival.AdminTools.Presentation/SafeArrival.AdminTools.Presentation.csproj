@@ -253,6 +253,11 @@
   <ItemGroup>
     <None Include="resources\Button-Blank-Red-icon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="SafeArrivalCredentials.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
