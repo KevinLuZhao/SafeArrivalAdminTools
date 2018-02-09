@@ -27,7 +27,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
             var response = await client.ListPipelinesAsync();
             var lst = ModelTransformer<PipelineSummary, SA_PipelineSummary>.
                 TransformAwsModelListToSafeArrivalModelList(response.Pipelines).FindAll(o =>
-                (o.Name.Contains(environment.ToString()) &&
+                (o.Name.IndexOf($"{environment.ToString()}-") == 0 &&
                 (o.Name.Contains(color) || (!o.Name.Contains("green") && (!o.Name.Contains("blue"))))));
             lst.Sort((a, b) => b.Created.CompareTo(a.Created));
             return lst.ToList();

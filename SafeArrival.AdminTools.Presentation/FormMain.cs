@@ -17,25 +17,21 @@ namespace SafeArrival.AdminTools.Presentation
             InitializeComponent();
             EnvironmentAccountService service = new EnvironmentAccountService();
             GlobalVariables.EnvironmentAccounts = service.GetEnvironmentAccounts();
-
-            string githubTokenPath = Path.Combine(
-                    System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile), "gittoken");
-            string gitToken = File.ReadAllText(githubTokenPath);
         }
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
-            tsComboEnv.ComboBox.DataSource = AwsUtilities.AwsCommon.GetEnvironmentList();
-            tsComboEnv.SelectedIndex = 0;
-            tsComboColor.ComboBox.DataSource = Enum.GetValues(typeof(Model.Color));
-            tsComboColor.SelectedIndex = 0;
-
             List<KeyValuePair<string, string>> lstRegions = Regions.GetRegionList();
             tsComboRegion.ComboBox.DataSource = lstRegions;
             tsComboRegion.ComboBox.DisplayMember = "Value";
             tsComboRegion.ComboBox.ValueMember = "Key";
             //tsComboRegion.ComboBox.SelectedIndex = 1;
             tsComboRegion.Enabled = false;
+
+            tsComboEnv.ComboBox.DataSource = AwsUtilities.AwsCommon.GetEnvironmentList();
+            tsComboEnv.SelectedIndex = 0;
+            tsComboColor.ComboBox.DataSource = Enum.GetValues(typeof(Model.Color));
+            tsComboColor.SelectedIndex = 0;
 
             MainStatusStrip = toolStripStatusLabel1;
 
@@ -106,16 +102,10 @@ namespace SafeArrival.AdminTools.Presentation
             GlobalVariables.Enviroment = AwsUtilities.AwsCommon.GetEnvironmentList().Find(o => o == tsComboEnv.SelectedItem.ToString());
             GlobalVariables.Region = GlobalVariables.EnvironmentAccounts[GlobalVariables.Enviroment.ToString()].Region;
             tsComboRegion.SelectedItem = Regions.GetRegionList().Find(o => o.Key == GlobalVariables.Region);
-
             foreach (var frm in OpendFormList)
             {
                 frm.OnEnvironmentChanged();
             }
-        }
-
-        private void tsComboRegion_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //GlobalVariables.Region = ((KeyValuePair<string, string>)tsComboRegion.SelectedItem).Key;
         }
 
         private void tsComboColor_SelectedIndexChanged(object sender, EventArgs e)

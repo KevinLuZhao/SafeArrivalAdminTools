@@ -16,6 +16,7 @@ namespace SafeArrival.AdminTools.Presentation
         private InfraManagementService service;
         private List<SA_Stack> stacks;
         private bool stopFlag = false;
+        private List<SA_PipelineSummary> codePipelineList;
         public FormInfraManager()
         {
             InitializeComponent();
@@ -124,13 +125,26 @@ namespace SafeArrival.AdminTools.Presentation
                         System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile), "gittoken");
                     string gitToken = File.ReadAllText(githubTokenPath);
 
-                    //radioLevels.Add(radioButtonDNS);
+                    string levelName = string.Empty;
+                    if (level == 1)
+                    {
+                        levelName = $"{GlobalVariables.Enviroment}-level-{level}";
+                    }
+                    else if (level == 2)
+                    {
+                        levelName = $"{GlobalVariables.Enviroment}-level-{level}-{GlobalVariables.Color}";
+                    }
+
                     if (level <= 2)
                     {
+                        if (codePipelineList.Find(o => o.Name == levelName) != null)
+                        {
+                            MessageBox.Show($"{levelName} exists. Please teardown cloudformation stacks before create.");
+                            return;
+                        }
                         await service.BuildCodePipelinelevel_1And2(level, gitToken);
                         NotifyToMainStatus(
-                            $"{GlobalVariables.Enviroment}-level-{level}-{GlobalVariables.Color} is created.",
-                            System.Drawing.Color.Green);
+                            $"{levelName} is created.", System.Drawing.Color.Green);
                     }
                     else if (level == 3)
                     {
@@ -139,6 +153,12 @@ namespace SafeArrival.AdminTools.Presentation
                             return;
                         foreach (var item in cListBoxApps.CheckedItems)
                         {
+                            levelName = $"{GlobalVariables.Enviroment}-level-{level}-{GlobalVariables.Color}-{item.ToString()}";
+                            if (codePipelineList.Find(o => o.Name == levelName) != null)
+                            {
+                                MessageBox.Show($"{levelName} exists. Please teardown cloudformation stacks before create.");
+                                return;
+                            }
                             apps.Add(item.ToString());
                         }
                         await service.BuildCodePipelinelevel_3(apps);
@@ -264,9 +284,10 @@ namespace SafeArrival.AdminTools.Presentation
 
         private async Task PopulateCodePipelineInfo()
         {
+            codePipelineList = await service.GetCodePipelineList();
             lblBranchName.Text = GetLocalRepositoryBranch();
             gvCodePiplines.AutoGenerateColumns = false;
-            gvCodePiplines.DataSource = await service.GetCodePipelinList();
+            gvCodePiplines.DataSource = codePipelineList;
         }
 
         private bool CheckGitRepository()

@@ -283,7 +283,7 @@
             // 
             // btnCreateSisEvent
             // 
-            this.btnCreateSisEvent.Location = new System.Drawing.Point(3, 31);
+            this.btnCreateSisEvent.Location = new System.Drawing.Point(3, 32);
             this.btnCreateSisEvent.Name = "btnCreateSisEvent";
             this.btnCreateSisEvent.Size = new System.Drawing.Size(147, 23);
             this.btnCreateSisEvent.TabIndex = 16;

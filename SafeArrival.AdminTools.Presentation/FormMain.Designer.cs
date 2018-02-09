@@ -34,6 +34,7 @@
             this.parameterEditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.s3MonitorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.systemManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.infrastructureManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.greenBlueDeploymentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -48,7 +49,6 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.tsComboColor = new System.Windows.Forms.ToolStripComboBox();
-            this.infrastructureManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -92,6 +92,14 @@
             this.systemManagerToolStripMenuItem.Tag = "FormSystemManager";
             this.systemManagerToolStripMenuItem.Text = "System Manager";
             this.systemManagerToolStripMenuItem.Click += new System.EventHandler(this.OpenFormMenu_Click);
+            // 
+            // infrastructureManagerToolStripMenuItem
+            // 
+            this.infrastructureManagerToolStripMenuItem.Name = "infrastructureManagerToolStripMenuItem";
+            this.infrastructureManagerToolStripMenuItem.Size = new System.Drawing.Size(140, 20);
+            this.infrastructureManagerToolStripMenuItem.Tag = "FormInfraManager";
+            this.infrastructureManagerToolStripMenuItem.Text = "Infrastructure Manager";
+            this.infrastructureManagerToolStripMenuItem.Click += new System.EventHandler(this.OpenFormMenu_Click);
             // 
             // greenBlueDeploymentToolStripMenuItem
             // 
@@ -176,7 +184,6 @@
             // 
             this.tsComboRegion.Name = "tsComboRegion";
             this.tsComboRegion.Size = new System.Drawing.Size(150, 25);
-            this.tsComboRegion.SelectedIndexChanged += new System.EventHandler(this.tsComboRegion_SelectedIndexChanged);
             // 
             // toolStripSeparator2
             // 
@@ -194,14 +201,6 @@
             this.tsComboColor.Name = "tsComboColor";
             this.tsComboColor.Size = new System.Drawing.Size(75, 25);
             this.tsComboColor.SelectedIndexChanged += new System.EventHandler(this.tsComboColor_SelectedIndexChanged);
-            // 
-            // infrastructureManagerToolStripMenuItem
-            // 
-            this.infrastructureManagerToolStripMenuItem.Name = "infrastructureManagerToolStripMenuItem";
-            this.infrastructureManagerToolStripMenuItem.Size = new System.Drawing.Size(140, 20);
-            this.infrastructureManagerToolStripMenuItem.Tag = "FormInfraManager";
-            this.infrastructureManagerToolStripMenuItem.Text = "Infrastructure Manager";
-            this.infrastructureManagerToolStripMenuItem.Click += new System.EventHandler(this.OpenFormMenu_Click);
             // 
             // FrmMain
             // 

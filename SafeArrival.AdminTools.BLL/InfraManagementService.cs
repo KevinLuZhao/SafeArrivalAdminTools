@@ -26,7 +26,7 @@ namespace SafeArrival.AdminTools.BLL
             return await helper.GetStackList();
         }
 
-        public async Task<List<SA_PipelineSummary>> GetCodePipelinList()
+        public async Task<List<SA_PipelineSummary>> GetCodePipelineList()
         {
             var helper = new CodePipelineHelper(
                 GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
