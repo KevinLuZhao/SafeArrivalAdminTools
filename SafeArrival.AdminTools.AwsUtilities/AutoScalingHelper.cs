@@ -29,7 +29,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
                 response.AutoScalingGroups.FindAll(o => o.Tags[0].Value.IndexOf(environment + "-" + color) >= 0);
             var jumpBox = response.AutoScalingGroups.Find(
                 o => o.Tags[0].Value.IndexOf(environment.ToString()) >= 0 && o.Tags[0].Value.IndexOf("Jump") > 0);
-            if (jumpBox != null)
+            if (jumpBox != null && lstGroups.Find(o => o.Tags[0].Value.IndexOf("Jump") > 0) == null)
                 lstGroups.Add(jumpBox);
             foreach (var group in lstGroups)
             {
@@ -86,13 +86,15 @@ namespace SafeArrival.AdminTools.AwsUtilities
                 AutoScalingGroupName = autoScalingGroup.AutoScalingGroupName
             };
             var getResponse = await client.DescribeLoadBalancerTargetGroupsAsync(getRequest);
+            if (getResponse.LoadBalancerTargetGroups.Count == 0)
+                return;
 
             var removeRequest = new DetachLoadBalancerTargetGroupsRequest()
             {
                 AutoScalingGroupName = autoScalingGroup.AutoScalingGroupName,
-                TargetGroupARNs = getResponse.LoadBalancerTargetGroups.ConvertAll(o=>o.LoadBalancerTargetGroupARN)
+                TargetGroupARNs = getResponse.LoadBalancerTargetGroups.ConvertAll(o => o.LoadBalancerTargetGroupARN)
             };
-            await client.DetachLoadBalancerTargetGroupsAsync(removeRequest);   
+            await client.DetachLoadBalancerTargetGroupsAsync(removeRequest);
         }
     }
 }

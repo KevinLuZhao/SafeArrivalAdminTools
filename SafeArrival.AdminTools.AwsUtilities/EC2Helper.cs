@@ -52,7 +52,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
             //};
             //Vpc
             var response = await client.DescribeVpcsAsync();
-            var vpc = response.Vpcs.Find(o=>o.Tags.Find(p=>p.Key=="Name").Value==environment.ToString());
+            var vpc = response.Vpcs.Find(o => o.Tags.Find(p => p.Key == "Name").Value == environment.ToString());
             if (vpc == null)
                 return null;
             var awsVpc = new SA_Vpc()
@@ -89,7 +89,6 @@ namespace SafeArrival.AdminTools.AwsUtilities
 
         public async Task<List<SA_SecurityGroup>> GetSecurityGroupList()
         {
-
             var saSecurityGroups = new List<SA_SecurityGroup>();
             var request = new DescribeSecurityGroupsRequest();
             var response = await client.DescribeSecurityGroupsAsync(request);
@@ -104,6 +103,50 @@ namespace SafeArrival.AdminTools.AwsUtilities
                 }
             }
             return saSecurityGroups;
+        }
+
+        public async Task CopySecurityGroup(string sourceSgId, string targetSgName, string description)
+        {
+            var sReq = new DescribeSecurityGroupsRequest()
+            {
+                GroupIds = new List<string>() { sourceSgId }
+            };
+            //client.va
+            var sResp = await client.DescribeSecurityGroupsAsync(sReq);
+            if (sResp.SecurityGroups.Count > 0)
+            {
+                var sSG = sResp.SecurityGroups[0];
+                SecurityGroup tSG;
+                var filters = new List<Filter>();
+                var filter = new Filter("group-name", new List<string> { targetSgName });
+                filters.Add(filter);
+                var tReq = new DescribeSecurityGroupsRequest()
+                {
+                    Filters = filters
+                };
+                var tResp = await client.DescribeSecurityGroupsAsync(tReq);
+                if (tResp.SecurityGroups.Count > 0)
+                {
+                    tSG = tResp.SecurityGroups[0];
+                    tSG.IpPermissions = sSG.IpPermissions;
+                    var uRequest = new UpdateSecurityGroupRuleDescriptionsIngressRequest()
+                    {
+                        GroupId = tSG.GroupId
+                    };
+                    await client.UpdateSecurityGroupRuleDescriptionsIngressAsync(uRequest);
+                }
+                else
+                {
+                    var cReq = new CreateSecurityGroupRequest()
+                    {
+                        Description = description,
+                        GroupName = targetSgName,
+                        VpcId = sSG.VpcId
+                    };
+                    var cResp = await client.CreateSecurityGroupAsync(cReq);
+                    AssignNameToResource(cResp.GroupId, targetSgName);
+                }
+            }
         }
 
         private SA_SecurityGroup ConvertSecurityGroup(SecurityGroup awsSecurityGroup)

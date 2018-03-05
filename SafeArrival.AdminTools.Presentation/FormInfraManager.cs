@@ -27,8 +27,11 @@ namespace SafeArrival.AdminTools.Presentation
         {
             try
             {
-                await PopulateStacks();
                 await PopulateCodePipelineInfo();
+                await PopulateLiveColorEnv();
+                await PopulateCodePipelinesCICDStatus();
+                await PopulateCurrentPublicDNS();
+                await PopulateStacks();
             }
             catch (Exception ex)
             {
@@ -59,8 +62,11 @@ namespace SafeArrival.AdminTools.Presentation
                 //    pnlTcBuildConfigs.Controls.Add(radioButton);
                 //    rowCounter++;
                 //}
-                await PopulateStacks();
                 await PopulateCodePipelineInfo();
+                await PopulateLiveColorEnv();
+                await PopulateCodePipelinesCICDStatus();
+                await PopulateCurrentPublicDNS();
+                await PopulateStacks();
             }
             catch (Exception ex)
             {
@@ -271,6 +277,33 @@ namespace SafeArrival.AdminTools.Presentation
             }
         }
 
+        private void btnTcBuild_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var confirmResult = MessageBox.Show(
+                        $"Are you sure to run the Teamcity build on {GlobalVariables.Enviroment}?",
+                        "Teamcity Build",
+                        MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    var tcService = new TeamCityService();
+                    tcService.RunBuildConfig(GlobalVariables.EnvironmentAccounts[GlobalVariables.Enviroment].TCBuildConfig);
+                    WriteNotification($"Building the appliction zip files on {GlobalVariables.Enviroment}.");
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+        }
+
+        private void linkLabelTeamcity_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            string url = $"http://{Utils.GetTeamcityCredential().HostName}/project.html?projectId=AwsCompleteDeploy";
+            Process.Start(url);
+        }
+
         private async Task PopulateStacks()
         {
             var stacks = await service.GetStackList();
@@ -288,6 +321,29 @@ namespace SafeArrival.AdminTools.Presentation
             lblBranchName.Text = GetLocalRepositoryBranch();
             gvCodePiplines.AutoGenerateColumns = false;
             gvCodePiplines.DataSource = codePipelineList;
+        }
+
+        private async Task PopulateCodePipelinesCICDStatus()
+        {
+            var ret = await service.GetAllColdPipelinesCicdStatus();
+            lblCicdStatus.Text = "";
+            foreach (var status in ret)
+            {
+                lblCicdStatus.Text += $"{status.Key}:{status.Value.ToString()}      ";
+            }
+        }
+
+        private async Task PopulateLiveColorEnv()
+        {
+            lblLiveColor.Text = await service.GetLiveColorEnv();
+        }
+
+        private async Task PopulateCurrentPublicDNS()
+        {
+            var dnsList = await service.GetCurrentPublicDnsList();
+            lblAdmin.Text = string.Join(System.Environment.NewLine, dnsList);
+            //lblAdmin.Text = dnsList.Find(o => o.ToLower().Contains("admin"));
+            //lblSuper.Text = dnsList.Find(o => o.ToLower().Contains("super"));
         }
 
         private bool CheckGitRepository()
@@ -320,19 +376,30 @@ namespace SafeArrival.AdminTools.Presentation
             }
         }
 
-        private void btnTcBuild_Click(object sender, EventArgs e)
+        private async void btnSwitchDNS_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                await service.SetMaintenanceDNS();
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+        }
+
+        private async void btnSwitchLeve3CICDMode_Click(object sender, EventArgs e)
         {
             try
             {
                 var confirmResult = MessageBox.Show(
-                        $"Are you sure to run the Teamcity build on {GlobalVariables.Enviroment}?",
-                        "Teamcity Build",
+                        $"Are you sure to switch the level 3 code pipeline CI/CD mode?",
+                        "Code Pipeline CI/CD Mode",
                         MessageBoxButtons.YesNo);
                 if (confirmResult == DialogResult.Yes)
                 {
-                    var tcService = new TeamCityService();
-                    tcService.RunBuildConfig(GlobalVariables.EnvironmentAccounts[GlobalVariables.Enviroment].TCBuildConfig);
-                    WriteNotification($"Building the appliction zip file on {GlobalVariables.Enviroment}.");
+                    await service.SwitchLevel3CicdMode();
+                    await PopulateCodePipelinesCICDStatus();
                 }
             }
             catch (Exception ex)
@@ -341,10 +408,24 @@ namespace SafeArrival.AdminTools.Presentation
             }
         }
 
-        private void linkLabelTeamcity_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private async void btnSwitchLeve2CICDMode_Click(object sender, EventArgs e)
         {
-            string url = $"http://{Utils.GetTeamcityCredential().HostName}/project.html?projectId=AwsCompleteDeploy";
-            Process.Start(url);
+            try
+            {
+                var confirmResult = MessageBox.Show(
+                        $"Are you sure to switch the level 2 code pipeline CI/CD mode?",
+                        "Code Pipeline CI/CD Mode",
+                        MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    await service.SwitchLevel2CicdMode();
+                    await PopulateCodePipelinesCICDStatus();
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
         }
     }
 }

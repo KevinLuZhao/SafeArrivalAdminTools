@@ -111,14 +111,24 @@ namespace SafeArrival.AdminTools.Presentation
             {
                 lblWarn.Visible = true;
                 lblWarn.Text = "Application load balances are NOT create yet.";
-                btnCreate.Visible = true;
+                btnCreate.Enabled = true;
+                btnSwitch.Enabled = false;
+                panel1.Controls.Add(lblWarn);
                 return;
             }
-            if (applicationLoadBalancers.Count < (Enum.GetNames(typeof(ApplicationServer)).Count() - 1))
+            //Worker and Jumpbox don't need the external ALB
+            if (applicationLoadBalancers.Count < (Enum.GetNames(typeof(ApplicationServer)).Count() - 2))
             {
                 lblWarn.Visible = true;
                 lblWarn.Text = "Not all application load balances are created. Please manually delete all load balancers and create again.";
-                return;
+                panel1.Controls.Add(lblWarn);
+                //btnCreate.Enabled = false;
+                btnSwitch.Enabled = false;
+            }
+            else
+            {
+                //btnCreate.Enabled = false;
+                btnSwitch.Enabled = true;
             }
             int counter = 0;
             foreach (var alb in applicationLoadBalancers)
@@ -132,8 +142,16 @@ namespace SafeArrival.AdminTools.Presentation
 
         private async void btnClearTargetGroups_Click(object sender, EventArgs e)
         {
-            SwitchDeploymentService service = new SwitchDeploymentService();
-            await service.ClearTargetGroupAttachments();
+            try
+            {
+                SwitchDeploymentService service = new SwitchDeploymentService();
+                await service.ClearTargetGroupAttachments();
+                WriteNotification($"All targetGroup attachments to autoscaling groups In {GlobalVariables.Enviroment.ToString()} are cleared!");
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
         }
     }
 }

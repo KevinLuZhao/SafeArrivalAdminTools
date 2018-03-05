@@ -22,6 +22,7 @@ namespace SafeArrival.AdminTools.BLL
                 GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
             var apps = Enum.GetNames(typeof(ApplicationServer)).ToList();
             apps.Remove("JumpBox");
+            apps.Remove("Worker");
             var colors = Enum.GetNames(typeof(Color)).ToList();
             var sGroups = await scalingGroupHelper.GetAutoScalingGroupList(true);
             sGroups.Remove(sGroups.Find(o => o.Name.IndexOf("Jump") >= 0));
@@ -32,6 +33,18 @@ namespace SafeArrival.AdminTools.BLL
             foreach (var appName in apps)
             {
                 var tGroups = new List<SA_TargetGroup>();
+                var newSGs = new List<string>();
+                var oldSGs = securirtyGroups.FindAll(o =>
+                        o.DisplayName.Contains(appName) &&
+                        o.DisplayName.Contains(GlobalVariables.Enviroment) &&
+                        o.Description == "Load Balancer Security Group").Select(o => o.GroupId).ToList();
+                //foreach (string oldSG in oldSGs)
+                //{
+                //    await ec2Helper.CopySecurityGroup(oldSG, 
+                //        $"{GlobalVariables.Enviroment}-{GlobalVariables.Color}-{appName}-External-ALB",
+                //        "External Application Load Balancer Security Group");
+                //}
+                //return;
                 var loadBalancerArn = await loadBalancerHelper.CreateLoadBalancer(
                     $"{GlobalVariables.Enviroment.ToString()}-{appName}-ALB",
                     securirtyGroups.FindAll(o =>
@@ -41,6 +54,14 @@ namespace SafeArrival.AdminTools.BLL
                     subnets.FindAll(o => o.DisplayName.Contains("Public")).Select(o => o.SubnetId).ToList());
                 foreach (var color in colors)
                 {
+                    var targetGroup = sGroups.Find(o => o.Name.Contains($"{GlobalVariables.Enviroment}-{color}-{appName}"));
+                    if (targetGroup == null)
+                    {
+                        LogServices.WriteLog(
+                            $"{GlobalVariables.Enviroment}-{color}-{appName} target group doesn't exist",
+                            LogType.Warn, "SwitchDeploymentService");
+                        continue;
+                    }
                     var tGroup = await loadBalancerHelper.CreateTargetGroup(
                         $"{GlobalVariables.Enviroment.ToString()}-{color}-{appName}-TG",
                         vpc.VpcId, "HTTP", 80);
@@ -49,21 +70,24 @@ namespace SafeArrival.AdminTools.BLL
                         new List<string>() { tGroup.TargetGroupArn });
                     tGroups.Add(tGroup);
                 }
-
-                await loadBalancerHelper.CreatListener(loadBalancerArn,
-                    tGroups.Find(o => o.TargetGroupName.Contains(Color.green.ToString())).TargetGroupArn,
-                    "HTTP", PRODUCTION_HTTP_PORT);
-                await loadBalancerHelper.CreatListener(loadBalancerArn,
-                    tGroups.Find(o => o.TargetGroupName.Contains(Color.green.ToString())).TargetGroupArn,
-                    "HTTPS", PRODUCTION_HTTPS_PORT,
-                    "arn:aws:acm:us-east-2:125237747044:certificate/abb607ce-4090-45cb-bf29-923e08106664");
-                await loadBalancerHelper.CreatListener(loadBalancerArn,
-                    tGroups.Find(o => o.TargetGroupName.Contains(Color.blue.ToString())).TargetGroupArn,
-                    "HTTP", PRE_PRODUCTION_HTTP_PORT);
-                await loadBalancerHelper.CreatListener(loadBalancerArn,
-                    tGroups.Find(o => o.TargetGroupName.Contains(Color.blue.ToString())).TargetGroupArn,
-                    "HTTPS", PRE_PRODUCTION_HTTPS_PORT,
-                    "arn:aws:acm:us-east-2:125237747044:certificate/abb607ce-4090-45cb-bf29-923e08106664");
+                var greenTargetGroup = tGroups.Find(o => o.TargetGroupName.Contains(Color.green.ToString()));
+                if (greenTargetGroup != null)
+                {
+                    await loadBalancerHelper.CreatListener(loadBalancerArn, greenTargetGroup.TargetGroupArn,
+                        "HTTP", PRODUCTION_HTTP_PORT);
+                    await loadBalancerHelper.CreatListener(loadBalancerArn, greenTargetGroup.TargetGroupArn,
+                        "HTTPS", PRODUCTION_HTTPS_PORT,
+                        "arn:aws:acm:us-east-2:125237747044:certificate/abb607ce-4090-45cb-bf29-923e08106664");
+                }
+                var blueTargetGroup = tGroups.Find(o => o.TargetGroupName.Contains(Color.blue.ToString()));
+                if (blueTargetGroup != null)
+                {
+                    await loadBalancerHelper.CreatListener(loadBalancerArn, blueTargetGroup.TargetGroupArn,
+                        "HTTP", PRE_PRODUCTION_HTTP_PORT);
+                    await loadBalancerHelper.CreatListener(loadBalancerArn, blueTargetGroup.TargetGroupArn,
+                        "HTTPS", PRE_PRODUCTION_HTTPS_PORT,
+                        "arn:aws:acm:us-east-2:125237747044:certificate/abb607ce-4090-45cb-bf29-923e08106664");
+                }
             }
         }
 

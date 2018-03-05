@@ -87,7 +87,7 @@ namespace SafeArrival.AdminTools.BLL
         public async Task SetSisEventTrigger()
         {
             var s3Helper = new S3Helper(
-               GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color, 
+               GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color,
                $"safe-arrival-{GlobalVariables.Region}-{GlobalVariables.Enviroment}-sisbucket");
             var lambdaHelper = new LambdaHelper(
                GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
@@ -122,6 +122,114 @@ namespace SafeArrival.AdminTools.BLL
                 ReadCodePipelineConfigs(4),
                 sa_parameters
             );
+        }
+
+        public async Task SetMaintenanceDNS()
+        {
+            string rootDns = GlobalVariables.EnvironmentAccounts[GlobalVariables.Enviroment].DNS + ".";
+            var dnsHelper = new Route53Helper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
+            string hostZoneId = await dnsHelper.GetHostZoneId();
+            //string admin = await dnsHelper.GetRecorSetValue(hostZoneId, "admin." + rootDns);
+            var recordSets = new List<KeyValuePair<string, string>>();
+            //KeyValuePair<string, string> recordSet = new  KeyValuePair<string, string>(GlobalVariables.EnvironmentAccounts[GlobalVariables.Enviroment].DNS,  )
+            var elbHelper = new LoadBalancerHelper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
+            var elbList = await elbHelper.GetLoadBalancerList();
+        }
+
+        public async Task<List<string>> GetCurrentPublicDnsList()
+        {
+            string rootDns = GlobalVariables.EnvironmentAccounts[GlobalVariables.Enviroment].DNS + ".";
+            var dnsHelper = new Route53Helper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
+            string hostZoneId = await dnsHelper.GetHostZoneId();
+            var dnsList = await dnsHelper.GetRecorSetValues(hostZoneId, new List<string>() { $"admin.{rootDns}", $"super.{rootDns}" });
+            return dnsList;
+        }
+
+        public async Task<string> GetLiveColorEnv()
+        {
+            string ret;
+            //LoadBalancerHelper loadBalancerHelper = new LoadBalancerHelper(
+            //   GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
+            //var loadBalancers = await loadBalancerHelper.GetLoadBalancerList();
+            var deployService = new SwitchDeploymentService();
+            var loadBalancers = await deployService.GetApplicationLoadBalancers();
+            if (loadBalancers == null || loadBalancers.Count == 0 ||
+                loadBalancers[0].Listeners.Count == 0)
+            {
+                ret = "The external appliction balancers are not created.";
+            }
+            else
+            {
+                var liveListener = loadBalancers[0].Listeners.Find(o => o.Port == 443 || o.Port == 80);
+                if (liveListener.TargetArn.Contains("green"))
+                {
+                    ret = "green";
+                }
+                else
+                {
+                    ret = "blue";
+                }
+            }
+            return ret;
+        }
+        public async Task<Dictionary<string, bool>> GetAllColdPipelinesCicdStatus()
+        {
+            var ret = new Dictionary<string, bool>();
+            var codePiplelineHelper = new CodePipelineHelper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
+            var codePipelines = await codePiplelineHelper.GetCodePipelineList();
+            foreach (var codePipeline in codePipelines)
+            {
+                if (codePipeline.Name.Contains("level-2"))
+                {
+                    ret.Add(codePipeline.Name, await codePiplelineHelper.GetCodePipelineStageTransitionStatus(codePipeline.Name, "Phase1"));
+                }
+                else if (codePipeline.Name.Contains("level-3"))
+                {
+                    ret.Add(codePipeline.Name, await codePiplelineHelper.GetCodePipelineStageTransitionStatus(codePipeline.Name, "Beanstalk"));
+                }
+            }
+            return ret;
+        }
+
+        public async Task SwitchLevel2CicdMode()
+        {
+            var codePiplelineHelper = new CodePipelineHelper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
+            var codePipeline = (await codePiplelineHelper.GetCodePipelineList()).Find(o => o.Name.Contains("level-2"));
+            if (codePipeline == null)
+            {
+                throw new Exception($"Can't find code pipeline {GlobalVariables.Enviroment}-level-2-{GlobalVariables.Color}!");
+            }
+            var enabled = await codePiplelineHelper.GetCodePipelineStageTransitionStatus(codePipeline.Name, "Phase1");
+            if (enabled)
+            {
+                await codePiplelineHelper.DisableTransition(codePipeline.Name, "Phase1", "Disabled until deployment is ready.");
+            }
+            else
+            {
+                await codePiplelineHelper.EnableTransition(codePipeline.Name, "Phase1");
+            }
+        }
+
+        public async Task SwitchLevel3CicdMode()
+        {
+            var codePiplelineHelper = new CodePipelineHelper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
+            var codePipelines = (await codePiplelineHelper.GetCodePipelineList()).FindAll(o => o.Name.Contains("level-3"));
+            if (codePipelines == null || codePipelines.Count == 0)
+            {
+                throw new Exception($"Can't find code pipeline {GlobalVariables.Enviroment}-level-2-{GlobalVariables.Color}!");
+            }
+            foreach (var codePipeline in codePipelines)
+            {
+                var enabled = await codePiplelineHelper.GetCodePipelineStageTransitionStatus(codePipeline.Name, "Beanstalk");
+                if (enabled)
+                {
+                    await codePiplelineHelper.DisableTransition(codePipeline.Name, "Beanstalk", "Disabled until deployment is ready.");
+                }
+                else
+                {
+                    await codePiplelineHelper.EnableTransition(codePipeline.Name, "Beanstalk");
+                }
+            }
         }
 
         private List<KeyValuePair<string, string>> GetCodePipelingParameters(int level)

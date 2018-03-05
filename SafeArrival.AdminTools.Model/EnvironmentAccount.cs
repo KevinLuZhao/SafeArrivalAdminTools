@@ -9,6 +9,7 @@ namespace SafeArrival.AdminTools.Model
     public class EnvironmentAccount
     {
         public string Environment { get; set; }
+        public string DNS { get; set; }
         public string Account { get; set; }
         public string Region { get; set; }
         public string RoleArn { get; set; }

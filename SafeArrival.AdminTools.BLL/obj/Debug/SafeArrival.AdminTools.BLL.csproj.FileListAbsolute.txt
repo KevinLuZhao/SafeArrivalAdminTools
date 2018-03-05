@@ -80,3 +80,6 @@ C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.BLL\
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.BLL\bin\Debug\LibGit2Sharp.xml
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.BLL\bin\Debug\Naos.TeamCity.APIWrapper.dll
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.BLL\bin\Debug\Naos.TeamCity.APIWrapper.pdb
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.BLL\bin\Debug\AWSSDK.Route53.dll
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.BLL\bin\Debug\AWSSDK.Route53.pdb
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.BLL\bin\Debug\AWSSDK.Route53.xml

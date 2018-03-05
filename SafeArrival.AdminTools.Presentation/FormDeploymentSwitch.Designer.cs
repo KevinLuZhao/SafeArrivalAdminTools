@@ -29,35 +29,13 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDeploymentSwitch));
-            this.btnSwitch = new System.Windows.Forms.Button();
-            this.btnCreate = new System.Windows.Forms.Button();
             this.btnClearTargetGroups = new System.Windows.Forms.Button();
-            this.lblWarn = new System.Windows.Forms.Label();
+            this.btnSwitch = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblWarn = new System.Windows.Forms.Label();
+            this.btnCreate = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // btnSwitch
-            // 
-            this.btnSwitch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSwitch.Location = new System.Drawing.Point(11, 615);
-            this.btnSwitch.Name = "btnSwitch";
-            this.btnSwitch.Size = new System.Drawing.Size(147, 23);
-            this.btnSwitch.TabIndex = 2;
-            this.btnSwitch.Text = "Switch Deployment";
-            this.btnSwitch.UseVisualStyleBackColor = true;
-            this.btnSwitch.Click += new System.EventHandler(this.btnSwitch_Click);
-            // 
-            // btnCreate
-            // 
-            this.btnCreate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCreate.Location = new System.Drawing.Point(974, 615);
-            this.btnCreate.Name = "btnCreate";
-            this.btnCreate.Size = new System.Drawing.Size(135, 23);
-            this.btnCreate.TabIndex = 0;
-            this.btnCreate.Text = "Create Load Balancer";
-            this.btnCreate.UseVisualStyleBackColor = true;
-            this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
             // 
             // btnClearTargetGroups
             // 
@@ -70,17 +48,16 @@
             this.btnClearTargetGroups.UseVisualStyleBackColor = true;
             this.btnClearTargetGroups.Click += new System.EventHandler(this.btnClearTargetGroups_Click);
             // 
-            // lblWarn
+            // btnSwitch
             // 
-            this.lblWarn.AutoSize = true;
-            this.lblWarn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblWarn.ForeColor = System.Drawing.Color.Red;
-            this.lblWarn.Location = new System.Drawing.Point(460, 303);
-            this.lblWarn.Name = "lblWarn";
-            this.lblWarn.Size = new System.Drawing.Size(46, 17);
-            this.lblWarn.TabIndex = 0;
-            this.lblWarn.Text = "label1";
-            this.lblWarn.Visible = false;
+            this.btnSwitch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSwitch.Location = new System.Drawing.Point(11, 615);
+            this.btnSwitch.Name = "btnSwitch";
+            this.btnSwitch.Size = new System.Drawing.Size(147, 23);
+            this.btnSwitch.TabIndex = 2;
+            this.btnSwitch.Text = "Switch Deployment";
+            this.btnSwitch.UseVisualStyleBackColor = true;
+            this.btnSwitch.Click += new System.EventHandler(this.btnSwitch_Click);
             // 
             // panel1
             // 
@@ -93,6 +70,29 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1096, 608);
             this.panel1.TabIndex = 1;
+            // 
+            // lblWarn
+            // 
+            this.lblWarn.AutoSize = true;
+            this.lblWarn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblWarn.ForeColor = System.Drawing.Color.Red;
+            this.lblWarn.Location = new System.Drawing.Point(22, 265);
+            this.lblWarn.Name = "lblWarn";
+            this.lblWarn.Size = new System.Drawing.Size(46, 17);
+            this.lblWarn.TabIndex = 0;
+            this.lblWarn.Text = "label1";
+            this.lblWarn.Visible = false;
+            // 
+            // btnCreate
+            // 
+            this.btnCreate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCreate.Location = new System.Drawing.Point(974, 615);
+            this.btnCreate.Name = "btnCreate";
+            this.btnCreate.Size = new System.Drawing.Size(135, 23);
+            this.btnCreate.TabIndex = 0;
+            this.btnCreate.Text = "Create Load Balancer";
+            this.btnCreate.UseVisualStyleBackColor = true;
+            this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
             // 
             // FormDeploymentSwitch
             // 

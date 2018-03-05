@@ -3,6 +3,7 @@ using SafeArrival.AdminTools.Model;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
@@ -144,6 +145,13 @@ namespace SafeArrival.AdminTools.Presentation
         {
             var s = sender;
             OpendFormList.Remove((FormMdiChildBase)sender);// OpendFormList.Find(o=>o.GetType().FullName == sender.GetType().FullName))
+        }
+
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath),"resources", "SafeArrivalAdminToolKits.docx");
+            MessageBox.Show(path);
+            Process.Start("winword.exe", path);
         }
     }
 }

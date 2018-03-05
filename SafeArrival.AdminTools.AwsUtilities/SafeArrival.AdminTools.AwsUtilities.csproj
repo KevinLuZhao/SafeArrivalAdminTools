@@ -110,6 +110,7 @@
     <Compile Include="LoadBalancerHelper.cs" />
     <Compile Include="ModelTransformer.cs" />
     <Compile Include="RDSHelper.cs" />
+    <Compile Include="Route53Helper.cs" />
     <Compile Include="S3Helper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
