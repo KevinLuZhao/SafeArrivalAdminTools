@@ -123,7 +123,8 @@ namespace SafeArrival.AdminTools.BLL
                 sa_parameters
             );
         }
-
+        //------------------------------------------------------------------------------------------------------------------
+        //Maintenance DNS
         public async Task SetMaintenanceDNS()
         {
             string rootDns = GlobalVariables.EnvironmentAccounts[GlobalVariables.Enviroment].DNS + ".";
@@ -138,6 +139,9 @@ namespace SafeArrival.AdminTools.BLL
 
         public async Task<List<string>> GetCurrentPublicDnsList()
         {
+            var lbHelper = new LoadBalancerHelper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
+            var lbs = await lbHelper.GetLoadBalancerList();
+
             string rootDns = GlobalVariables.EnvironmentAccounts[GlobalVariables.Enviroment].DNS + ".";
             var dnsHelper = new Route53Helper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
             string hostZoneId = await dnsHelper.GetHostZoneId();
@@ -145,6 +149,8 @@ namespace SafeArrival.AdminTools.BLL
             return dnsList;
         }
 
+        //------------------------------------------------------------------------------------------------------------------
+        //Switch Live Color Env
         public async Task<string> GetLiveColorEnv()
         {
             string ret;

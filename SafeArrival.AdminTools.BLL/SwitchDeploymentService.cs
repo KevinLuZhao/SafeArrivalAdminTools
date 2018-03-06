@@ -121,10 +121,22 @@ namespace SafeArrival.AdminTools.BLL
                 var preProdHttpListener = listeners.Find(o => o.Port == PRE_PRODUCTION_HTTP_PORT);
                 var preProdHttpsListener = listeners.Find(o => o.Port == PRE_PRODUCTION_HTTPS_PORT);
 
-                await loadBalancerHelper.ChangeListenerTargets(prodHttpListener.ListenerArn, preProdHttpListener.TargetArn);
-                await loadBalancerHelper.ChangeListenerTargets(preProdHttpListener.ListenerArn, prodHttpListener.TargetArn);
-                await loadBalancerHelper.ChangeListenerTargets(prodHttpsListener.ListenerArn, preProdHttpsListener.TargetArn);
-                await loadBalancerHelper.ChangeListenerTargets(preProdHttpsListener.ListenerArn, prodHttpsListener.TargetArn);
+                //Http listners (80, 8080) are not manditory
+                if (prodHttpListener!= null && preProdHttpListener!=null)
+                {
+                    await loadBalancerHelper.ChangeListenerTargets(prodHttpListener.ListenerArn, preProdHttpListener.TargetArn);
+                    await loadBalancerHelper.ChangeListenerTargets(preProdHttpListener.ListenerArn, prodHttpListener.TargetArn);
+                }
+                //Https listners (443, 4343) are manditory. If not created, should go back to rebuild the ALB.
+                if (prodHttpsListener != null && preProdHttpsListener != null)
+                {
+                    await loadBalancerHelper.ChangeListenerTargets(prodHttpsListener.ListenerArn, preProdHttpsListener.TargetArn);
+                    await loadBalancerHelper.ChangeListenerTargets(preProdHttpsListener.ListenerArn, prodHttpsListener.TargetArn);
+                }
+                else
+                {
+                    throw new Exception($"The Https listers for {loadBalancer.LoadBalancerName} are not created!");
+                }
             }
         }
 
