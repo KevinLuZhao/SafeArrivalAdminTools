@@ -7204,33 +7204,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="T:Amazon.Runtime.InstanceProfileAWSCredentials">
-            <summary>
-            Credentials that are retrieved from the Instance Profile service on an EC2 instance
-            </summary>
-        </member>
-        <member name="P:Amazon.Runtime.InstanceProfileAWSCredentials.Role">
-            <summary>
-            Role for which the credentials are retrieved
-            </summary>
-        </member>
-        <member name="M:Amazon.Runtime.InstanceProfileAWSCredentials.#ctor(System.String)">
-            <summary>
-            Constructs a InstanceProfileAWSCredentials object for specific role
-            </summary>
-            <param name="role">Role to use</param>
-        </member>
-        <member name="M:Amazon.Runtime.InstanceProfileAWSCredentials.#ctor">
-            <summary>
-            Constructs a InstanceProfileAWSCredentials object for the first found role
-            </summary>
-        </member>
-        <member name="M:Amazon.Runtime.InstanceProfileAWSCredentials.GetAvailableRoles">
-            <summary>
-            Retrieves a list of all roles available through current InstanceProfile service
-            </summary>
-            <returns></returns>
-        </member>
         <member name="T:Amazon.Runtime.RefreshingAWSCredentials">
             <summary>
             Abstract class for automatically refreshing AWS credentials
@@ -7377,6 +7350,42 @@
             <summary>
             Returns an instance of ImmutableCredentials for this instance
             </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Amazon.Runtime.InstanceProfileAWSCredentials">
+            <summary>
+            Credentials that are retrieved from the Instance Profile service on an EC2 instance
+            </summary>
+        </member>
+        <member name="P:Amazon.Runtime.InstanceProfileAWSCredentials.Role">
+            <summary>
+            Role for which the credentials are retrieved
+            </summary>
+        </member>
+        <member name="M:Amazon.Runtime.InstanceProfileAWSCredentials.#ctor(System.String)">
+            <summary>
+            Constructs a InstanceProfileAWSCredentials object for specific role
+            </summary>
+            <param name="role">Role to use</param>
+        </member>
+        <member name="M:Amazon.Runtime.InstanceProfileAWSCredentials.#ctor">
+            <summary>
+            Constructs a InstanceProfileAWSCredentials object for the first found role
+            </summary>
+        </member>
+        <member name="M:Amazon.Runtime.InstanceProfileAWSCredentials.GetAvailableRoles">
+            <summary>
+            Retrieves a list of all roles available through current InstanceProfile service
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Amazon.Runtime.InstanceProfileAWSCredentials.IsNullOrWhiteSpace(System.String)">
+            <summary>
+            Return true if string is null or whitespace, false otherwise.
+            We can't use String.IsNullOrWhitespace because it doesn't exist
+            in all frameworks we support.
+            </summary>
+            <param name="s"></param>
             <returns></returns>
         </member>
         <member name="T:Amazon.Runtime.StoredProfileAWSCredentials">
@@ -9340,10 +9349,24 @@
         </member>
         <member name="M:Amazon.Util.AWSSDKUtils.CanonicalizeResourcePath(System.Uri,System.String)">
             <summary>
+            Returns the canonicalized resource path for the service endpoint with single URL encoded path segments.
+            </summary>
+            <param name="endpoint">Endpoint URL for the request</param>
+            <param name="resourcePath">Resource path for the request</param>
+            <remarks>
+            If resourcePath begins or ends with slash, the resulting canonicalized
+            path will follow suit.
+            </remarks>
+            <returns>Canonicalized resource path for the endpoint</returns>
+        </member>
+        <member name="M:Amazon.Util.AWSSDKUtils.CanonicalizeResourcePath(System.Uri,System.String,System.Boolean)">
+            <summary>
             Returns the canonicalized resource path for the service endpoint
             </summary>
             <param name="endpoint">Endpoint URL for the request</param>
             <param name="resourcePath">Resource path for the request</param>
+            <param name="detectPreEncode">If true pre URL encode path segments if necessary.
+            S3 is currently the only service that does not expect pre URL encoded segments.</param>
             <remarks>
             If resourcePath begins or ends with slash, the resulting canonicalized
             path will follow suit.
@@ -9750,6 +9773,10 @@
             More information about EC2 Metadata <see href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AESDG-chapter-instancedata.html"/>
             </para>
             </remarks>
+        </member>
+        <member name="P:Amazon.Util.EC2InstanceMetadata.IsIMDSEnabled">
+            <summary>
+            </summary>
         </member>
         <member name="P:Amazon.Util.EC2InstanceMetadata.AmiId">
             <summary>

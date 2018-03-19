@@ -17,6 +17,8 @@ namespace SafeArrival.AdminTools.Presentation
         private List<SA_Stack> stacks;
         private bool stopFlag = false;
         private List<SA_PipelineSummary> codePipelineList;
+        private List<DeployDnsModel> availableDnsSets;
+
         public FormInfraManager()
         {
             InitializeComponent();
@@ -50,18 +52,6 @@ namespace SafeArrival.AdminTools.Presentation
                     counter++;
                 }
                 btnSuspend.Enabled = false;
-                //TeamCityService service = new TeamCityService();
-                //var configs = service.ListConfigruations();
-                //int rowCounter = 0;
-                //foreach (var config in configs)
-                //{
-                //    var radioButton = new RadioButton();
-                //    radioButton.Text = config;
-                //    radioButton.Width = 400;
-                //    radioButton.Top = 5 + 25 * rowCounter;
-                //    pnlTcBuildConfigs.Controls.Add(radioButton);
-                //    rowCounter++;
-                //}
                 await PopulateCodePipelineInfo();
                 await PopulateLiveColorEnv();
                 await PopulateCodePipelinesCICDStatus();
@@ -244,14 +234,20 @@ namespace SafeArrival.AdminTools.Presentation
             {
                 return;
             }
-            if (!CheckGitRepository())
-            {
-                return;
-            }
             try
             {
-                await service.SetSisEventTrigger();
-                WriteNotification($"{GlobalVariables.Enviroment} SIS event trigger has been successfully created.");
+                string s3Name = $"safe-arrival-{GlobalVariables.Region}-{GlobalVariables.Enviroment}-sisbucket";
+                string lambdaName = $"SafeArrival-SIS-{GlobalVariables.Enviroment.ToString()}-{GlobalVariables.Color}";
+                string eventName = $"sis-raw-event-{GlobalVariables.Enviroment.ToString()}";
+                var confirmResult = MessageBox.Show(
+                        $"Are you sure to create following SIS event?{Environment.NewLine}S3 Bucket Name: {s3Name}{Environment.NewLine}Event Name: {eventName}{Environment.NewLine}Lambda Name: {lambdaName}",
+                        "Teamcity Build",
+                        MessageBoxButtons.YesNo);
+                if (confirmResult== DialogResult.Yes)
+                {
+                    await service.SetSisEventTrigger(s3Name, lambdaName, eventName);
+                    WriteNotification($"{GlobalVariables.Enviroment} SIS event trigger has been successfully created.");
+                }
             }
             catch (Exception ex)
             {
@@ -315,6 +311,77 @@ namespace SafeArrival.AdminTools.Presentation
             this.stacks = stacks;
         }
 
+        private async void btnSwitchDnsTarget_Click(object sender, EventArgs e)
+        {
+            string type = ((Button)sender).Tag.ToString();
+            try
+            {
+                var confirmResult = MessageBox.Show(
+                        $"Are you sure to switch {GlobalVariables.EnvironmentAccounts[GlobalVariables.Enviroment].DNS} pointing to {type}?",
+                        "Set DNS Target",
+                        MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    if (availableDnsSets == null)
+                    {
+                        availableDnsSets = await service.GetAvailableDnsList();
+                    }
+                    lblAdmin.Text = string.Empty;
+                    await service.SwitchDnsTarget(availableDnsSets, type);
+                    WriteNotification(
+                        $"Has switch {GlobalVariables.EnvironmentAccounts[GlobalVariables.Enviroment].DNS} pointing to {type}.");
+                    await Task.Delay(5000);
+                    await PopulateCurrentPublicDNS();
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+        }
+
+        private async void btnSwitchLeve3CICDMode_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var confirmResult = MessageBox.Show(
+                        $"Are you sure to switch the level 3 code pipeline CI/CD mode?",
+                        "Code Pipeline CI/CD Mode",
+                        MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    await service.SwitchLevel3CicdMode();
+                    await PopulateCodePipelinesCICDStatus();
+                    WriteNotification($"Has switched the level 3 code pipeline CI/CD mode.");
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+        }
+
+        private async void btnSwitchLeve2CICDMode_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var confirmResult = MessageBox.Show(
+                        $"Are you sure to switch the level 2 code pipeline CI/CD mode?",
+                        "Code Pipeline CI/CD Mode",
+                        MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    await service.SwitchLevel2CicdMode();
+                    await PopulateCodePipelinesCICDStatus();
+                    WriteNotification($"Has switched the level 2 code pipeline CI/CD mode.");
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+        }
+
         private async Task PopulateCodePipelineInfo()
         {
             codePipelineList = await service.GetCodePipelineList();
@@ -373,58 +440,6 @@ namespace SafeArrival.AdminTools.Presentation
             else
             {
                 return $"No repository is found from the path of {path}, please check your config file";
-            }
-        }
-
-        private async void btnSwitchDNS_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                await service.SetMaintenanceDNS();
-            }
-            catch (Exception ex)
-            {
-                HandleException(ex);
-            }
-        }
-
-        private async void btnSwitchLeve3CICDMode_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var confirmResult = MessageBox.Show(
-                        $"Are you sure to switch the level 3 code pipeline CI/CD mode?",
-                        "Code Pipeline CI/CD Mode",
-                        MessageBoxButtons.YesNo);
-                if (confirmResult == DialogResult.Yes)
-                {
-                    await service.SwitchLevel3CicdMode();
-                    await PopulateCodePipelinesCICDStatus();
-                }
-            }
-            catch (Exception ex)
-            {
-                HandleException(ex);
-            }
-        }
-
-        private async void btnSwitchLeve2CICDMode_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var confirmResult = MessageBox.Show(
-                        $"Are you sure to switch the level 2 code pipeline CI/CD mode?",
-                        "Code Pipeline CI/CD Mode",
-                        MessageBoxButtons.YesNo);
-                if (confirmResult == DialogResult.Yes)
-                {
-                    await service.SwitchLevel2CicdMode();
-                    await PopulateCodePipelinesCICDStatus();
-                }
-            }
-            catch (Exception ex)
-            {
-                HandleException(ex);
             }
         }
     }

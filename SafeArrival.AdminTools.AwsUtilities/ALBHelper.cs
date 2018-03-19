@@ -9,11 +9,11 @@ using SafeArrival.AdminTools.Model;
 
 namespace SafeArrival.AdminTools.AwsUtilities
 {
-    public class LoadBalancerHelper : AwsHelperBase
+    public class ALBHelper : AwsHelperBase
     {
         private AmazonElasticLoadBalancingV2Client client;
 
-        public LoadBalancerHelper(string profile, string region, string color) : base(profile, region, color)
+        public ALBHelper(string profile, string region, string color) : base(profile, region, color)
         {
             //client = new AmazonRDSClient(credentials, AwsCommon.GetRetionEndpoint(region));
             client = new AmazonElasticLoadBalancingV2Client(

@@ -27,7 +27,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
                 DNSName = account.DNS + "."
             };
             var response = await client.ListHostedZonesByNameAsync(request);
-            return response.HostedZones.Find(o=>o.Name== account.DNS + ".").Id;
+            return response.HostedZones.Find(o => o.Name == account.DNS + ".").Id;
         }
 
         /// <summary>
@@ -57,17 +57,19 @@ namespace SafeArrival.AdminTools.AwsUtilities
             return ret;
         }
 
-        public async Task UpdateHostZoneRecordSetValue(string action, List<KeyValuePair<string, string>> recordsetChanges)
+        public async Task<string> UpdateHostZoneRecordSetValue(string action, List<KeyValuePair<string, string>> recordsetChanges)
         {
             List<Change> changes = new List<Change>();
             foreach (var recordsetChange in recordsetChanges)
             {
                 changes.Add(
                     new Change(
-                        new ChangeAction("UPSERT"),
+                        new ChangeAction(action),  //"UPSERT"
                         new ResourceRecordSet()
                         {
                             Name = recordsetChange.Key,
+                            TTL = 900,
+                            Type = RRType.CNAME,
                             ResourceRecords = new List<ResourceRecord>()
                             {
                                 new ResourceRecord()
@@ -85,7 +87,8 @@ namespace SafeArrival.AdminTools.AwsUtilities
                 HostedZoneId = await GetHostZoneId(),
                 ChangeBatch = batch
             };
-            client.ChangeResourceRecordSets(request);
+            var response = await client.ChangeResourceRecordSetsAsync(request);
+            return response.HttpStatusCode.ToString();
         }
     }
 }

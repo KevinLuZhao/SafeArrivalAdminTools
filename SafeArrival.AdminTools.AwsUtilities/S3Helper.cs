@@ -55,14 +55,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
         /// </summary>
         /// <param name="fullFileName">File Name with Sub Path (if have)</param>
         /// <param name="fileStream"></param>
-        public async
-        /// <summary>
-        /// Upload the File to AWS S3
-        /// </summary>
-        /// <param name="fullFileName">File Name with Sub Path (if have)</param>
-        /// <param name="fileStream"></param>
-        Task
-UploadFile(string fullFileName, Stream fileStream)
+        public async Task UploadFile(string fullFileName, Stream fileStream)
         {
             if (fullFileName == null)
             {
@@ -126,13 +119,7 @@ UploadFile(string fullFileName, Stream fileStream)
         /// Delete a file from AWS S3
         /// </summary>
         /// <param name="fullFileName"></param>
-        public async
-        /// <summary>
-        /// Delete a file from AWS S3
-        /// </summary>
-        /// <param name="fullFileName"></param>
-        Task
-DeleteFile(string fullFileName)
+        public async Task DeleteFile(string fullFileName)
         {
             if (fullFileName == null)
             {
@@ -216,6 +203,13 @@ DeleteFile(string fullFileName)
                 LambdaFunctionConfigurations = new List<LambdaFunctionConfiguration>() { lambdaConfig }
             };
             var response = await client.PutBucketNotificationAsync(request);
+        }
+
+        public async Task GetBuckets()
+        {
+            var request = new ListBucketsRequest();
+            var response = await client.ListBucketsAsync();
+            //return response.Buckets;
         }
     }
 }

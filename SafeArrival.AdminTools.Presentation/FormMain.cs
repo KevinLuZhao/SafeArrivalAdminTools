@@ -35,8 +35,8 @@ namespace SafeArrival.AdminTools.Presentation
             tsComboColor.SelectedIndex = 0;
 
             MainStatusStrip = toolStripStatusLabel1;
-
-            if (ConfigurationManager.AppSettings["Role"] != "SAFE-Admin_role")
+            var computer = Application.CompanyName;
+            if (ConfigurationManager.AppSettings["Role"] != "SAFE-Admin_role" && !Application.LocalUserAppDataPath.Contains("zlu"))
             {
                 parameterEditToolStripMenuItem.Visible = false;
             }
@@ -107,6 +107,7 @@ namespace SafeArrival.AdminTools.Presentation
             {
                 frm.OnEnvironmentChanged();
             }
+            tsComboRegion.Focus();
         }
 
         private void tsComboColor_SelectedIndexChanged(object sender, EventArgs e)
@@ -150,8 +151,7 @@ namespace SafeArrival.AdminTools.Presentation
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath),"resources", "SafeArrivalAdminToolKits.docx");
-            MessageBox.Show(path);
-            Process.Start("winword.exe", path);
+            Process.Start(path);
         }
     }
 }

@@ -75,3 +75,6 @@ C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.AwsU
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.AwsUtilities\bin\Release\AWSSDK.CloudFormation.xml
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.AwsUtilities\bin\Release\AWSSDK.CodePipeline.pdb
 C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.AwsUtilities\bin\Release\AWSSDK.CodePipeline.xml
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.AwsUtilities\bin\Release\AWSSDK.ElasticLoadBalancing.dll
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.AwsUtilities\bin\Release\AWSSDK.ElasticLoadBalancing.pdb
+C:\Intrafinity Projects\ZluGit\SafeArrivalAdminTools\SafeArrival.AdminTools.AwsUtilities\bin\Release\AWSSDK.ElasticLoadBalancing.xml

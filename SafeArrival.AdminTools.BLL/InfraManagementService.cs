@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Threading.Tasks;
-
+using System.Linq;
 
 namespace SafeArrival.AdminTools.BLL
 {
@@ -84,11 +84,10 @@ namespace SafeArrival.AdminTools.BLL
             }
         }
 
-        public async Task SetSisEventTrigger()
+        public async Task SetSisEventTrigger(string s3Name, string lambdaName, string eventName)
         {
             var s3Helper = new S3Helper(
-               GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color,
-               $"safe-arrival-{GlobalVariables.Region}-{GlobalVariables.Enviroment}-sisbucket");
+               GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color, s3Name);
             var lambdaHelper = new LambdaHelper(
                GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
             var db = new EnvironmentAccountDb();
@@ -98,8 +97,8 @@ namespace SafeArrival.AdminTools.BLL
             await Task.Delay(1000);
             await s3Helper.PutNotification
             (
-                $"sis-raw-event-{GlobalVariables.Enviroment.ToString()}",
-                $"arn:aws:lambda:{GlobalVariables.Region}:{account.Account}:function:SafeArrival-SIS-{GlobalVariables.Enviroment.ToString()}-{GlobalVariables.Color}",
+                eventName,
+                $"arn:aws:lambda:{GlobalVariables.Region}:{account.Account}:function:{lambdaName}",
                 "s3:ObjectCreated:Put"
             );
         }
@@ -124,22 +123,39 @@ namespace SafeArrival.AdminTools.BLL
             );
         }
         //------------------------------------------------------------------------------------------------------------------
-        //Maintenance DNS
-        public async Task SetMaintenanceDNS()
+        //Switch DNS to live website (load balancers) or maintenance page (S3 buckets). Only "admin" and "super" server has public access.
+        public async Task SwitchDnsTarget(List<DeployDnsModel> availableDnsSets, string type)
         {
             string rootDns = GlobalVariables.EnvironmentAccounts[GlobalVariables.Enviroment].DNS + ".";
             var dnsHelper = new Route53Helper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
-            string hostZoneId = await dnsHelper.GetHostZoneId();
+            //string hostZoneId = await dnsHelper.GetHostZoneId();
             //string admin = await dnsHelper.GetRecorSetValue(hostZoneId, "admin." + rootDns);
             var recordSets = new List<KeyValuePair<string, string>>();
-            //KeyValuePair<string, string> recordSet = new  KeyValuePair<string, string>(GlobalVariables.EnvironmentAccounts[GlobalVariables.Enviroment].DNS,  )
-            var elbHelper = new LoadBalancerHelper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
-            var elbList = await elbHelper.GetLoadBalancerList();
+            var applicationList = new List<string>() { "Admin", "Super" };
+            foreach (var application in applicationList)
+            {
+                KeyValuePair<string, string> recordSet;
+                if (type == "Regular")
+                {
+                    recordSet = new KeyValuePair<string, string>
+                        ($"{application}.{GlobalVariables.EnvironmentAccounts[GlobalVariables.Enviroment].DNS}.",
+                        availableDnsSets.Find(o => o.Application == application).LiveEndpoint);
+                }
+                else
+                {
+                    recordSet = new KeyValuePair<string, string>
+                        ($"{application}.{GlobalVariables.EnvironmentAccounts[GlobalVariables.Enviroment].DNS}.",
+                        availableDnsSets.Find(o => o.Application == application).MaintenanceEndpoint);
+                }
+                recordSets.Add(recordSet);
+            }
+            await dnsHelper.UpdateHostZoneRecordSetValue("UPSERT", recordSets);
         }
 
         public async Task<List<string>> GetCurrentPublicDnsList()
         {
-            var lbHelper = new LoadBalancerHelper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
+            var list = await GetAvailableDnsList();
+            var lbHelper = new ALBHelper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
             var lbs = await lbHelper.GetLoadBalancerList();
 
             string rootDns = GlobalVariables.EnvironmentAccounts[GlobalVariables.Enviroment].DNS + ".";
@@ -149,6 +165,49 @@ namespace SafeArrival.AdminTools.BLL
             return dnsList;
         }
 
+
+        public async Task<List<DeployDnsModel>> GetAvailableDnsList()
+        {
+            var availableDnsList = new List<DeployDnsModel>();
+            List<SA_LoadBalancer> loadBalancers;
+            //For version compatable. When Blue/Green deploy is ready, only ALB is available.
+            if (isMultipleColorEnvsCreated())
+            {
+                var helper = new ALBHelper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
+                loadBalancers = await helper.GetLoadBalancerList();
+            }
+            else
+            {
+                var helper = new ELBHelper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
+                loadBalancers = await helper.GetLoadBalancerList();
+            }
+            var applicationList = new List<string>() { "Admin", "Super" };
+            foreach (var application in applicationList)
+            {
+                var dns = new DeployDnsModel()
+                {
+                    Application = application,
+                    LiveEndpoint = loadBalancers.Find(o => o.LoadBalancerName.Contains(application)).DNSName,
+                    MaintenanceEndpoint = GenerateMaintanenceEndpoint(application)
+                };
+                availableDnsList.Add(dns);
+            }
+            return availableDnsList;
+        }
+
+        private string GenerateMaintanenceEndpoint(string appName)
+        {
+            return $"{appName}.{GlobalVariables.EnvironmentAccounts[GlobalVariables.Enviroment].DNS}.s3-website.{GlobalVariables.Region}.amazonaws.com";
+        }
+
+        private bool isMultipleColorEnvsCreated()
+        {
+            var MultipleColorsEnvs = ConfigurationManager.AppSettings["GreenBlueEnvs"].Split(',').ToList();
+            if (MultipleColorsEnvs.IndexOf(GlobalVariables.Enviroment) >= 0)
+            { return true; }
+            else
+            { return false; }
+        }
         //------------------------------------------------------------------------------------------------------------------
         //Switch Live Color Env
         public async Task<string> GetLiveColorEnv()

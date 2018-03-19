@@ -16,7 +16,7 @@ namespace SafeArrival.AdminTools.BLL
         const int PRE_PRODUCTION_HTTPS_PORT = 4343;
         public async Task GenerateExternalLoadBalancers()
         {
-            LoadBalancerHelper loadBalancerHelper = new LoadBalancerHelper(
+            ALBHelper loadBalancerHelper = new ALBHelper(
                 GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
             var scalingGroupHelper = new AutoScalingHelper(
                 GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
@@ -93,7 +93,7 @@ namespace SafeArrival.AdminTools.BLL
 
         public async Task<List<ApplicationLoadBalancerModel>> GetApplicationLoadBalancers()
         {
-            LoadBalancerHelper loadBalancerHelper = new LoadBalancerHelper(
+            ALBHelper loadBalancerHelper = new ALBHelper(
                 GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
             var applicationLoadBalancers = new List<ApplicationLoadBalancerModel>();
             var loadBalancers = await loadBalancerHelper.GetLoadBalancerList();
@@ -110,7 +110,7 @@ namespace SafeArrival.AdminTools.BLL
 
         public async Task SwitchDeployment()
         {
-            LoadBalancerHelper loadBalancerHelper = new LoadBalancerHelper(
+            ALBHelper loadBalancerHelper = new ALBHelper(
                 GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
             var loadBalancers = await loadBalancerHelper.GetLoadBalancerList();
             foreach (var loadBalancer in loadBalancers)
@@ -142,7 +142,7 @@ namespace SafeArrival.AdminTools.BLL
 
         public async Task ClearTargetGroupAttachments()
         {
-            var loadBalancerHelper = new LoadBalancerHelper(
+            var loadBalancerHelper = new ALBHelper(
                 GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
             var scalingGroupHelper = new AutoScalingHelper(
                 GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
