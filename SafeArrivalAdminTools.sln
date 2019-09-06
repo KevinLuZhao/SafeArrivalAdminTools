@@ -1,15 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SafeArrival.AdminTools.Presentation", "SafeArrival.AdminTools.Presentation\SafeArrival.AdminTools.Presentation.csproj", "{0C57356D-5A50-4A0E-A656-66C3821C3EB5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SafeArrival.AdminTools.AwsUtilities", "SafeArrival.AdminTools.AwsUtilities\SafeArrival.AdminTools.AwsUtilities.csproj", "{190A1BDD-EBC5-49EF-99BE-EF3F3A163185}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SafeArrival.AdminTools.Model", "SafeArrival.AdminTools.Model\SafeArrival.AdminTools.Model.csproj", "{DFA4E32F-9A65-4918-93C7-B821C2D6571E}"
-EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SafeArrival.AdminTools.Setup", "SafeArrival.AdminTools.Setup\SafeArrival.AdminTools.Setup.vdproj", "{FAA23386-DEBD-4390-88C4-3AE1120096E7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SafeArrival.AdminTools.BLL", "SafeArrival.AdminTools.BLL\SafeArrival.AdminTools.BLL.csproj", "{6CE0D60D-6511-4171-972E-B290DFC1028A}"
 EndProject
@@ -47,10 +45,6 @@ Global
 		{DFA4E32F-9A65-4918-93C7-B821C2D6571E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DFA4E32F-9A65-4918-93C7-B821C2D6571E}.Release|x86.ActiveCfg = Release|Any CPU
 		{DFA4E32F-9A65-4918-93C7-B821C2D6571E}.Release|x86.Build.0 = Release|Any CPU
-		{FAA23386-DEBD-4390-88C4-3AE1120096E7}.Debug|Any CPU.ActiveCfg = Debug
-		{FAA23386-DEBD-4390-88C4-3AE1120096E7}.Debug|x86.ActiveCfg = Debug
-		{FAA23386-DEBD-4390-88C4-3AE1120096E7}.Release|Any CPU.ActiveCfg = Release
-		{FAA23386-DEBD-4390-88C4-3AE1120096E7}.Release|x86.ActiveCfg = Release
 		{6CE0D60D-6511-4171-972E-B290DFC1028A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6CE0D60D-6511-4171-972E-B290DFC1028A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6CE0D60D-6511-4171-972E-B290DFC1028A}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -70,5 +64,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {11718FD3-0FB5-4A6C-8616-A618ACE6938D}
 	EndGlobalSection
 EndGlobal

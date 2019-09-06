@@ -37,7 +37,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
             {
                 GlobalRoleCredentialsCache[env.ToString()] = 
                     new AssumeRoleAWSCredentials(
-                        new StoredProfileAWSCredentials(), 
+                        new StoredProfileAWSCredentials("schoolmessenger"), 
                         GlobalRoleArnCache[env.ToString()], 
                         "AssumeRole");
             }
@@ -47,6 +47,8 @@ namespace SafeArrival.AdminTools.AwsUtilities
 
         public static StoredProfileAWSCredentials GetDynamoDbCredential()
         {
+            var credential = new StoredProfileAWSCredentials("development");
+            
             return new StoredProfileAWSCredentials("development");
         }
     }

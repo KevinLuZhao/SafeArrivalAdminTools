@@ -15,10 +15,10 @@ namespace SafeArrival.AdminTools.AwsUtilities
 
         public CodePipelineHelper(string profile, string region, string color) : base(profile, region, color)
         {
-            //client = new AmazonRDSClient(credentials, AwsCommon.GetRetionEndpoint(region));
             client = new AmazonCodePipelineClient(
                 CredentiaslManager.GetCredential(profile),
                 AwsCommon.GetRetionEndpoint(region));
+            
         }
 
         //public async Task<PipelineDeclaration> Get()
