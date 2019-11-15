@@ -47,8 +47,6 @@ namespace SafeArrival.AdminTools.AwsUtilities
 
         public static StoredProfileAWSCredentials GetDynamoDbCredential()
         {
-            var credential = new StoredProfileAWSCredentials("development");
-            
             return new StoredProfileAWSCredentials("development");
         }
     }
