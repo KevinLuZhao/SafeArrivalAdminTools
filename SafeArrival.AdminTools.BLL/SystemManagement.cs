@@ -81,6 +81,24 @@ namespace SafeArrival.AdminTools.BLL
             await rdsHelper.StopRdsInstance(response.DBInstanceIdentifier);
         }
 
+        public async Task StartRdsInstances(List<SA_RdsInstance> lstInstances)
+        {
+            RDSHelper rdsHelper = new RDSHelper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
+            foreach (var instance in lstInstances)
+            {
+                await rdsHelper.StartRdsInstance(instance.DBInstanceIdentifier, instance.MultiAZ);
+            }
+        }
+
+        public async Task StopRdsInstances(List<SA_RdsInstance> lstInstances)
+        {
+            RDSHelper rdsHelper = new RDSHelper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
+            foreach (var instance in lstInstances)
+            {
+                await rdsHelper.StopRdsInstance(instance.DBInstanceIdentifier);
+            }
+        }
+
         public void SaveAllAutoScalingGroupSettings(List<AutoScalingGroupSettings> settings)
         {
             foreach (var setting in settings)

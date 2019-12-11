@@ -80,6 +80,17 @@
             this.lblRpcId = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.tabRDS = new System.Windows.Forms.TabPage();
+            this.btnRds_Refresh = new System.Windows.Forms.Button();
+            this.btnRdsStop = new System.Windows.Forms.Button();
+            this.btnRdsStart = new System.Windows.Forms.Button();
+            this.gvRDS = new System.Windows.Forms.DataGridView();
+            this.DBInstanceIdentifier = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DBInstanceArn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.rdsEnvironment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MultiAZ = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ActionSelected = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tPageStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgScheduleStatus)).BeginInit();
@@ -91,6 +102,8 @@
             this.tPagePeeringConnection.SuspendLayout();
             this.pnlNonExistRpc.SuspendLayout();
             this.pnlExistRpc.SuspendLayout();
+            this.tabRDS.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gvRDS)).BeginInit();
             this.SuspendLayout();
             // 
             // btnInit
@@ -105,9 +118,12 @@
             // 
             // tabControl1
             // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.tabControl1.Controls.Add(this.tPageStatus);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tPagePeeringConnection);
+            this.tabControl1.Controls.Add(this.tabRDS);
             this.tabControl1.Location = new System.Drawing.Point(2, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -207,6 +223,7 @@
             // 
             // listView2
             // 
+            this.listView2.HideSelection = false;
             this.listView2.Location = new System.Drawing.Point(7, 247);
             this.listView2.Name = "listView2";
             this.listView2.Size = new System.Drawing.Size(1083, 126);
@@ -219,7 +236,7 @@
             this.btnRefresh.FlatAppearance.BorderSize = 0;
             this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRefresh.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Reload;
-            this.btnRefresh.Location = new System.Drawing.Point(232, 523);
+            this.btnRefresh.Location = new System.Drawing.Point(229, 523);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(45, 42);
             this.btnRefresh.TabIndex = 13;
@@ -332,6 +349,7 @@
             // 
             // listView1
             // 
+            this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(10, 35);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(1083, 160);
@@ -620,6 +638,116 @@
             this.label6.TabIndex = 0;
             this.label6.Text = "Peering Connection of RDS VPC and Application VPC";
             // 
+            // tabRDS
+            // 
+            this.tabRDS.Controls.Add(this.btnRds_Refresh);
+            this.tabRDS.Controls.Add(this.btnRdsStop);
+            this.tabRDS.Controls.Add(this.btnRdsStart);
+            this.tabRDS.Controls.Add(this.gvRDS);
+            this.tabRDS.Location = new System.Drawing.Point(4, 22);
+            this.tabRDS.Name = "tabRDS";
+            this.tabRDS.Padding = new System.Windows.Forms.Padding(3);
+            this.tabRDS.Size = new System.Drawing.Size(1105, 576);
+            this.tabRDS.TabIndex = 3;
+            this.tabRDS.Text = "RDS Instances";
+            this.tabRDS.UseVisualStyleBackColor = true;
+            // 
+            // btnRds_Refresh
+            // 
+            this.btnRds_Refresh.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Reload;
+            this.btnRds_Refresh.Location = new System.Drawing.Point(245, 522);
+            this.btnRds_Refresh.Name = "btnRds_Refresh";
+            this.btnRds_Refresh.Size = new System.Drawing.Size(47, 48);
+            this.btnRds_Refresh.TabIndex = 4;
+            this.btnRds_Refresh.UseVisualStyleBackColor = true;
+            this.btnRds_Refresh.Click += new System.EventHandler(this.btnRdsRefresh);
+            // 
+            // btnRdsStop
+            // 
+            this.btnRdsStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnRdsStop.Location = new System.Drawing.Point(119, 536);
+            this.btnRdsStop.Name = "btnRdsStop";
+            this.btnRdsStop.Size = new System.Drawing.Size(75, 23);
+            this.btnRdsStop.TabIndex = 3;
+            this.btnRdsStop.Text = "Stop";
+            this.btnRdsStop.UseVisualStyleBackColor = true;
+            this.btnRdsStop.Click += new System.EventHandler(this.btnRdsStop_Click);
+            // 
+            // btnRdsStart
+            // 
+            this.btnRdsStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnRdsStart.Location = new System.Drawing.Point(8, 536);
+            this.btnRdsStart.Name = "btnRdsStart";
+            this.btnRdsStart.Size = new System.Drawing.Size(75, 23);
+            this.btnRdsStart.TabIndex = 2;
+            this.btnRdsStart.Text = "Start";
+            this.btnRdsStart.UseVisualStyleBackColor = true;
+            this.btnRdsStart.Click += new System.EventHandler(this.btnRdsStart_Click);
+            // 
+            // gvRDS
+            // 
+            this.gvRDS.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.gvRDS.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gvRDS.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.DBInstanceIdentifier,
+            this.DBInstanceArn,
+            this.rdsEnvironment,
+            this.Status,
+            this.MultiAZ,
+            this.ActionSelected});
+            this.gvRDS.Location = new System.Drawing.Point(6, 6);
+            this.gvRDS.Name = "gvRDS";
+            this.gvRDS.Size = new System.Drawing.Size(1092, 510);
+            this.gvRDS.TabIndex = 1;
+            // 
+            // DBInstanceIdentifier
+            // 
+            this.DBInstanceIdentifier.DataPropertyName = "DBInstanceIdentifier";
+            this.DBInstanceIdentifier.HeaderText = "Instance Name";
+            this.DBInstanceIdentifier.Name = "DBInstanceIdentifier";
+            this.DBInstanceIdentifier.ReadOnly = true;
+            this.DBInstanceIdentifier.Width = 200;
+            // 
+            // DBInstanceArn
+            // 
+            this.DBInstanceArn.DataPropertyName = "DBInstanceArn";
+            this.DBInstanceArn.HeaderText = "Instance Arn";
+            this.DBInstanceArn.Name = "DBInstanceArn";
+            this.DBInstanceArn.ReadOnly = true;
+            this.DBInstanceArn.Width = 500;
+            // 
+            // rdsEnvironment
+            // 
+            this.rdsEnvironment.DataPropertyName = "RdsEnvinronment";
+            this.rdsEnvironment.HeaderText = "Environment";
+            this.rdsEnvironment.Name = "rdsEnvironment";
+            this.rdsEnvironment.ReadOnly = true;
+            // 
+            // Status
+            // 
+            this.Status.DataPropertyName = "Status";
+            this.Status.HeaderText = "Status";
+            this.Status.Name = "Status";
+            this.Status.ReadOnly = true;
+            this.Status.Width = 70;
+            // 
+            // MultiAZ
+            // 
+            this.MultiAZ.DataPropertyName = "MultiAZ";
+            this.MultiAZ.HeaderText = "Multi AZ";
+            this.MultiAZ.Name = "MultiAZ";
+            this.MultiAZ.ReadOnly = true;
+            this.MultiAZ.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.MultiAZ.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.MultiAZ.Width = 70;
+            // 
+            // ActionSelected
+            // 
+            this.ActionSelected.HeaderText = "Select";
+            this.ActionSelected.Name = "ActionSelected";
+            this.ActionSelected.Width = 50;
+            // 
             // FormSystemManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -627,7 +755,7 @@
             this.ClientSize = new System.Drawing.Size(1120, 608);
             this.Controls.Add(this.tabControl1);
             this.Name = "FormSystemManager";
-            this.Text = "System Manager";
+            this.Text = "System Maintenance";
             this.Load += new System.EventHandler(this.FormSystemManager_Load);
             this.tabControl1.ResumeLayout(false);
             this.tPageStatus.ResumeLayout(false);
@@ -645,6 +773,8 @@
             this.pnlNonExistRpc.PerformLayout();
             this.pnlExistRpc.ResumeLayout(false);
             this.pnlExistRpc.PerformLayout();
+            this.tabRDS.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gvRDS)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -702,5 +832,16 @@
         private System.Windows.Forms.PictureBox imgRdsStatus;
         private System.Windows.Forms.PictureBox imgScheduleStatus;
         private System.Windows.Forms.CheckBox cboxStopJumpbox;
+        private System.Windows.Forms.TabPage tabRDS;
+        private System.Windows.Forms.DataGridView gvRDS;
+        private System.Windows.Forms.Button btnRdsStop;
+        private System.Windows.Forms.Button btnRdsStart;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DBInstanceIdentifier;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DBInstanceArn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn rdsEnvironment;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Status;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn MultiAZ;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ActionSelected;
+        private System.Windows.Forms.Button btnRds_Refresh;
     }
 }
