@@ -9,9 +9,9 @@ using SafeArrival.AdminTools.Model;
 
 namespace SafeArrival.AdminTools.AwsUtilities
 {
-    public class RDSHelper: AwsHelperBase
+    public class RDSHelper : AwsHelperBase
     {
-        
+
         private AmazonRDSClient client;
 
         public RDSHelper(string profile, string region, string color) : base(profile, region, color)
@@ -43,6 +43,27 @@ namespace SafeArrival.AdminTools.AwsUtilities
             return null;
         }
 
+        public async Task<List<SA_RdsInstance>> GetRDSInstanceList()
+        {
+            var lst = new List<SA_RdsInstance>();
+            var response = await client.DescribeDBInstancesAsync();
+            var lstInstance = response.DBInstances;
+            foreach (var instance in lstInstance)
+            {
+
+                SA_RdsInstance objInstance = new SA_RdsInstance
+                {
+                    DBInstanceIdentifier = instance.DBInstanceIdentifier,
+                    DBInstanceArn = instance.DBInstanceArn,
+                    RdsEnvinronment = environment,
+                    Status = instance.DBInstanceStatus,
+                    MultiAZ = instance.MultiAZ
+                };
+                lst.Add(objInstance);
+            }
+            return lst;
+        }
+
 
         public async Task StopRdsInstance(string instanceIdentifier)
         {
@@ -70,8 +91,8 @@ namespace SafeArrival.AdminTools.AwsUtilities
                     ;
                 }
             }
-            
-            
+
+
             var stopRequest = new StopDBInstanceRequest()
             {
                 DBInstanceIdentifier = instanceIdentifier
@@ -87,10 +108,10 @@ namespace SafeArrival.AdminTools.AwsUtilities
             };
             await client.StartDBInstanceAsync(startRequest);
 
-            ModifyDBInstanceRequest request = new ModifyDBInstanceRequest();
-            request.MultiAZ = isMultyAz;
-            request.DBInstanceIdentifier = instanceIdentifier;
-            var response = await client.ModifyDBInstanceAsync(request);
+            //ModifyDBInstanceRequest request = new ModifyDBInstanceRequest();
+            //request.MultiAZ = isMultyAz;
+            //request.DBInstanceIdentifier = instanceIdentifier;
+            //var response = await client.ModifyDBInstanceAsync(request);
         }
     }
 }

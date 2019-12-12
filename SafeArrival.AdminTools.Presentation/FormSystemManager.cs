@@ -11,6 +11,7 @@ namespace SafeArrival.AdminTools.Presentation
     {
 
         private List<AutoScalingGroupSettings> lstAutoScalingGroupSettings = new List<AutoScalingGroupSettings>();
+        private List<SA_RdsInstance> lstRdsInstances = new List<SA_RdsInstance>();
         private List<SA_Vpc> lstVpcs = new List<SA_Vpc>();
         private SA_PeeringConnection vpcPeeringConnection;
 
@@ -53,6 +54,7 @@ namespace SafeArrival.AdminTools.Presentation
 
                 await PopulateSystemStatus();
                 dataGridView1.AutoGenerateColumns = false;
+                gvRDS.AutoGenerateColumns = false;
             }
             catch (Exception ex)
             {
@@ -163,6 +165,7 @@ namespace SafeArrival.AdminTools.Presentation
             LoadAutoScalingGroupSettings();
             await PopulatePeeringConnection();
             await PopulateeeringConnectionVpcDropdownLists();
+            await PopulateRDSList();
         }
 
         private async Task PopulateAutoScalingGroup()
@@ -274,6 +277,19 @@ namespace SafeArrival.AdminTools.Presentation
                 this.imgRdsStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Red_icon;
                 return SystemStauts.Abnormal;
             }
+        }
+
+        private async Task PopulateRDSList()
+        {
+            gvRDS.DataSource = null;
+            lstRdsInstances.Clear();
+            AwsUtilities.RDSHelper helper = new AwsUtilities.RDSHelper(
+                GlobalVariables.Enviroment,
+                GlobalVariables.Region,
+                GlobalVariables.Color);
+            lstRdsInstances.AddRange(await helper.GetRDSInstanceList());
+            gvRDS.DataSource = lstRdsInstances;
+            //gvRDS.Refresh();
         }
 
         private async Task PopulatePeeringConnection()
@@ -402,6 +418,100 @@ namespace SafeArrival.AdminTools.Presentation
         private async void btnRpcRefresh_Click(object sender, EventArgs e)
         {
             await PopulatePeeringConnection();
+        }
+
+        private async void btnRdsStop_Click(object sender, EventArgs e)
+        {
+            var service = new SystemManagement();
+            var lstInstanceSelected = new List<SA_RdsInstance>();
+            var strInstanceSelected = string.Empty;
+            foreach (DataGridViewRow item in gvRDS.Rows)
+            {
+                if (item.Cells["ActionSelected"].Value == null)
+                    continue;
+                bool selected;
+                if (bool.TryParse(item.Cells["ActionSelected"].Value.ToString(), out selected) &&
+                    selected && item.Cells["Status"].Value.ToString() == "available")
+                {
+                    lstInstanceSelected.Add(lstRdsInstances.Find(
+                        o => o.DBInstanceIdentifier == (string)item.Cells["DBInstanceIdentifier"].Value));
+                    strInstanceSelected += (string)item.Cells["DBInstanceIdentifier"].Value + ",";
+                }
+            }
+            if (lstInstanceSelected.Count > 0)
+            {
+                strInstanceSelected = strInstanceSelected.Substring(0, strInstanceSelected.Length - 1);
+                var confirmResult = MessageBox.Show(
+                            string.Format("RDS instances: {0} are selected. Pleae click YES button to stop them!",
+                            strInstanceSelected),
+                            "Confirm Stop RDS Instances",
+                            MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+
+                    try
+                    {
+                        NotifyToMainStatus($"RDS instances {strInstanceSelected} begin to stopped.", System.Drawing.Color.Green);
+                        await service.StopRdsInstances(lstInstanceSelected);
+                        await PopulateRDSList();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleException(ex);
+                        return;
+                    }
+                    WriteNotification($"RDS instances {strInstanceSelected} are stopped.");
+                }
+            }
+        }
+
+        private async void btnRdsStart_Click(object sender, EventArgs e)
+        {
+            var service = new SystemManagement();
+            var lstInstanceSelected = new List<SA_RdsInstance>();
+            var strInstanceSelected = string.Empty;
+            foreach (DataGridViewRow item in gvRDS.Rows)
+            {
+                if (item.Cells["ActionSelected"].Value == null)
+                    continue;
+                bool selected;
+                if (bool.TryParse(item.Cells["ActionSelected"].Value.ToString(), out selected) && 
+                    selected && item.Cells["Status"].Value.ToString() == "stopped")
+                {
+                    lstInstanceSelected.Add(lstRdsInstances.Find(
+                        o => o.DBInstanceIdentifier == (string)item.Cells["DBInstanceIdentifier"].Value));
+                    strInstanceSelected += (string)item.Cells["DBInstanceIdentifier"].Value + ",";
+                }
+            }
+            if (lstInstanceSelected.Count > 0)
+            {
+                strInstanceSelected = strInstanceSelected.Substring(0, strInstanceSelected.Length - 1);
+                var confirmResult = MessageBox.Show(
+                            string.Format("RDS instances: {0} are selected. Pleae click YES button to start them!",
+                            strInstanceSelected),
+                            "Confirm Start RDS Instances",
+                            MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    try
+                    {
+                        NotifyToMainStatus($"RDS instances {strInstanceSelected} begin to start.", System.Drawing.Color.Green);
+                        await service.StartRdsInstances(lstInstanceSelected);
+                        await PopulateRDSList();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleException(ex);
+                        return;
+                    }
+                    WriteNotification($"RDS instances {strInstanceSelected} are started.");
+                }
+            }
+        }
+
+        private async void btnRdsRefresh(object sender, EventArgs e)
+        {
+            await PopulateRDSList();
         }
     }
 }

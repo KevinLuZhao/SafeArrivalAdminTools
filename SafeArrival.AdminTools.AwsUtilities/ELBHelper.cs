@@ -54,8 +54,8 @@ namespace SafeArrival.AdminTools.AwsUtilities
             foreach (var sourceELB in lstSourceELBs)
             {
                 var tagName = respTags.TagDescriptions.Find
-                    (o => o.LoadBalancerName == sourceELB.LoadBalancerName).Tags.Find(o => o.Key == "aws:cloudformation:stack-name").Value;
-                if (!(tagName.IndexOf($"{environment}-{color}")==0))
+                    (o => o.LoadBalancerName == sourceELB.LoadBalancerName).Tags.Find(o => o.Key == "Name").Value;
+                if (!(tagName.IndexOf($"{environment}-{color}")==0))   //check
                     continue;
                 var elb = ModelTransformer<LoadBalancerDescription, SA_LoadBalancer>.
                     TransformAwsModelToSafeArrivalModel(sourceELB);
