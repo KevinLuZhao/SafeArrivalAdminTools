@@ -159,6 +159,7 @@ namespace SafeArrival.AdminTools.Presentation
                 btnInit.Enabled = btnSave_ASG_Settings.Enabled = true;
             }
 
+            PopulateEc2Regions();
             await PopulateAutoScalingGroup();
             await PopulateScheduleActions();
             await PopulateRDS();
@@ -252,7 +253,7 @@ namespace SafeArrival.AdminTools.Presentation
 
         private async Task<SystemStauts> PopulateRDS()
         {
-            AwsUtilities.RDSHelper helper = new AwsUtilities.RDSHelper(
+            var helper = new AwsUtilities.RDSHelper(
                 GlobalVariables.Enviroment,
                 GlobalVariables.Region,
                 GlobalVariables.Color);
@@ -290,6 +291,30 @@ namespace SafeArrival.AdminTools.Presentation
             lstRdsInstances.AddRange(await helper.GetRDSInstanceList());
             gvRDS.DataSource = lstRdsInstances;
             //gvRDS.Refresh();
+
+
+
+            var ec2Helper = new AwsUtilities.EC2Helper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
+            var x = await ec2Helper.GetEc2InsatancesList("us-west-2");
+        }
+
+        private void PopulateEc2Regions()
+        {
+            List<KeyValuePair<string, string>> lstRegions = Regions.GetRegionList();
+            tsComboRegion.DataSource = lstRegions;
+            tsComboRegion.DisplayMember = "Value";
+            tsComboRegion.ValueMember = "Key";
+            tsComboRegion.SelectedValue = GlobalVariables.Region;
+        }
+
+        private async Task PopulateEc2Instances()
+        {
+            //gvEc2Instances.DataSource = null;
+            var helper = new AwsUtilities.EC2Helper(
+                GlobalVariables.Enviroment,
+                GlobalVariables.Region,
+                GlobalVariables.Color);
+            gvEc2Instances.DataSource = await helper.GetEc2InsatancesList(((KeyValuePair<string, string>)tsComboRegion.SelectedItem).Key);
         }
 
         private async Task PopulatePeeringConnection()
@@ -512,6 +537,11 @@ namespace SafeArrival.AdminTools.Presentation
         private async void btnRdsRefresh(object sender, EventArgs e)
         {
             await PopulateRDSList();
+        }
+
+        private async void tsComboRegion_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            await PopulateEc2Instances();
         }
     }
 }

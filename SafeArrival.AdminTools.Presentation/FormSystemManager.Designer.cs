@@ -80,17 +80,81 @@
             this.lblRpcId = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.tabRDS = new System.Windows.Forms.TabPage();
-            this.btnRds_Refresh = new System.Windows.Forms.Button();
+            this.tabEc2Instances = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.listView3 = new System.Windows.Forms.ListView();
+            this.button3 = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.listView4 = new System.Windows.Forms.ListView();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.button6 = new System.Windows.Forms.Button();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.button7 = new System.Windows.Forms.Button();
+            this.label25 = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.button8 = new System.Windows.Forms.Button();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
+            this.label31 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
+            this.label34 = new System.Windows.Forms.Label();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.button9 = new System.Windows.Forms.Button();
             this.btnRdsStop = new System.Windows.Forms.Button();
             this.btnRdsStart = new System.Windows.Forms.Button();
             this.gvRDS = new System.Windows.Forms.DataGridView();
-            this.DBInstanceIdentifier = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DBInstanceArn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.rdsEnvironment = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MultiAZ = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.ActionSelected = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dataGridViewCheckBoxColumn2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.tabEc2 = new System.Windows.Forms.TabPage();
+            this.label35 = new System.Windows.Forms.Label();
+            this.tsComboRegion = new System.Windows.Forms.ComboBox();
+            this.btnEc2Refresh = new System.Windows.Forms.Button();
+            this.btnEc2Stop = new System.Windows.Forms.Button();
+            this.btnEc2Start = new System.Windows.Forms.Button();
+            this.gvEc2Instances = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VpcId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewCheckBoxColumn4 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tPageStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgScheduleStatus)).BeginInit();
@@ -102,8 +166,21 @@
             this.tPagePeeringConnection.SuspendLayout();
             this.pnlNonExistRpc.SuspendLayout();
             this.pnlExistRpc.SuspendLayout();
-            this.tabRDS.SuspendLayout();
+            this.tabEc2Instances.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            this.panel2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            this.tabPage4.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.panel4.SuspendLayout();
+            this.tabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gvRDS)).BeginInit();
+            this.tabEc2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gvEc2Instances)).BeginInit();
             this.SuspendLayout();
             // 
             // btnInit
@@ -123,7 +200,6 @@
             this.tabControl1.Controls.Add(this.tPageStatus);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tPagePeeringConnection);
-            this.tabControl1.Controls.Add(this.tabRDS);
             this.tabControl1.Location = new System.Drawing.Point(2, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -638,29 +714,554 @@
             this.label6.TabIndex = 0;
             this.label6.Text = "Peering Connection of RDS VPC and Application VPC";
             // 
-            // tabRDS
+            // tabEc2Instances
             // 
-            this.tabRDS.Controls.Add(this.btnRds_Refresh);
-            this.tabRDS.Controls.Add(this.btnRdsStop);
-            this.tabRDS.Controls.Add(this.btnRdsStart);
-            this.tabRDS.Controls.Add(this.gvRDS);
-            this.tabRDS.Location = new System.Drawing.Point(4, 22);
-            this.tabRDS.Name = "tabRDS";
-            this.tabRDS.Padding = new System.Windows.Forms.Padding(3);
-            this.tabRDS.Size = new System.Drawing.Size(1105, 576);
-            this.tabRDS.TabIndex = 3;
-            this.tabRDS.Text = "RDS Instances";
-            this.tabRDS.UseVisualStyleBackColor = true;
+            this.tabEc2Instances.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.tabEc2Instances.Controls.Add(this.tabPage1);
+            this.tabEc2Instances.Controls.Add(this.tabPage3);
+            this.tabEc2Instances.Controls.Add(this.tabPage4);
+            this.tabEc2Instances.Controls.Add(this.tabPage5);
+            this.tabEc2Instances.Controls.Add(this.tabEc2);
+            this.tabEc2Instances.Location = new System.Drawing.Point(4, 3);
+            this.tabEc2Instances.Name = "tabEc2Instances";
+            this.tabEc2Instances.SelectedIndex = 0;
+            this.tabEc2Instances.Size = new System.Drawing.Size(1113, 602);
+            this.tabEc2Instances.TabIndex = 4;
             // 
-            // btnRds_Refresh
+            // tabPage1
             // 
-            this.btnRds_Refresh.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Reload;
-            this.btnRds_Refresh.Location = new System.Drawing.Point(245, 522);
-            this.btnRds_Refresh.Name = "btnRds_Refresh";
-            this.btnRds_Refresh.Size = new System.Drawing.Size(47, 48);
-            this.btnRds_Refresh.TabIndex = 4;
-            this.btnRds_Refresh.UseVisualStyleBackColor = true;
-            this.btnRds_Refresh.Click += new System.EventHandler(this.btnRdsRefresh);
+            this.tabPage1.Controls.Add(this.checkBox1);
+            this.tabPage1.Controls.Add(this.pictureBox1);
+            this.tabPage1.Controls.Add(this.pictureBox2);
+            this.tabPage1.Controls.Add(this.pictureBox3);
+            this.tabPage1.Controls.Add(this.button1);
+            this.tabPage1.Controls.Add(this.label9);
+            this.tabPage1.Controls.Add(this.button2);
+            this.tabPage1.Controls.Add(this.listView3);
+            this.tabPage1.Controls.Add(this.button3);
+            this.tabPage1.Controls.Add(this.panel2);
+            this.tabPage1.Controls.Add(this.label21);
+            this.tabPage1.Controls.Add(this.label22);
+            this.tabPage1.Controls.Add(this.listView4);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1105, 576);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Status";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.checkBox1.Location = new System.Drawing.Point(184, 12);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(236, 17);
+            this.checkBox1.TabIndex = 19;
+            this.checkBox1.Text = "Stop Jump Box When Shuting Down System";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox1.Location = new System.Drawing.Point(1071, 222);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(17, 17);
+            this.pictureBox1.TabIndex = 18;
+            this.pictureBox1.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox2.Location = new System.Drawing.Point(1071, 390);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(17, 17);
+            this.pictureBox2.TabIndex = 17;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox3.Location = new System.Drawing.Point(1071, 12);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(17, 17);
+            this.pictureBox3.TabIndex = 16;
+            this.pictureBox3.TabStop = false;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(116, 533);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "Start System";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(7, 222);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(142, 17);
+            this.label9.TabIndex = 15;
+            this.label9.Text = "Scheduled Actions";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(7, 533);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 0;
+            this.button2.Text = "Stop System";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // listView3
+            // 
+            this.listView3.HideSelection = false;
+            this.listView3.Location = new System.Drawing.Point(7, 247);
+            this.listView3.Name = "listView3";
+            this.listView3.Size = new System.Drawing.Size(1083, 126);
+            this.listView3.TabIndex = 14;
+            this.listView3.UseCompatibleStateImageBehavior = false;
+            // 
+            // button3
+            // 
+            this.button3.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.button3.FlatAppearance.BorderSize = 0;
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button3.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Reload;
+            this.button3.Location = new System.Drawing.Point(229, 523);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(45, 42);
+            this.button3.TabIndex = 13;
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.Transparent;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.checkBox2);
+            this.panel2.Controls.Add(this.label15);
+            this.panel2.Controls.Add(this.label16);
+            this.panel2.Controls.Add(this.label17);
+            this.panel2.Controls.Add(this.label18);
+            this.panel2.Controls.Add(this.label19);
+            this.panel2.Controls.Add(this.label20);
+            this.panel2.Location = new System.Drawing.Point(7, 419);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(1083, 100);
+            this.panel2.TabIndex = 12;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox2.Location = new System.Drawing.Point(156, 64);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(73, 17);
+            this.checkBox2.TabIndex = 12;
+            this.checkBox2.Text = "Multi AZ";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(18, 66);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(47, 13);
+            this.label15.TabIndex = 8;
+            this.label15.Text = "Status:";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.Location = new System.Drawing.Point(18, 15);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(135, 13);
+            this.label16.TabIndex = 4;
+            this.label16.Text = "DB Instance Identifier:";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(158, 15);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(13, 13);
+            this.label17.TabIndex = 5;
+            this.label17.Text = "  ";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(67, 66);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(13, 13);
+            this.label18.TabIndex = 9;
+            this.label18.Text = "  ";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.Location = new System.Drawing.Point(18, 40);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(104, 13);
+            this.label19.TabIndex = 6;
+            this.label19.Text = "DB Instance Arn:";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(128, 40);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(13, 13);
+            this.label20.TabIndex = 7;
+            this.label20.Text = "  ";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.Location = new System.Drawing.Point(7, 390);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(40, 17);
+            this.label21.TabIndex = 3;
+            this.label21.Text = "RDS";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.Location = new System.Drawing.Point(10, 10);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(149, 17);
+            this.label22.TabIndex = 2;
+            this.label22.Text = "Auto Scaling Group";
+            // 
+            // listView4
+            // 
+            this.listView4.HideSelection = false;
+            this.listView4.Location = new System.Drawing.Point(10, 35);
+            this.listView4.Name = "listView4";
+            this.listView4.Size = new System.Drawing.Size(1083, 160);
+            this.listView4.TabIndex = 1;
+            this.listView4.UseCompatibleStateImageBehavior = false;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.button4);
+            this.tabPage3.Controls.Add(this.button5);
+            this.tabPage3.Controls.Add(this.dataGridView2);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(1105, 576);
+            this.tabPage3.TabIndex = 1;
+            this.tabPage3.Text = "Auto-Scaling Settings";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(985, 538);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(114, 23);
+            this.button4.TabIndex = 4;
+            this.button4.Text = "Init DB Records";
+            this.button4.UseVisualStyleBackColor = true;
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(7, 538);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 1;
+            this.button5.Text = "Save";
+            this.button5.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView2
+            // 
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewTextBoxColumn3,
+            this.dataGridViewTextBoxColumn4,
+            this.dataGridViewTextBoxColumn5});
+            this.dataGridView2.Location = new System.Drawing.Point(7, 17);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.Size = new System.Drawing.Size(1092, 515);
+            this.dataGridView2.TabIndex = 0;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.DataPropertyName = "Environment";
+            this.dataGridViewTextBoxColumn1.HeaderText = "Environment";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.Width = 150;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.DataPropertyName = "Application";
+            this.dataGridViewTextBoxColumn2.HeaderText = "Application";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "MaxSize";
+            this.dataGridViewTextBoxColumn3.HeaderText = "Max Size";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.DataPropertyName = "MinSize";
+            this.dataGridViewTextBoxColumn4.HeaderText = "Min Size";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.DataPropertyName = "DesiredCapacity";
+            this.dataGridViewTextBoxColumn5.HeaderText = "Desired Capacity";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.Width = 150;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.button6);
+            this.tabPage4.Controls.Add(this.panel3);
+            this.tabPage4.Controls.Add(this.panel4);
+            this.tabPage4.Controls.Add(this.label34);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(1105, 576);
+            this.tabPage4.TabIndex = 2;
+            this.tabPage4.Text = "VPC Peering Connection";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // button6
+            // 
+            this.button6.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button6.Image = ((System.Drawing.Image)(resources.GetObject("button6.Image")));
+            this.button6.Location = new System.Drawing.Point(797, 6);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(38, 40);
+            this.button6.TabIndex = 5;
+            this.button6.UseVisualStyleBackColor = true;
+            // 
+            // panel3
+            // 
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Controls.Add(this.comboBox1);
+            this.panel3.Controls.Add(this.comboBox2);
+            this.panel3.Controls.Add(this.label23);
+            this.panel3.Controls.Add(this.label24);
+            this.panel3.Controls.Add(this.button7);
+            this.panel3.Controls.Add(this.label25);
+            this.panel3.Location = new System.Drawing.Point(26, 196);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(809, 163);
+            this.panel3.TabIndex = 4;
+            this.panel3.Visible = false;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(434, 43);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(191, 21);
+            this.comboBox1.TabIndex = 8;
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(124, 43);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(191, 21);
+            this.comboBox2.TabIndex = 7;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label23.Location = new System.Drawing.Point(338, 47);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(90, 13);
+            this.label23.TabIndex = 6;
+            this.label23.Text = "Accepter VPC:";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.Location = new System.Drawing.Point(20, 47);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(97, 13);
+            this.label24.TabIndex = 5;
+            this.label24.Text = "Requester VPC:";
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(16, 124);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(108, 23);
+            this.button7.TabIndex = 3;
+            this.button7.Text = "Create Connection";
+            this.button7.UseVisualStyleBackColor = true;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(13, 13);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(269, 13);
+            this.label25.TabIndex = 2;
+            this.label25.Text = "RDS-Application VPC peering connection is not existing";
+            // 
+            // panel4
+            // 
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Controls.Add(this.button8);
+            this.panel4.Controls.Add(this.label26);
+            this.panel4.Controls.Add(this.label27);
+            this.panel4.Controls.Add(this.label28);
+            this.panel4.Controls.Add(this.label29);
+            this.panel4.Controls.Add(this.label30);
+            this.panel4.Controls.Add(this.label31);
+            this.panel4.Controls.Add(this.label32);
+            this.panel4.Controls.Add(this.label33);
+            this.panel4.Location = new System.Drawing.Point(26, 57);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(809, 109);
+            this.panel4.TabIndex = 1;
+            this.panel4.Visible = false;
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(9, 74);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(122, 23);
+            this.button8.TabIndex = 8;
+            this.button8.Text = "Delete Connection";
+            this.button8.UseVisualStyleBackColor = true;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(67, 46);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(41, 13);
+            this.label26.TabIndex = 7;
+            this.label26.Text = "label11";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label27.Location = new System.Drawing.Point(20, 46);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(47, 13);
+            this.label27.TabIndex = 6;
+            this.label27.Text = "Status:";
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(621, 13);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(41, 13);
+            this.label28.TabIndex = 5;
+            this.label28.Text = "label11";
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label29.Location = new System.Drawing.Point(531, 13);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(90, 13);
+            this.label29.TabIndex = 4;
+            this.label29.Text = "Accepter VPC:";
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(424, 13);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(41, 13);
+            this.label30.TabIndex = 3;
+            this.label30.Text = "label11";
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label31.Location = new System.Drawing.Point(329, 13);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(97, 13);
+            this.label31.TabIndex = 2;
+            this.label31.Text = "Requester VPC:";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(190, 13);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(41, 13);
+            this.label32.TabIndex = 1;
+            this.label32.Text = "label11";
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label33.Location = new System.Drawing.Point(20, 13);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(167, 13);
+            this.label33.TabIndex = 0;
+            this.label33.Text = "VPC Peering Connection ID:";
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label34.Location = new System.Drawing.Point(23, 19);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(393, 17);
+            this.label34.TabIndex = 0;
+            this.label34.Text = "Peering Connection of RDS VPC and Application VPC";
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.button9);
+            this.tabPage5.Controls.Add(this.btnRdsStop);
+            this.tabPage5.Controls.Add(this.btnRdsStart);
+            this.tabPage5.Controls.Add(this.gvRDS);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(1105, 576);
+            this.tabPage5.TabIndex = 3;
+            this.tabPage5.Text = "RDS Instances";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // button9
+            // 
+            this.button9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button9.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Reload;
+            this.button9.Location = new System.Drawing.Point(245, 522);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(47, 48);
+            this.button9.TabIndex = 4;
+            this.button9.UseVisualStyleBackColor = true;
             // 
             // btnRdsStop
             // 
@@ -671,7 +1272,6 @@
             this.btnRdsStop.TabIndex = 3;
             this.btnRdsStop.Text = "Stop";
             this.btnRdsStop.UseVisualStyleBackColor = true;
-            this.btnRdsStop.Click += new System.EventHandler(this.btnRdsStop_Click);
             // 
             // btnRdsStart
             // 
@@ -682,7 +1282,6 @@
             this.btnRdsStart.TabIndex = 2;
             this.btnRdsStart.Text = "Start";
             this.btnRdsStart.UseVisualStyleBackColor = true;
-            this.btnRdsStart.Click += new System.EventHandler(this.btnRdsStart_Click);
             // 
             // gvRDS
             // 
@@ -690,69 +1289,195 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.gvRDS.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gvRDS.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.DBInstanceIdentifier,
-            this.DBInstanceArn,
-            this.rdsEnvironment,
-            this.Status,
-            this.MultiAZ,
-            this.ActionSelected});
+            this.dataGridViewTextBoxColumn6,
+            this.dataGridViewTextBoxColumn7,
+            this.dataGridViewTextBoxColumn8,
+            this.dataGridViewTextBoxColumn9,
+            this.dataGridViewCheckBoxColumn1,
+            this.dataGridViewCheckBoxColumn2});
             this.gvRDS.Location = new System.Drawing.Point(6, 6);
             this.gvRDS.Name = "gvRDS";
             this.gvRDS.Size = new System.Drawing.Size(1092, 510);
             this.gvRDS.TabIndex = 1;
             // 
-            // DBInstanceIdentifier
+            // dataGridViewTextBoxColumn6
             // 
-            this.DBInstanceIdentifier.DataPropertyName = "DBInstanceIdentifier";
-            this.DBInstanceIdentifier.HeaderText = "Instance Name";
-            this.DBInstanceIdentifier.Name = "DBInstanceIdentifier";
-            this.DBInstanceIdentifier.ReadOnly = true;
-            this.DBInstanceIdentifier.Width = 200;
+            this.dataGridViewTextBoxColumn6.DataPropertyName = "DBInstanceIdentifier";
+            this.dataGridViewTextBoxColumn6.HeaderText = "Instance Name";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.ReadOnly = true;
+            this.dataGridViewTextBoxColumn6.Width = 200;
             // 
-            // DBInstanceArn
+            // dataGridViewTextBoxColumn7
             // 
-            this.DBInstanceArn.DataPropertyName = "DBInstanceArn";
-            this.DBInstanceArn.HeaderText = "Instance Arn";
-            this.DBInstanceArn.Name = "DBInstanceArn";
-            this.DBInstanceArn.ReadOnly = true;
-            this.DBInstanceArn.Width = 500;
+            this.dataGridViewTextBoxColumn7.DataPropertyName = "DBInstanceArn";
+            this.dataGridViewTextBoxColumn7.HeaderText = "Instance Arn";
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            this.dataGridViewTextBoxColumn7.ReadOnly = true;
+            this.dataGridViewTextBoxColumn7.Width = 500;
             // 
-            // rdsEnvironment
+            // dataGridViewTextBoxColumn8
             // 
-            this.rdsEnvironment.DataPropertyName = "RdsEnvinronment";
-            this.rdsEnvironment.HeaderText = "Environment";
-            this.rdsEnvironment.Name = "rdsEnvironment";
-            this.rdsEnvironment.ReadOnly = true;
+            this.dataGridViewTextBoxColumn8.DataPropertyName = "RdsEnvinronment";
+            this.dataGridViewTextBoxColumn8.HeaderText = "Environment";
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            this.dataGridViewTextBoxColumn8.ReadOnly = true;
             // 
-            // Status
+            // dataGridViewTextBoxColumn9
             // 
-            this.Status.DataPropertyName = "Status";
-            this.Status.HeaderText = "Status";
-            this.Status.Name = "Status";
-            this.Status.ReadOnly = true;
-            this.Status.Width = 70;
+            this.dataGridViewTextBoxColumn9.DataPropertyName = "Status";
+            this.dataGridViewTextBoxColumn9.HeaderText = "Status";
+            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            this.dataGridViewTextBoxColumn9.ReadOnly = true;
+            this.dataGridViewTextBoxColumn9.Width = 70;
             // 
-            // MultiAZ
+            // dataGridViewCheckBoxColumn1
             // 
-            this.MultiAZ.DataPropertyName = "MultiAZ";
-            this.MultiAZ.HeaderText = "Multi AZ";
-            this.MultiAZ.Name = "MultiAZ";
-            this.MultiAZ.ReadOnly = true;
-            this.MultiAZ.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.MultiAZ.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.MultiAZ.Width = 70;
+            this.dataGridViewCheckBoxColumn1.DataPropertyName = "MultiAZ";
+            this.dataGridViewCheckBoxColumn1.HeaderText = "Multi AZ";
+            this.dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
+            this.dataGridViewCheckBoxColumn1.ReadOnly = true;
+            this.dataGridViewCheckBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewCheckBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.dataGridViewCheckBoxColumn1.Width = 70;
             // 
-            // ActionSelected
+            // dataGridViewCheckBoxColumn2
             // 
-            this.ActionSelected.HeaderText = "Select";
-            this.ActionSelected.Name = "ActionSelected";
-            this.ActionSelected.Width = 50;
+            this.dataGridViewCheckBoxColumn2.HeaderText = "Select";
+            this.dataGridViewCheckBoxColumn2.Name = "dataGridViewCheckBoxColumn2";
+            this.dataGridViewCheckBoxColumn2.Width = 50;
+            // 
+            // tabEc2
+            // 
+            this.tabEc2.Controls.Add(this.label35);
+            this.tabEc2.Controls.Add(this.tsComboRegion);
+            this.tabEc2.Controls.Add(this.btnEc2Refresh);
+            this.tabEc2.Controls.Add(this.btnEc2Stop);
+            this.tabEc2.Controls.Add(this.btnEc2Start);
+            this.tabEc2.Controls.Add(this.gvEc2Instances);
+            this.tabEc2.Location = new System.Drawing.Point(4, 22);
+            this.tabEc2.Name = "tabEc2";
+            this.tabEc2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabEc2.Size = new System.Drawing.Size(1105, 576);
+            this.tabEc2.TabIndex = 4;
+            this.tabEc2.Text = "EC2 Instances";
+            this.tabEc2.UseVisualStyleBackColor = true;
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(8, 14);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(49, 13);
+            this.label35.TabIndex = 10;
+            this.label35.Text = "Regions:";
+            // 
+            // tsComboRegion
+            // 
+            this.tsComboRegion.FormattingEnabled = true;
+            this.tsComboRegion.Location = new System.Drawing.Point(60, 12);
+            this.tsComboRegion.Name = "tsComboRegion";
+            this.tsComboRegion.Size = new System.Drawing.Size(121, 21);
+            this.tsComboRegion.TabIndex = 9;
+            this.tsComboRegion.SelectedIndexChanged += new System.EventHandler(this.tsComboRegion_SelectedIndexChanged);
+            // 
+            // btnEc2Refresh
+            // 
+            this.btnEc2Refresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnEc2Refresh.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Reload;
+            this.btnEc2Refresh.Location = new System.Drawing.Point(245, 522);
+            this.btnEc2Refresh.Name = "btnEc2Refresh";
+            this.btnEc2Refresh.Size = new System.Drawing.Size(47, 48);
+            this.btnEc2Refresh.TabIndex = 8;
+            this.btnEc2Refresh.UseVisualStyleBackColor = true;
+            // 
+            // btnEc2Stop
+            // 
+            this.btnEc2Stop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnEc2Stop.Location = new System.Drawing.Point(119, 536);
+            this.btnEc2Stop.Name = "btnEc2Stop";
+            this.btnEc2Stop.Size = new System.Drawing.Size(75, 23);
+            this.btnEc2Stop.TabIndex = 7;
+            this.btnEc2Stop.Text = "Stop";
+            this.btnEc2Stop.UseVisualStyleBackColor = true;
+            // 
+            // btnEc2Start
+            // 
+            this.btnEc2Start.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnEc2Start.Location = new System.Drawing.Point(8, 536);
+            this.btnEc2Start.Name = "btnEc2Start";
+            this.btnEc2Start.Size = new System.Drawing.Size(75, 23);
+            this.btnEc2Start.TabIndex = 6;
+            this.btnEc2Start.Text = "Start";
+            this.btnEc2Start.UseVisualStyleBackColor = true;
+            // 
+            // gvEc2Instances
+            // 
+            this.gvEc2Instances.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.gvEc2Instances.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gvEc2Instances.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn10,
+            this.dataGridViewTextBoxColumn11,
+            this.dataGridViewTextBoxColumn12,
+            this.VpcId,
+            this.dataGridViewTextBoxColumn13,
+            this.dataGridViewCheckBoxColumn4});
+            this.gvEc2Instances.Location = new System.Drawing.Point(6, 45);
+            this.gvEc2Instances.Name = "gvEc2Instances";
+            this.gvEc2Instances.Size = new System.Drawing.Size(1092, 471);
+            this.gvEc2Instances.TabIndex = 5;
+            // 
+            // dataGridViewTextBoxColumn10
+            // 
+            this.dataGridViewTextBoxColumn10.DataPropertyName = "Name";
+            this.dataGridViewTextBoxColumn10.HeaderText = "Name";
+            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
+            this.dataGridViewTextBoxColumn10.ReadOnly = true;
+            this.dataGridViewTextBoxColumn10.Width = 400;
+            // 
+            // dataGridViewTextBoxColumn11
+            // 
+            this.dataGridViewTextBoxColumn11.DataPropertyName = "InstanceId";
+            this.dataGridViewTextBoxColumn11.HeaderText = "Instance ID";
+            this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
+            this.dataGridViewTextBoxColumn11.ReadOnly = true;
+            this.dataGridViewTextBoxColumn11.Width = 300;
+            // 
+            // dataGridViewTextBoxColumn12
+            // 
+            this.dataGridViewTextBoxColumn12.DataPropertyName = "InstanceType";
+            this.dataGridViewTextBoxColumn12.HeaderText = "Type";
+            this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
+            this.dataGridViewTextBoxColumn12.ReadOnly = true;
+            // 
+            // VpcId
+            // 
+            this.VpcId.DataPropertyName = "VpcId";
+            this.VpcId.HeaderText = "VPC ID";
+            this.VpcId.Name = "VpcId";
+            this.VpcId.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn13
+            // 
+            this.dataGridViewTextBoxColumn13.DataPropertyName = "State";
+            this.dataGridViewTextBoxColumn13.HeaderText = "State";
+            this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
+            this.dataGridViewTextBoxColumn13.ReadOnly = true;
+            this.dataGridViewTextBoxColumn13.Width = 70;
+            // 
+            // dataGridViewCheckBoxColumn4
+            // 
+            this.dataGridViewCheckBoxColumn4.HeaderText = "Select";
+            this.dataGridViewCheckBoxColumn4.Name = "dataGridViewCheckBoxColumn4";
+            this.dataGridViewCheckBoxColumn4.Width = 50;
             // 
             // FormSystemManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1120, 608);
+            this.Controls.Add(this.tabEc2Instances);
             this.Controls.Add(this.tabControl1);
             this.Name = "FormSystemManager";
             this.Text = "System Maintenance";
@@ -773,8 +1498,27 @@
             this.pnlNonExistRpc.PerformLayout();
             this.pnlExistRpc.ResumeLayout(false);
             this.pnlExistRpc.PerformLayout();
-            this.tabRDS.ResumeLayout(false);
+            this.tabEc2Instances.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gvRDS)).EndInit();
+            this.tabEc2.ResumeLayout(false);
+            this.tabEc2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gvEc2Instances)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -832,16 +1576,80 @@
         private System.Windows.Forms.PictureBox imgRdsStatus;
         private System.Windows.Forms.PictureBox imgScheduleStatus;
         private System.Windows.Forms.CheckBox cboxStopJumpbox;
-        private System.Windows.Forms.TabPage tabRDS;
-        private System.Windows.Forms.DataGridView gvRDS;
+        private System.Windows.Forms.TabControl tabEc2Instances;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ListView listView3;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.ListView listView4;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.Button button9;
         private System.Windows.Forms.Button btnRdsStop;
         private System.Windows.Forms.Button btnRdsStart;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DBInstanceIdentifier;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DBInstanceArn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn rdsEnvironment;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Status;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn MultiAZ;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn ActionSelected;
-        private System.Windows.Forms.Button btnRds_Refresh;
+        private System.Windows.Forms.DataGridView gvRDS;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn1;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn2;
+        private System.Windows.Forms.TabPage tabEc2;
+        private System.Windows.Forms.Button btnEc2Refresh;
+        private System.Windows.Forms.Button btnEc2Stop;
+        private System.Windows.Forms.Button btnEc2Start;
+        private System.Windows.Forms.DataGridView gvEc2Instances;
+        private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.ComboBox tsComboRegion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VpcId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn4;
     }
 }

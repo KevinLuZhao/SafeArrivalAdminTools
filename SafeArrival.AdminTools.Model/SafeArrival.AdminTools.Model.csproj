@@ -47,6 +47,7 @@
     <Compile Include="AutoScalingGroupSettings.cs" />
     <Compile Include="DeployDnsModel.cs" />
     <Compile Include="SA_AutoScalingGroup.cs" />
+    <Compile Include="SA_Ec2Instance.cs" />
     <Compile Include="SA_Listener.cs" />
     <Compile Include="SA_LoadBalancer.cs" />
     <Compile Include="SA_PipelineSummary.cs" />
