@@ -39,7 +39,6 @@
             this.btnStart = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.btnStop = new System.Windows.Forms.Button();
-            this.listView2 = new System.Windows.Forms.ListView();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.cboxRdsMutlAZ = new System.Windows.Forms.CheckBox();
@@ -51,7 +50,6 @@
             this.lblRdsArn = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.listView1 = new System.Windows.Forms.ListView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.btnSave_ASG_Settings = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -80,7 +78,9 @@
             this.lblRpcId = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.tabEc2Instances = new System.Windows.Forms.TabControl();
+            this.listView2 = new System.Windows.Forms.ListView();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.tabCtrlMain = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -89,19 +89,9 @@
             this.button1 = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
-            this.listView3 = new System.Windows.Forms.ListView();
             this.button3 = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
-            this.listView4 = new System.Windows.Forms.ListView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
@@ -144,7 +134,7 @@
             this.dataGridViewCheckBoxColumn2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tabEc2 = new System.Windows.Forms.TabPage();
             this.label35 = new System.Windows.Forms.Label();
-            this.tsComboRegion = new System.Windows.Forms.ComboBox();
+            this.ddlEC2Region = new System.Windows.Forms.ComboBox();
             this.btnEc2Refresh = new System.Windows.Forms.Button();
             this.btnEc2Stop = new System.Windows.Forms.Button();
             this.btnEc2Start = new System.Windows.Forms.Button();
@@ -155,6 +145,22 @@
             this.VpcId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewCheckBoxColumn4 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.tabAsg = new System.Windows.Forms.TabPage();
+            this.pnlAsg = new System.Windows.Forms.Panel();
+            this.label15 = new System.Windows.Forms.Label();
+            this.ddlAsgRegion = new System.Windows.Forms.ComboBox();
+            this.btnAsgRefresh = new System.Windows.Forms.Button();
+            this.btnAsgStop = new System.Windows.Forms.Button();
+            this.btnAsgStart = new System.Windows.Forms.Button();
+            this.gvAsg = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Desired = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewCheckBoxColumn3 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tPageStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgScheduleStatus)).BeginInit();
@@ -166,12 +172,11 @@
             this.tPagePeeringConnection.SuspendLayout();
             this.pnlNonExistRpc.SuspendLayout();
             this.pnlExistRpc.SuspendLayout();
-            this.tabEc2Instances.SuspendLayout();
+            this.tabCtrlMain.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            this.panel2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.tabPage4.SuspendLayout();
@@ -181,6 +186,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.gvRDS)).BeginInit();
             this.tabEc2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gvEc2Instances)).BeginInit();
+            this.tabAsg.SuspendLayout();
+            this.pnlAsg.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gvAsg)).BeginInit();
             this.SuspendLayout();
             // 
             // btnInit
@@ -215,12 +223,9 @@
             this.tPageStatus.Controls.Add(this.btnStart);
             this.tPageStatus.Controls.Add(this.label4);
             this.tPageStatus.Controls.Add(this.btnStop);
-            this.tPageStatus.Controls.Add(this.listView2);
             this.tPageStatus.Controls.Add(this.btnRefresh);
-            this.tPageStatus.Controls.Add(this.panel1);
             this.tPageStatus.Controls.Add(this.label2);
             this.tPageStatus.Controls.Add(this.label1);
-            this.tPageStatus.Controls.Add(this.listView1);
             this.tPageStatus.Location = new System.Drawing.Point(4, 22);
             this.tPageStatus.Name = "tPageStatus";
             this.tPageStatus.Padding = new System.Windows.Forms.Padding(3);
@@ -296,15 +301,6 @@
             this.btnStop.Text = "Stop System";
             this.btnStop.UseVisualStyleBackColor = true;
             this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
-            // 
-            // listView2
-            // 
-            this.listView2.HideSelection = false;
-            this.listView2.Location = new System.Drawing.Point(7, 247);
-            this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(1083, 126);
-            this.listView2.TabIndex = 14;
-            this.listView2.UseCompatibleStateImageBehavior = false;
             // 
             // btnRefresh
             // 
@@ -422,15 +418,6 @@
             this.label1.Size = new System.Drawing.Size(149, 17);
             this.label1.TabIndex = 2;
             this.label1.Text = "Auto Scaling Group";
-            // 
-            // listView1
-            // 
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(10, 35);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(1083, 160);
-            this.listView1.TabIndex = 1;
-            this.listView1.UseCompatibleStateImageBehavior = false;
             // 
             // tabPage2
             // 
@@ -714,20 +701,39 @@
             this.label6.TabIndex = 0;
             this.label6.Text = "Peering Connection of RDS VPC and Application VPC";
             // 
-            // tabEc2Instances
+            // listView2
             // 
-            this.tabEc2Instances.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.listView2.HideSelection = false;
+            this.listView2.Location = new System.Drawing.Point(7, 245);
+            this.listView2.Name = "listView2";
+            this.listView2.Size = new System.Drawing.Size(1083, 126);
+            this.listView2.TabIndex = 14;
+            this.listView2.UseCompatibleStateImageBehavior = false;
+            // 
+            // listView1
+            // 
+            this.listView1.HideSelection = false;
+            this.listView1.Location = new System.Drawing.Point(10, 35);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(1083, 160);
+            this.listView1.TabIndex = 1;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            // 
+            // tabCtrlMain
+            // 
+            this.tabCtrlMain.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.tabEc2Instances.Controls.Add(this.tabPage1);
-            this.tabEc2Instances.Controls.Add(this.tabPage3);
-            this.tabEc2Instances.Controls.Add(this.tabPage4);
-            this.tabEc2Instances.Controls.Add(this.tabPage5);
-            this.tabEc2Instances.Controls.Add(this.tabEc2);
-            this.tabEc2Instances.Location = new System.Drawing.Point(4, 3);
-            this.tabEc2Instances.Name = "tabEc2Instances";
-            this.tabEc2Instances.SelectedIndex = 0;
-            this.tabEc2Instances.Size = new System.Drawing.Size(1113, 602);
-            this.tabEc2Instances.TabIndex = 4;
+            this.tabCtrlMain.Controls.Add(this.tabPage1);
+            this.tabCtrlMain.Controls.Add(this.tabPage3);
+            this.tabCtrlMain.Controls.Add(this.tabPage4);
+            this.tabCtrlMain.Controls.Add(this.tabPage5);
+            this.tabCtrlMain.Controls.Add(this.tabEc2);
+            this.tabCtrlMain.Controls.Add(this.tabAsg);
+            this.tabCtrlMain.Location = new System.Drawing.Point(4, 3);
+            this.tabCtrlMain.Name = "tabCtrlMain";
+            this.tabCtrlMain.SelectedIndex = 0;
+            this.tabCtrlMain.Size = new System.Drawing.Size(1113, 602);
+            this.tabCtrlMain.TabIndex = 4;
             // 
             // tabPage1
             // 
@@ -738,18 +744,18 @@
             this.tabPage1.Controls.Add(this.button1);
             this.tabPage1.Controls.Add(this.label9);
             this.tabPage1.Controls.Add(this.button2);
-            this.tabPage1.Controls.Add(this.listView3);
+            this.tabPage1.Controls.Add(this.listView2);
+            this.tabPage1.Controls.Add(this.listView1);
             this.tabPage1.Controls.Add(this.button3);
-            this.tabPage1.Controls.Add(this.panel2);
+            this.tabPage1.Controls.Add(this.panel1);
             this.tabPage1.Controls.Add(this.label21);
             this.tabPage1.Controls.Add(this.label22);
-            this.tabPage1.Controls.Add(this.listView4);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(1105, 576);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Status";
+            this.tabPage1.Text = "Environment Status";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // checkBox1
@@ -818,15 +824,6 @@
             this.button2.Text = "Stop System";
             this.button2.UseVisualStyleBackColor = true;
             // 
-            // listView3
-            // 
-            this.listView3.HideSelection = false;
-            this.listView3.Location = new System.Drawing.Point(7, 247);
-            this.listView3.Name = "listView3";
-            this.listView3.Size = new System.Drawing.Size(1083, 126);
-            this.listView3.TabIndex = 14;
-            this.listView3.UseCompatibleStateImageBehavior = false;
-            // 
             // button3
             // 
             this.button3.FlatAppearance.BorderColor = System.Drawing.Color.White;
@@ -838,90 +835,6 @@
             this.button3.Size = new System.Drawing.Size(45, 42);
             this.button3.TabIndex = 13;
             this.button3.UseVisualStyleBackColor = true;
-            // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.Transparent;
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.checkBox2);
-            this.panel2.Controls.Add(this.label15);
-            this.panel2.Controls.Add(this.label16);
-            this.panel2.Controls.Add(this.label17);
-            this.panel2.Controls.Add(this.label18);
-            this.panel2.Controls.Add(this.label19);
-            this.panel2.Controls.Add(this.label20);
-            this.panel2.Location = new System.Drawing.Point(7, 419);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1083, 100);
-            this.panel2.TabIndex = 12;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox2.Location = new System.Drawing.Point(156, 64);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(73, 17);
-            this.checkBox2.TabIndex = 12;
-            this.checkBox2.Text = "Multi AZ";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(18, 66);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(47, 13);
-            this.label15.TabIndex = 8;
-            this.label15.Text = "Status:";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(18, 15);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(135, 13);
-            this.label16.TabIndex = 4;
-            this.label16.Text = "DB Instance Identifier:";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(158, 15);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(13, 13);
-            this.label17.TabIndex = 5;
-            this.label17.Text = "  ";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(67, 66);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(13, 13);
-            this.label18.TabIndex = 9;
-            this.label18.Text = "  ";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(18, 40);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(104, 13);
-            this.label19.TabIndex = 6;
-            this.label19.Text = "DB Instance Arn:";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(128, 40);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(13, 13);
-            this.label20.TabIndex = 7;
-            this.label20.Text = "  ";
             // 
             // label21
             // 
@@ -942,15 +855,6 @@
             this.label22.Size = new System.Drawing.Size(149, 17);
             this.label22.TabIndex = 2;
             this.label22.Text = "Auto Scaling Group";
-            // 
-            // listView4
-            // 
-            this.listView4.HideSelection = false;
-            this.listView4.Location = new System.Drawing.Point(10, 35);
-            this.listView4.Name = "listView4";
-            this.listView4.Size = new System.Drawing.Size(1083, 160);
-            this.listView4.TabIndex = 1;
-            this.listView4.UseCompatibleStateImageBehavior = false;
             // 
             // tabPage3
             // 
@@ -1350,7 +1254,7 @@
             // tabEc2
             // 
             this.tabEc2.Controls.Add(this.label35);
-            this.tabEc2.Controls.Add(this.tsComboRegion);
+            this.tabEc2.Controls.Add(this.ddlEC2Region);
             this.tabEc2.Controls.Add(this.btnEc2Refresh);
             this.tabEc2.Controls.Add(this.btnEc2Stop);
             this.tabEc2.Controls.Add(this.btnEc2Start);
@@ -1372,14 +1276,14 @@
             this.label35.TabIndex = 10;
             this.label35.Text = "Regions:";
             // 
-            // tsComboRegion
+            // ddlEC2Region
             // 
-            this.tsComboRegion.FormattingEnabled = true;
-            this.tsComboRegion.Location = new System.Drawing.Point(60, 12);
-            this.tsComboRegion.Name = "tsComboRegion";
-            this.tsComboRegion.Size = new System.Drawing.Size(121, 21);
-            this.tsComboRegion.TabIndex = 9;
-            this.tsComboRegion.SelectedIndexChanged += new System.EventHandler(this.tsComboRegion_SelectedIndexChanged);
+            this.ddlEC2Region.FormattingEnabled = true;
+            this.ddlEC2Region.Location = new System.Drawing.Point(60, 12);
+            this.ddlEC2Region.Name = "ddlEC2Region";
+            this.ddlEC2Region.Size = new System.Drawing.Size(121, 21);
+            this.ddlEC2Region.TabIndex = 9;
+            this.ddlEC2Region.SelectedIndexChanged += new System.EventHandler(this.tsComboRegion_SelectedIndexChanged);
             // 
             // btnEc2Refresh
             // 
@@ -1472,12 +1376,165 @@
             this.dataGridViewCheckBoxColumn4.Name = "dataGridViewCheckBoxColumn4";
             this.dataGridViewCheckBoxColumn4.Width = 50;
             // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox2.Location = new System.Drawing.Point(156, 64);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(73, 17);
+            this.checkBox2.TabIndex = 12;
+            this.checkBox2.Text = "Multi AZ";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // tabAsg
+            // 
+            this.tabAsg.Controls.Add(this.pnlAsg);
+            this.tabAsg.Location = new System.Drawing.Point(4, 22);
+            this.tabAsg.Name = "tabAsg";
+            this.tabAsg.Padding = new System.Windows.Forms.Padding(3);
+            this.tabAsg.Size = new System.Drawing.Size(1105, 576);
+            this.tabAsg.TabIndex = 5;
+            this.tabAsg.Text = "Auto-Scaling Groups";
+            this.tabAsg.UseVisualStyleBackColor = true;
+            // 
+            // pnlAsg
+            // 
+            this.pnlAsg.Controls.Add(this.label15);
+            this.pnlAsg.Controls.Add(this.ddlAsgRegion);
+            this.pnlAsg.Controls.Add(this.btnAsgRefresh);
+            this.pnlAsg.Controls.Add(this.btnAsgStop);
+            this.pnlAsg.Controls.Add(this.btnAsgStart);
+            this.pnlAsg.Controls.Add(this.gvAsg);
+            this.pnlAsg.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlAsg.Location = new System.Drawing.Point(3, 3);
+            this.pnlAsg.Name = "pnlAsg";
+            this.pnlAsg.Size = new System.Drawing.Size(1099, 570);
+            this.pnlAsg.TabIndex = 0;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(5, 8);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(49, 13);
+            this.label15.TabIndex = 16;
+            this.label15.Text = "Regions:";
+            // 
+            // ddlAsgRegion
+            // 
+            this.ddlAsgRegion.FormattingEnabled = true;
+            this.ddlAsgRegion.Location = new System.Drawing.Point(57, 6);
+            this.ddlAsgRegion.Name = "ddlAsgRegion";
+            this.ddlAsgRegion.Size = new System.Drawing.Size(121, 21);
+            this.ddlAsgRegion.TabIndex = 15;
+            this.ddlAsgRegion.SelectedIndexChanged += new System.EventHandler(this.ddlAsgRegion_SelectedIndexChanged);
+            // 
+            // btnAsgRefresh
+            // 
+            this.btnAsgRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnAsgRefresh.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Reload;
+            this.btnAsgRefresh.Location = new System.Drawing.Point(242, 516);
+            this.btnAsgRefresh.Name = "btnAsgRefresh";
+            this.btnAsgRefresh.Size = new System.Drawing.Size(47, 48);
+            this.btnAsgRefresh.TabIndex = 14;
+            this.btnAsgRefresh.UseVisualStyleBackColor = true;
+            // 
+            // btnAsgStop
+            // 
+            this.btnAsgStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnAsgStop.Location = new System.Drawing.Point(116, 530);
+            this.btnAsgStop.Name = "btnAsgStop";
+            this.btnAsgStop.Size = new System.Drawing.Size(75, 23);
+            this.btnAsgStop.TabIndex = 13;
+            this.btnAsgStop.Text = "Stop";
+            this.btnAsgStop.UseVisualStyleBackColor = true;
+            // 
+            // btnAsgStart
+            // 
+            this.btnAsgStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnAsgStart.Location = new System.Drawing.Point(5, 530);
+            this.btnAsgStart.Name = "btnAsgStart";
+            this.btnAsgStart.Size = new System.Drawing.Size(75, 23);
+            this.btnAsgStart.TabIndex = 12;
+            this.btnAsgStart.Text = "Start";
+            this.btnAsgStart.UseVisualStyleBackColor = true;
+            // 
+            // gvAsg
+            // 
+            this.gvAsg.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.gvAsg.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gvAsg.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn14,
+            this.dataGridViewTextBoxColumn15,
+            this.dataGridViewTextBoxColumn16,
+            this.dataGridViewTextBoxColumn17,
+            this.Desired,
+            this.dataGridViewTextBoxColumn18,
+            this.dataGridViewCheckBoxColumn3});
+            this.gvAsg.Location = new System.Drawing.Point(3, 39);
+            this.gvAsg.Name = "gvAsg";
+            this.gvAsg.Size = new System.Drawing.Size(1092, 471);
+            this.gvAsg.TabIndex = 11;
+            // 
+            // dataGridViewTextBoxColumn14
+            // 
+            this.dataGridViewTextBoxColumn14.DataPropertyName = "Name";
+            this.dataGridViewTextBoxColumn14.HeaderText = "Name";
+            this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
+            this.dataGridViewTextBoxColumn14.ReadOnly = true;
+            this.dataGridViewTextBoxColumn14.Width = 200;
+            // 
+            // dataGridViewTextBoxColumn15
+            // 
+            this.dataGridViewTextBoxColumn15.DataPropertyName = "AutoScalingGroupName";
+            this.dataGridViewTextBoxColumn15.HeaderText = "ID";
+            this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
+            this.dataGridViewTextBoxColumn15.ReadOnly = true;
+            this.dataGridViewTextBoxColumn15.Width = 300;
+            // 
+            // dataGridViewTextBoxColumn16
+            // 
+            this.dataGridViewTextBoxColumn16.DataPropertyName = "MaxSize";
+            this.dataGridViewTextBoxColumn16.HeaderText = "Max Size";
+            this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
+            this.dataGridViewTextBoxColumn16.Width = 70;
+            // 
+            // dataGridViewTextBoxColumn17
+            // 
+            this.dataGridViewTextBoxColumn17.DataPropertyName = "MinSize";
+            this.dataGridViewTextBoxColumn17.HeaderText = "Min Size";
+            this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
+            this.dataGridViewTextBoxColumn17.Width = 70;
+            // 
+            // Desired
+            // 
+            this.Desired.DataPropertyName = "DesiredCapacity";
+            this.Desired.HeaderText = "Capacity";
+            this.Desired.Name = "Desired";
+            this.Desired.Width = 70;
+            // 
+            // dataGridViewTextBoxColumn18
+            // 
+            this.dataGridViewTextBoxColumn18.DataPropertyName = "RunningInstances";
+            this.dataGridViewTextBoxColumn18.HeaderText = "Instances";
+            this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
+            this.dataGridViewTextBoxColumn18.ReadOnly = true;
+            this.dataGridViewTextBoxColumn18.Width = 70;
+            // 
+            // dataGridViewCheckBoxColumn3
+            // 
+            this.dataGridViewCheckBoxColumn3.HeaderText = "Select";
+            this.dataGridViewCheckBoxColumn3.Name = "dataGridViewCheckBoxColumn3";
+            this.dataGridViewCheckBoxColumn3.Width = 50;
+            // 
             // FormSystemManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1120, 608);
-            this.Controls.Add(this.tabEc2Instances);
+            this.Controls.Add(this.tabCtrlMain);
             this.Controls.Add(this.tabControl1);
             this.Name = "FormSystemManager";
             this.Text = "System Maintenance";
@@ -1498,14 +1555,12 @@
             this.pnlNonExistRpc.PerformLayout();
             this.pnlExistRpc.ResumeLayout(false);
             this.pnlExistRpc.PerformLayout();
-            this.tabEc2Instances.ResumeLayout(false);
+            this.tabCtrlMain.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.tabPage4.ResumeLayout(false);
@@ -1519,6 +1574,10 @@
             this.tabEc2.ResumeLayout(false);
             this.tabEc2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gvEc2Instances)).EndInit();
+            this.tabAsg.ResumeLayout(false);
+            this.pnlAsg.ResumeLayout(false);
+            this.pnlAsg.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gvAsg)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1576,7 +1635,7 @@
         private System.Windows.Forms.PictureBox imgRdsStatus;
         private System.Windows.Forms.PictureBox imgScheduleStatus;
         private System.Windows.Forms.CheckBox cboxStopJumpbox;
-        private System.Windows.Forms.TabControl tabEc2Instances;
+        private System.Windows.Forms.TabControl tabCtrlMain;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.PictureBox pictureBox1;
@@ -1585,19 +1644,10 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.ListView listView3;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.ListView listView4;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
@@ -1644,12 +1694,27 @@
         private System.Windows.Forms.Button btnEc2Start;
         private System.Windows.Forms.DataGridView gvEc2Instances;
         private System.Windows.Forms.Label label35;
-        private System.Windows.Forms.ComboBox tsComboRegion;
+        private System.Windows.Forms.ComboBox ddlEC2Region;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
         private System.Windows.Forms.DataGridViewTextBoxColumn VpcId;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
         private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn4;
+        private System.Windows.Forms.TabPage tabAsg;
+        private System.Windows.Forms.Panel pnlAsg;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.ComboBox ddlAsgRegion;
+        private System.Windows.Forms.Button btnAsgRefresh;
+        private System.Windows.Forms.Button btnAsgStop;
+        private System.Windows.Forms.Button btnAsgStart;
+        private System.Windows.Forms.DataGridView gvAsg;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Desired;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn3;
     }
 }

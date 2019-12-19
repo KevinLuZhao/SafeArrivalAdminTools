@@ -175,7 +175,7 @@ namespace SafeArrival.AdminTools.Presentation
                 GlobalVariables.Enviroment,
                 GlobalVariables.Region,
                 GlobalVariables.Color);
-            var lstGroup = await helper.GetAutoScalingGroupList();
+            var lstGroup = await helper.GetEnvironmentAutoScalingGroupList();
             int stoppedGroupCounter = 0;
             listView1.Items.Clear();
             foreach (var group in lstGroup)
@@ -290,21 +290,20 @@ namespace SafeArrival.AdminTools.Presentation
                 GlobalVariables.Color);
             lstRdsInstances.AddRange(await helper.GetRDSInstanceList());
             gvRDS.DataSource = lstRdsInstances;
-            //gvRDS.Refresh();
-
-
-
-            var ec2Helper = new AwsUtilities.EC2Helper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
-            var x = await ec2Helper.GetEc2InsatancesList("us-west-2");
         }
 
         private void PopulateEc2Regions()
         {
             List<KeyValuePair<string, string>> lstRegions = Regions.GetRegionList();
-            tsComboRegion.DataSource = lstRegions;
-            tsComboRegion.DisplayMember = "Value";
-            tsComboRegion.ValueMember = "Key";
-            tsComboRegion.SelectedValue = GlobalVariables.Region;
+            ddlEC2Region.DataSource = lstRegions;
+            ddlEC2Region.DisplayMember = "Value";
+            ddlEC2Region.ValueMember = "Key";
+            ddlEC2Region.SelectedValue = GlobalVariables.Region;
+
+            ddlAsgRegion.DataSource = lstRegions;
+            ddlAsgRegion.DisplayMember = "Value";
+            ddlAsgRegion.ValueMember = "Key";
+            ddlAsgRegion.SelectedValue = GlobalVariables.Region;
         }
 
         private async Task PopulateEc2Instances()
@@ -314,7 +313,17 @@ namespace SafeArrival.AdminTools.Presentation
                 GlobalVariables.Enviroment,
                 GlobalVariables.Region,
                 GlobalVariables.Color);
-            gvEc2Instances.DataSource = await helper.GetEc2InsatancesList(((KeyValuePair<string, string>)tsComboRegion.SelectedItem).Key);
+            gvEc2Instances.DataSource = await helper.GetEc2InsatancesList(((KeyValuePair<string, string>)ddlEC2Region.SelectedItem).Key);
+        }
+
+        private async Task PopulateAsgList()
+        {
+            //gvEc2Instances.DataSource = null;
+            var helper = new AwsUtilities.AutoScalingHelper(
+                GlobalVariables.Enviroment,
+                GlobalVariables.Region,
+                GlobalVariables.Color);
+            gvAsg.DataSource = await helper.GetAllAutoScalingGroupList(((KeyValuePair<string, string>)ddlAsgRegion.SelectedItem).Key);
         }
 
         private async Task PopulatePeeringConnection()
@@ -542,6 +551,11 @@ namespace SafeArrival.AdminTools.Presentation
         private async void tsComboRegion_SelectedIndexChanged(object sender, EventArgs e)
         {
             await PopulateEc2Instances();
+        }
+
+        private async void ddlAsgRegion_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            await PopulateAsgList();
         }
     }
 }

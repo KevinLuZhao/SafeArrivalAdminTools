@@ -42,7 +42,7 @@ namespace SafeArrival.AdminTools.BLL
                 }
                 //Start applications by changing the auto scaling group
                 var autoScalingHelper = new AutoScalingHelper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
-                var lstGroup = await autoScalingHelper.GetAutoScalingGroupList();
+                var lstGroup = await autoScalingHelper.GetEnvironmentAutoScalingGroupList();
                 foreach (var group in lstGroup)
                 {
                     var settings = lstSettings.Find(o => group.Name.IndexOf(o.Environment.ToString()) == 0 &&
@@ -60,7 +60,7 @@ namespace SafeArrival.AdminTools.BLL
         public async Task ShutDownSystem(bool stopJumpBox)
         {
             var autoScalingHelper = new AutoScalingHelper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
-            var lstGroup = await autoScalingHelper.GetAutoScalingGroupList();
+            var lstGroup = await autoScalingHelper.GetEnvironmentAutoScalingGroupList();
             if (!stopJumpBox)
             {
                 var jumpBox = lstGroup.Find(o => o.Name.IndexOf("Jump") >= 0);

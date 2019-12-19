@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Amazon.AutoScaling;
+﻿using Amazon.AutoScaling;
 using Amazon.AutoScaling.Model;
 using SafeArrival.AdminTools.Model;
-using Amazon.Runtime;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SafeArrival.AdminTools.AwsUtilities
 {
@@ -12,21 +11,24 @@ namespace SafeArrival.AdminTools.AwsUtilities
     {
         //public string Environment { get; }
         private AmazonAutoScalingClient client;
+        public string profile;
 
         public AutoScalingHelper(string profile, string region, string color) : base(profile, region, color)
         {
+            this.profile = profile;
             client = new AmazonAutoScalingClient(
                 CredentiaslManager.GetCredential(profile),
                 AwsCommon.GetRetionEndpoint(region));
         }
 
-        public async Task<List<SA_AutoScalingGroup>> GetAutoScalingGroupList(bool ignorColor = false)
+        public async Task<List<SA_AutoScalingGroup>> GetEnvironmentAutoScalingGroupList(bool ignorColor = false)
         {
             var lstSaGroups = new List<SA_AutoScalingGroup>();
             var response = await client.DescribeAutoScalingGroupsAsync();
             var lstGroups = ignorColor ?
                 response.AutoScalingGroups.FindAll(o => o.Tags[0].Value.IndexOf(environment.ToString()) >= 0) :
                 response.AutoScalingGroups.FindAll(o => o.Tags[0].Value.IndexOf(environment + "-" + color) >= 0);
+            //var lstGroups = response.AutoScalingGroups.FindAll(o => o.Tags[0].Value.Substring(0, o.Tags[0].Value.IndexOf("-")) == environment.ToString());
             var jumpBox = response.AutoScalingGroups.Find(
                 o => o.Tags[0].Value.IndexOf(environment.ToString()) >= 0 && o.Tags[0].Value.IndexOf("Jump") > 0);
             if (jumpBox != null && lstGroups.Find(o => o.Tags[0].Value.IndexOf("Jump") > 0) == null)
@@ -38,7 +40,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
                     AutoScalingGroupName = group.AutoScalingGroupName,
                     AutoScalingGroupARN = group.AutoScalingGroupARN,
                     Name = group.Tags[0].Value,
-                    Status = group.Status,
+                    //Status = group.Status,
                     MaxSize = group.MaxSize,
                     MinSize = group.MinSize,
                     DesiredCapacity = group.DesiredCapacity,
@@ -47,7 +49,41 @@ namespace SafeArrival.AdminTools.AwsUtilities
                 };
                 lstSaGroups.Add(saGroup);
             }
-            return lstSaGroups;
+            var results = lstSaGroups.OrderBy(o => o.Name).ToList();
+            return results;
+        }
+
+        public async Task<List<SA_AutoScalingGroup>> GetAllAutoScalingGroupList(string region = null)
+        {
+            if (region != null)
+            {
+                client = new AmazonAutoScalingClient(
+                CredentiaslManager.GetCredential(profile),
+                AwsCommon.GetRetionEndpoint(region));
+            }
+
+            var lstSaGroups = new List<SA_AutoScalingGroup>();
+            var response = await client.DescribeAutoScalingGroupsAsync();
+            var lstGroups = response.AutoScalingGroups.FindAll(o => o.Tags[0].Value.IndexOf(environment.ToString()) >= 0);
+
+            foreach (var group in lstGroups)
+            {
+                var saGroup = new SA_AutoScalingGroup()
+                {
+                    AutoScalingGroupName = group.AutoScalingGroupName,
+                    AutoScalingGroupARN = group.AutoScalingGroupARN,
+                    Name = group.Tags[0].Value,
+                    //Status = group.Status,
+                    MaxSize = group.MaxSize,
+                    MinSize = group.MinSize,
+                    DesiredCapacity = group.DesiredCapacity,
+                    CreatedTime = group.CreatedTime,
+                    RunningInstances = group.Instances.Count
+                };
+                lstSaGroups.Add(saGroup);
+            }
+            var results = lstSaGroups.OrderBy(o => o.Name).ToList();
+            return results;
         }
 
         public async Task StopScalingGroup(string groupName)

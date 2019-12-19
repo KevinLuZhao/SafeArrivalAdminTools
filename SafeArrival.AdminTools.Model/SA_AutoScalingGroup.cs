@@ -11,7 +11,7 @@ namespace SafeArrival.AdminTools.Model
         public string AutoScalingGroupName { get; set; }
         public string AutoScalingGroupARN { get; set; }
         public string Name { get; set; }
-        public string Status { get; set; }
+        //public string Status { get; set; }
         public int RunningInstances { get; set; }
 
         public int MaxSize { get; set; }

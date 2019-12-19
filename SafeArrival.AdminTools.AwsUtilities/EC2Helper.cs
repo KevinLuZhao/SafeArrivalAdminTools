@@ -21,6 +21,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
                 AwsCommon.GetRetionEndpoint(region));
         }
 
+        /****************************************** EC2  ******************************************/
         public async Task<List<SA_Ec2Instance>> GetEc2InsatancesList(string region = null)
         {
             if (region != null)
@@ -48,6 +49,36 @@ namespace SafeArrival.AdminTools.AwsUtilities
             }
             return ret;
         }
+
+        /****************************************** EC2  ******************************************/
+        public async Task<List<SA_Ec2Instance>> GetScalingGroupList(string region = null)
+        {
+            if (region != null)
+            {
+                client = new AmazonEC2Client(
+                CredentiaslManager.GetCredential(profile),
+                AwsCommon.GetRetionEndpoint(region));
+            }
+            var request = new DescribeInstancesRequest();
+            var response = await client.DescribeInstancesAsync(request);
+            var ret = new List<SA_Ec2Instance>();
+            foreach (var reservation in response.Reservations)
+            {
+                foreach (var instance in reservation.Instances)
+                {
+                    ret.Add(new SA_Ec2Instance()
+                    {
+                        Name = instance.KeyName,
+                        InstanceId = instance.InstanceId,
+                        InstanceType = instance.InstanceType,
+                        VpcId = instance.VpcId,
+                        State = instance.State.Name
+                    });
+                }
+            }
+            return ret;
+        }
+
         /****************************************** VPC  ******************************************/
         public async Task<List<SA_Vpc>> GetVPCList()
         {

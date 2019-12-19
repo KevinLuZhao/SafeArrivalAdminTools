@@ -24,7 +24,7 @@ namespace SafeArrival.AdminTools.BLL
             apps.Remove("JumpBox");
             apps.Remove("Worker");
             var colors = Enum.GetNames(typeof(Color)).ToList();
-            var sGroups = await scalingGroupHelper.GetAutoScalingGroupList(true);
+            var sGroups = await scalingGroupHelper.GetEnvironmentAutoScalingGroupList(true);
             sGroups.Remove(sGroups.Find(o => o.Name.IndexOf("Jump") >= 0));
             var ec2Helper = new EC2Helper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
             var vpc = await ec2Helper.GetVPC();
@@ -146,7 +146,7 @@ namespace SafeArrival.AdminTools.BLL
                 GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
             var scalingGroupHelper = new AutoScalingHelper(
                 GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
-            var autoScalingGroups = await scalingGroupHelper.GetAutoScalingGroupList(true);
+            var autoScalingGroups = await scalingGroupHelper.GetEnvironmentAutoScalingGroupList(true);
             foreach (var autoScalingGroup in autoScalingGroups)
             {
                 await scalingGroupHelper.ClearAutoScalingGroupAttachedTargetGroups(autoScalingGroup);
