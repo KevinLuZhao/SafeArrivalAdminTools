@@ -40,14 +40,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.btnStop = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.cboxRdsMutlAZ = new System.Windows.Forms.CheckBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.lblRdsIdentifier = new System.Windows.Forms.Label();
-            this.lblRdsStatus = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.lblRdsArn = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -78,6 +70,14 @@
             this.lblRpcId = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.cboxRdsMutlAZ = new System.Windows.Forms.CheckBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lblRdsIdentifier = new System.Windows.Forms.Label();
+            this.lblRdsStatus = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.lblRdsArn = new System.Windows.Forms.Label();
             this.listView2 = new System.Windows.Forms.ListView();
             this.listView1 = new System.Windows.Forms.ListView();
             this.tabCtrlMain = new System.Windows.Forms.TabControl();
@@ -145,7 +145,6 @@
             this.VpcId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewCheckBoxColumn4 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.tabAsg = new System.Windows.Forms.TabPage();
             this.pnlAsg = new System.Windows.Forms.Panel();
             this.label15 = new System.Windows.Forms.Label();
@@ -154,6 +153,7 @@
             this.btnAsgStop = new System.Windows.Forms.Button();
             this.btnAsgStart = new System.Windows.Forms.Button();
             this.gvAsg = new System.Windows.Forms.DataGridView();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -166,12 +166,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.imgScheduleStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgRdsStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgAppStatus)).BeginInit();
-            this.panel1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tPagePeeringConnection.SuspendLayout();
             this.pnlNonExistRpc.SuspendLayout();
             this.pnlExistRpc.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.tabCtrlMain.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -314,90 +314,6 @@
             this.btnRefresh.TabIndex = 13;
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.Transparent;
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.cboxRdsMutlAZ);
-            this.panel1.Controls.Add(this.label7);
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.lblRdsIdentifier);
-            this.panel1.Controls.Add(this.lblRdsStatus);
-            this.panel1.Controls.Add(this.label5);
-            this.panel1.Controls.Add(this.lblRdsArn);
-            this.panel1.Location = new System.Drawing.Point(7, 419);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1083, 100);
-            this.panel1.TabIndex = 12;
-            // 
-            // cboxRdsMutlAZ
-            // 
-            this.cboxRdsMutlAZ.AutoSize = true;
-            this.cboxRdsMutlAZ.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboxRdsMutlAZ.Location = new System.Drawing.Point(156, 64);
-            this.cboxRdsMutlAZ.Name = "cboxRdsMutlAZ";
-            this.cboxRdsMutlAZ.Size = new System.Drawing.Size(73, 17);
-            this.cboxRdsMutlAZ.TabIndex = 12;
-            this.cboxRdsMutlAZ.Text = "Multi AZ";
-            this.cboxRdsMutlAZ.UseVisualStyleBackColor = true;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(18, 66);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(47, 13);
-            this.label7.TabIndex = 8;
-            this.label7.Text = "Status:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(18, 15);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(135, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "DB Instance Identifier:";
-            // 
-            // lblRdsIdentifier
-            // 
-            this.lblRdsIdentifier.AutoSize = true;
-            this.lblRdsIdentifier.Location = new System.Drawing.Point(158, 15);
-            this.lblRdsIdentifier.Name = "lblRdsIdentifier";
-            this.lblRdsIdentifier.Size = new System.Drawing.Size(13, 13);
-            this.lblRdsIdentifier.TabIndex = 5;
-            this.lblRdsIdentifier.Text = "  ";
-            // 
-            // lblRdsStatus
-            // 
-            this.lblRdsStatus.AutoSize = true;
-            this.lblRdsStatus.Location = new System.Drawing.Point(67, 66);
-            this.lblRdsStatus.Name = "lblRdsStatus";
-            this.lblRdsStatus.Size = new System.Drawing.Size(13, 13);
-            this.lblRdsStatus.TabIndex = 9;
-            this.lblRdsStatus.Text = "  ";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(18, 40);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(104, 13);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "DB Instance Arn:";
-            // 
-            // lblRdsArn
-            // 
-            this.lblRdsArn.AutoSize = true;
-            this.lblRdsArn.Location = new System.Drawing.Point(128, 40);
-            this.lblRdsArn.Name = "lblRdsArn";
-            this.lblRdsArn.Size = new System.Drawing.Size(13, 13);
-            this.lblRdsArn.TabIndex = 7;
-            this.lblRdsArn.Text = "  ";
             // 
             // label2
             // 
@@ -700,6 +616,90 @@
             this.label6.Size = new System.Drawing.Size(393, 17);
             this.label6.TabIndex = 0;
             this.label6.Text = "Peering Connection of RDS VPC and Application VPC";
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.cboxRdsMutlAZ);
+            this.panel1.Controls.Add(this.label7);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.lblRdsIdentifier);
+            this.panel1.Controls.Add(this.lblRdsStatus);
+            this.panel1.Controls.Add(this.label5);
+            this.panel1.Controls.Add(this.lblRdsArn);
+            this.panel1.Location = new System.Drawing.Point(7, 419);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1083, 100);
+            this.panel1.TabIndex = 12;
+            // 
+            // cboxRdsMutlAZ
+            // 
+            this.cboxRdsMutlAZ.AutoSize = true;
+            this.cboxRdsMutlAZ.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cboxRdsMutlAZ.Location = new System.Drawing.Point(156, 64);
+            this.cboxRdsMutlAZ.Name = "cboxRdsMutlAZ";
+            this.cboxRdsMutlAZ.Size = new System.Drawing.Size(73, 17);
+            this.cboxRdsMutlAZ.TabIndex = 12;
+            this.cboxRdsMutlAZ.Text = "Multi AZ";
+            this.cboxRdsMutlAZ.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(18, 66);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(47, 13);
+            this.label7.TabIndex = 8;
+            this.label7.Text = "Status:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(18, 15);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(135, 13);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "DB Instance Identifier:";
+            // 
+            // lblRdsIdentifier
+            // 
+            this.lblRdsIdentifier.AutoSize = true;
+            this.lblRdsIdentifier.Location = new System.Drawing.Point(158, 15);
+            this.lblRdsIdentifier.Name = "lblRdsIdentifier";
+            this.lblRdsIdentifier.Size = new System.Drawing.Size(13, 13);
+            this.lblRdsIdentifier.TabIndex = 5;
+            this.lblRdsIdentifier.Text = "  ";
+            // 
+            // lblRdsStatus
+            // 
+            this.lblRdsStatus.AutoSize = true;
+            this.lblRdsStatus.Location = new System.Drawing.Point(67, 66);
+            this.lblRdsStatus.Name = "lblRdsStatus";
+            this.lblRdsStatus.Size = new System.Drawing.Size(13, 13);
+            this.lblRdsStatus.TabIndex = 9;
+            this.lblRdsStatus.Text = "  ";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(18, 40);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(104, 13);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "DB Instance Arn:";
+            // 
+            // lblRdsArn
+            // 
+            this.lblRdsArn.AutoSize = true;
+            this.lblRdsArn.Location = new System.Drawing.Point(128, 40);
+            this.lblRdsArn.Name = "lblRdsArn";
+            this.lblRdsArn.Size = new System.Drawing.Size(13, 13);
+            this.lblRdsArn.TabIndex = 7;
+            this.lblRdsArn.Text = "  ";
             // 
             // listView2
             // 
@@ -1376,17 +1376,6 @@
             this.dataGridViewCheckBoxColumn4.Name = "dataGridViewCheckBoxColumn4";
             this.dataGridViewCheckBoxColumn4.Width = 50;
             // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox2.Location = new System.Drawing.Point(156, 64);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(73, 17);
-            this.checkBox2.TabIndex = 12;
-            this.checkBox2.Text = "Multi AZ";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
             // tabAsg
             // 
             this.tabAsg.Controls.Add(this.pnlAsg);
@@ -1473,10 +1462,23 @@
             this.Desired,
             this.dataGridViewTextBoxColumn18,
             this.dataGridViewCheckBoxColumn3});
+            this.gvAsg.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.gvAsg.Location = new System.Drawing.Point(3, 39);
             this.gvAsg.Name = "gvAsg";
             this.gvAsg.Size = new System.Drawing.Size(1092, 471);
             this.gvAsg.TabIndex = 11;
+            this.gvAsg.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SelectAsgEdit);
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox2.Location = new System.Drawing.Point(156, 64);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(73, 17);
+            this.checkBox2.TabIndex = 12;
+            this.checkBox2.Text = "Multi AZ";
+            this.checkBox2.UseVisualStyleBackColor = true;
             // 
             // dataGridViewTextBoxColumn14
             // 
@@ -1499,6 +1501,7 @@
             this.dataGridViewTextBoxColumn16.DataPropertyName = "MaxSize";
             this.dataGridViewTextBoxColumn16.HeaderText = "Max Size";
             this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
+            this.dataGridViewTextBoxColumn16.ReadOnly = true;
             this.dataGridViewTextBoxColumn16.Width = 70;
             // 
             // dataGridViewTextBoxColumn17
@@ -1506,6 +1509,7 @@
             this.dataGridViewTextBoxColumn17.DataPropertyName = "MinSize";
             this.dataGridViewTextBoxColumn17.HeaderText = "Min Size";
             this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
+            this.dataGridViewTextBoxColumn17.ReadOnly = true;
             this.dataGridViewTextBoxColumn17.Width = 70;
             // 
             // Desired
@@ -1513,6 +1517,7 @@
             this.Desired.DataPropertyName = "DesiredCapacity";
             this.Desired.HeaderText = "Capacity";
             this.Desired.Name = "Desired";
+            this.Desired.ReadOnly = true;
             this.Desired.Width = 70;
             // 
             // dataGridViewTextBoxColumn18
@@ -1545,8 +1550,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.imgScheduleStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgRdsStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgAppStatus)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tPagePeeringConnection.ResumeLayout(false);
@@ -1555,6 +1558,8 @@
             this.pnlNonExistRpc.PerformLayout();
             this.pnlExistRpc.ResumeLayout(false);
             this.pnlExistRpc.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.tabCtrlMain.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();

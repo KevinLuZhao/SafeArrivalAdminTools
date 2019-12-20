@@ -55,6 +55,7 @@ namespace SafeArrival.AdminTools.Presentation
                 await PopulateSystemStatus();
                 dataGridView1.AutoGenerateColumns = false;
                 gvRDS.AutoGenerateColumns = false;
+                gvAsg.AutoGenerateColumns = false;
             }
             catch (Exception ex)
             {
@@ -194,7 +195,7 @@ namespace SafeArrival.AdminTools.Presentation
                 this.imgAppStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Green_icon;
                 //return SystemStauts.Running;
             }
-                
+
             else if (stoppedGroupCounter == lstGroup.Count)
             {
                 this.imgAppStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Gray_icon;
@@ -267,7 +268,7 @@ namespace SafeArrival.AdminTools.Presentation
                 this.imgRdsStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Green_icon;
                 return SystemStauts.Running;
             }
-                
+
             else if (instance.Status == "stopped")
             {
                 this.imgRdsStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Gray_icon;
@@ -318,12 +319,16 @@ namespace SafeArrival.AdminTools.Presentation
 
         private async Task PopulateAsgList()
         {
-            //gvEc2Instances.DataSource = null;
             var helper = new AwsUtilities.AutoScalingHelper(
                 GlobalVariables.Enviroment,
                 GlobalVariables.Region,
                 GlobalVariables.Color);
+            gvAsg.AutoGenerateColumns = false;
             gvAsg.DataSource = await helper.GetAllAutoScalingGroupList(((KeyValuePair<string, string>)ddlAsgRegion.SelectedItem).Key);
+            foreach (DataGridViewRow row in gvAsg.Rows)
+            {
+                row.DefaultCellStyle.BackColor = System.Drawing.Color.Green;
+            }
         }
 
         private async Task PopulatePeeringConnection()
@@ -509,7 +514,7 @@ namespace SafeArrival.AdminTools.Presentation
                 if (item.Cells["ActionSelected"].Value == null)
                     continue;
                 bool selected;
-                if (bool.TryParse(item.Cells["ActionSelected"].Value.ToString(), out selected) && 
+                if (bool.TryParse(item.Cells["ActionSelected"].Value.ToString(), out selected) &&
                     selected && item.Cells["Status"].Value.ToString() == "stopped")
                 {
                     lstInstanceSelected.Add(lstRdsInstances.Find(
@@ -556,6 +561,19 @@ namespace SafeArrival.AdminTools.Presentation
         private async void ddlAsgRegion_SelectedIndexChanged(object sender, EventArgs e)
         {
             await PopulateAsgList();
+        }
+
+        private void SelectAsgEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == gvAsg.Columns[6].Index && e.RowIndex != -1)
+            {
+                // Handle checkbox state change here
+                if (((DataGridViewCheckBoxCell)gvAsg.CurrentCell).Selected)
+                {
+                    gvAsg.CurrentRow.Cells[2].ReadOnly = gvAsg.CurrentRow.Cells[3].ReadOnly = gvAsg.CurrentRow.Cells[4].ReadOnly = false;
+                    gvAsg.CurrentRow.DefaultCellStyle.BackColor = System.Drawing.Color.LightBlue;
+                }
+            }
         }
     }
 }
