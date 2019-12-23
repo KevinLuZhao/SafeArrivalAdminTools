@@ -94,8 +94,14 @@ namespace SafeArrival.AdminTools.AwsUtilities
             await client.UpdateAutoScalingGroupAsync(request);
         }
 
-        public async Task ChangeScalingGroup(string groupName, AutoScalingGroupSettings settings)
+        public async Task ChangeScalingGroup(string groupName, AutoScalingGroupSettings settings, string region = null)
         {
+            if (region != null)
+            {
+                client = new AmazonAutoScalingClient(
+                CredentiaslManager.GetCredential(profile),
+                AwsCommon.GetRetionEndpoint(region));
+            }
             UpdateAutoScalingGroupRequest request = new UpdateAutoScalingGroupRequest();
             request.MaxSize = settings.MaxSize;
             request.MinSize = settings.MinSize;

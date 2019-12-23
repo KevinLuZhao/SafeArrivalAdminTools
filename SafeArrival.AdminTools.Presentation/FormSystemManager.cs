@@ -1,4 +1,5 @@
-﻿using SafeArrival.AdminTools.BLL;
+﻿using SafeArrival.AdminTools.AwsUtilities;
+using SafeArrival.AdminTools.BLL;
 using SafeArrival.AdminTools.Model;
 using System;
 using System.Collections.Generic;
@@ -252,6 +253,7 @@ namespace SafeArrival.AdminTools.Presentation
             dataGridView1.DataSource = lstAutoScalingGroupSettings;
         }
 
+        //-----------------------------------------------RDS Tab--------------------------------------------------------------
         private async Task<SystemStauts> PopulateRDS()
         {
             var helper = new AwsUtilities.RDSHelper(
@@ -293,6 +295,106 @@ namespace SafeArrival.AdminTools.Presentation
             gvRDS.DataSource = lstRdsInstances;
         }
 
+        private async void btnRdsStop_Click(object sender, EventArgs e)
+        {
+            var service = new SystemManagement();
+            var lstInstanceSelected = new List<SA_RdsInstance>();
+            var strInstanceSelected = string.Empty;
+            foreach (DataGridViewRow item in gvRDS.Rows)
+            {
+                if (item.Cells["ActionSelected"].Value == null)
+                    continue;
+                bool selected;
+                if (bool.TryParse(item.Cells["ActionSelected"].Value.ToString(), out selected) &&
+                    selected && item.Cells["Status"].Value.ToString() == "available")
+                {
+                    lstInstanceSelected.Add(lstRdsInstances.Find(
+                        o => o.DBInstanceIdentifier == (string)item.Cells["DBInstanceIdentifier"].Value));
+                    strInstanceSelected += (string)item.Cells["DBInstanceIdentifier"].Value + ",";
+                }
+            }
+            if (lstInstanceSelected.Count > 0)
+            {
+                strInstanceSelected = strInstanceSelected.Substring(0, strInstanceSelected.Length - 1);
+                var confirmResult = MessageBox.Show(
+                            string.Format("RDS instances: {0} are selected. Pleae click YES button to stop them!",
+                            strInstanceSelected),
+                            "Confirm Stop RDS Instances",
+                            MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+
+                    try
+                    {
+                        NotifyToMainStatus($"RDS instances {strInstanceSelected} begin to stopped.", System.Drawing.Color.Green);
+                        await service.StopRdsInstances(lstInstanceSelected);
+                        await PopulateRDSList();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleException(ex);
+                        return;
+                    }
+                    WriteNotification($"RDS instances {strInstanceSelected} are stopped.");
+                }
+            }
+        }
+
+        private async void btnRdsStart_Click(object sender, EventArgs e)
+        {
+            var service = new SystemManagement();
+            var lstInstanceSelected = new List<SA_RdsInstance>();
+            var strInstanceSelected = string.Empty;
+            foreach (DataGridViewRow item in gvRDS.Rows)
+            {
+                if (item.Cells["ActionSelected"].Value == null)
+                    continue;
+                bool selected;
+                if (bool.TryParse(item.Cells["ActionSelected"].Value.ToString(), out selected) &&
+                    selected && item.Cells["Status"].Value.ToString() == "stopped")
+                {
+                    lstInstanceSelected.Add(lstRdsInstances.Find(
+                        o => o.DBInstanceIdentifier == (string)item.Cells["DBInstanceIdentifier"].Value));
+                    strInstanceSelected += (string)item.Cells["DBInstanceIdentifier"].Value + ",";
+                }
+            }
+            if (lstInstanceSelected.Count > 0)
+            {
+                strInstanceSelected = strInstanceSelected.Substring(0, strInstanceSelected.Length - 1);
+                var confirmResult = MessageBox.Show(
+                            string.Format("RDS instances: {0} are selected. Pleae click YES button to start them!",
+                            strInstanceSelected),
+                            "Confirm Start RDS Instances",
+                            MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    try
+                    {
+                        NotifyToMainStatus($"RDS instances {strInstanceSelected} begin to start.", System.Drawing.Color.Green);
+                        await service.StartRdsInstances(lstInstanceSelected);
+                        await PopulateRDSList();
+                    }
+                    catch (Exception ex)
+                    {
+                        HandleException(ex);
+                        return;
+                    }
+                    WriteNotification($"RDS instances {strInstanceSelected} are started.");
+                }
+            }
+        }
+
+        private void btnRdsStart_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private async void btnRdsRefresh(object sender, EventArgs e)
+        {
+            await PopulateRDSList();
+        }
+
+        //-----------------------------------------------EC2 Instances Tab--------------------------------------------------------------
         private void PopulateEc2Regions()
         {
             List<KeyValuePair<string, string>> lstRegions = Regions.GetRegionList();
@@ -317,19 +419,68 @@ namespace SafeArrival.AdminTools.Presentation
             gvEc2Instances.DataSource = await helper.GetEc2InsatancesList(((KeyValuePair<string, string>)ddlEC2Region.SelectedItem).Key);
         }
 
-        private async Task PopulateAsgList()
+        private async void tsComboRegion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var helper = new AwsUtilities.AutoScalingHelper(
+            await PopulateEc2Instances();
+        }
+
+        private async void btnEc2Start_Click(object sender, EventArgs e)
+        {
+            var helper = new AwsUtilities.EC2Helper(
                 GlobalVariables.Enviroment,
                 GlobalVariables.Region,
                 GlobalVariables.Color);
-            gvAsg.AutoGenerateColumns = false;
-            gvAsg.DataSource = await helper.GetAllAutoScalingGroupList(((KeyValuePair<string, string>)ddlAsgRegion.SelectedItem).Key);
-            foreach (DataGridViewRow row in gvAsg.Rows)
+            var instanceIds = new List<string>();
+
+            foreach (DataGridViewRow row in gvEc2Instances.Rows)
             {
-                row.DefaultCellStyle.BackColor = System.Drawing.Color.Green;
+                if (row.Cells[5].Value != null && (bool)row.Cells[5].Value)
+                {
+                    instanceIds.Add(row.Cells[1].Value.ToString());
+                }
+            }
+            var confirmResult = MessageBox.Show(
+                          string.Format("Are you sure to start EC2 instances: '{0}'?",
+                          string.Join(", ", instanceIds),
+                          "Confirm Start EC2 Instances",
+                          MessageBoxButtons.YesNo));
+            if (confirmResult == DialogResult.Yes)
+            {
+                await helper.StartEc2Instances(instanceIds);
             }
         }
+
+        private async void btnEc2Stop_Click(object sender, EventArgs e)
+        {
+            var helper = new AwsUtilities.EC2Helper(
+                GlobalVariables.Enviroment,
+                GlobalVariables.Region,
+                GlobalVariables.Color);
+            var instanceIds = new List<string>();
+            foreach (DataGridViewRow row in gvEc2Instances.Rows)
+            {
+                if (row.Cells[5].Value != null && (bool)row.Cells[5].Value)
+                {
+                    instanceIds.Add(row.Cells[1].Value.ToString());
+                }
+            }
+            var confirmResult = MessageBox.Show(
+                           string.Format("Are you sure to stop EC2 instances: '{0}'?",
+                           string.Join(", ", instanceIds),
+                           "Confirm Stop EC2 Instances",
+                           MessageBoxButtons.YesNo));
+            if (confirmResult == DialogResult.Yes)
+            {
+                await helper.StopEc2Instances(instanceIds);
+            }
+        }
+
+        private async void btnEc2Refresh_Click(object sender, EventArgs e)
+        {
+            await PopulateEc2Instances();
+        }
+
+        //-----------------------------------------------Peering Connection Tab--------------------------------------------------------------
 
         private async Task PopulatePeeringConnection()
         {
@@ -459,106 +610,14 @@ namespace SafeArrival.AdminTools.Presentation
             await PopulatePeeringConnection();
         }
 
-        private async void btnRdsStop_Click(object sender, EventArgs e)
-        {
-            var service = new SystemManagement();
-            var lstInstanceSelected = new List<SA_RdsInstance>();
-            var strInstanceSelected = string.Empty;
-            foreach (DataGridViewRow item in gvRDS.Rows)
-            {
-                if (item.Cells["ActionSelected"].Value == null)
-                    continue;
-                bool selected;
-                if (bool.TryParse(item.Cells["ActionSelected"].Value.ToString(), out selected) &&
-                    selected && item.Cells["Status"].Value.ToString() == "available")
-                {
-                    lstInstanceSelected.Add(lstRdsInstances.Find(
-                        o => o.DBInstanceIdentifier == (string)item.Cells["DBInstanceIdentifier"].Value));
-                    strInstanceSelected += (string)item.Cells["DBInstanceIdentifier"].Value + ",";
-                }
-            }
-            if (lstInstanceSelected.Count > 0)
-            {
-                strInstanceSelected = strInstanceSelected.Substring(0, strInstanceSelected.Length - 1);
-                var confirmResult = MessageBox.Show(
-                            string.Format("RDS instances: {0} are selected. Pleae click YES button to stop them!",
-                            strInstanceSelected),
-                            "Confirm Stop RDS Instances",
-                            MessageBoxButtons.YesNo);
-                if (confirmResult == DialogResult.Yes)
-                {
-
-                    try
-                    {
-                        NotifyToMainStatus($"RDS instances {strInstanceSelected} begin to stopped.", System.Drawing.Color.Green);
-                        await service.StopRdsInstances(lstInstanceSelected);
-                        await PopulateRDSList();
-                    }
-                    catch (Exception ex)
-                    {
-                        HandleException(ex);
-                        return;
-                    }
-                    WriteNotification($"RDS instances {strInstanceSelected} are stopped.");
-                }
-            }
-        }
-
-        private async void btnRdsStart_Click(object sender, EventArgs e)
-        {
-            var service = new SystemManagement();
-            var lstInstanceSelected = new List<SA_RdsInstance>();
-            var strInstanceSelected = string.Empty;
-            foreach (DataGridViewRow item in gvRDS.Rows)
-            {
-                if (item.Cells["ActionSelected"].Value == null)
-                    continue;
-                bool selected;
-                if (bool.TryParse(item.Cells["ActionSelected"].Value.ToString(), out selected) &&
-                    selected && item.Cells["Status"].Value.ToString() == "stopped")
-                {
-                    lstInstanceSelected.Add(lstRdsInstances.Find(
-                        o => o.DBInstanceIdentifier == (string)item.Cells["DBInstanceIdentifier"].Value));
-                    strInstanceSelected += (string)item.Cells["DBInstanceIdentifier"].Value + ",";
-                }
-            }
-            if (lstInstanceSelected.Count > 0)
-            {
-                strInstanceSelected = strInstanceSelected.Substring(0, strInstanceSelected.Length - 1);
-                var confirmResult = MessageBox.Show(
-                            string.Format("RDS instances: {0} are selected. Pleae click YES button to start them!",
-                            strInstanceSelected),
-                            "Confirm Start RDS Instances",
-                            MessageBoxButtons.YesNo);
-                if (confirmResult == DialogResult.Yes)
-                {
-                    try
-                    {
-                        NotifyToMainStatus($"RDS instances {strInstanceSelected} begin to start.", System.Drawing.Color.Green);
-                        await service.StartRdsInstances(lstInstanceSelected);
-                        await PopulateRDSList();
-                    }
-                    catch (Exception ex)
-                    {
-                        HandleException(ex);
-                        return;
-                    }
-                    WriteNotification($"RDS instances {strInstanceSelected} are started.");
-                }
-            }
-        }
-
-        private async void btnRdsRefresh(object sender, EventArgs e)
-        {
-            await PopulateRDSList();
-        }
-
-        private async void tsComboRegion_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            await PopulateEc2Instances();
-        }
+        //-----------------------------------------------Auto Scaling Group Tab--------------------------------------------------------------
 
         private async void ddlAsgRegion_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            await PopulateAsgList();
+        }
+
+        private async void btnAsgRefresh_Click(object sender, EventArgs e)
         {
             await PopulateAsgList();
         }
@@ -573,7 +632,59 @@ namespace SafeArrival.AdminTools.Presentation
                     gvAsg.CurrentRow.Cells[2].ReadOnly = gvAsg.CurrentRow.Cells[3].ReadOnly = gvAsg.CurrentRow.Cells[4].ReadOnly = false;
                     gvAsg.CurrentRow.DefaultCellStyle.BackColor = System.Drawing.Color.LightBlue;
                 }
+                else
+                {
+                    gvAsg.CurrentRow.Cells[2].ReadOnly = gvAsg.CurrentRow.Cells[3].ReadOnly = gvAsg.CurrentRow.Cells[4].ReadOnly = true;
+                    gvAsg.CurrentRow.DefaultCellStyle.BackColor = System.Drawing.Color.White;
+                }
             }
+        }
+
+        private async void btnAsgUpdate_Click(object sender, EventArgs e)
+        {
+            var datasource = gvAsg.DataSource;
+            var helper = new AwsUtilities.AutoScalingHelper(
+                GlobalVariables.Enviroment,
+                GlobalVariables.Region,
+                GlobalVariables.Color);
+            foreach (DataGridViewRow row in gvAsg.Rows)
+            {
+                if (row.Cells[6].Value != null && (bool)row.Cells[6].Value)
+                {
+                    var rowDs = ((List<SA_AutoScalingGroup>)datasource)[row.Index];
+                    var settings = new AutoScalingGroupSettings()
+                    {
+                        MaxSize = rowDs.MaxSize,
+                        MinSize = rowDs.MinSize,
+                        DesiredCapacity = rowDs.DesiredCapacity
+                    };
+                    var confirmResult = MessageBox.Show(
+                            string.Format("Are you sure to change autoscaling group settings: '{0}' to be '{1}-{2}-{3}'? Pleae check the settings first and then click YES button!",
+                            rowDs.AutoScalingGroupName, rowDs.MaxSize, rowDs.MinSize, rowDs.DesiredCapacity),
+                            "Confirm Updating Auto Scaling Group Settings",
+                            MessageBoxButtons.YesNo);
+                    if (confirmResult == DialogResult.Yes)
+                    {
+                        await helper.ChangeScalingGroup(
+                        rowDs.AutoScalingGroupName, settings,
+                        ((KeyValuePair<string, string>)ddlAsgRegion.SelectedItem).Key);
+                    }
+                }
+            }
+        }
+
+        private async Task PopulateAsgList()
+        {
+            var helper = new AwsUtilities.AutoScalingHelper(
+                GlobalVariables.Enviroment,
+                GlobalVariables.Region,
+                GlobalVariables.Color);
+            gvAsg.AutoGenerateColumns = false;
+            gvAsg.DataSource = await helper.GetAllAutoScalingGroupList(((KeyValuePair<string, string>)ddlAsgRegion.SelectedItem).Key);
+            //foreach (DataGridViewRow row in gvAsg.Rows)
+            //{
+            //    row.DefaultCellStyle.BackColor = System.Drawing.Color.Green;
+            //}
         }
     }
 }

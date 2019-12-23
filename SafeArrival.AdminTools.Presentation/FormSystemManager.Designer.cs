@@ -139,19 +139,12 @@
             this.btnEc2Stop = new System.Windows.Forms.Button();
             this.btnEc2Start = new System.Windows.Forms.Button();
             this.gvEc2Instances = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.VpcId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewCheckBoxColumn4 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tabAsg = new System.Windows.Forms.TabPage();
             this.pnlAsg = new System.Windows.Forms.Panel();
             this.label15 = new System.Windows.Forms.Label();
             this.ddlAsgRegion = new System.Windows.Forms.ComboBox();
             this.btnAsgRefresh = new System.Windows.Forms.Button();
-            this.btnAsgStop = new System.Windows.Forms.Button();
-            this.btnAsgStart = new System.Windows.Forms.Button();
+            this.btnAsgUpdate = new System.Windows.Forms.Button();
             this.gvAsg = new System.Windows.Forms.DataGridView();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -161,6 +154,12 @@
             this.Desired = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewCheckBoxColumn3 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VpcId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewCheckBoxColumn4 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tPageStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgScheduleStatus)).BeginInit();
@@ -1186,6 +1185,7 @@
             this.btnRdsStart.TabIndex = 2;
             this.btnRdsStart.Text = "Start";
             this.btnRdsStart.UseVisualStyleBackColor = true;
+            this.btnRdsStart.Click += new System.EventHandler(this.btnRdsStart_Click_1);
             // 
             // gvRDS
             // 
@@ -1294,6 +1294,7 @@
             this.btnEc2Refresh.Size = new System.Drawing.Size(47, 48);
             this.btnEc2Refresh.TabIndex = 8;
             this.btnEc2Refresh.UseVisualStyleBackColor = true;
+            this.btnEc2Refresh.Click += new System.EventHandler(this.btnEc2Refresh_Click);
             // 
             // btnEc2Stop
             // 
@@ -1304,6 +1305,7 @@
             this.btnEc2Stop.TabIndex = 7;
             this.btnEc2Stop.Text = "Stop";
             this.btnEc2Stop.UseVisualStyleBackColor = true;
+            this.btnEc2Stop.Click += new System.EventHandler(this.btnEc2Stop_Click);
             // 
             // btnEc2Start
             // 
@@ -1314,6 +1316,7 @@
             this.btnEc2Start.TabIndex = 6;
             this.btnEc2Start.Text = "Start";
             this.btnEc2Start.UseVisualStyleBackColor = true;
+            this.btnEc2Start.Click += new System.EventHandler(this.btnEc2Start_Click);
             // 
             // gvEc2Instances
             // 
@@ -1332,50 +1335,6 @@
             this.gvEc2Instances.Size = new System.Drawing.Size(1092, 471);
             this.gvEc2Instances.TabIndex = 5;
             // 
-            // dataGridViewTextBoxColumn10
-            // 
-            this.dataGridViewTextBoxColumn10.DataPropertyName = "Name";
-            this.dataGridViewTextBoxColumn10.HeaderText = "Name";
-            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
-            this.dataGridViewTextBoxColumn10.ReadOnly = true;
-            this.dataGridViewTextBoxColumn10.Width = 400;
-            // 
-            // dataGridViewTextBoxColumn11
-            // 
-            this.dataGridViewTextBoxColumn11.DataPropertyName = "InstanceId";
-            this.dataGridViewTextBoxColumn11.HeaderText = "Instance ID";
-            this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
-            this.dataGridViewTextBoxColumn11.ReadOnly = true;
-            this.dataGridViewTextBoxColumn11.Width = 300;
-            // 
-            // dataGridViewTextBoxColumn12
-            // 
-            this.dataGridViewTextBoxColumn12.DataPropertyName = "InstanceType";
-            this.dataGridViewTextBoxColumn12.HeaderText = "Type";
-            this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
-            this.dataGridViewTextBoxColumn12.ReadOnly = true;
-            // 
-            // VpcId
-            // 
-            this.VpcId.DataPropertyName = "VpcId";
-            this.VpcId.HeaderText = "VPC ID";
-            this.VpcId.Name = "VpcId";
-            this.VpcId.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn13
-            // 
-            this.dataGridViewTextBoxColumn13.DataPropertyName = "State";
-            this.dataGridViewTextBoxColumn13.HeaderText = "State";
-            this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
-            this.dataGridViewTextBoxColumn13.ReadOnly = true;
-            this.dataGridViewTextBoxColumn13.Width = 70;
-            // 
-            // dataGridViewCheckBoxColumn4
-            // 
-            this.dataGridViewCheckBoxColumn4.HeaderText = "Select";
-            this.dataGridViewCheckBoxColumn4.Name = "dataGridViewCheckBoxColumn4";
-            this.dataGridViewCheckBoxColumn4.Width = 50;
-            // 
             // tabAsg
             // 
             this.tabAsg.Controls.Add(this.pnlAsg);
@@ -1392,8 +1351,7 @@
             this.pnlAsg.Controls.Add(this.label15);
             this.pnlAsg.Controls.Add(this.ddlAsgRegion);
             this.pnlAsg.Controls.Add(this.btnAsgRefresh);
-            this.pnlAsg.Controls.Add(this.btnAsgStop);
-            this.pnlAsg.Controls.Add(this.btnAsgStart);
+            this.pnlAsg.Controls.Add(this.btnAsgUpdate);
             this.pnlAsg.Controls.Add(this.gvAsg);
             this.pnlAsg.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlAsg.Location = new System.Drawing.Point(3, 3);
@@ -1423,31 +1381,23 @@
             // 
             this.btnAsgRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnAsgRefresh.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Reload;
-            this.btnAsgRefresh.Location = new System.Drawing.Point(242, 516);
+            this.btnAsgRefresh.Location = new System.Drawing.Point(97, 517);
             this.btnAsgRefresh.Name = "btnAsgRefresh";
             this.btnAsgRefresh.Size = new System.Drawing.Size(47, 48);
             this.btnAsgRefresh.TabIndex = 14;
             this.btnAsgRefresh.UseVisualStyleBackColor = true;
+            this.btnAsgRefresh.Click += new System.EventHandler(this.btnAsgRefresh_Click);
             // 
-            // btnAsgStop
+            // btnAsgUpdate
             // 
-            this.btnAsgStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnAsgStop.Location = new System.Drawing.Point(116, 530);
-            this.btnAsgStop.Name = "btnAsgStop";
-            this.btnAsgStop.Size = new System.Drawing.Size(75, 23);
-            this.btnAsgStop.TabIndex = 13;
-            this.btnAsgStop.Text = "Stop";
-            this.btnAsgStop.UseVisualStyleBackColor = true;
-            // 
-            // btnAsgStart
-            // 
-            this.btnAsgStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnAsgStart.Location = new System.Drawing.Point(5, 530);
-            this.btnAsgStart.Name = "btnAsgStart";
-            this.btnAsgStart.Size = new System.Drawing.Size(75, 23);
-            this.btnAsgStart.TabIndex = 12;
-            this.btnAsgStart.Text = "Start";
-            this.btnAsgStart.UseVisualStyleBackColor = true;
+            this.btnAsgUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnAsgUpdate.Location = new System.Drawing.Point(5, 530);
+            this.btnAsgUpdate.Name = "btnAsgUpdate";
+            this.btnAsgUpdate.Size = new System.Drawing.Size(75, 23);
+            this.btnAsgUpdate.TabIndex = 12;
+            this.btnAsgUpdate.Text = "Update";
+            this.btnAsgUpdate.UseVisualStyleBackColor = true;
+            this.btnAsgUpdate.Click += new System.EventHandler(this.btnAsgUpdate_Click);
             // 
             // gvAsg
             // 
@@ -1494,7 +1444,7 @@
             this.dataGridViewTextBoxColumn15.HeaderText = "ID";
             this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
             this.dataGridViewTextBoxColumn15.ReadOnly = true;
-            this.dataGridViewTextBoxColumn15.Width = 300;
+            this.dataGridViewTextBoxColumn15.Width = 400;
             // 
             // dataGridViewTextBoxColumn16
             // 
@@ -1533,6 +1483,50 @@
             this.dataGridViewCheckBoxColumn3.HeaderText = "Select";
             this.dataGridViewCheckBoxColumn3.Name = "dataGridViewCheckBoxColumn3";
             this.dataGridViewCheckBoxColumn3.Width = 50;
+            // 
+            // dataGridViewTextBoxColumn10
+            // 
+            this.dataGridViewTextBoxColumn10.DataPropertyName = "Name";
+            this.dataGridViewTextBoxColumn10.HeaderText = "Name";
+            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
+            this.dataGridViewTextBoxColumn10.ReadOnly = true;
+            this.dataGridViewTextBoxColumn10.Width = 400;
+            // 
+            // dataGridViewTextBoxColumn11
+            // 
+            this.dataGridViewTextBoxColumn11.DataPropertyName = "InstanceId";
+            this.dataGridViewTextBoxColumn11.HeaderText = "Instance ID";
+            this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
+            this.dataGridViewTextBoxColumn11.ReadOnly = true;
+            this.dataGridViewTextBoxColumn11.Width = 300;
+            // 
+            // dataGridViewTextBoxColumn12
+            // 
+            this.dataGridViewTextBoxColumn12.DataPropertyName = "InstanceType";
+            this.dataGridViewTextBoxColumn12.HeaderText = "Type";
+            this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
+            this.dataGridViewTextBoxColumn12.ReadOnly = true;
+            // 
+            // VpcId
+            // 
+            this.VpcId.DataPropertyName = "VpcId";
+            this.VpcId.HeaderText = "VPC ID";
+            this.VpcId.Name = "VpcId";
+            this.VpcId.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn13
+            // 
+            this.dataGridViewTextBoxColumn13.DataPropertyName = "State";
+            this.dataGridViewTextBoxColumn13.HeaderText = "State";
+            this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
+            this.dataGridViewTextBoxColumn13.ReadOnly = true;
+            this.dataGridViewTextBoxColumn13.Width = 70;
+            // 
+            // dataGridViewCheckBoxColumn4
+            // 
+            this.dataGridViewCheckBoxColumn4.HeaderText = "Select";
+            this.dataGridViewCheckBoxColumn4.Name = "dataGridViewCheckBoxColumn4";
+            this.dataGridViewCheckBoxColumn4.Width = 50;
             // 
             // FormSystemManager
             // 
@@ -1700,19 +1694,12 @@
         private System.Windows.Forms.DataGridView gvEc2Instances;
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.ComboBox ddlEC2Region;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
-        private System.Windows.Forms.DataGridViewTextBoxColumn VpcId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn4;
         private System.Windows.Forms.TabPage tabAsg;
         private System.Windows.Forms.Panel pnlAsg;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.ComboBox ddlAsgRegion;
         private System.Windows.Forms.Button btnAsgRefresh;
-        private System.Windows.Forms.Button btnAsgStop;
-        private System.Windows.Forms.Button btnAsgStart;
+        private System.Windows.Forms.Button btnAsgUpdate;
         private System.Windows.Forms.DataGridView gvAsg;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
@@ -1721,5 +1708,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Desired;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
         private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VpcId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn4;
     }
 }

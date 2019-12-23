@@ -50,7 +50,38 @@ namespace SafeArrival.AdminTools.AwsUtilities
             return ret;
         }
 
-        /****************************************** EC2  ******************************************/
+        public async Task StartEc2Instances(List<string> InstanceIds, string region = null)
+        {
+            if (region != null)
+            {
+                client = new AmazonEC2Client(
+                CredentiaslManager.GetCredential(profile),
+                AwsCommon.GetRetionEndpoint(region));
+            }
+
+            var request = new StartInstancesRequest()
+            {
+                InstanceIds = InstanceIds
+            };
+            await client.StartInstancesAsync(request);
+        }
+
+        public async Task StopEc2Instances(List<string> InstanceIds, string region = null)
+        {
+            if (region != null)
+            {
+                client = new AmazonEC2Client(
+                CredentiaslManager.GetCredential(profile),
+                AwsCommon.GetRetionEndpoint(region));
+            }
+
+            var request = new StopInstancesRequest()
+            {
+                InstanceIds = InstanceIds
+            };
+            await client.StopInstancesAsync(request);
+        }
+        /****************************************** Scaling Group  ******************************************/
         public async Task<List<SA_Ec2Instance>> GetScalingGroupList(string region = null)
         {
             if (region != null)

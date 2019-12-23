@@ -11,10 +11,6 @@ namespace SafeArrival.AdminTools.BLL
 {
     public class SystemManagement
     {
-        //public async Task ShutDownSystem(Environment environment)
-        //{
-        //    await 
-        //}
         AutoScaleGroupSettingsDb db = new AutoScaleGroupSettingsDb();
 
         public async Task StartSystem( 
