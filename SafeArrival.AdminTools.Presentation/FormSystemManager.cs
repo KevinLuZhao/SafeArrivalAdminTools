@@ -55,7 +55,7 @@ namespace SafeArrival.AdminTools.Presentation
 
                 PopulateEc2Regions();
                 await PopulateSystemStatus();
-                dataGridView1.AutoGenerateColumns = false;
+                gvAsgSettings.AutoGenerateColumns = false;
                 gvRDS.AutoGenerateColumns = false;
                 gvAsg.AutoGenerateColumns = false;
             }
@@ -65,17 +65,41 @@ namespace SafeArrival.AdminTools.Presentation
             }
         }
 
-        private void btnInit_Click(object sender, EventArgs e)
+        private async Task PopulateSystemStatus()
         {
-            SystemManagement service = new SystemManagement();
-            service.InitAutoScalingGroupSettings(GlobalVariables.Enviroment);
+            if (GlobalVariables.Enviroment.ToString().IndexOf("production") >= 0)
+            {
+                MessageBox.Show("Starting/Stopping System is not supported in Production envirnment!");
+                //this.Enabled = false;
+                btnSystemStart.Visible = false;
+                btnSystemStop.Visible = false;
+                btnSystemRefresh.Visible = false;
+                btnAsgSettingsInit.Enabled = btnAsgSettingsSave.Enabled = false;
+            }
+            else
+            {
+                //this.Enabled = true;
+                btnSystemStart.Visible = true;
+                btnSystemStop.Visible = true;
+                btnSystemRefresh.Visible = true;
+                btnAsgSettingsInit.Enabled = btnAsgSettingsSave.Enabled = true;
+            }
+
+            await PopulateAutoScalingGroup();
+            await PopulateScheduleActions();
+            await PopulateRDS();
+            LoadAutoScalingGroupSettings();
+            await PopulatePeeringConnection();
+            await PopulateeeringConnectionVpcDropdownLists();
+            await PopulateRDSList();
         }
 
-        private async void btnStart_Click(object sender, EventArgs e)
+        //-----------------------------------------------Envroment Status--------------------------------------------------------------
+        private async void btnSystemStart_Click(object sender, EventArgs e)
         {
             try
             {
-                tabControl1.SelectedIndex = 1;
+                tabCtrlMain.SelectedIndex = 1;
                 var confirmResult = MessageBox.Show(
                             string.Format("Are you sure to start all instances in: '{0}'? Pleae check the settings first and then click YES button!",
                             GlobalVariables.Enviroment.ToString()),
@@ -101,7 +125,7 @@ namespace SafeArrival.AdminTools.Presentation
             }
         }
 
-        private async void btnStop_Click(object sender, EventArgs e)
+        private async void btnSystemStop_Click(object sender, EventArgs e)
         {
             try
             {
@@ -130,7 +154,7 @@ namespace SafeArrival.AdminTools.Presentation
             }
         }
 
-        private async void btnRefresh_Click(object sender, EventArgs e)
+        private async void btnSystemRefresh_Click(object sender, EventArgs e)
         {
             try
             {
@@ -139,73 +163,6 @@ namespace SafeArrival.AdminTools.Presentation
             catch (Exception ex)
             {
                 HandleException(ex);
-            }
-        }
-
-        private async Task PopulateSystemStatus()
-        {
-            if (GlobalVariables.Enviroment.ToString().IndexOf("production") >= 0)
-            {
-                MessageBox.Show("Starting/Stopping System is not supported in Production envirnment!");
-                //this.Enabled = false;
-                btnStart.Visible = false;
-                btnStop.Visible = false;
-                btnRefresh.Visible = false;
-                btnInit.Enabled = btnSave_ASG_Settings.Enabled = false;
-            }
-            else
-            {
-                //this.Enabled = true;
-                btnStart.Visible = true;
-                btnStop.Visible = true;
-                btnRefresh.Visible = true;
-                btnInit.Enabled = btnSave_ASG_Settings.Enabled = true;
-            }
-
-            await PopulateAutoScalingGroup();
-            await PopulateScheduleActions();
-            await PopulateRDS();
-            LoadAutoScalingGroupSettings();
-            await PopulatePeeringConnection();
-            await PopulateeeringConnectionVpcDropdownLists();
-            await PopulateRDSList();
-        }
-
-        private async Task PopulateAutoScalingGroup()
-        {
-            var helper = new AwsUtilities.AutoScalingHelper(
-                GlobalVariables.Enviroment,
-                GlobalVariables.Region,
-                GlobalVariables.Color);
-            var lstGroup = await helper.GetEnvironmentAutoScalingGroupList();
-            int stoppedGroupCounter = 0;
-            listView1.Items.Clear();
-            foreach (var group in lstGroup)
-            {
-                ListViewItem item = new ListViewItem();
-                item.Text = group.Name;
-                item.SubItems.Add(group.MaxSize.ToString());
-                item.SubItems.Add(group.MinSize.ToString());
-                item.SubItems.Add(group.RunningInstances.ToString());
-                listView1.Items.Add(item);
-                if (group.RunningInstances == 0)
-                    stoppedGroupCounter++;
-            }
-            if (stoppedGroupCounter == 0)
-            {
-                this.imgAppStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Green_icon;
-                //return SystemStauts.Running;
-            }
-
-            else if (stoppedGroupCounter == lstGroup.Count)
-            {
-                this.imgAppStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Gray_icon;
-                //return SystemStauts.Terminated;
-            }
-            else
-            {
-                this.imgAppStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Red_icon;
-                //return SystemStauts.Abnormal;
             }
         }
 
@@ -246,11 +203,62 @@ namespace SafeArrival.AdminTools.Presentation
             }
         }
 
+        //-----------------------------------------------Auto-Scaling Settings--------------------------------------------------------------
+        private void btnAsgSettingsInit_Click(object sender, EventArgs e)
+        {
+            SystemManagement service = new SystemManagement();
+            service.InitAutoScalingGroupSettings(GlobalVariables.Enviroment);
+        }
+
+        private void btnAsgSettingsSave_Click(object sender, EventArgs e)
+        {
+            SystemManagement service = new SystemManagement();
+            service.SaveAllAutoScalingGroupSettings(lstAutoScalingGroupSettings);
+        }
+
+        private async Task PopulateAutoScalingGroup()
+        {
+            var helper = new AwsUtilities.AutoScalingHelper(
+                GlobalVariables.Enviroment,
+                GlobalVariables.Region,
+                GlobalVariables.Color);
+            var lstGroup = await helper.GetEnvironmentAutoScalingGroupList();
+            int stoppedGroupCounter = 0;
+            listView1.Items.Clear();
+            foreach (var group in lstGroup)
+            {
+                ListViewItem item = new ListViewItem();
+                item.Text = group.Name;
+                item.SubItems.Add(group.MaxSize.ToString());
+                item.SubItems.Add(group.MinSize.ToString());
+                item.SubItems.Add(group.RunningInstances.ToString());
+                listView1.Items.Add(item);
+                if (group.RunningInstances == 0)
+                    stoppedGroupCounter++;
+            }
+            if (stoppedGroupCounter == 0)
+            {
+                this.imgAppStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Green_icon;
+                //return SystemStauts.Running;
+            }
+
+            else if (stoppedGroupCounter == lstGroup.Count)
+            {
+                this.imgAppStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Gray_icon;
+                //return SystemStauts.Terminated;
+            }
+            else
+            {
+                this.imgAppStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Red_icon;
+                //return SystemStauts.Abnormal;
+            }
+        }
+
         private void LoadAutoScalingGroupSettings()
         {
             SystemManagement service = new SystemManagement();
             lstAutoScalingGroupSettings = service.GetAutoScalingGroupSettingsByEnv(GlobalVariables.Enviroment);
-            dataGridView1.DataSource = lstAutoScalingGroupSettings;
+            gvAsgSettings.DataSource = lstAutoScalingGroupSettings;
         }
 
         //-----------------------------------------------RDS Tab--------------------------------------------------------------
@@ -520,12 +528,6 @@ namespace SafeArrival.AdminTools.Presentation
                 ddlRequesterVpc.Items.Add($"{vpc.VpcId}|{vpc.Name}");
                 ddlAccepterVpc.Items.Add($"{vpc.VpcId}|{vpc.Name}");
             }
-        }
-
-        private void btnSave_ASG_Settings_Click(object sender, EventArgs e)
-        {
-            SystemManagement service = new SystemManagement();
-            service.SaveAllAutoScalingGroupSettings(lstAutoScalingGroupSettings);
         }
 
         private async void btnRpcCreate_Click(object sender, EventArgs e)
