@@ -86,6 +86,38 @@ namespace SafeArrival.AdminTools.AwsUtilities
             return results;
         }
 
+        public List<SA_AsgEc2Map> GetAsgEc2Maps(string region = null)
+        {
+            var rets = new List<SA_AsgEc2Map>();
+            if (region != null)
+            {
+                client = new AmazonAutoScalingClient(
+                CredentiaslManager.GetCredential(profile),
+                AwsCommon.GetRetionEndpoint(region));
+            }
+
+            var lstSaGroups = new List<SA_AutoScalingGroup>();
+            var response = client.DescribeAutoScalingGroups();
+            var lstGroups = response.AutoScalingGroups.FindAll(o => o.Tags[0].Value.IndexOf(environment.ToString()) >= 0);
+
+            foreach (var group in lstGroups)
+            {
+                if (group.Instances != null)
+                {
+                    foreach (var instance in group.Instances)
+                    {
+                        rets.Add(new SA_AsgEc2Map()
+                        {
+                            AsgName = group.Tags[0].Value,
+                            AutoScalingGroupName = group.AutoScalingGroupName,
+                            InstanceId = instance.InstanceId
+                        });
+                    }
+                }
+            }
+            return rets;
+        }
+
         public async Task StopScalingGroup(string groupName)
         {
             UpdateAutoScalingGroupRequest request = new UpdateAutoScalingGroupRequest();

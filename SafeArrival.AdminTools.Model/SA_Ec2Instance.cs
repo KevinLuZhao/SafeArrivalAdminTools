@@ -13,5 +13,6 @@ namespace SafeArrival.AdminTools.Model
         public string InstanceType { get; set; }
         public string VpcId { get; set; }
         public string State { get; set; }
+        public string AsgName { get; set; }
     }
 }

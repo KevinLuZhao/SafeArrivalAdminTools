@@ -32,19 +32,33 @@ namespace SafeArrival.AdminTools.AwsUtilities
             }
             var request = new DescribeInstancesRequest();
             var response = await client.DescribeInstancesAsync(request);
+
+            var asgHelper = new AutoScalingHelper(profile, region, "green");
+            var asgEc2Maps = asgHelper.GetAsgEc2Maps(region);
+
             var ret = new List<SA_Ec2Instance>();
             foreach (var reservation in response.Reservations)
             {
                 foreach (var instance in reservation.Instances)
                 {
-                    ret.Add(new SA_Ec2Instance()
+                    var saInstance = new SA_Ec2Instance()
                     {
                         Name = instance.KeyName,
                         InstanceId = instance.InstanceId,
                         InstanceType = instance.InstanceType,
                         VpcId = instance.VpcId,
                         State = instance.State.Name
-                    });
+                    };
+                    var searchedAsgEc2Map = asgEc2Maps.Find(o => o.InstanceId == instance.InstanceId);
+                    if (searchedAsgEc2Map != null)
+                    {
+                        saInstance.AsgName = searchedAsgEc2Map.AutoScalingGroupName;
+                    }
+                    else
+                    {
+                        saInstance.AsgName = string.Empty;
+                    }
+                    ret.Add(saInstance);
                 }
             }
             return ret;
@@ -107,6 +121,10 @@ namespace SafeArrival.AdminTools.AwsUtilities
                     });
                 }
             }
+
+            //DescribeInstanceStatusRequest requst = new DescribeInstanceStatusRequest();
+            //var rr = client.DescribeInstanceStatus(requst);
+            //    rr.InstanceStatuses[0].
             return ret;
         }
 

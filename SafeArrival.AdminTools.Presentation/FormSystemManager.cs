@@ -53,6 +53,7 @@ namespace SafeArrival.AdminTools.Presentation
                 listView2.Columns.Add("End Time", 150);
                 listView2.Columns.Add("Suspended", 70);
 
+                PopulateEc2Regions();
                 await PopulateSystemStatus();
                 dataGridView1.AutoGenerateColumns = false;
                 gvRDS.AutoGenerateColumns = false;
@@ -161,7 +162,6 @@ namespace SafeArrival.AdminTools.Presentation
                 btnInit.Enabled = btnSave_ASG_Settings.Enabled = true;
             }
 
-            PopulateEc2Regions();
             await PopulateAutoScalingGroup();
             await PopulateScheduleActions();
             await PopulateRDS();
