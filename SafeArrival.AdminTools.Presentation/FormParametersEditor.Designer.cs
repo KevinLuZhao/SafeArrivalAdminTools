@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormParametersEditor));
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.splitContainerParams = new System.Windows.Forms.SplitContainer();
             this.btnCmd = new System.Windows.Forms.Button();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.linkLabParams = new System.Windows.Forms.LinkLabel();
             this.lstJsonFiles = new System.Windows.Forms.ListBox();
             this.btnCompare = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -39,34 +39,51 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.txtFileEditor = new System.Windows.Forms.RichTextBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
+            this.tabMain = new System.Windows.Forms.TabControl();
+            this.tabCloudFormation = new System.Windows.Forms.TabPage();
+            this.splitContainerCF = new System.Windows.Forms.SplitContainer();
+            this.button1 = new System.Windows.Forms.Button();
+            this.linkLabCF = new System.Windows.Forms.LinkLabel();
+            this.lstCFFiles = new System.Windows.Forms.ListBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.btnExportCF = new System.Windows.Forms.Button();
+            this.txtCFViewer = new System.Windows.Forms.RichTextBox();
+            this.tabParams = new System.Windows.Forms.TabPage();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerParams)).BeginInit();
+            this.splitContainerParams.Panel1.SuspendLayout();
+            this.splitContainerParams.Panel2.SuspendLayout();
+            this.splitContainerParams.SuspendLayout();
+            this.tabMain.SuspendLayout();
+            this.tabCloudFormation.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerCF)).BeginInit();
+            this.splitContainerCF.Panel1.SuspendLayout();
+            this.splitContainerCF.Panel2.SuspendLayout();
+            this.splitContainerCF.SuspendLayout();
+            this.tabParams.SuspendLayout();
             this.SuspendLayout();
             // 
-            // splitContainer1
+            // splitContainerParams
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainerParams.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerParams.Location = new System.Drawing.Point(3, 3);
+            this.splitContainerParams.Name = "splitContainerParams";
             // 
-            // splitContainer1.Panel1
+            // splitContainerParams.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.btnCmd);
-            this.splitContainer1.Panel1.Controls.Add(this.linkLabel1);
-            this.splitContainer1.Panel1.Controls.Add(this.lstJsonFiles);
+            this.splitContainerParams.Panel1.Controls.Add(this.btnCmd);
+            this.splitContainerParams.Panel1.Controls.Add(this.linkLabParams);
+            this.splitContainerParams.Panel1.Controls.Add(this.lstJsonFiles);
             // 
-            // splitContainer1.Panel2
+            // splitContainerParams.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.btnCompare);
-            this.splitContainer1.Panel2.Controls.Add(this.label1);
-            this.splitContainer1.Panel2.Controls.Add(this.btnExport);
-            this.splitContainer1.Panel2.Controls.Add(this.btnSave);
-            this.splitContainer1.Panel2.Controls.Add(this.txtFileEditor);
-            this.splitContainer1.Size = new System.Drawing.Size(990, 569);
-            this.splitContainer1.SplitterDistance = 234;
-            this.splitContainer1.TabIndex = 0;
+            this.splitContainerParams.Panel2.Controls.Add(this.btnCompare);
+            this.splitContainerParams.Panel2.Controls.Add(this.label1);
+            this.splitContainerParams.Panel2.Controls.Add(this.btnExport);
+            this.splitContainerParams.Panel2.Controls.Add(this.btnSave);
+            this.splitContainerParams.Panel2.Controls.Add(this.txtFileEditor);
+            this.splitContainerParams.Size = new System.Drawing.Size(976, 537);
+            this.splitContainerParams.SplitterDistance = 230;
+            this.splitContainerParams.TabIndex = 0;
             // 
             // btnCmd
             // 
@@ -81,16 +98,16 @@
             this.btnCmd.UseVisualStyleBackColor = true;
             this.btnCmd.Click += new System.EventHandler(this.btnCmd_Click);
             // 
-            // linkLabel1
+            // linkLabParams
             // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(3, 14);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(85, 13);
-            this.linkLabel1.TabIndex = 5;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "Open in Explorer";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            this.linkLabParams.AutoSize = true;
+            this.linkLabParams.Location = new System.Drawing.Point(3, 14);
+            this.linkLabParams.Name = "linkLabParams";
+            this.linkLabParams.Size = new System.Drawing.Size(85, 13);
+            this.linkLabParams.TabIndex = 5;
+            this.linkLabParams.TabStop = true;
+            this.linkLabParams.Text = "Open in Explorer";
+            this.linkLabParams.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // lstJsonFiles
             // 
@@ -100,7 +117,7 @@
             this.lstJsonFiles.FormattingEnabled = true;
             this.lstJsonFiles.Location = new System.Drawing.Point(4, 34);
             this.lstJsonFiles.Name = "lstJsonFiles";
-            this.lstJsonFiles.Size = new System.Drawing.Size(227, 537);
+            this.lstJsonFiles.Size = new System.Drawing.Size(223, 498);
             this.lstJsonFiles.TabIndex = 2;
             this.lstJsonFiles.SelectedIndexChanged += new System.EventHandler(this.lstJsonFiles_SelectedIndexChanged);
             // 
@@ -108,7 +125,7 @@
             // 
             this.btnCompare.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCompare.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCompare.Location = new System.Drawing.Point(370, 9);
+            this.btnCompare.Location = new System.Drawing.Point(360, 9);
             this.btnCompare.Name = "btnCompare";
             this.btnCompare.Size = new System.Drawing.Size(153, 23);
             this.btnCompare.TabIndex = 4;
@@ -129,7 +146,7 @@
             // 
             this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnExport.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExport.Location = new System.Drawing.Point(548, 9);
+            this.btnExport.Location = new System.Drawing.Point(538, 9);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(109, 23);
             this.btnExport.TabIndex = 2;
@@ -141,7 +158,7 @@
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(674, 9);
+            this.btnSave.Location = new System.Drawing.Point(664, 9);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 1;
@@ -156,33 +173,160 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtFileEditor.Location = new System.Drawing.Point(3, 33);
             this.txtFileEditor.Name = "txtFileEditor";
-            this.txtFileEditor.Size = new System.Drawing.Size(746, 533);
+            this.txtFileEditor.Size = new System.Drawing.Size(736, 501);
             this.txtFileEditor.TabIndex = 0;
             this.txtFileEditor.Text = "";
+            // 
+            // tabMain
+            // 
+            this.tabMain.Controls.Add(this.tabCloudFormation);
+            this.tabMain.Controls.Add(this.tabParams);
+            this.tabMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabMain.Location = new System.Drawing.Point(0, 0);
+            this.tabMain.Name = "tabMain";
+            this.tabMain.SelectedIndex = 0;
+            this.tabMain.Size = new System.Drawing.Size(990, 569);
+            this.tabMain.TabIndex = 1;
+            // 
+            // tabCloudFormation
+            // 
+            this.tabCloudFormation.Controls.Add(this.splitContainerCF);
+            this.tabCloudFormation.Location = new System.Drawing.Point(4, 22);
+            this.tabCloudFormation.Name = "tabCloudFormation";
+            this.tabCloudFormation.Padding = new System.Windows.Forms.Padding(3);
+            this.tabCloudFormation.Size = new System.Drawing.Size(982, 543);
+            this.tabCloudFormation.TabIndex = 1;
+            this.tabCloudFormation.Text = "CloudFormation";
+            this.tabCloudFormation.UseVisualStyleBackColor = true;
+            // 
+            // splitContainerCF
+            // 
+            this.splitContainerCF.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerCF.Location = new System.Drawing.Point(3, 3);
+            this.splitContainerCF.Name = "splitContainerCF";
+            // 
+            // splitContainerCF.Panel1
+            // 
+            this.splitContainerCF.Panel1.Controls.Add(this.button1);
+            this.splitContainerCF.Panel1.Controls.Add(this.linkLabCF);
+            this.splitContainerCF.Panel1.Controls.Add(this.lstCFFiles);
+            // 
+            // splitContainerCF.Panel2
+            // 
+            this.splitContainerCF.Panel2.Controls.Add(this.label2);
+            this.splitContainerCF.Panel2.Controls.Add(this.btnExportCF);
+            this.splitContainerCF.Panel2.Controls.Add(this.txtCFViewer);
+            this.splitContainerCF.Size = new System.Drawing.Size(976, 537);
+            this.splitContainerCF.SplitterDistance = 230;
+            this.splitContainerCF.TabIndex = 1;
+            // 
+            // button1
+            // 
+            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
+            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button1.Location = new System.Drawing.Point(94, 9);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(113, 23);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "Command Prompt";
+            this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // linkLabCF
+            // 
+            this.linkLabCF.AutoSize = true;
+            this.linkLabCF.Location = new System.Drawing.Point(3, 14);
+            this.linkLabCF.Name = "linkLabCF";
+            this.linkLabCF.Size = new System.Drawing.Size(85, 13);
+            this.linkLabCF.TabIndex = 5;
+            this.linkLabCF.TabStop = true;
+            this.linkLabCF.Text = "Open in Explorer";
+            // 
+            // lstCFFiles
+            // 
+            this.lstCFFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lstCFFiles.FormattingEnabled = true;
+            this.lstCFFiles.Location = new System.Drawing.Point(4, 34);
+            this.lstCFFiles.Name = "lstCFFiles";
+            this.lstCFFiles.Size = new System.Drawing.Size(223, 498);
+            this.lstCFFiles.TabIndex = 2;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(19, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "    ";
+            // 
+            // btnExportCF
+            // 
+            this.btnExportCF.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnExportCF.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExportCF.Location = new System.Drawing.Point(609, 4);
+            this.btnExportCF.Name = "btnExportCF";
+            this.btnExportCF.Size = new System.Drawing.Size(109, 23);
+            this.btnExportCF.TabIndex = 2;
+            this.btnExportCF.Text = "Export to AWS S3";
+            this.btnExportCF.UseVisualStyleBackColor = true;
+            // 
+            // txtCFViewer
+            // 
+            this.txtCFViewer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtCFViewer.Location = new System.Drawing.Point(3, 33);
+            this.txtCFViewer.Name = "txtCFViewer";
+            this.txtCFViewer.Size = new System.Drawing.Size(736, 501);
+            this.txtCFViewer.TabIndex = 0;
+            this.txtCFViewer.Text = "";
+            // 
+            // tabParams
+            // 
+            this.tabParams.Controls.Add(this.splitContainerParams);
+            this.tabParams.Location = new System.Drawing.Point(4, 22);
+            this.tabParams.Name = "tabParams";
+            this.tabParams.Padding = new System.Windows.Forms.Padding(3);
+            this.tabParams.Size = new System.Drawing.Size(982, 543);
+            this.tabParams.TabIndex = 0;
+            this.tabParams.Text = "Parameters";
+            this.tabParams.UseVisualStyleBackColor = true;
             // 
             // FormParametersEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(990, 569);
-            this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.tabMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormParametersEditor";
-            this.Text = "Parameters Editor";
+            this.Text = "Repositories Manager";
             this.Load += new System.EventHandler(this.FormParametersEditor_Load);
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel1.PerformLayout();
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            this.splitContainer1.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
+            this.splitContainerParams.Panel1.ResumeLayout(false);
+            this.splitContainerParams.Panel1.PerformLayout();
+            this.splitContainerParams.Panel2.ResumeLayout(false);
+            this.splitContainerParams.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerParams)).EndInit();
+            this.splitContainerParams.ResumeLayout(false);
+            this.tabMain.ResumeLayout(false);
+            this.tabCloudFormation.ResumeLayout(false);
+            this.splitContainerCF.Panel1.ResumeLayout(false);
+            this.splitContainerCF.Panel1.PerformLayout();
+            this.splitContainerCF.Panel2.ResumeLayout(false);
+            this.splitContainerCF.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerCF)).EndInit();
+            this.splitContainerCF.ResumeLayout(false);
+            this.tabParams.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.SplitContainer splitContainerParams;
         private System.Windows.Forms.ListBox lstJsonFiles;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.RichTextBox txtFileEditor;
@@ -190,7 +334,17 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnCompare;
-        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.LinkLabel linkLabParams;
         private System.Windows.Forms.Button btnCmd;
+        private System.Windows.Forms.TabControl tabMain;
+        private System.Windows.Forms.TabPage tabCloudFormation;
+        private System.Windows.Forms.SplitContainer splitContainerCF;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.LinkLabel linkLabCF;
+        private System.Windows.Forms.ListBox lstCFFiles;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnExportCF;
+        private System.Windows.Forms.RichTextBox txtCFViewer;
+        private System.Windows.Forms.TabPage tabParams;
     }
 }

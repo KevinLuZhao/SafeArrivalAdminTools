@@ -70,7 +70,7 @@ namespace SafeArrival.AdminTools.Presentation
             if (GlobalVariables.Enviroment.ToString().IndexOf("production") >= 0)
             {
                 MessageBox.Show("Starting/Stopping System is not supported in Production envirnment!");
-                //this.Enabled = false;
+                //Enabled = false;
                 btnSystemStart.Visible = false;
                 btnSystemStop.Visible = false;
                 btnSystemRefresh.Visible = false;
@@ -78,7 +78,7 @@ namespace SafeArrival.AdminTools.Presentation
             }
             else
             {
-                //this.Enabled = true;
+                //Enabled = true;
                 btnSystemStart.Visible = true;
                 btnSystemStop.Visible = true;
                 btnSystemRefresh.Visible = true;
@@ -107,9 +107,9 @@ namespace SafeArrival.AdminTools.Presentation
                             MessageBoxButtons.YesNo);
                 if (confirmResult == DialogResult.Yes)
                 {
-                    this.imgAppStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Red_icon;
-                    this.imgRdsStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Red_icon;
-                    this.imgScheduleStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Red_icon;
+                    imgAppStatus.Image = Properties.Resources.Button_Blank_Red_icon;
+                    imgRdsStatus.Image = Properties.Resources.Button_Blank_Red_icon;
+                    imgScheduleStatus.Image = Properties.Resources.Button_Blank_Red_icon;
                     var manager = new SystemManagement();
                     await manager.StartSystem(lstAutoScalingGroupSettings, cboxRdsMutlAZ.Checked);
                     WriteNotification($"{GlobalVariables.Enviroment.ToString()} system is started!");
@@ -136,9 +136,9 @@ namespace SafeArrival.AdminTools.Presentation
                         MessageBoxButtons.YesNo);
                 if (confirmResult == DialogResult.Yes)
                 {
-                    this.imgAppStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Red_icon;
-                    this.imgRdsStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Red_icon;
-                    this.imgScheduleStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Red_icon;
+                    imgAppStatus.Image = Properties.Resources.Button_Blank_Red_icon;
+                    imgRdsStatus.Image = Properties.Resources.Button_Blank_Red_icon;
+                    imgScheduleStatus.Image = Properties.Resources.Button_Blank_Red_icon;
                     var manager = new SystemManagement();
                     await manager.ShutDownSystem(cboxStopJumpbox.Checked);
                     WriteNotification(String.Format("{0} system is stopped!", GlobalVariables.Enviroment.ToString()));
@@ -191,15 +191,15 @@ namespace SafeArrival.AdminTools.Presentation
             }
             if (0 == counterSuspended)
             {
-                this.imgScheduleStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Green_icon;
+                imgScheduleStatus.Image = Properties.Resources.Button_Blank_Green_icon;
             }
             else if (lstAction.Count == counterSuspended)
             {
-                this.imgScheduleStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Gray_icon;
+                imgScheduleStatus.Image = Properties.Resources.Button_Blank_Gray_icon;
             }
             else
             {
-                this.imgScheduleStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Red_icon;
+                imgScheduleStatus.Image = Properties.Resources.Button_Blank_Red_icon;
             }
         }
 
@@ -238,18 +238,18 @@ namespace SafeArrival.AdminTools.Presentation
             }
             if (stoppedGroupCounter == 0)
             {
-                this.imgAppStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Green_icon;
+                imgAppStatus.Image = Properties.Resources.Button_Blank_Green_icon;
                 //return SystemStauts.Running;
             }
 
             else if (stoppedGroupCounter == lstGroup.Count)
             {
-                this.imgAppStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Gray_icon;
+                imgAppStatus.Image = Properties.Resources.Button_Blank_Gray_icon;
                 //return SystemStauts.Terminated;
             }
             else
             {
-                this.imgAppStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Red_icon;
+                imgAppStatus.Image = Properties.Resources.Button_Blank_Red_icon;
                 //return SystemStauts.Abnormal;
             }
         }
@@ -275,18 +275,18 @@ namespace SafeArrival.AdminTools.Presentation
             cboxRdsMutlAZ.Checked = instance.MultiAZ;
             if (instance.Status == "available")
             {
-                this.imgRdsStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Green_icon;
+                imgRdsStatus.Image = Properties.Resources.Button_Blank_Green_icon;
                 return SystemStauts.Running;
             }
 
             else if (instance.Status == "stopped")
             {
-                this.imgRdsStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Gray_icon;
+                imgRdsStatus.Image = Properties.Resources.Button_Blank_Gray_icon;
                 return SystemStauts.Terminated;
             }
             else
             {
-                this.imgRdsStatus.Image = global::SafeArrival.AdminTools.Presentation.Properties.Resources.Button_Blank_Red_icon;
+                imgRdsStatus.Image = Properties.Resources.Button_Blank_Red_icon;
                 return SystemStauts.Abnormal;
             }
         }
@@ -425,6 +425,7 @@ namespace SafeArrival.AdminTools.Presentation
                 GlobalVariables.Region,
                 GlobalVariables.Color);
             gvEc2Instances.DataSource = await helper.GetEc2InsatancesList(((KeyValuePair<string, string>)ddlEC2Region.SelectedItem).Key);
+            //gvEc2Instances.Sort(gvEc2InstancesColState, System.ComponentModel.ListSortDirection.Ascending);
         }
 
         private async void tsComboRegion_SelectedIndexChanged(object sender, EventArgs e)

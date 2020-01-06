@@ -3,6 +3,7 @@ using Amazon.EC2.Model;
 using SafeArrival.AdminTools.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SafeArrival.AdminTools.AwsUtilities
@@ -61,7 +62,8 @@ namespace SafeArrival.AdminTools.AwsUtilities
                     ret.Add(saInstance);
                 }
             }
-            return ret;
+            var results = ret.OrderBy(o => o.State).ToList();
+            return results;
         }
 
         public async Task StartEc2Instances(List<string> InstanceIds, string region = null)

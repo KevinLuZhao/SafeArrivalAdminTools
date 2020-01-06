@@ -22,6 +22,16 @@ namespace SafeArrival.AdminTools.Presentation
 
         public override void OnEnvironmentChanged()
         {
+            BindFolders();
+        }
+
+        private void FormParametersEditor_Load(object sender, EventArgs e)
+        {
+            BindFolders();
+        }
+
+        private void BindFolders()
+        {
             BindFolder(GetJsonFilesFolder());
         }
 
@@ -29,7 +39,7 @@ namespace SafeArrival.AdminTools.Presentation
         {
             try
             {
-                List<KeyValuePair<string, string>> lstFile = new List<KeyValuePair<string, string>>();
+                var lstFile = new List<KeyValuePair<string, string>>();
                 foreach (var file in Directory.GetFiles(dir, "*.json"))
                 {
                     lstFile.Add(new KeyValuePair<string, string>(Path.GetFileNameWithoutExtension(file), file));
@@ -90,13 +100,13 @@ namespace SafeArrival.AdminTools.Presentation
             try
             {
                 var confirmResult = MessageBox.Show(
-                    $"Are you sure to upload parameter.zip to S3 bucket '{GenerationS3BucketName()}'",
+                    $"Are you sure to upload parameter.zip to S3 bucket '{GenerationParamsS3BucketName()}'",
                     "Confirm Export to S3 Bucket",
                     MessageBoxButtons.YesNo);
                 if (confirmResult == DialogResult.Yes)
                 {
                     await GenerateParameterZip();
-                    WriteNotification("File parameter.zip updated at " + GenerationS3BucketName());
+                    WriteNotification("File parameter.zip updated at " + GenerationParamsS3BucketName());
                 }
             }
             catch (Exception ex)
@@ -160,7 +170,7 @@ namespace SafeArrival.AdminTools.Presentation
                 GlobalVariables.Enviroment,
                 GlobalVariables.Region,
                 GlobalVariables.Color,
-                GenerationS3BucketName()
+                GenerationParamsS3BucketName()
                 );
 
             await s3Helper.UploadFile("parameter.zip", new FileStream(@"c:\temp\parameter.zip", FileMode.Open));
@@ -171,14 +181,9 @@ namespace SafeArrival.AdminTools.Presentation
             return ConfigurationSettings.AppSettings["ParammeterFilesFolder"] + GlobalVariables.Enviroment;
         }
 
-        private string GenerationS3BucketName()
+        private string GenerationParamsS3BucketName()
         {
             return string.Join("-", "safe-arrival", GlobalVariables.Region, GlobalVariables.Enviroment, "parameters");
-        }
-
-        private void FormParametersEditor_Load(object sender, EventArgs e)
-        {
-            BindFolder(GetJsonFilesFolder());
         }
     }
 }
