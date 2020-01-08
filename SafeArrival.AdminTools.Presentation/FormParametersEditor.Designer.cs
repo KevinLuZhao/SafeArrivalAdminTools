@@ -45,10 +45,16 @@
             this.button1 = new System.Windows.Forms.Button();
             this.linkLabCF = new System.Windows.Forms.LinkLabel();
             this.lstCFFiles = new System.Windows.Forms.ListBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lblBranchName = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnExportCF = new System.Windows.Forms.Button();
             this.txtCFViewer = new System.Windows.Forms.RichTextBox();
             this.tabParams = new System.Windows.Forms.TabPage();
+            this.tabApplications = new System.Windows.Forms.TabPage();
+            this.pnlApplications = new System.Windows.Forms.Panel();
+            this.btnAppsExport = new System.Windows.Forms.Button();
+            this.txtAppsProcess = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerParams)).BeginInit();
             this.splitContainerParams.Panel1.SuspendLayout();
             this.splitContainerParams.Panel2.SuspendLayout();
@@ -60,6 +66,8 @@
             this.splitContainerCF.Panel2.SuspendLayout();
             this.splitContainerCF.SuspendLayout();
             this.tabParams.SuspendLayout();
+            this.tabApplications.SuspendLayout();
+            this.pnlApplications.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainerParams
@@ -82,7 +90,7 @@
             this.splitContainerParams.Panel2.Controls.Add(this.btnSave);
             this.splitContainerParams.Panel2.Controls.Add(this.txtFileEditor);
             this.splitContainerParams.Size = new System.Drawing.Size(976, 537);
-            this.splitContainerParams.SplitterDistance = 230;
+            this.splitContainerParams.SplitterDistance = 229;
             this.splitContainerParams.TabIndex = 0;
             // 
             // btnCmd
@@ -117,7 +125,7 @@
             this.lstJsonFiles.FormattingEnabled = true;
             this.lstJsonFiles.Location = new System.Drawing.Point(4, 34);
             this.lstJsonFiles.Name = "lstJsonFiles";
-            this.lstJsonFiles.Size = new System.Drawing.Size(223, 498);
+            this.lstJsonFiles.Size = new System.Drawing.Size(222, 498);
             this.lstJsonFiles.TabIndex = 2;
             this.lstJsonFiles.SelectedIndexChanged += new System.EventHandler(this.lstJsonFiles_SelectedIndexChanged);
             // 
@@ -125,7 +133,7 @@
             // 
             this.btnCompare.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCompare.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCompare.Location = new System.Drawing.Point(360, 9);
+            this.btnCompare.Location = new System.Drawing.Point(361, 9);
             this.btnCompare.Name = "btnCompare";
             this.btnCompare.Size = new System.Drawing.Size(153, 23);
             this.btnCompare.TabIndex = 4;
@@ -146,7 +154,7 @@
             // 
             this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnExport.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExport.Location = new System.Drawing.Point(538, 9);
+            this.btnExport.Location = new System.Drawing.Point(539, 9);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(109, 23);
             this.btnExport.TabIndex = 2;
@@ -158,7 +166,7 @@
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(664, 9);
+            this.btnSave.Location = new System.Drawing.Point(665, 9);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 1;
@@ -173,7 +181,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtFileEditor.Location = new System.Drawing.Point(3, 33);
             this.txtFileEditor.Name = "txtFileEditor";
-            this.txtFileEditor.Size = new System.Drawing.Size(736, 501);
+            this.txtFileEditor.Size = new System.Drawing.Size(737, 501);
             this.txtFileEditor.TabIndex = 0;
             this.txtFileEditor.Text = "";
             // 
@@ -181,6 +189,7 @@
             // 
             this.tabMain.Controls.Add(this.tabCloudFormation);
             this.tabMain.Controls.Add(this.tabParams);
+            this.tabMain.Controls.Add(this.tabApplications);
             this.tabMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabMain.Location = new System.Drawing.Point(0, 0);
             this.tabMain.Name = "tabMain";
@@ -213,11 +222,13 @@
             // 
             // splitContainerCF.Panel2
             // 
+            this.splitContainerCF.Panel2.Controls.Add(this.label3);
+            this.splitContainerCF.Panel2.Controls.Add(this.lblBranchName);
             this.splitContainerCF.Panel2.Controls.Add(this.label2);
             this.splitContainerCF.Panel2.Controls.Add(this.btnExportCF);
             this.splitContainerCF.Panel2.Controls.Add(this.txtCFViewer);
             this.splitContainerCF.Size = new System.Drawing.Size(976, 537);
-            this.splitContainerCF.SplitterDistance = 230;
+            this.splitContainerCF.SplitterDistance = 229;
             this.splitContainerCF.TabIndex = 1;
             // 
             // button1
@@ -244,14 +255,36 @@
             // 
             // lstCFFiles
             // 
+            this.lstCFFiles.AllowDrop = true;
             this.lstCFFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lstCFFiles.FormattingEnabled = true;
             this.lstCFFiles.Location = new System.Drawing.Point(4, 34);
             this.lstCFFiles.Name = "lstCFFiles";
-            this.lstCFFiles.Size = new System.Drawing.Size(223, 498);
+            this.lstCFFiles.Size = new System.Drawing.Size(222, 498);
             this.lstCFFiles.TabIndex = 2;
+            this.lstCFFiles.SelectedIndexChanged += new System.EventHandler(this.lstCFFiles_SelectedIndexChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(12, 9);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(151, 13);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Current Git Local Branch:";
+            // 
+            // lblBranchName
+            // 
+            this.lblBranchName.AutoSize = true;
+            this.lblBranchName.ForeColor = System.Drawing.Color.Red;
+            this.lblBranchName.Location = new System.Drawing.Point(169, 9);
+            this.lblBranchName.Name = "lblBranchName";
+            this.lblBranchName.Size = new System.Drawing.Size(10, 13);
+            this.lblBranchName.TabIndex = 5;
+            this.lblBranchName.Text = " ";
             // 
             // label2
             // 
@@ -266,12 +299,13 @@
             // 
             this.btnExportCF.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnExportCF.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExportCF.Location = new System.Drawing.Point(609, 4);
+            this.btnExportCF.Location = new System.Drawing.Point(609, 7);
             this.btnExportCF.Name = "btnExportCF";
             this.btnExportCF.Size = new System.Drawing.Size(109, 23);
             this.btnExportCF.TabIndex = 2;
             this.btnExportCF.Text = "Export to AWS S3";
             this.btnExportCF.UseVisualStyleBackColor = true;
+            this.btnExportCF.Click += new System.EventHandler(this.btnExportCF_Click);
             // 
             // txtCFViewer
             // 
@@ -280,7 +314,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtCFViewer.Location = new System.Drawing.Point(3, 33);
             this.txtCFViewer.Name = "txtCFViewer";
-            this.txtCFViewer.Size = new System.Drawing.Size(736, 501);
+            this.txtCFViewer.ReadOnly = true;
+            this.txtCFViewer.Size = new System.Drawing.Size(737, 501);
             this.txtCFViewer.TabIndex = 0;
             this.txtCFViewer.Text = "";
             // 
@@ -295,6 +330,48 @@
             this.tabParams.Text = "Parameters";
             this.tabParams.UseVisualStyleBackColor = true;
             // 
+            // tabApplications
+            // 
+            this.tabApplications.Controls.Add(this.pnlApplications);
+            this.tabApplications.Location = new System.Drawing.Point(4, 22);
+            this.tabApplications.Name = "tabApplications";
+            this.tabApplications.Padding = new System.Windows.Forms.Padding(3);
+            this.tabApplications.Size = new System.Drawing.Size(982, 543);
+            this.tabApplications.TabIndex = 2;
+            this.tabApplications.Text = "Applications";
+            this.tabApplications.UseVisualStyleBackColor = true;
+            // 
+            // pnlApplications
+            // 
+            this.pnlApplications.Controls.Add(this.txtAppsProcess);
+            this.pnlApplications.Controls.Add(this.btnAppsExport);
+            this.pnlApplications.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlApplications.Location = new System.Drawing.Point(3, 3);
+            this.pnlApplications.Name = "pnlApplications";
+            this.pnlApplications.Size = new System.Drawing.Size(976, 537);
+            this.pnlApplications.TabIndex = 0;
+            // 
+            // btnAppsExport
+            // 
+            this.btnAppsExport.Location = new System.Drawing.Point(6, 4);
+            this.btnAppsExport.Name = "btnAppsExport";
+            this.btnAppsExport.Size = new System.Drawing.Size(75, 23);
+            this.btnAppsExport.TabIndex = 0;
+            this.btnAppsExport.Text = "Export";
+            this.btnAppsExport.UseVisualStyleBackColor = true;
+            this.btnAppsExport.Click += new System.EventHandler(this.btnAppsExport_Click);
+            // 
+            // txtAppsProcess
+            // 
+            this.txtAppsProcess.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtAppsProcess.Location = new System.Drawing.Point(6, 34);
+            this.txtAppsProcess.Name = "txtAppsProcess";
+            this.txtAppsProcess.Size = new System.Drawing.Size(965, 498);
+            this.txtAppsProcess.TabIndex = 1;
+            this.txtAppsProcess.Text = "";
+            // 
             // FormParametersEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -303,7 +380,7 @@
             this.Controls.Add(this.tabMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormParametersEditor";
-            this.Text = "Repositories Manager";
+            this.Text = "Software Delivery";
             this.Load += new System.EventHandler(this.FormParametersEditor_Load);
             this.splitContainerParams.Panel1.ResumeLayout(false);
             this.splitContainerParams.Panel1.PerformLayout();
@@ -320,6 +397,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerCF)).EndInit();
             this.splitContainerCF.ResumeLayout(false);
             this.tabParams.ResumeLayout(false);
+            this.tabApplications.ResumeLayout(false);
+            this.pnlApplications.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -346,5 +425,11 @@
         private System.Windows.Forms.Button btnExportCF;
         private System.Windows.Forms.RichTextBox txtCFViewer;
         private System.Windows.Forms.TabPage tabParams;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblBranchName;
+        private System.Windows.Forms.TabPage tabApplications;
+        private System.Windows.Forms.Panel pnlApplications;
+        private System.Windows.Forms.Button btnAppsExport;
+        private System.Windows.Forms.RichTextBox txtAppsProcess;
     }
 }

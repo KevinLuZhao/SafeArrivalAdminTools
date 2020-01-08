@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibGit2Sharp;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Windows.Forms;
@@ -8,12 +9,14 @@ using SafeArrival.AdminTools.Model;
 using SafeArrival.AdminTools.AwsUtilities;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using SafeArrival.AdminTools.BLL;
 
 namespace SafeArrival.AdminTools.Presentation
 {
     public partial class FormParametersEditor : FormMdiChildBase
     {
         private string _parameterFolder = string.Empty;
+        private SoftwareDeliveryService service = new SoftwareDeliveryService();
         //private string _s3bucket; 
         public FormParametersEditor()
         {
@@ -28,11 +31,13 @@ namespace SafeArrival.AdminTools.Presentation
         private void FormParametersEditor_Load(object sender, EventArgs e)
         {
             BindFolders();
+            lblBranchName.Text = GetLocalInfraRepositoryBranch();
         }
 
         private void BindFolders()
         {
             BindFolder(GetJsonFilesFolder());
+            BindInfraFolders();
         }
 
         private void BindFolder(string dir)
@@ -105,7 +110,7 @@ namespace SafeArrival.AdminTools.Presentation
                     MessageBoxButtons.YesNo);
                 if (confirmResult == DialogResult.Yes)
                 {
-                    await GenerateParameterZip();
+                    await service.ExportParameters();
                     WriteNotification("File parameter.zip updated at " + GenerationParamsS3BucketName());
                 }
             }
@@ -130,60 +135,118 @@ namespace SafeArrival.AdminTools.Presentation
         {
             Process p = new Process();
             p.StartInfo.FileName = "cmd.exe";
-            p.StartInfo.WorkingDirectory = ConfigurationSettings.AppSettings["ParammeterFilesFolder"];
+            p.StartInfo.WorkingDirectory = ConfigurationManager.AppSettings["ParammeterFilesFolder"];
             p.StartInfo.UseShellExecute = false;
             p.Start();
         }
 
-        private async Task GenerateParameterZip()
-        {
-            if (!Directory.Exists(@"c:\temp"))
-            {
-                NotifyToMainStatus(string.Format("Folder {0} is needed to store the tempary zip file", @"c:\temp"), System.Drawing.Color.Red);
-                return;
-            }
-            if (File.Exists(@"c:\temp\parameter.zip"))
-            {
-                File.Delete(@"c:\temp\parameter.zip");
-            }
-
-            using (FileStream zipToOpen = new FileStream(@"c:\temp\parameter.zip", FileMode.OpenOrCreate))
-            {
-                using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Update))
-                {
-                    ZipArchiveEntry readmeEntry;
-                    DirectoryInfo d = new DirectoryInfo(GetJsonFilesFolder());
-                    FileInfo[] Files = d.GetFiles("*.json");
-                    foreach (FileInfo file in Files)
-                    {
-                        readmeEntry = archive.CreateEntryFromFile(file.FullName, file.Name);
-                    }
-                }
-                zipToOpen.Close();
-            }
-            await UploadParameterZipToS3();
-        }
-
-        private async Task UploadParameterZipToS3()
-        {
-            S3Helper s3Helper = new S3Helper(
-                GlobalVariables.Enviroment,
-                GlobalVariables.Region,
-                GlobalVariables.Color,
-                GenerationParamsS3BucketName()
-                );
-
-            await s3Helper.UploadFile("parameter.zip", new FileStream(@"c:\temp\parameter.zip", FileMode.Open));
-        } 
-
+        
         private string GetJsonFilesFolder()
         {
-            return ConfigurationSettings.AppSettings["ParammeterFilesFolder"] + GlobalVariables.Enviroment;
+            return ConfigurationManager.AppSettings["ParammeterFilesFolder"] + GlobalVariables.Enviroment;
         }
 
         private string GenerationParamsS3BucketName()
         {
             return string.Join("-", "safe-arrival", GlobalVariables.Region, GlobalVariables.Enviroment, "parameters");
+        }
+
+        //-----------------------------------------CloudFormation------------------------------------------
+        private void BindInfraFolders()
+        {
+            try
+            {
+                var dir = new DirectoryInfo(ConfigurationManager.AppSettings["InfraFileFolder"]);
+                var lstFile = new List<KeyValuePair<string, string>>();
+                foreach (var subFolder in dir.GetDirectories())
+                {
+                    if (subFolder.Name == ".git")
+                        continue;
+                    lstFile.Add(new KeyValuePair<string, string>(subFolder.Name, "Folder" + subFolder.Name));
+                    foreach (var file in subFolder.GetFiles())
+                    {
+                        lstFile.Add(new KeyValuePair<string, string>("    " + file.Name, file.FullName));
+                    }
+                }
+                lstCFFiles.DataSource = lstFile;
+                lstCFFiles.DisplayMember = "Key";
+                lstCFFiles.ValueMember = "Value";
+                lstCFFiles.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+        }
+
+        private string GetLocalInfraRepositoryBranch()
+        {
+            string path = ConfigurationManager.AppSettings["InfraFileFolder"];
+            if (LibGit2Sharp.Repository.IsValid(path))
+            {
+                var repo = new Repository(path);
+                return repo.Head.FriendlyName;
+            }
+            else
+            {
+                return $"No repository is found from the path of {path}, please check your config file";
+            }
+        }
+
+        private void lstCFFiles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (lstCFFiles.SelectedIndex < 0)
+                {
+                    txtCFViewer.Text = string.Empty;
+                    return;
+                }
+                var itemName = ((KeyValuePair<string, string>)lstCFFiles.SelectedItem).Value;
+                if (itemName.IndexOf("Folder") == 0)
+                    return;
+                using (StreamReader r = new StreamReader(itemName))
+                {
+                    txtCFViewer.Text = r.ReadToEnd();
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+        }
+
+        private async void btnExportCF_Click(object sender, EventArgs e)
+        {
+            if (lblBranchName.Text != GlobalVariables.Enviroment)
+            {
+                var confirmResult = MessageBox.Show(
+                        $"The selected environment is '{GlobalVariables.Enviroment}', but your current safearrival-infra local repository branch is '{lblBranchName.Text}'. " +
+                        $"Please either re-select current environment or check-out required branch",
+                        "Warn: Evironment And Repository Branch Doesn't Match",
+                        MessageBoxButtons.OK);
+                return;
+            }
+            var confirmResult1 = MessageBox.Show(
+                    $"Are you sure to upload safearrival-infra.zip to S3 bucket '{GeneratioCFS3BucketName()}'",
+                    "Confirm Export to S3 Bucket",
+                    MessageBoxButtons.YesNo);
+            if (confirmResult1 == DialogResult.Yes)
+            {
+                await service.ExportCloudFormation();
+                WriteNotification("File parameter.zip updated at " + GenerationParamsS3BucketName());
+            }
+        }
+
+        private string GeneratioCFS3BucketName()
+        {
+            return string.Join("-", "safe-arrival", GlobalVariables.Region, GlobalVariables.Enviroment, "cloudformation");
+        }
+
+        //-----------------------------------------Applications------------------------------------------
+        private void btnAppsExport_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

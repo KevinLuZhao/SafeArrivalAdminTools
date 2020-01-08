@@ -37,6 +37,7 @@
             this.infrastructureManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.greenBlueDeploymentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
@@ -49,7 +50,6 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.tsComboColor = new System.Windows.Forms.ToolStripComboBox();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -74,9 +74,9 @@
             // parameterEditToolStripMenuItem
             // 
             this.parameterEditToolStripMenuItem.Name = "parameterEditToolStripMenuItem";
-            this.parameterEditToolStripMenuItem.Size = new System.Drawing.Size(101, 20);
+            this.parameterEditToolStripMenuItem.Size = new System.Drawing.Size(110, 20);
             this.parameterEditToolStripMenuItem.Tag = "FormParametersEditor";
-            this.parameterEditToolStripMenuItem.Text = "Edit Parameters";
+            this.parameterEditToolStripMenuItem.Text = "Software Delivery";
             this.parameterEditToolStripMenuItem.Click += new System.EventHandler(this.OpenFormMenu_Click);
             // 
             // s3MonitorToolStripMenuItem
@@ -118,6 +118,13 @@
             this.viewLogsToolStripMenuItem.Tag = "FormLogs";
             this.viewLogsToolStripMenuItem.Text = "View Logs";
             this.viewLogsToolStripMenuItem.Click += new System.EventHandler(this.OpenFormMenu_Click);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -203,13 +210,6 @@
             this.tsComboColor.Name = "tsComboColor";
             this.tsComboColor.Size = new System.Drawing.Size(75, 25);
             this.tsComboColor.SelectedIndexChanged += new System.EventHandler(this.tsComboColor_SelectedIndexChanged);
-            // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
-            this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
             // 
             // FrmMain
             // 

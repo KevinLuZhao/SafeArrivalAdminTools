@@ -45,10 +45,11 @@ namespace SafeArrival.AdminTools.AwsUtilities
             BucketName = bucketName;
         }
 
-        //public S3Helper(string bucketName)
-        //{
-        //    BucketName = bucketName;
-        //}
+        public async Task CopyFile(string sourceBucket, string sourceKey, string destinationBucket, string destinationKey)
+        {
+            var response = await client.CopyObjectAsync(sourceBucket, sourceKey, destinationBucket, destinationKey);
+            //response.
+        }
 
         /// <summary>
         /// Upload the File to AWS S3
