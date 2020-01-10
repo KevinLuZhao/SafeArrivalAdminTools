@@ -57,5 +57,28 @@ namespace SafeArrival.AdminTools.AwsUtilities
                 ;
             }
         }
+
+        public string ReadTag(string lambdaFunctionName, string tagName)
+        {
+            string tagValue;
+            var lstLambdaFuncs = client.ListFunctions();
+
+            var request = new ListTagsRequest();
+            request.Resource = lstLambdaFuncs.Functions[0].FunctionArn;
+            var tagsResponse = client.ListTags(request);
+            if (tagsResponse.Tags.TryGetValue(lambdaFunctionName, out tagValue))
+            {
+                return tagValue;
+            }
+            return null;
+        }
+
+        public void SetTag(string lambdaFunctionName, string tagName, string tagValue)
+        {
+            var request = new TagResourceRequest();
+            request.Resource = lambdaFunctionName;
+            request.Tags.Add(tagName, tagValue);
+            client.TagResource(request);
+        }
     }
 }

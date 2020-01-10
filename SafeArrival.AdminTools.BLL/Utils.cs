@@ -5,6 +5,8 @@ using System.Text;
 using System.IO;
 using SafeArrival.AdminTools.Model;
 using System.Xml;
+using System.Configuration;
+using LibGit2Sharp;
 
 namespace SafeArrival.AdminTools.BLL
 {
@@ -19,6 +21,20 @@ namespace SafeArrival.AdminTools.BLL
         {
             var doc = GetCredentialsFile();
             return doc.SelectSingleNode("github").Value;
+        }
+
+        static public string GetLocalInfraRepositoryBranch()
+        {
+            string path = ConfigurationManager.AppSettings["InfraFileFolder"];
+            if (LibGit2Sharp.Repository.IsValid(path))
+            {
+                var repo = new Repository(path);
+                return repo.Head.FriendlyName;
+            }
+            else
+            {
+                return $"No repository is found from the path of {path}, please check your config file";
+            }
         }
 
         static public TeamCityCredencial GetTeamcityCredential()

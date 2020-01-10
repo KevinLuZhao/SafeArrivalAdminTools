@@ -8,6 +8,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SafeArrival.AdminTools.BLL
@@ -15,7 +16,7 @@ namespace SafeArrival.AdminTools.BLL
     public class SoftwareDeliveryService
     {
         string tempPath = @"c:\temp\";
-        
+
         public async Task ExportParameters()
         {
             var paramsFilePath = $"{tempPath}parameter.zip";
@@ -106,9 +107,52 @@ namespace SafeArrival.AdminTools.BLL
             return zipFilePath;
         }
 
-        private async void DeliverApplications()
+        public async Task DeliverApplications(List<string> applicationExportingLogs)
         {
+            //await CopyApplicationZipFiles(applicationExportingLogs);
+            await UpdateLambdaFunctionVersion();
+            await Task.Run(() =>
+            {
 
+                //for (var i = 0; i < 100; i++)
+                //{
+                //    Thread.Sleep(1000);
+                //    applicationExportingLogs.Add($"This is {i}");
+                //}
+            });
+        }
+
+        private async Task CopyApplicationZipFiles(List<string> applicationExportingLogs)
+        {
+            //var sourceFolder = "application_sources/";
+            var sourceFolder = "application/";
+            var detinationFolder = "application/";
+            S3Helper s3Helper = new S3Helper(
+               GlobalVariables.Enviroment,
+               GlobalVariables.Region,
+               GlobalVariables.Color,
+               string.Join("-", "safe-arrival", GlobalVariables.Region, GlobalVariables.Enviroment, "artifact")
+            );
+
+            var sourceFiles = s3Helper.GetFolderFileKeys(s3Helper.BucketName, sourceFolder);
+            foreach (var sourceKey in sourceFiles)
+            {
+                if (sourceKey.Trim() == sourceFolder)
+                    continue;
+                var destinationKey = sourceKey.Replace(sourceFolder, detinationFolder);
+                //await s3Helper.CopyFile(s3Helper.BucketName, sourceKey, s3Helper.BucketName, destinationKey);
+                applicationExportingLogs.Add($"{DateTime.Now}:  {sourceKey} copied to {destinationKey}");
+            }
+            //await s3Helper.CopyFolder(s3Helper.BucketName, "application/", s3Helper.BucketName, "application_sources/");
+        }
+
+        private async Task UpdateLambdaFunctionVersion()
+        {
+            LambdaHelper helper = new LambdaHelper(
+             GlobalVariables.Enviroment,
+             GlobalVariables.Region,
+             GlobalVariables.Color);
+            helper.ReadTag("SafeArrival-Lambda-SisFetcher-staging-green", "Version");
         }
     }
 }

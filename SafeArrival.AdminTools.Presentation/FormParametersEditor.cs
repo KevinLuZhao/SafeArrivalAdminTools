@@ -1,15 +1,13 @@
-﻿using LibGit2Sharp;
+﻿using SafeArrival.AdminTools.BLL;
+using SafeArrival.AdminTools.Model;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Windows.Forms;
-using System.IO;
-using System.IO.Compression;
-using SafeArrival.AdminTools.Model;
-using SafeArrival.AdminTools.AwsUtilities;
 using System.Diagnostics;
+using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
-using SafeArrival.AdminTools.BLL;
+using System.Windows.Forms;
 
 namespace SafeArrival.AdminTools.Presentation
 {
@@ -17,6 +15,7 @@ namespace SafeArrival.AdminTools.Presentation
     {
         private string _parameterFolder = string.Empty;
         private SoftwareDeliveryService service = new SoftwareDeliveryService();
+        private static List<string> applicationExportingLogs;
         //private string _s3bucket; 
         public FormParametersEditor()
         {
@@ -31,7 +30,7 @@ namespace SafeArrival.AdminTools.Presentation
         private void FormParametersEditor_Load(object sender, EventArgs e)
         {
             BindFolders();
-            lblBranchName.Text = GetLocalInfraRepositoryBranch();
+            lblBranchName.Text = Utils.GetLocalInfraRepositoryBranch();
         }
 
         private void BindFolders()
@@ -179,20 +178,6 @@ namespace SafeArrival.AdminTools.Presentation
             }
         }
 
-        private string GetLocalInfraRepositoryBranch()
-        {
-            string path = ConfigurationManager.AppSettings["InfraFileFolder"];
-            if (LibGit2Sharp.Repository.IsValid(path))
-            {
-                var repo = new Repository(path);
-                return repo.Head.FriendlyName;
-            }
-            else
-            {
-                return $"No repository is found from the path of {path}, please check your config file";
-            }
-        }
-
         private void lstCFFiles_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
@@ -244,9 +229,25 @@ namespace SafeArrival.AdminTools.Presentation
         }
 
         //-----------------------------------------Applications------------------------------------------
-        private void btnAppsExport_Click(object sender, EventArgs e)
+        private async void btnAppsExport_Click(object sender, EventArgs e)
         {
+            timer1.Enabled = true;
+            applicationExportingLogs = new List<string>();
+            await service.DeliverApplications(applicationExportingLogs);
+            //Wait 1 second to allow the DeliverApplications finish all tasks and write log to screen before the timer1 disabled, 
+            //but the waiting will not block the main threa, to let the timer1_Tick keeps listening the applicationExportingLogs value changes.
+            await Task.Run(() =>
+            {
+                Thread.Sleep(1000);
+            });
+            timer1.Enabled = false;
+        }
 
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            txtAppsProcess.Text = string.Join(Environment.NewLine, applicationExportingLogs);
+            txtAppsProcess.SelectionStart = txtAppsProcess.Text.Length;
+            txtAppsProcess.ScrollToCaret();
         }
     }
 }

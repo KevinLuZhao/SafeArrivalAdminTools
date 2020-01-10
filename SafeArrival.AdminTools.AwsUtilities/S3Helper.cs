@@ -45,6 +45,26 @@ namespace SafeArrival.AdminTools.AwsUtilities
             BucketName = bucketName;
         }
 
+        public List<string> GetFolderFileKeys(string bucket, string folder)
+        {
+            var ret = new List<string>();
+            var files = client.ListObjects(bucket, folder);
+            foreach (var file in files.S3Objects)
+            {
+                ret.Add(file.Key);
+            }
+            return ret;
+        }
+
+        public async Task CopyFolder(string sourceBucket, string sourceFolder, string destinationBucket, string destinationFolder)
+        {
+            var files = client.ListObjects(sourceBucket, sourceFolder);
+            foreach (var file in files.S3Objects)
+            {
+                var key = file.Key;
+            }
+        }
+
         public async Task CopyFile(string sourceBucket, string sourceKey, string destinationBucket, string destinationKey)
         {
             var response = await client.CopyObjectAsync(sourceBucket, sourceKey, destinationBucket, destinationKey);

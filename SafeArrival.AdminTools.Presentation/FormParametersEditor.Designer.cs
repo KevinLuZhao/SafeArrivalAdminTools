@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormParametersEditor));
             this.splitContainerParams = new System.Windows.Forms.SplitContainer();
             this.btnCmd = new System.Windows.Forms.Button();
@@ -55,6 +56,7 @@
             this.pnlApplications = new System.Windows.Forms.Panel();
             this.btnAppsExport = new System.Windows.Forms.Button();
             this.txtAppsProcess = new System.Windows.Forms.RichTextBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerParams)).BeginInit();
             this.splitContainerParams.Panel1.SuspendLayout();
             this.splitContainerParams.Panel2.SuspendLayout();
@@ -372,6 +374,11 @@
             this.txtAppsProcess.TabIndex = 1;
             this.txtAppsProcess.Text = "";
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 500;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // FormParametersEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -431,5 +438,6 @@
         private System.Windows.Forms.Panel pnlApplications;
         private System.Windows.Forms.Button btnAppsExport;
         private System.Windows.Forms.RichTextBox txtAppsProcess;
+        private System.Windows.Forms.Timer timer1;
     }
 }
