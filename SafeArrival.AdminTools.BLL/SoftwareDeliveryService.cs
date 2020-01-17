@@ -16,6 +16,39 @@ namespace SafeArrival.AdminTools.BLL
     public class SoftwareDeliveryService
     {
         string tempPath = @"c:\temp\";
+        S3Helper s3ParamsHelper;
+        S3Helper s3CloudFormationHelper;
+        S3Helper s3ArtifactHelper;
+        LambdaHelper lambdaHelper;
+
+        public SoftwareDeliveryService()
+        {
+            s3ParamsHelper = new S3Helper(
+                GlobalVariables.Enviroment,
+                GlobalVariables.Region,
+                GlobalVariables.Color,
+                string.Join("-", "safe-arrival", GlobalVariables.Region, GlobalVariables.Enviroment, "parameters")
+            );
+
+            s3CloudFormationHelper = new S3Helper(
+                GlobalVariables.Enviroment,
+                GlobalVariables.Region,
+                GlobalVariables.Color,
+                string.Join("-", "safe-arrival", GlobalVariables.Region, GlobalVariables.Enviroment, "cloudformation")
+             );
+
+            s3ArtifactHelper = new S3Helper(
+               GlobalVariables.Enviroment,
+               GlobalVariables.Region,
+               GlobalVariables.Color,
+               GetArtifactS3Bucket()
+            );
+
+            lambdaHelper = new LambdaHelper(
+             GlobalVariables.Enviroment,
+             GlobalVariables.Region,
+             GlobalVariables.Color);
+        }
 
         public async Task ExportParameters()
         {
@@ -49,27 +82,14 @@ namespace SafeArrival.AdminTools.BLL
 
         private async Task UploadParameterZipToS3()
         {
-            S3Helper s3Helper = new S3Helper(
-                GlobalVariables.Enviroment,
-                GlobalVariables.Region,
-                GlobalVariables.Color,
-                string.Join("-", "safe-arrival", GlobalVariables.Region, GlobalVariables.Enviroment, "parameters")
-                );
-
-            await s3Helper.UploadFile("parameter.zip", new FileStream($"{tempPath}parameter.zip", FileMode.Open));
+            await s3ParamsHelper.UploadFile("parameter.zip", new FileStream($"{tempPath}parameter.zip", FileMode.Open));
         }
 
         public async Task ExportCloudFormation()
         {
             var zipFilePath = GenerateInfraZip();
-            S3Helper s3Helper = new S3Helper(
-             GlobalVariables.Enviroment,
-             GlobalVariables.Region,
-             GlobalVariables.Color,
-             string.Join("-", "safe-arrival", GlobalVariables.Region, GlobalVariables.Enviroment, "cloudformation")
-             );
 
-            await s3Helper.UploadFile(Path.GetFileName(zipFilePath), new FileStream(zipFilePath, FileMode.Open));
+            await s3CloudFormationHelper.UploadFile(Path.GetFileName(zipFilePath), new FileStream(zipFilePath, FileMode.Open));
         }
 
         private string GenerateInfraZip()
@@ -110,7 +130,8 @@ namespace SafeArrival.AdminTools.BLL
         public async Task DeliverApplications(List<string> applicationExportingLogs)
         {
             //await CopyApplicationZipFiles(applicationExportingLogs);
-            await UpdateLambdaFunctionVersion();
+            //await UpdateLambdaFunctionVersion();
+            await UpdateLambdaFunctions(applicationExportingLogs);
             await Task.Run(() =>
             {
 
@@ -127,14 +148,8 @@ namespace SafeArrival.AdminTools.BLL
             //var sourceFolder = "application_sources/";
             var sourceFolder = "application/";
             var detinationFolder = "application/";
-            S3Helper s3Helper = new S3Helper(
-               GlobalVariables.Enviroment,
-               GlobalVariables.Region,
-               GlobalVariables.Color,
-               string.Join("-", "safe-arrival", GlobalVariables.Region, GlobalVariables.Enviroment, "artifact")
-            );
 
-            var sourceFiles = s3Helper.GetFolderFileKeys(s3Helper.BucketName, sourceFolder);
+            var sourceFiles = s3ArtifactHelper.GetFolderFileKeys(s3ArtifactHelper.BucketName, sourceFolder);
             foreach (var sourceKey in sourceFiles)
             {
                 if (sourceKey.Trim() == sourceFolder)
@@ -146,13 +161,48 @@ namespace SafeArrival.AdminTools.BLL
             //await s3Helper.CopyFolder(s3Helper.BucketName, "application/", s3Helper.BucketName, "application_sources/");
         }
 
+        private async Task UpdateLambdaFunctions(List<string> applicationExportingLogs)
+        {
+            var fileList = s3ArtifactHelper.GetBucketFileList("application/");
+            foreach (var file in fileList)
+            {
+                if (file.FullName.IndexOf("lambda") < 0)
+                {
+                    continue;   
+                }
+                var fileName = file.FullName.Replace("application/", string.Empty);
+                var functionName = GetLambdaFunctionNameFromZipFileName(fileName);
+                if (!lambdaHelper.VerifyFunction(file.FullName))
+                {
+                    applicationExportingLogs.Add($"Warn: Can't find corresponing lambda function for zip file '{file.FullName}'!");
+                    continue;
+                }
+            }
+            //lambdaHelper.UpdateFunction("", "", "");
+        }
+
         private async Task UpdateLambdaFunctionVersion()
+        {
+
+            lambdaHelper.ReadTag("SafeArrival-Lambda-SisFetcher-staging-green", "Version");
+        }
+
+        private string GetArtifactS3Bucket()
+        {
+            return string.Join("-", "safe-arrival", GlobalVariables.Region, GlobalVariables.Enviroment, "artifact");
+        }
+
+        private string GetLambdaFunctionNameFromZipFileName(string fileName)
         {
             LambdaHelper helper = new LambdaHelper(
              GlobalVariables.Enviroment,
              GlobalVariables.Region,
              GlobalVariables.Color);
-            helper.ReadTag("SafeArrival-Lambda-SisFetcher-staging-green", "Version");
+            var functionName = string.Join("-", "SafeArrival", "Lambda", fileName, GlobalVariables.Enviroment, GlobalVariables.Color);
+            if (helper.VerifyFunction(functionName))
+                return functionName;
+            else
+                return null;
         }
     }
 }

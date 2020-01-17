@@ -237,7 +237,7 @@
             // 
             this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
             this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.Location = new System.Drawing.Point(94, 9);
+            this.button1.Location = new System.Drawing.Point(94, 4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(113, 23);
             this.button1.TabIndex = 5;
@@ -248,7 +248,7 @@
             // linkLabCF
             // 
             this.linkLabCF.AutoSize = true;
-            this.linkLabCF.Location = new System.Drawing.Point(3, 14);
+            this.linkLabCF.Location = new System.Drawing.Point(3, 9);
             this.linkLabCF.Name = "linkLabCF";
             this.linkLabCF.Size = new System.Drawing.Size(85, 13);
             this.linkLabCF.TabIndex = 5;
@@ -301,7 +301,7 @@
             // 
             this.btnExportCF.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnExportCF.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExportCF.Location = new System.Drawing.Point(609, 7);
+            this.btnExportCF.Location = new System.Drawing.Point(609, 4);
             this.btnExportCF.Name = "btnExportCF";
             this.btnExportCF.Size = new System.Drawing.Size(109, 23);
             this.btnExportCF.TabIndex = 2;
@@ -357,9 +357,9 @@
             // 
             this.btnAppsExport.Location = new System.Drawing.Point(6, 4);
             this.btnAppsExport.Name = "btnAppsExport";
-            this.btnAppsExport.Size = new System.Drawing.Size(75, 23);
+            this.btnAppsExport.Size = new System.Drawing.Size(88, 23);
             this.btnAppsExport.TabIndex = 0;
-            this.btnAppsExport.Text = "Export";
+            this.btnAppsExport.Text = "Export to AWS";
             this.btnAppsExport.UseVisualStyleBackColor = true;
             this.btnAppsExport.Click += new System.EventHandler(this.btnAppsExport_Click);
             // 

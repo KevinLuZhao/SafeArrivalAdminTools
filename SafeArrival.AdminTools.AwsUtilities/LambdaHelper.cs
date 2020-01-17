@@ -80,5 +80,22 @@ namespace SafeArrival.AdminTools.AwsUtilities
             request.Tags.Add(tagName, tagValue);
             client.TagResource(request);
         }
+
+        public bool VerifyFunction(string functionName)
+        {
+            var response = client.GetFunction(functionName);
+            return (response != null);
+        }
+
+        public async void UpdateFunction(string functionName, string s3Bucket, string s3Key)
+        {
+            //var request = new UpdateFunctionCodeRequest()
+            //{
+            //    FunctionName = functionName,
+
+            //}
+            var res1 = await client.ListFunctionsAsync();
+            var response = await client.GetFunctionAsync(res1.Functions[0].FunctionName);
+        }
     }
 }

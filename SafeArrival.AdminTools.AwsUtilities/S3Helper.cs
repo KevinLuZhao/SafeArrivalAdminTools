@@ -168,6 +168,8 @@ namespace SafeArrival.AdminTools.AwsUtilities
             var output = new List<SA_S3Object>();
             var request = new ListObjectsRequest();
             request.BucketName = BucketName;
+            if (prefix != "")
+                request.Prefix = prefix;
             ListObjectsResponse listResponse;
             do
             {

@@ -232,6 +232,7 @@ namespace SafeArrival.AdminTools.Presentation
         private async void btnAppsExport_Click(object sender, EventArgs e)
         {
             timer1.Enabled = true;
+            btnAppsExport.Enabled = false;
             applicationExportingLogs = new List<string>();
             await service.DeliverApplications(applicationExportingLogs);
             //Wait 1 second to allow the DeliverApplications finish all tasks and write log to screen before the timer1 disabled, 
@@ -240,6 +241,7 @@ namespace SafeArrival.AdminTools.Presentation
             {
                 Thread.Sleep(1000);
             });
+            btnAppsExport.Enabled = true;
             timer1.Enabled = false;
         }
 
