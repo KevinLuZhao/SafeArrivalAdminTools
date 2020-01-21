@@ -54,8 +54,8 @@
             this.tabParams = new System.Windows.Forms.TabPage();
             this.tabApplications = new System.Windows.Forms.TabPage();
             this.pnlApplications = new System.Windows.Forms.Panel();
-            this.btnAppsExport = new System.Windows.Forms.Button();
             this.txtAppsProcess = new System.Windows.Forms.RichTextBox();
+            this.btnAppsExport = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerParams)).BeginInit();
             this.splitContainerParams.Panel1.SuspendLayout();
@@ -353,16 +353,6 @@
             this.pnlApplications.Size = new System.Drawing.Size(976, 537);
             this.pnlApplications.TabIndex = 0;
             // 
-            // btnAppsExport
-            // 
-            this.btnAppsExport.Location = new System.Drawing.Point(6, 4);
-            this.btnAppsExport.Name = "btnAppsExport";
-            this.btnAppsExport.Size = new System.Drawing.Size(88, 23);
-            this.btnAppsExport.TabIndex = 0;
-            this.btnAppsExport.Text = "Export to AWS";
-            this.btnAppsExport.UseVisualStyleBackColor = true;
-            this.btnAppsExport.Click += new System.EventHandler(this.btnAppsExport_Click);
-            // 
             // txtAppsProcess
             // 
             this.txtAppsProcess.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -373,6 +363,16 @@
             this.txtAppsProcess.Size = new System.Drawing.Size(965, 498);
             this.txtAppsProcess.TabIndex = 1;
             this.txtAppsProcess.Text = "";
+            // 
+            // btnAppsExport
+            // 
+            this.btnAppsExport.Location = new System.Drawing.Point(6, 4);
+            this.btnAppsExport.Name = "btnAppsExport";
+            this.btnAppsExport.Size = new System.Drawing.Size(88, 23);
+            this.btnAppsExport.TabIndex = 0;
+            this.btnAppsExport.Text = "Export to AWS";
+            this.btnAppsExport.UseVisualStyleBackColor = true;
+            this.btnAppsExport.Click += new System.EventHandler(this.btnAppsExport_Click);
             // 
             // timer1
             // 
@@ -387,7 +387,7 @@
             this.Controls.Add(this.tabMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormParametersEditor";
-            this.Text = "Software Delivery";
+            this.Text = "Delivery Manager";
             this.Load += new System.EventHandler(this.FormParametersEditor_Load);
             this.splitContainerParams.Panel1.ResumeLayout(false);
             this.splitContainerParams.Panel1.PerformLayout();

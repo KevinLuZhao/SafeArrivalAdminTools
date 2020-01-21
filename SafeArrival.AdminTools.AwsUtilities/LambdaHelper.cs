@@ -1,5 +1,6 @@
 ﻿using Amazon.Lambda;
 using Amazon.Lambda.Model;
+using System;
 using System.Threading.Tasks;
 
 namespace SafeArrival.AdminTools.AwsUtilities
@@ -83,19 +84,27 @@ namespace SafeArrival.AdminTools.AwsUtilities
 
         public bool VerifyFunction(string functionName)
         {
-            var response = client.GetFunction(functionName);
-            return (response != null);
+            try
+            {
+                var response = client.GetFunction(functionName);
+                return (response != null);
+            }
+            catch (ResourceNotFoundException ex)
+            {
+                return false;
+            }
         }
 
-        public async void UpdateFunction(string functionName, string s3Bucket, string s3Key)
+        public async Task<string> UpdateFunction(string functionName, string s3Bucket, string s3Key)
         {
-            //var request = new UpdateFunctionCodeRequest()
-            //{
-            //    FunctionName = functionName,
-
-            //}
-            var res1 = await client.ListFunctionsAsync();
-            var response = await client.GetFunctionAsync(res1.Functions[0].FunctionName);
+            var request = new UpdateFunctionCodeRequest()
+            {
+                FunctionName = functionName,
+                S3Bucket = s3Bucket,
+                S3Key = s3Key
+            };
+            var response = await client.UpdateFunctionCodeAsync(request);
+            return response.Description;
         }
     }
 }

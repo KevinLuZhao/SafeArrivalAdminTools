@@ -139,7 +139,7 @@ namespace SafeArrival.AdminTools.Presentation
             p.Start();
         }
 
-        
+
         private string GetJsonFilesFolder()
         {
             return ConfigurationManager.AppSettings["ParammeterFilesFolder"] + GlobalVariables.Enviroment;
@@ -248,8 +248,35 @@ namespace SafeArrival.AdminTools.Presentation
         private void timer1_Tick(object sender, EventArgs e)
         {
             txtAppsProcess.Text = string.Join(Environment.NewLine, applicationExportingLogs);
-            txtAppsProcess.SelectionStart = txtAppsProcess.Text.Length;
-            txtAppsProcess.ScrollToCaret();
+            txtAppsProcess.Text = string.Empty;
+            foreach (var text in applicationExportingLogs)
+            {
+                if (text.IndexOf("Warn:") == 0)
+                {
+                    AppendText(txtAppsProcess, System.Drawing.Color.Red, text + Environment.NewLine + Environment.NewLine);
+                }
+                else
+                {
+                    txtAppsProcess.AppendText(text + Environment.NewLine + Environment.NewLine);
+                }
+                txtAppsProcess.SelectionStart = txtAppsProcess.Text.Length;
+                txtAppsProcess.ScrollToCaret();
+            }
+        }
+
+        void AppendText(RichTextBox box, System.Drawing.Color color, string text)
+        {
+            int start = box.TextLength;
+            box.AppendText(text);
+            int end = box.TextLength;
+
+            // Textbox may transform chars, so (end-start) != text.Length
+            box.Select(start, end - start);
+            {
+                box.SelectionColor = color;
+                // could set box.SelectionBackColor, box.SelectionFont too.
+            }
+            box.SelectionLength = 0; // clear
         }
     }
 }

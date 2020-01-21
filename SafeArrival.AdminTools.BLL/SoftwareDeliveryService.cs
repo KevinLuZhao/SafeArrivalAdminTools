@@ -129,8 +129,7 @@ namespace SafeArrival.AdminTools.BLL
 
         public async Task DeliverApplications(List<string> applicationExportingLogs)
         {
-            //await CopyApplicationZipFiles(applicationExportingLogs);
-            //await UpdateLambdaFunctionVersion();
+            await CopyApplicationZipFiles(applicationExportingLogs);
             await UpdateLambdaFunctions(applicationExportingLogs);
             await Task.Run(() =>
             {
@@ -158,51 +157,96 @@ namespace SafeArrival.AdminTools.BLL
                 //await s3Helper.CopyFile(s3Helper.BucketName, sourceKey, s3Helper.BucketName, destinationKey);
                 applicationExportingLogs.Add($"{DateTime.Now}:  {sourceKey} copied to {destinationKey}");
             }
-            //await s3Helper.CopyFolder(s3Helper.BucketName, "application/", s3Helper.BucketName, "application_sources/");
         }
 
-        private async Task UpdateLambdaFunctions(List<string> applicationExportingLogs)
+        private async Task<string> UpdateLambdaFunctions(List<string> applicationExportingLogs)
         {
-            var fileList = s3ArtifactHelper.GetBucketFileList("application/");
-            foreach (var file in fileList)
+            var result = "";
+            try
             {
-                if (file.FullName.IndexOf("lambda") < 0)
+                var fileList = s3ArtifactHelper.GetBucketFileList("application/");
+                foreach (var file in fileList)
                 {
-                    continue;   
+                    if (file.FullName.IndexOf("lambda") < 0)
+                    {
+                        continue;
+                    }
+                    var fileName = file.FullName.Replace("application/", string.Empty);
+                    bool exsit;
+                    var functionName = GetLambdaFunctionNameFromZipFileName(fileName, out exsit);
+                    if (!exsit)
+                    {
+                        applicationExportingLogs.Add($"Warn: Can't find corresponing lambda function {functionName} for zip file '{file.FullName}'!");
+                        continue;
+                    }
+                    //var response = await lambdaHelper.UpdateFunction(functionName, file.S3BucketName, file.FullName);
+                    //applicationExportingLogs.Add($"Function {functionName} is updated. Description: {response}");
+                    applicationExportingLogs.Add($"Function {functionName} is updated.");
+
+                    applicationExportingLogs.Add(await UpdateLambdaFunctionVersion(functionName));
                 }
-                var fileName = file.FullName.Replace("application/", string.Empty);
-                var functionName = GetLambdaFunctionNameFromZipFileName(fileName);
-                if (!lambdaHelper.VerifyFunction(file.FullName))
-                {
-                    applicationExportingLogs.Add($"Warn: Can't find corresponing lambda function for zip file '{file.FullName}'!");
-                    continue;
-                }
+                result = $"Updating lambda functions finished!";
             }
-            //lambdaHelper.UpdateFunction("", "", "");
+            catch (Exception ex)
+            {
+                result = $"Warn: {ex.Message}";
+            }
+            return result;
         }
 
-        private async Task UpdateLambdaFunctionVersion()
+        private async Task<string> UpdateLambdaFunctionVersion(string functionName)
         {
-
-            lambdaHelper.ReadTag("SafeArrival-Lambda-SisFetcher-staging-green", "Version");
+            var result = "";
+            await Task.Run(() =>
+            {
+                try
+                {
+                    var tagName = "Version";
+                    var tagValue = ReadAppVersion();
+                    lambdaHelper.SetTag(functionName, tagName, tagValue);
+                    var updatedVersion = lambdaHelper.ReadTag(functionName, tagName);
+                    if (tagValue != updatedVersion)
+                    {
+                        result = $"Warn: Updating function {functionName} failed. Current version is {updatedVersion}. Desired version is {tagValue}.";
+                    }
+                    else
+                    {
+                        result = $"Updated function {functionName} to version {updatedVersion}";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    result = $"Warn: {ex.Message}";
+                }
+            });
+            return result;
         }
+
 
         private string GetArtifactS3Bucket()
         {
             return string.Join("-", "safe-arrival", GlobalVariables.Region, GlobalVariables.Enviroment, "artifact");
         }
 
-        private string GetLambdaFunctionNameFromZipFileName(string fileName)
+        private string GetLambdaFunctionNameFromZipFileName(string fileName, out bool exist)
         {
             LambdaHelper helper = new LambdaHelper(
              GlobalVariables.Enviroment,
              GlobalVariables.Region,
              GlobalVariables.Color);
-            var functionName = string.Join("-", "SafeArrival", "Lambda", fileName, GlobalVariables.Enviroment, GlobalVariables.Color);
+            var functionName = string.Join("-", "SafeArrival", "Lambda",
+                Path.GetFileNameWithoutExtension(fileName).Replace("lambda", ""),
+                GlobalVariables.Enviroment, GlobalVariables.Color);
             if (helper.VerifyFunction(functionName))
-                return functionName;
+                exist = true;
             else
-                return null;
+                exist = false; ;
+            return functionName;
+        }
+
+        private string ReadAppVersion()
+        {
+            return "1.5.0.0";
         }
     }
 }
