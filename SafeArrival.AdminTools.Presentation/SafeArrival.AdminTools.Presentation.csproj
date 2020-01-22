@@ -134,11 +134,11 @@
     <Compile Include="FormParameterFileCompare.Designer.cs">
       <DependentUpon>FormParameterFileCompare.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormParametersEditor.cs">
+    <Compile Include="FormDeliveryManager.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormParametersEditor.Designer.cs">
-      <DependentUpon>FormParametersEditor.cs</DependentUpon>
+    <Compile Include="FormDeliveryManager.Designer.cs">
+      <DependentUpon>FormDeliveryManager.cs</DependentUpon>
     </Compile>
     <Compile Include="FormS3Monitor.cs">
       <SubType>Form</SubType>
@@ -178,8 +178,8 @@
     <EmbeddedResource Include="FormParameterFileCompare.resx">
       <DependentUpon>FormParameterFileCompare.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormParametersEditor.resx">
-      <DependentUpon>FormParametersEditor.cs</DependentUpon>
+    <EmbeddedResource Include="FormDeliveryManager.resx">
+      <DependentUpon>FormDeliveryManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormS3Monitor.resx">
       <DependentUpon>FormS3Monitor.cs</DependentUpon>

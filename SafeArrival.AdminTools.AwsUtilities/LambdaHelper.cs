@@ -1,5 +1,6 @@
 ﻿using Amazon.Lambda;
 using Amazon.Lambda.Model;
+using SafeArrival.AdminTools.Model;
 using System;
 using System.Threading.Tasks;
 
@@ -15,6 +16,27 @@ namespace SafeArrival.AdminTools.AwsUtilities
                 CredentiaslManager.GetCredential(environment),
                 AwsCommon.GetRetionEndpoint(region));
         }
+
+        public SA_Lambda GetFromFunctionName(string functionName)
+        {
+            try
+            {
+                var response = client.GetFunction(functionName);
+                var result = new SA_Lambda()
+                {
+                    FunctionArn = response.Configuration.FunctionArn,
+                    FunctionName = response.Configuration.FunctionName,
+                    LastModified = DateTime.Parse(response.Configuration.LastModified),
+                    Tags = response.Tags
+                };
+                return result;
+            }
+            catch (ResourceNotFoundException)
+            {
+                return null;
+            }
+        }
+
         public void SetEventTrigger()
         {
             //S3Helper s3Helper = new S3Helper();
@@ -67,7 +89,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
             var request = new ListTagsRequest();
             request.Resource = lstLambdaFuncs.Functions[0].FunctionArn;
             var tagsResponse = client.ListTags(request);
-            if (tagsResponse.Tags.TryGetValue(lambdaFunctionName, out tagValue))
+            if (tagsResponse.Tags.TryGetValue(tagName, out tagValue))
             {
                 return tagValue;
             }
@@ -82,18 +104,18 @@ namespace SafeArrival.AdminTools.AwsUtilities
             client.TagResource(request);
         }
 
-        public bool VerifyFunction(string functionName)
-        {
-            try
-            {
-                var response = client.GetFunction(functionName);
-                return (response != null);
-            }
-            catch (ResourceNotFoundException ex)
-            {
-                return false;
-            }
-        }
+        //public bool VerifyFunction(string functionName)
+        //{
+        //    try
+        //    {
+        //        var response = client.GetFunction(functionName);
+        //        return (response != null);
+        //    }
+        //    catch (ResourceNotFoundException ex)
+        //    {
+        //        return false;
+        //    }
+        //}
 
         public async Task<string> UpdateFunction(string functionName, string s3Bucket, string s3Key)
         {

@@ -49,6 +49,7 @@
     <Compile Include="SA_AsgEc2Map.cs" />
     <Compile Include="SA_AutoScalingGroup.cs" />
     <Compile Include="SA_Ec2Instance.cs" />
+    <Compile Include="SA_Lambda.cs" />
     <Compile Include="SA_Listener.cs" />
     <Compile Include="SA_LoadBalancer.cs" />
     <Compile Include="SA_PipelineSummary.cs" />

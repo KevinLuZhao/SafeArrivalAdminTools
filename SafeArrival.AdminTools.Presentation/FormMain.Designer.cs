@@ -74,9 +74,10 @@
             // parameterEditToolStripMenuItem
             // 
             this.parameterEditToolStripMenuItem.Name = "parameterEditToolStripMenuItem";
-            this.parameterEditToolStripMenuItem.Size = new System.Drawing.Size(110, 20);
-            this.parameterEditToolStripMenuItem.Tag = "FormParametersEditor";
-            this.parameterEditToolStripMenuItem.Text = "Software Delivery";
+            this.parameterEditToolStripMenuItem.RightToLeftAutoMirrorImage = true;
+            this.parameterEditToolStripMenuItem.Size = new System.Drawing.Size(111, 20);
+            this.parameterEditToolStripMenuItem.Tag = "FormDeliveryManager";
+            this.parameterEditToolStripMenuItem.Text = "Delivery Manager";
             this.parameterEditToolStripMenuItem.Click += new System.EventHandler(this.OpenFormMenu_Click);
             // 
             // s3MonitorToolStripMenuItem

@@ -1,14 +1,10 @@
-﻿using LibGit2Sharp;
-using SafeArrival.AdminTools.AwsUtilities;
+﻿using SafeArrival.AdminTools.AwsUtilities;
 using SafeArrival.AdminTools.Model;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace SafeArrival.AdminTools.BLL
@@ -127,19 +123,46 @@ namespace SafeArrival.AdminTools.BLL
             return zipFilePath;
         }
 
-        public async Task DeliverApplications(List<string> applicationExportingLogs)
+        public List<string> GeneratePreviewData()
         {
-            await CopyApplicationZipFiles(applicationExportingLogs);
-            await UpdateLambdaFunctions(applicationExportingLogs);
-            await Task.Run(() =>
+            var ret = new List<string>();
+            var sourceFiles = s3ArtifactHelper.GetBucketFileList("application/");
+            ret.Add($"ZIP files to be delivered on {GlobalVariables.Enviroment.ToUpper()}:{Environment.NewLine}");
+            var nameLimit = 60;
+            foreach (var file in sourceFiles)
             {
+                if (file.FullName.ToLower().IndexOf(".zip") < 0)
+                    continue;
+                var fileName = Path.GetFileName(file.FullName);
+                var row = fileName;
+                int spaceNum = nameLimit - fileName.Length;
+                if (fileName == "api.zip")
+                {
+                    var asd = spaceNum;
+                }
+                while (spaceNum > 0)
+                {
+                    row += " ";
+                    spaceNum--;
+                }
+                ret.Add($"{row}\t{file.LastModified}\t{file.Size}{Environment.NewLine}");
+            }
+            return ret;
+        }
 
-                //for (var i = 0; i < 100; i++)
-                //{
-                //    Thread.Sleep(1000);
-                //    applicationExportingLogs.Add($"This is {i}");
-                //}
-            });
+        public async Task DeliverApplications(List<string> applicationExportingLogs, bool copyFiles, bool updateLambdaFiles, bool updateLambdaVersions)
+        {
+            if (copyFiles)
+            {
+                UpdateApplicationExportingLogs(applicationExportingLogs, "---------------------- Copy application zip files ----------------------");
+                await CopyApplicationZipFiles(applicationExportingLogs);
+            }
+            if (updateLambdaFiles || updateLambdaVersions)
+            {
+                UpdateApplicationExportingLogs(applicationExportingLogs, "---------------------- Update lambda functions ----------------------");
+                await UpdateLambdaFunctions(applicationExportingLogs, updateLambdaFiles, updateLambdaVersions);
+            }
+            UpdateApplicationExportingLogs(applicationExportingLogs, "---------------------- Applications delivery finished ----------------------");
         }
 
         private async Task CopyApplicationZipFiles(List<string> applicationExportingLogs)
@@ -155,11 +178,11 @@ namespace SafeArrival.AdminTools.BLL
                     continue;
                 var destinationKey = sourceKey.Replace(sourceFolder, detinationFolder);
                 //await s3Helper.CopyFile(s3Helper.BucketName, sourceKey, s3Helper.BucketName, destinationKey);
-                applicationExportingLogs.Add($"{DateTime.Now}:  {sourceKey} copied to {destinationKey}");
+                UpdateApplicationExportingLogs(applicationExportingLogs, $"{sourceKey} copied to {destinationKey}");
             }
         }
 
-        private async Task<string> UpdateLambdaFunctions(List<string> applicationExportingLogs)
+        private async Task<string> UpdateLambdaFunctions(List<string> applicationExportingLogs, bool updateLambdaFiles, bool updateLambdaVersions)
         {
             var result = "";
             try
@@ -173,17 +196,22 @@ namespace SafeArrival.AdminTools.BLL
                     }
                     var fileName = file.FullName.Replace("application/", string.Empty);
                     bool exsit;
-                    var functionName = GetLambdaFunctionNameFromZipFileName(fileName, out exsit);
+                    var lambda = GetLambdaFunctionFromZipFileName(fileName, out exsit);
                     if (!exsit)
                     {
-                        applicationExportingLogs.Add($"Warn: Can't find corresponing lambda function {functionName} for zip file '{file.FullName}'!");
+                        UpdateApplicationExportingLogs(applicationExportingLogs, $"Warn: Expected lambda function '{FormatLambdaFunctionname(fileName)}' for zip file '{file.FullName}' can't be found!");
                         continue;
                     }
-                    //var response = await lambdaHelper.UpdateFunction(functionName, file.S3BucketName, file.FullName);
-                    //applicationExportingLogs.Add($"Function {functionName} is updated. Description: {response}");
-                    applicationExportingLogs.Add($"Function {functionName} is updated.");
-
-                    applicationExportingLogs.Add(await UpdateLambdaFunctionVersion(functionName));
+                    if (updateLambdaFiles)
+                    {
+                        //var response = await lambdaHelper.UpdateFunction(functionName, file.S3BucketName, file.FullName);
+                        //UpdateApplicationExportingLogs(applicationExportingLogs, $"Function {functionName} is updated. Description: {response}");
+                        UpdateApplicationExportingLogs(applicationExportingLogs, $"Function {lambda.FunctionName} is updated.");
+                    }
+                    if (updateLambdaVersions)
+                    {
+                        UpdateApplicationExportingLogs(applicationExportingLogs, await UpdateLambdaFunctionVersion(lambda));
+                    }
                 }
                 result = $"Updating lambda functions finished!";
             }
@@ -194,7 +222,7 @@ namespace SafeArrival.AdminTools.BLL
             return result;
         }
 
-        private async Task<string> UpdateLambdaFunctionVersion(string functionName)
+        private async Task<string> UpdateLambdaFunctionVersion(SA_Lambda lambda)
         {
             var result = "";
             await Task.Run(() =>
@@ -203,15 +231,15 @@ namespace SafeArrival.AdminTools.BLL
                 {
                     var tagName = "Version";
                     var tagValue = ReadAppVersion();
-                    lambdaHelper.SetTag(functionName, tagName, tagValue);
-                    var updatedVersion = lambdaHelper.ReadTag(functionName, tagName);
+                    //lambdaHelper.SetTag(lambda.FunctionArn, tagName, tagValue);
+                    var updatedVersion = lambdaHelper.ReadTag(lambda.FunctionArn, tagName);
                     if (tagValue != updatedVersion)
                     {
-                        result = $"Warn: Updating function {functionName} failed. Current version is {updatedVersion}. Desired version is {tagValue}.";
+                        result = $"Warn: Updating function {lambda.FunctionName} failed. Current version is {updatedVersion}. Desired version is {tagValue}.";
                     }
                     else
                     {
-                        result = $"Updated function {functionName} to version {updatedVersion}";
+                        result = $"Updated function {lambda.FunctionName} to version {updatedVersion}";
                     }
                 }
                 catch (Exception ex)
@@ -228,25 +256,33 @@ namespace SafeArrival.AdminTools.BLL
             return string.Join("-", "safe-arrival", GlobalVariables.Region, GlobalVariables.Enviroment, "artifact");
         }
 
-        private string GetLambdaFunctionNameFromZipFileName(string fileName, out bool exist)
+        private SA_Lambda GetLambdaFunctionFromZipFileName(string fileName, out bool exist)
         {
             LambdaHelper helper = new LambdaHelper(
              GlobalVariables.Enviroment,
              GlobalVariables.Region,
              GlobalVariables.Color);
-            var functionName = string.Join("-", "SafeArrival", "Lambda",
-                Path.GetFileNameWithoutExtension(fileName).Replace("lambda", ""),
-                GlobalVariables.Enviroment, GlobalVariables.Color);
-            if (helper.VerifyFunction(functionName))
-                exist = true;
-            else
-                exist = false; ;
-            return functionName;
+            var functionName = FormatLambdaFunctionname(fileName);
+            var lambda = lambdaHelper.GetFromFunctionName(functionName);
+            exist = (lambda != null);
+            return lambda;
         }
 
         private string ReadAppVersion()
         {
-            return "1.5.0.0";
+            return "1.5.1-20200116.1";
+        }
+
+        private string FormatLambdaFunctionname(string fileName)
+        {
+            return string.Join("-", "SafeArrival", "Lambda",
+                Path.GetFileNameWithoutExtension(fileName).Replace("lambda", ""),
+                GlobalVariables.Enviroment, GlobalVariables.Color);
+        }
+
+        private void UpdateApplicationExportingLogs(List<string> applicationExportingLogs, string input)
+        {
+            applicationExportingLogs.Add($"{DateTime.Now}:  {input}");
         }
     }
 }

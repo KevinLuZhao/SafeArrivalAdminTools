@@ -11,13 +11,13 @@ using System.Windows.Forms;
 
 namespace SafeArrival.AdminTools.Presentation
 {
-    public partial class FormParametersEditor : FormMdiChildBase
+    public partial class FormDeliveryManager : FormMdiChildBase
     {
         private string _parameterFolder = string.Empty;
         private SoftwareDeliveryService service = new SoftwareDeliveryService();
         private static List<string> applicationExportingLogs;
         //private string _s3bucket; 
-        public FormParametersEditor()
+        public FormDeliveryManager()
         {
             InitializeComponent();
         }
@@ -231,27 +231,37 @@ namespace SafeArrival.AdminTools.Presentation
         //-----------------------------------------Applications------------------------------------------
         private async void btnAppsExport_Click(object sender, EventArgs e)
         {
-            timer1.Enabled = true;
-            btnAppsExport.Enabled = false;
-            applicationExportingLogs = new List<string>();
-            await service.DeliverApplications(applicationExportingLogs);
-            //Wait 1 second to allow the DeliverApplications finish all tasks and write log to screen before the timer1 disabled, 
-            //but the waiting will not block the main threa, to let the timer1_Tick keeps listening the applicationExportingLogs value changes.
-            await Task.Run(() =>
+            var confirmResult1 = MessageBox.Show(
+                    $"Will start the applications delivery process on {(GlobalVariables.Enviroment).ToUpper()}, please click 'Yes' to continue",
+                    "Applications Delivery",
+                    MessageBoxButtons.YesNo);
+            if (confirmResult1 == DialogResult.Yes)
             {
-                Thread.Sleep(1000);
-            });
-            btnAppsExport.Enabled = true;
-            timer1.Enabled = false;
+                timer1.Enabled = true;
+                btnAppsExport.Enabled = false;
+                applicationExportingLogs = new List<string>();
+                txtAppsProcess.Text = string.Empty;
+                await service.DeliverApplications(applicationExportingLogs, cboxCopyApps.Checked, cboxUpdateLambdas.Checked, cboxUpdateVersions.Checked);
+                //Wait 1 second to allow the DeliverApplications finish all tasks and write log to screen before the timer1 disabled, 
+                //but the waiting will not block the main threa, to let the timer1_Tick keeps listening the applicationExportingLogs value changes.
+                await Task.Run(() =>
+                {
+                    Thread.Sleep(1000);
+                });
+                btnAppsExport.Enabled = true;
+                timer1.Enabled = false;
+            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            txtAppsProcess.Text = string.Join(Environment.NewLine, applicationExportingLogs);
-            txtAppsProcess.Text = string.Empty;
-            foreach (var text in applicationExportingLogs)
+            //txtAppsProcess.Text = string.Join(Environment.NewLine, applicationExportingLogs);
+            //txtAppsProcess.Text = string.Empty;
+            string[] copy = new string[applicationExportingLogs.Count];
+            applicationExportingLogs.CopyTo(copy);
+            foreach (var text in copy)
             {
-                if (text.IndexOf("Warn:") == 0)
+                if (text.IndexOf("Warn:") >= 0)
                 {
                     AppendText(txtAppsProcess, System.Drawing.Color.Red, text + Environment.NewLine + Environment.NewLine);
                 }
@@ -262,6 +272,7 @@ namespace SafeArrival.AdminTools.Presentation
                 txtAppsProcess.SelectionStart = txtAppsProcess.Text.Length;
                 txtAppsProcess.ScrollToCaret();
             }
+            applicationExportingLogs.RemoveRange(0, copy.Length);
         }
 
         void AppendText(RichTextBox box, System.Drawing.Color color, string text)
@@ -269,14 +280,45 @@ namespace SafeArrival.AdminTools.Presentation
             int start = box.TextLength;
             box.AppendText(text);
             int end = box.TextLength;
-
-            // Textbox may transform chars, so (end-start) != text.Length
             box.Select(start, end - start);
             {
                 box.SelectionColor = color;
-                // could set box.SelectionBackColor, box.SelectionFont too.
             }
-            box.SelectionLength = 0; // clear
+            box.SelectionLength = 0;
+        }
+
+        private void btnDeliverySave_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var path = "DeliveryLog.txt";
+                if (!File.Exists(path))
+                {
+                    File.Create(path);
+                }
+                File.AppendAllText(path, txtAppsProcess.Text);
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+        }
+
+        private void btnPerview_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var data = service.GeneratePreviewData();
+                foreach (var dataRow in data)
+                {
+                    txtAppsProcess.AppendText(dataRow);
+                }
+                NotifyToMainStatus($"Delivery Logs are saved.", System.Drawing.Color.Green);
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
         }
     }
 }

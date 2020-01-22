@@ -77,7 +77,7 @@ namespace SafeArrival.AdminTools.Presentation
                             "Parameter Editor need the system directory {0}. This directory is defined at config file",
                             ConfigurationManager.AppSettings["ParammeterFilesFolder"]);
                     }
-                    frm = new FormParametersEditor();
+                    frm = new FormDeliveryManager();
                     break;
                 case "s3MonitorToolStripMenuItem":
                     frm = new FormS3Monitor();
