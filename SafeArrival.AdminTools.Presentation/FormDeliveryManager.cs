@@ -304,11 +304,12 @@ namespace SafeArrival.AdminTools.Presentation
             }
         }
 
-        private void btnPerview_Click(object sender, EventArgs e)
+        private async void btnPerview_Click(object sender, EventArgs e)
         {
             try
             {
-                var data = service.GeneratePreviewData();
+                txtAppsProcess.Text = string.Empty;
+                var data = await service.GeneratePreviewData();
                 foreach (var dataRow in data)
                 {
                     txtAppsProcess.AppendText(dataRow);

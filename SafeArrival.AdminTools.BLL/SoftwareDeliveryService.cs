@@ -17,6 +17,21 @@ namespace SafeArrival.AdminTools.BLL
         S3Helper s3ArtifactHelper;
         LambdaHelper lambdaHelper;
 
+        public string appsSourceFolder
+        {
+            get
+            {
+                return "application_source/";
+            }
+        }
+        string appsDestinationFolder
+        {
+            get
+            {
+                return "application/";
+            }
+        }
+
         public SoftwareDeliveryService()
         {
             s3ParamsHelper = new S3Helper(
@@ -123,30 +138,45 @@ namespace SafeArrival.AdminTools.BLL
             return zipFilePath;
         }
 
-        public List<string> GeneratePreviewData()
+        public async Task<string> ReadAppVersion(string folder)
+        {
+            var versionFile = await s3ArtifactHelper.DownloadFile($"{folder}version.txt");
+            using (StreamReader sr = new StreamReader(versionFile))
+            {
+                return sr.ReadToEnd();
+            }
+        }
+
+        public async Task<List<string>> GeneratePreviewData()
         {
             var ret = new List<string>();
-            var sourceFiles = s3ArtifactHelper.GetBucketFileList("application/");
-            ret.Add($"ZIP files to be delivered on {GlobalVariables.Enviroment.ToUpper()}:{Environment.NewLine}");
-            var nameLimit = 60;
-            foreach (var file in sourceFiles)
-            {
-                if (file.FullName.ToLower().IndexOf(".zip") < 0)
-                    continue;
-                var fileName = Path.GetFileName(file.FullName);
-                var row = fileName;
-                int spaceNum = nameLimit - fileName.Length;
-                if (fileName == "api.zip")
+            await Task.Run(() => {
+                var sourceFiles = s3ArtifactHelper.GetBucketFileList(appsSourceFolder);
+                ret.Add($"ZIP files to be delivered on {GlobalVariables.Enviroment.ToUpper()}:{Environment.NewLine}");
+                var nameLimit = 60;
+                foreach (var file in sourceFiles)
                 {
-                    var asd = spaceNum;
+                    if (file.FullName.ToLower().IndexOf(".zip") < 0)
+                        continue;
+                    var fileName = Path.GetFileName(file.FullName);
+                    var row = fileName;
+                    int spaceNum = nameLimit - fileName.Length;
+                    if (fileName == "api.zip")
+                    {
+                        var asd = spaceNum;
+                    }
+                    while (spaceNum > 0)
+                    {
+                        row += " ";
+                        spaceNum--;
+                    }
+                    ret.Add($"{row}\t{file.LastModified}\t{file.Size}{Environment.NewLine}");
                 }
-                while (spaceNum > 0)
-                {
-                    row += " ";
-                    spaceNum--;
-                }
-                ret.Add($"{row}\t{file.LastModified}\t{file.Size}{Environment.NewLine}");
-            }
+            });
+            
+            ret.Add($"{Environment.NewLine}New version:{Environment.NewLine}");
+            var version = await ReadAppVersion(appsSourceFolder);
+            ret.Add($"{version}{Environment.NewLine}");
             return ret;
         }
 
@@ -167,17 +197,13 @@ namespace SafeArrival.AdminTools.BLL
 
         private async Task CopyApplicationZipFiles(List<string> applicationExportingLogs)
         {
-            //var sourceFolder = "application_sources/";
-            var sourceFolder = "application/";
-            var detinationFolder = "application/";
-
-            var sourceFiles = s3ArtifactHelper.GetFolderFileKeys(s3ArtifactHelper.BucketName, sourceFolder);
+            var sourceFiles = s3ArtifactHelper.GetFolderFileKeys(s3ArtifactHelper.BucketName, appsSourceFolder);
             foreach (var sourceKey in sourceFiles)
             {
-                if (sourceKey.Trim() == sourceFolder)
+                if (sourceKey.Trim() == appsSourceFolder)
                     continue;
-                var destinationKey = sourceKey.Replace(sourceFolder, detinationFolder);
-                //await s3Helper.CopyFile(s3Helper.BucketName, sourceKey, s3Helper.BucketName, destinationKey);
+                var destinationKey = sourceKey.Replace(appsSourceFolder, appsDestinationFolder);
+                await s3ArtifactHelper.CopyFile(s3ArtifactHelper.BucketName, sourceKey, s3ArtifactHelper.BucketName, destinationKey);
                 UpdateApplicationExportingLogs(applicationExportingLogs, $"{sourceKey} copied to {destinationKey}");
             }
         }
@@ -187,14 +213,14 @@ namespace SafeArrival.AdminTools.BLL
             var result = "";
             try
             {
-                var fileList = s3ArtifactHelper.GetBucketFileList("application/");
+                var fileList = s3ArtifactHelper.GetBucketFileList(appsDestinationFolder);
                 foreach (var file in fileList)
                 {
                     if (file.FullName.IndexOf("lambda") < 0)
                     {
                         continue;
                     }
-                    var fileName = file.FullName.Replace("application/", string.Empty);
+                    var fileName = file.FullName.Replace(appsDestinationFolder, string.Empty);
                     bool exsit;
                     var lambda = GetLambdaFunctionFromZipFileName(fileName, out exsit);
                     if (!exsit)
@@ -225,12 +251,12 @@ namespace SafeArrival.AdminTools.BLL
         private async Task<string> UpdateLambdaFunctionVersion(SA_Lambda lambda)
         {
             var result = "";
+            var tagName = "Version";
+            var tagValue = await ReadAppVersion(appsDestinationFolder);
             await Task.Run(() =>
             {
                 try
                 {
-                    var tagName = "Version";
-                    var tagValue = ReadAppVersion();
                     //lambdaHelper.SetTag(lambda.FunctionArn, tagName, tagValue);
                     var updatedVersion = lambdaHelper.ReadTag(lambda.FunctionArn, tagName);
                     if (tagValue != updatedVersion)
@@ -266,11 +292,6 @@ namespace SafeArrival.AdminTools.BLL
             var lambda = lambdaHelper.GetFromFunctionName(functionName);
             exist = (lambda != null);
             return lambda;
-        }
-
-        private string ReadAppVersion()
-        {
-            return "1.5.1-20200116.1";
         }
 
         private string FormatLambdaFunctionname(string fileName)
