@@ -126,7 +126,7 @@ namespace SafeArrival.AdminTools.BLL
                     {
                         if (subFolder.Name == ".git")
                             continue;
-                        // = archive.CreateEntry(subFolder.Name);
+
                         foreach (var file in subFolder.GetFiles())
                         {
                             readmeEntry = archive.CreateEntryFromFile(file.FullName, subFolder.Name + "/" + file.Name);
@@ -150,7 +150,8 @@ namespace SafeArrival.AdminTools.BLL
         public async Task<List<string>> GeneratePreviewData()
         {
             var ret = new List<string>();
-            await Task.Run(() => {
+            await Task.Run(() =>
+            {
                 var sourceFiles = s3ArtifactHelper.GetBucketFileList(appsSourceFolder);
                 ret.Add($"ZIP files to be delivered on {GlobalVariables.Enviroment.ToUpper()}:{Environment.NewLine}");
                 var nameLimit = 60;
@@ -173,7 +174,7 @@ namespace SafeArrival.AdminTools.BLL
                     ret.Add($"{row}\t{file.LastModified}\t{file.Size}{Environment.NewLine}");
                 }
             });
-            
+
             ret.Add($"{Environment.NewLine}New version:{Environment.NewLine}");
             var version = await ReadAppVersion(appsSourceFolder);
             ret.Add($"{version}{Environment.NewLine}");
@@ -185,32 +186,48 @@ namespace SafeArrival.AdminTools.BLL
             if (copyFiles)
             {
                 UpdateApplicationExportingLogs(applicationExportingLogs, "---------------------- Copy application zip files ----------------------");
-                await CopyApplicationZipFiles(applicationExportingLogs);
+                var counter = await CopyApplicationZipFiles(applicationExportingLogs);
+                UpdateApplicationExportingLogs(applicationExportingLogs,
+                    $"{counter} ZIP application files are copied from " +
+                    $"{s3ArtifactHelper.BucketName}/{appsSourceFolder} to " +
+                    $"{s3ArtifactHelper.BucketName}/{appsDestinationFolder}");
             }
             if (updateLambdaFiles || updateLambdaVersions)
             {
                 UpdateApplicationExportingLogs(applicationExportingLogs, "---------------------- Update lambda functions ----------------------");
-                await UpdateLambdaFunctions(applicationExportingLogs, updateLambdaFiles, updateLambdaVersions);
+                var counter = await UpdateLambdaFunctions(applicationExportingLogs, updateLambdaFiles, updateLambdaVersions);
+                UpdateApplicationExportingLogs(applicationExportingLogs, $"{counter} lambda functions are updated");
             }
             UpdateApplicationExportingLogs(applicationExportingLogs, "---------------------- Applications delivery finished ----------------------");
         }
 
-        private async Task CopyApplicationZipFiles(List<string> applicationExportingLogs)
+        private async Task<int> CopyApplicationZipFiles(List<string> applicationExportingLogs)
         {
             var sourceFiles = s3ArtifactHelper.GetFolderFileKeys(s3ArtifactHelper.BucketName, appsSourceFolder);
+            var counter = 0;
             foreach (var sourceKey in sourceFiles)
             {
                 if (sourceKey.Trim() == appsSourceFolder)
                     continue;
                 var destinationKey = sourceKey.Replace(appsSourceFolder, appsDestinationFolder);
-                await s3ArtifactHelper.CopyFile(s3ArtifactHelper.BucketName, sourceKey, s3ArtifactHelper.BucketName, destinationKey);
+                try
+                {
+                    //await s3ArtifactHelper.CopyFile(s3ArtifactHelper.BucketName, sourceKey, s3ArtifactHelper.BucketName, destinationKey);
+                }
+                catch (Exception ex)
+                {
+                    UpdateApplicationException(applicationExportingLogs, ex);
+                    continue;
+                }
                 UpdateApplicationExportingLogs(applicationExportingLogs, $"{sourceKey} copied to {destinationKey}");
+                counter++;
             }
+            return counter;
         }
 
-        private async Task<string> UpdateLambdaFunctions(List<string> applicationExportingLogs, bool updateLambdaFiles, bool updateLambdaVersions)
+        private async Task<int> UpdateLambdaFunctions(List<string> applicationExportingLogs, bool updateLambdaFiles, bool updateLambdaVersions)
         {
-            var result = "";
+            var counter = 0;
             try
             {
                 var fileList = s3ArtifactHelper.GetBucketFileList(appsDestinationFolder);
@@ -230,22 +247,38 @@ namespace SafeArrival.AdminTools.BLL
                     }
                     if (updateLambdaFiles)
                     {
-                        //var response = await lambdaHelper.UpdateFunction(functionName, file.S3BucketName, file.FullName);
-                        //UpdateApplicationExportingLogs(applicationExportingLogs, $"Function {functionName} is updated. Description: {response}");
-                        UpdateApplicationExportingLogs(applicationExportingLogs, $"Function {lambda.FunctionName} is updated.");
+                        try
+                        {
+                            //var response = await lambdaHelper.UpdateFunction(functionName, file.S3BucketName, file.FullName);
+                            //UpdateApplicationExportingLogs(applicationExportingLogs, $"Function {functionName} is updated. Description: {response}");
+                            UpdateApplicationExportingLogs(applicationExportingLogs, $"Function {lambda.FunctionName} is updated.");
+                        }
+                        catch (Exception ex)
+                        {
+                            UpdateApplicationException(applicationExportingLogs, ex);
+                            continue;
+                        }
                     }
                     if (updateLambdaVersions)
                     {
-                        UpdateApplicationExportingLogs(applicationExportingLogs, await UpdateLambdaFunctionVersion(lambda));
+                        try
+                        {
+                            UpdateApplicationExportingLogs(applicationExportingLogs, await UpdateLambdaFunctionVersion(lambda));
+                        }
+                        catch (Exception ex)
+                        {
+                            UpdateApplicationException(applicationExportingLogs, ex);
+                            continue;
+                        }
                     }
+                    counter++;
                 }
-                result = $"Updating lambda functions finished!";
             }
             catch (Exception ex)
             {
-                result = $"Warn: {ex.Message}";
+                UpdateApplicationException(applicationExportingLogs, ex);
             }
-            return result;
+            return counter;
         }
 
         private async Task<string> UpdateLambdaFunctionVersion(SA_Lambda lambda)
@@ -270,7 +303,7 @@ namespace SafeArrival.AdminTools.BLL
                 }
                 catch (Exception ex)
                 {
-                    result = $"Warn: {ex.Message}";
+                    throw(ex);
                 }
             });
             return result;
@@ -304,6 +337,11 @@ namespace SafeArrival.AdminTools.BLL
         private void UpdateApplicationExportingLogs(List<string> applicationExportingLogs, string input)
         {
             applicationExportingLogs.Add($"{DateTime.Now}:  {input}");
+        }
+
+        private void UpdateApplicationException(List<string> applicationExportingLogs, Exception ex)
+        {
+            applicationExportingLogs.Add($"{DateTime.Now}:  Warn: {ex.Message}/n{ex.StackTrace}");
         }
     }
 }
