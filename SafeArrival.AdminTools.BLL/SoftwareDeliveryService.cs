@@ -178,6 +178,10 @@ namespace SafeArrival.AdminTools.BLL
             ret.Add($"{Environment.NewLine}New version:{Environment.NewLine}");
             var version = await ReadAppVersion(appsSourceFolder);
             ret.Add($"{version}{Environment.NewLine}");
+
+            ret.Add($"{Environment.NewLine}Current version:{Environment.NewLine}");
+            version = await ReadAppVersion(appsDestinationFolder);
+            ret.Add($"{version}{Environment.NewLine}");
             return ret;
         }
 
