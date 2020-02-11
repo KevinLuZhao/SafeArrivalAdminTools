@@ -54,7 +54,8 @@ namespace SafeArrival.AdminTools.AwsUtilities
             var ret = new Dictionary<string, EnvironmentAccount>();
             foreach (var account in helper.ScanTable("sa_env_accounts"))
             {
-                ret.Add(account.Environment.ToString(), account);
+                if (account.Enabled)
+                    ret.Add(account.Environment.ToString(), account);
             }
             return ret;
         }

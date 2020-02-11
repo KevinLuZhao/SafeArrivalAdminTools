@@ -22,9 +22,11 @@ namespace SafeArrival.AdminTools.DAL
         public Dictionary<string, EnvironmentAccount> GetEnvironmentAccounts()
         {
             var ret = new Dictionary<string, EnvironmentAccount>();
-            foreach (var account in helper.ScanTable(tableName))
+            var accounts = helper.ScanTable(tableName);
+            foreach (var account in accounts)
             {
-                ret.Add(account.Environment.ToString(), account);
+                if (account.Enabled)
+                    ret.Add(account.Environment.ToString(), account);
             }
             return ret;
         }
