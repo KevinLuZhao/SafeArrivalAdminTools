@@ -97,6 +97,14 @@ namespace SafeArrival.AdminTools.AwsUtilities
                     filterConditions.Add(saCondition.AttributeName, condition);
                 }
                 //var request = new ScanRequest(tableName);
+
+                
+                Table ThreadTable = Table.LoadTable(client, tableName);
+
+                //ScanFilter scanFilter = new ScanFilter();
+                //scanFilter.AddCondition("ForumId", ScanOperator.Equal, 101);
+                //scanFilter.AddCondition("Tags", ScanOperator.Between, "sortkey");
+
                 response = client.Scan(tableName, filterConditions);
             }
             else

@@ -56,8 +56,10 @@ namespace SafeArrival.AdminTools.DAL
                 conditions.Add(new DynamodbScanCondition()
                 {
                     AttributeName = "Date",
-                    Operator = "BETWEEN",
-                    Value = new List<string> { from.ToString(), to.ToString()}                    
+                    //Operator = "BETWEEN",
+                    Operator = DynamodbScanOperator.GT,
+                    //Value = new List<string> { from.ToString(), to.ToString()}
+                    Value = new List<string> { from.ToString()}
                 });
             }
             //if (to != null)

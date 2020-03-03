@@ -28,11 +28,11 @@ namespace SafeArrival.AdminTools.Model
         //
         // Summary:
         //     Constant GE for DynamodbScanOperator
-        public static string GE;
+        public static string GE { get { return "GE"; } }
         //
         // Summary:
         //     Constant GT for DynamodbScanOperator
-        public static string GT;
+        public static string GT { get { return "GT"; } }
         //
         // Summary:
         //     Constant IN for DynamodbScanOperator
@@ -44,7 +44,7 @@ namespace SafeArrival.AdminTools.Model
         //
         // Summary:
         //     Constant LT for DynamodbScanOperator
-        public static string LT;
+        public static string LT { get { return "LT"; } }
         //
         // Summary:
         //     Constant NE for DynamodbScanOperator

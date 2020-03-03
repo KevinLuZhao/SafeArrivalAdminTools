@@ -228,11 +228,17 @@ namespace SafeArrival.AdminTools.AwsUtilities
             var response = await client.PutBucketNotificationAsync(request);
         }
 
-        public async Task GetBuckets()
+        public async Task<List<string>> GetBuckets()
         {
             var request = new ListBucketsRequest();
             var response = await client.ListBucketsAsync();
-            //return response.Buckets;
+            var ret = new List<string>();
+            
+            foreach (var bucket in response.Buckets)
+            {
+                ret.Add(bucket.BucketName);
+            }
+            return ret;
         }
     }
 }

@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.IO.Compression;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SafeArrival.AdminTools.BLL
@@ -32,20 +34,25 @@ namespace SafeArrival.AdminTools.BLL
             }
         }
 
+        string parameterbucket = string.Join("-", "safe-arrival", GlobalVariables.Region, GlobalVariables.Enviroment, "parameters");
+
+        string cloudFormationBucket = string.Join("-", "safe-arrival", GlobalVariables.Region, GlobalVariables.Enviroment, "cloudformation");
+
         public SoftwareDeliveryService()
         {
             s3ParamsHelper = new S3Helper(
                 GlobalVariables.Enviroment,
                 GlobalVariables.Region,
                 GlobalVariables.Color,
-                string.Join("-", "safe-arrival", GlobalVariables.Region, GlobalVariables.Enviroment, "parameters")
+                parameterbucket
             );
+
 
             s3CloudFormationHelper = new S3Helper(
                 GlobalVariables.Enviroment,
                 GlobalVariables.Region,
                 GlobalVariables.Color,
-                string.Join("-", "safe-arrival", GlobalVariables.Region, GlobalVariables.Enviroment, "cloudformation")
+                cloudFormationBucket
              );
 
             s3ArtifactHelper = new S3Helper(
@@ -61,13 +68,18 @@ namespace SafeArrival.AdminTools.BLL
              GlobalVariables.Color);
         }
 
-        public async Task ExportParameters()
+        public async Task<string> ExportParameters()
         {
+            var bucketList = await s3ParamsHelper.GetBuckets();
+            if (bucketList.IndexOf(s3ParamsHelper.BucketName) < 0)
+            {
+                return $"ERROR: Can not find bucket {s3ParamsHelper.BucketName}! Please make sure this S3 bucket is available.";
+            }
             var paramsFilePath = $"{tempPath}parameter.zip";
             if (!Directory.Exists(tempPath))
             {
                 Directory.CreateDirectory(tempPath);
-                return;
+                //return;
             }
             if (File.Exists(paramsFilePath))
             {
@@ -88,19 +100,20 @@ namespace SafeArrival.AdminTools.BLL
                 }
                 zipToOpen.Close();
             }
-            await UploadParameterZipToS3();
+            await s3ParamsHelper.UploadFile(paramsFilePath, new FileStream(paramsFilePath, FileMode.Open));
+            return $"File {paramsFilePath} has been upload to {s3ParamsHelper.BucketName}. Please monitor the change on AWS Console";
         }
 
-        private async Task UploadParameterZipToS3()
+        public async Task<string> ExportCloudFormation()
         {
-            await s3ParamsHelper.UploadFile("parameter.zip", new FileStream($"{tempPath}parameter.zip", FileMode.Open));
-        }
-
-        public async Task ExportCloudFormation()
-        {
+            var bucketList = await s3CloudFormationHelper.GetBuckets();
+            if (bucketList.IndexOf(s3CloudFormationHelper.BucketName)<0)
+            {
+                return $"ERROR: Can not find bucket {s3CloudFormationHelper.BucketName}! Please make sure this S3 bucket is available.";
+            }
             var zipFilePath = GenerateInfraZip();
-
             await s3CloudFormationHelper.UploadFile(Path.GetFileName(zipFilePath), new FileStream(zipFilePath, FileMode.Open));
+            return $"File {zipFilePath} has been upload to {s3CloudFormationHelper.BucketName}. Please monitor the change on AWS Console";
         }
 
         private string GenerateInfraZip()
@@ -140,11 +153,14 @@ namespace SafeArrival.AdminTools.BLL
 
         public async Task<string> ReadAppVersion(string folder)
         {
+            var strVersion = string.Empty;
             var versionFile = await s3ArtifactHelper.DownloadFile($"{folder}version.txt");
             using (StreamReader sr = new StreamReader(versionFile))
             {
-                return sr.ReadToEnd();
+                strVersion = sr.ReadToEnd();
             }
+            strVersion = Regex.Replace(strVersion, @"\t|\n|\r", "");
+            return strVersion.Trim();
         }
 
         public async Task<List<string>> GeneratePreviewData()
@@ -162,10 +178,10 @@ namespace SafeArrival.AdminTools.BLL
                     var fileName = Path.GetFileName(file.FullName);
                     var row = fileName;
                     int spaceNum = nameLimit - fileName.Length;
-                    if (fileName == "api.zip")
-                    {
-                        var asd = spaceNum;
-                    }
+                    //if (fileName == "api.zip")
+                    //{
+                    //    var asd = spaceNum;
+                    //}
                     while (spaceNum > 0)
                     {
                         row += " ";
@@ -216,7 +232,7 @@ namespace SafeArrival.AdminTools.BLL
                 var destinationKey = sourceKey.Replace(appsSourceFolder, appsDestinationFolder);
                 try
                 {
-                    //await s3ArtifactHelper.CopyFile(s3ArtifactHelper.BucketName, sourceKey, s3ArtifactHelper.BucketName, destinationKey);
+                    await s3ArtifactHelper.CopyFile(s3ArtifactHelper.BucketName, sourceKey, s3ArtifactHelper.BucketName, destinationKey);
                 }
                 catch (Exception ex)
                 {
@@ -253,9 +269,13 @@ namespace SafeArrival.AdminTools.BLL
                     {
                         try
                         {
-                            //var response = await lambdaHelper.UpdateFunction(functionName, file.S3BucketName, file.FullName);
-                            //UpdateApplicationExportingLogs(applicationExportingLogs, $"Function {functionName} is updated. Description: {response}");
-                            UpdateApplicationExportingLogs(applicationExportingLogs, $"Function {lambda.FunctionName} is updated.");
+                            var response = await lambdaHelper.UpdateFunction(lambda.FunctionName, file.S3BucketName, file.FullName);
+                            var logMsg = $"Function {lambda.FunctionName} is updated. ";
+                            if (!string.IsNullOrEmpty(response))
+                            {
+                                logMsg += $"Description: {response}";
+                            }
+                            UpdateApplicationExportingLogs(applicationExportingLogs, logMsg);
                         }
                         catch (Exception ex)
                         {
@@ -292,22 +312,17 @@ namespace SafeArrival.AdminTools.BLL
             var tagValue = await ReadAppVersion(appsDestinationFolder);
             await Task.Run(() =>
             {
-                try
+                lambdaHelper.SetTag(lambda.FunctionArn, tagName, tagValue);
+                lambdaHelper.UpdateFunctionDescription(lambda.FunctionName, tagValue);
+                Thread.Sleep(500);
+                var updatedVersion = lambdaHelper.ReadTag(lambda.FunctionArn, tagName);
+                if (tagValue != updatedVersion)
                 {
-                    //lambdaHelper.SetTag(lambda.FunctionArn, tagName, tagValue);
-                    var updatedVersion = lambdaHelper.ReadTag(lambda.FunctionArn, tagName);
-                    if (tagValue != updatedVersion)
-                    {
-                        result = $"Warn: Updating function {lambda.FunctionName} failed. Current version is {updatedVersion}. Desired version is {tagValue}.";
-                    }
-                    else
-                    {
-                        result = $"Updated function {lambda.FunctionName} to version {updatedVersion}";
-                    }
+                    result = $"Warn: Updating function {lambda.FunctionName} failed. Current version is {updatedVersion}. Desired version is {tagValue}.";
                 }
-                catch (Exception ex)
+                else
                 {
-                    throw(ex);
+                    result = $"Updated function {lambda.FunctionName} to version {updatedVersion}";
                 }
             });
             return result;

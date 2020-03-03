@@ -88,8 +88,6 @@ namespace SafeArrival.AdminTools.Presentation
                 ((System.Collections.Generic.KeyValuePair<string, string>)lstJsonFiles.SelectedItem).Value))
                 {
                     w.Write(txtFileEditor.Text);
-                    //MessageBox.Show(string.Format("{0} saved!", ((System.Collections.Generic.KeyValuePair<string, string>)lstJsonFiles.SelectedItem).Key));
-                    //NotifyToMainStatus(string.Format("{0} saved!", ((System.Collections.Generic.KeyValuePair<string, string>)lstJsonFiles.SelectedItem).Key));
                     WriteNotification(string.Format("{0} is changed!", ((System.Collections.Generic.KeyValuePair<string, string>)lstJsonFiles.SelectedItem).Key));
                 }
             }
@@ -109,8 +107,9 @@ namespace SafeArrival.AdminTools.Presentation
                     MessageBoxButtons.YesNo);
                 if (confirmResult == DialogResult.Yes)
                 {
-                    await service.ExportParameters();
-                    WriteNotification("File parameter.zip updated at " + GenerationParamsS3BucketName());
+                    var ret = await service.ExportParameters();
+                    confirmResult = MessageBox.Show(ret, "Export cloudformation file to AWS", MessageBoxButtons.OK);                    
+                    WriteNotification(ret);
                 }
             }
             catch (Exception ex)
@@ -218,8 +217,9 @@ namespace SafeArrival.AdminTools.Presentation
                     MessageBoxButtons.YesNo);
             if (confirmResult1 == DialogResult.Yes)
             {
-                await service.ExportCloudFormation();
-                WriteNotification("File parameter.zip updated at " + GenerationParamsS3BucketName());
+                var ret = await service.ExportCloudFormation();
+                var confirmResult = MessageBox.Show(ret, "Export cloudformation file to AWS", MessageBoxButtons.OK);
+                WriteNotification(ret);
             }
         }
 
@@ -250,6 +250,22 @@ namespace SafeArrival.AdminTools.Presentation
                 });
                 btnAppsExport.Enabled = true;
                 timer1.Enabled = false;
+
+                var ret = $"Export applications to AWS. Operation includes: ";
+                if (cboxCopyApps.Checked)
+                {
+                    ret += "Copy zip files ";
+                }
+                if (cboxUpdateLambdas.Checked)
+                {
+                    ret += "Update lambda functions ";
+                }
+                if (cboxUpdateVersions.Checked)
+                {
+                    ret += "Update lambda function versions ";
+                }
+                var confirmResult = MessageBox.Show(ret, "Export applications to AWS", MessageBoxButtons.OK);
+                WriteNotification(ret);
             }
         }
 

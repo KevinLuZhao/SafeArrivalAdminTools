@@ -29,7 +29,7 @@ namespace SafeArrival.AdminTools.Presentation
                 ddlType.DataSource = lstLogType;
 
                 dtPickerFrom.Value = DateTime.Today.AddDays(-1);
-                dtPickerTo.Value = DateTime.Today.AddDays(1);
+                dtPickerTo.Value = DateTime.Today.AddDays(2);
 
                 BindData();
                 gvLogs.Columns[1].HeaderText = "Type";

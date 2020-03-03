@@ -37,26 +37,12 @@ namespace SafeArrival.AdminTools.AwsUtilities
             }
         }
 
+        //Unfinished
         public void SetEventTrigger()
         {
-            //S3Helper s3Helper = new S3Helper();
             var lstLambdaFuncs = client.ListFunctions();
-
-
-            //var request = new CreateEventSourceMappingRequest()
-            //{ 
-            //    FunctionName = lstLambdaFuncs.Functions[0].FunctionName,
-            //    Enabled = true,
-            //    StartingPosition = EventSourcePosition.AT_TIMESTAMP,
-            //    EventSourceArn = $"arn:aws:s3:::safe-arrival-{region}-{environment.ToString()}-sisbucket"
-            //};
             var request = new GetEventSourceMappingRequest() { };
             var policy = client.GetEventSourceMapping(request);
-            //client.CreateEventSourceMapping(request);
-
-            CreateFunctionRequest re = new CreateFunctionRequest();
-            var x = client.CreateFunction(re);
-            //x.
         }
 
         public async Task AddPolicy(string account)
@@ -104,19 +90,6 @@ namespace SafeArrival.AdminTools.AwsUtilities
             client.TagResource(request);
         }
 
-        //public bool VerifyFunction(string functionName)
-        //{
-        //    try
-        //    {
-        //        var response = client.GetFunction(functionName);
-        //        return (response != null);
-        //    }
-        //    catch (ResourceNotFoundException ex)
-        //    {
-        //        return false;
-        //    }
-        //}
-
         public async Task<string> UpdateFunction(string functionName, string s3Bucket, string s3Key)
         {
             var request = new UpdateFunctionCodeRequest()
@@ -126,7 +99,15 @@ namespace SafeArrival.AdminTools.AwsUtilities
                 S3Key = s3Key
             };
             var response = await client.UpdateFunctionCodeAsync(request);
-            return response.Description;
+            return response.Description.Trim();
+        }
+
+        public void UpdateFunctionDescription(string lambdaFunctionName, string description)
+        {
+            var request = new UpdateFunctionConfigurationRequest();
+            request.FunctionName = lambdaFunctionName;
+            request.Description = description;
+            var response = client.UpdateFunctionConfiguration(request);
         }
     }
 }
