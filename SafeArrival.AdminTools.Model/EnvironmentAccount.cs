@@ -14,5 +14,6 @@ namespace SafeArrival.AdminTools.Model
         public string Region { get; set; }
         public string RoleArn { get; set; }
         public string TCBuildConfig { get; set; }
+        public bool Enabled { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace SafeArrival.AdminTools.Presentation
     public partial class FormDeliveryManager : FormMdiChildBase
     {
         private string _parameterFolder = string.Empty;
-        private SoftwareDeliveryService service = new SoftwareDeliveryService();
+        private SoftwareDeliveryService service;
         private static List<string> applicationExportingLogs;
         //private string _s3bucket; 
         public FormDeliveryManager()
@@ -37,6 +37,7 @@ namespace SafeArrival.AdminTools.Presentation
         {
             BindFolder(GetJsonFilesFolder());
             BindInfraFolders();
+            service = new SoftwareDeliveryService();
         }
 
         private void BindFolder(string dir)
@@ -334,6 +335,7 @@ namespace SafeArrival.AdminTools.Presentation
             }
             catch (Exception ex)
             {
+
                 HandleException(ex);
             }
         }

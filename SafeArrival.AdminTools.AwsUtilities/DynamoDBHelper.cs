@@ -173,6 +173,9 @@ namespace SafeArrival.AdminTools.AwsUtilities
                     case "System.DateTime":
                         prop.SetValue(obj, DateTime.Parse(tableItem[prop.Name].S));
                         break;
+                    case "System.Boolean":
+                        prop.SetValue(obj, tableItem[prop.Name].BOOL);
+                        break;
                     default:
                         prop.SetValue(obj, tableItem[prop.Name].S);
                         break;
