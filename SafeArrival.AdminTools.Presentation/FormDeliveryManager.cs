@@ -254,7 +254,7 @@ namespace SafeArrival.AdminTools.Presentation
                 var ret = $"Export applications to AWS. Operation includes: ";
                 if (cboxCopyApps.Checked)
                 {
-                    ret += "Copy zip files ";
+                    ret += $"Copy zip files to S3 bucket: {string.Join("-", "safe-arrival", GlobalVariables.Region, GlobalVariables.Enviroment, "artifact")}\application";
                 }
                 if (cboxUpdateLambdas.Checked)
                 {

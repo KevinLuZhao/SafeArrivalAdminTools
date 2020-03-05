@@ -101,7 +101,7 @@ namespace SafeArrival.AdminTools.BLL
                 zipToOpen.Close();
             }
             await s3ParamsHelper.UploadFile(paramsFilePath, new FileStream(paramsFilePath, FileMode.Open));
-            return $"File {paramsFilePath} has been upload to {s3ParamsHelper.BucketName}. Please monitor the change on AWS Console";
+            return $"File {paramsFilePath} has been upload to S3 bucket: {s3ParamsHelper.BucketName}. Please monitor the change on AWS Console";
         }
 
         public async Task<string> ExportCloudFormation()
@@ -113,7 +113,7 @@ namespace SafeArrival.AdminTools.BLL
             }
             var zipFilePath = GenerateInfraZip();
             await s3CloudFormationHelper.UploadFile(Path.GetFileName(zipFilePath), new FileStream(zipFilePath, FileMode.Open));
-            return $"File {zipFilePath} has been upload to {s3CloudFormationHelper.BucketName}. Please monitor the change on AWS Console";
+            return $"File {zipFilePath} has been upload to S3 bucket: {s3CloudFormationHelper.BucketName}. Please monitor the change on AWS Console";
         }
 
         private string GenerateInfraZip()
