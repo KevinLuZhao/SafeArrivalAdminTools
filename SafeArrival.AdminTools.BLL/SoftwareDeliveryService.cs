@@ -153,25 +153,18 @@ namespace SafeArrival.AdminTools.BLL
 
         public async Task<string> ReadAppVersion(string folder)
         {
-<<<<<<< HEAD
             var strVersion = string.Empty;
-            var versionFile = await s3ArtifactHelper.DownloadFile($"{folder}version.txt");
-            using (StreamReader sr = new StreamReader(versionFile))
-            {
-                strVersion = sr.ReadToEnd();
-=======
             try
             {
                 var versionFile = await s3ArtifactHelper.DownloadFile($"{folder}version.txt");
                 using (StreamReader sr = new StreamReader(versionFile))
                 {
-                    return sr.ReadToEnd();
+                    strVersion = sr.ReadToEnd();
                 }
             }
             catch (Exception ex)
             {
                 throw new Exception($"Read version.txt file from {folder} failed. Error message: {ex.Message}");
->>>>>>> 7810c343a5d49a593cbccb690892470bc644d720
             }
             strVersion = Regex.Replace(strVersion, @"\t|\n|\r", "");
             return strVersion.Trim();
@@ -184,35 +177,18 @@ namespace SafeArrival.AdminTools.BLL
             {
                 await Task.Run(() =>
                 {
-<<<<<<< HEAD
-                    if (file.FullName.ToLower().IndexOf(".zip") < 0)
-                        continue;
-                    var fileName = Path.GetFileName(file.FullName);
-                    var row = fileName;
-                    int spaceNum = nameLimit - fileName.Length;
-                    //if (fileName == "api.zip")
-                    //{
-                    //    var asd = spaceNum;
-                    //}
-                    while (spaceNum > 0)
-=======
                     var sourceFiles = s3ArtifactHelper.GetBucketFileList(appsSourceFolder);
-                    ret.Add($"ZIP files to be delivered on {GlobalVariables.Enviroment.ToUpper()}:{Environment.NewLine}");
+                    ret.Add($"ZIP files to be delivered on {GlobalVariables.Enviroment.ToUpper()} ({s3ArtifactHelper.BucketName}):{Environment.NewLine}");
                     var nameLimit = 60;
                     var countFiles = 0;
                     var countLambdaFiles = 0;
                     foreach (var file in sourceFiles)
->>>>>>> 7810c343a5d49a593cbccb690892470bc644d720
                     {
                         if (file.FullName.ToLower().IndexOf(".zip") < 0)
                             continue;
                         var fileName = Path.GetFileName(file.FullName);
                         var row = fileName;
                         int spaceNum = nameLimit - fileName.Length;
-                        //if (fileName == "api.zip")
-                        //{
-                        //    var asd = spaceNum;
-                        //}
                         while (spaceNum > 0)
                         {
                             row += " ";
@@ -367,11 +343,7 @@ namespace SafeArrival.AdminTools.BLL
                 }
                 else
                 {
-<<<<<<< HEAD
                     result = $"Updated function {lambda.FunctionName} to version {updatedVersion}";
-=======
-                    throw (ex);
->>>>>>> 7810c343a5d49a593cbccb690892470bc644d720
                 }
             });
             return result;

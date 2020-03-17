@@ -149,36 +149,43 @@ namespace SafeArrival.AdminTools.AwsUtilities
             T obj = (T)Activator.CreateInstance(typeof(T));
             foreach (var prop in typeof(T).GetProperties())
             {
-                //foreach
-                string propertyType;
-                if (prop.PropertyType.BaseType.FullName == "System.Enum")
+                try
                 {
-                    propertyType = "System.Enum";
+                    string propertyType;
+                    if (prop.PropertyType.BaseType.FullName == "System.Enum")
+                    {
+                        propertyType = "System.Enum";
+                    }
+                    else
+                    {
+                        propertyType = prop.PropertyType.FullName;
+                    }
+                    switch (propertyType)
+                    {
+                        case "System.String":
+                            prop.SetValue(obj, tableItem[prop.Name].S);
+                            break;
+                        case "System.Int32":
+                            prop.SetValue(obj, int.Parse(tableItem[prop.Name].S));
+                            break;
+                        case "System.Enum":
+                            prop.SetValue(obj, Enum.Parse(prop.PropertyType, tableItem[prop.Name].S));
+                            break;
+                        case "System.DateTime":
+                            prop.SetValue(obj, DateTime.Parse(tableItem[prop.Name].S));
+                            break;
+                        case "System.Boolean":
+                            prop.SetValue(obj, tableItem[prop.Name].BOOL);
+                            break;
+                        default:
+                            prop.SetValue(obj, tableItem[prop.Name].S);
+                            break;
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    propertyType = prop.PropertyType.FullName;
-                }
-                switch (propertyType)
-                {
-                    case "System.String":
-                        prop.SetValue(obj, tableItem[prop.Name].S);
-                        break;
-                    case "System.Int32":
-                        prop.SetValue(obj, int.Parse(tableItem[prop.Name].S));
-                        break;
-                    case "System.Enum":
-                        prop.SetValue(obj, Enum.Parse(prop.PropertyType, tableItem[prop.Name].S));
-                        break;
-                    case "System.DateTime":
-                        prop.SetValue(obj, DateTime.Parse(tableItem[prop.Name].S));
-                        break;
-                    case "System.Boolean":
-                        prop.SetValue(obj, tableItem[prop.Name].BOOL);
-                        break;
-                    default:
-                        prop.SetValue(obj, tableItem[prop.Name].S);
-                        break;
+                    Console.Write($"Fail to convert property of {prop.Name}");
+                    continue;
                 }
             }
             return obj;

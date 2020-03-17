@@ -13,6 +13,8 @@ namespace SafeArrival.AdminTools.Model
         public int MaxSize { get; set; }
         public int MinSize { get; set; }
         public int DesiredCapacity { get; set; }
+        public string HealthCheckType { get; set; }
+        public int HealthCheckGracePeriod { get; set; }
         //public string DisplayName { get; set; }
     }
 }

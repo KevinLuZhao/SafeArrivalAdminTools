@@ -92,6 +92,8 @@ namespace SafeArrival.AdminTools.Presentation
             await PopulatePeeringConnection();
             await PopulateeeringConnectionVpcDropdownLists();
             await PopulateRDSList();
+            await PopulateEc2Instances();
+            await PopulateAsgList();
         }
 
         //-----------------------------------------------Envroment Status--------------------------------------------------------------
@@ -650,16 +652,19 @@ namespace SafeArrival.AdminTools.Presentation
                 GlobalVariables.Enviroment,
                 GlobalVariables.Region,
                 GlobalVariables.Color);
+            int selectCol = gvAsg.ColumnCount - 1;
             foreach (DataGridViewRow row in gvAsg.Rows)
             {
-                if (row.Cells[6].Value != null && (bool)row.Cells[6].Value)
+                if (row.Cells[selectCol].Value != null && (bool)row.Cells[selectCol].Value)
                 {
                     var rowDs = ((List<SA_AutoScalingGroup>)datasource)[row.Index];
                     var settings = new AutoScalingGroupSettings()
                     {
                         MaxSize = rowDs.MaxSize,
                         MinSize = rowDs.MinSize,
-                        DesiredCapacity = rowDs.DesiredCapacity
+                        DesiredCapacity = rowDs.DesiredCapacity,
+                        HealthCheckType = rowDs.HealthCheckType,
+                        HealthCheckGracePeriod = rowDs.HealthCheckGracePeriod
                     };
                     var confirmResult = MessageBox.Show(
                             string.Format("Are you sure to change autoscaling group settings: '{0}' to be '{1}-{2}-{3}'? Pleae check the settings first and then click YES button!",

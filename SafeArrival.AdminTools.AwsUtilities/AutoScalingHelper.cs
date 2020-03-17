@@ -78,7 +78,9 @@ namespace SafeArrival.AdminTools.AwsUtilities
                     MinSize = group.MinSize,
                     DesiredCapacity = group.DesiredCapacity,
                     CreatedTime = group.CreatedTime,
-                    RunningInstances = group.Instances.Count
+                    RunningInstances = group.Instances.Count,
+                    HealthCheckType = group.HealthCheckType,
+                    HealthCheckGracePeriod = group.HealthCheckGracePeriod
                 };
                 lstSaGroups.Add(saGroup);
             }
@@ -138,6 +140,8 @@ namespace SafeArrival.AdminTools.AwsUtilities
             request.MaxSize = settings.MaxSize;
             request.MinSize = settings.MinSize;
             request.DesiredCapacity = settings.DesiredCapacity;
+            request.HealthCheckType = settings.HealthCheckType;
+            request.HealthCheckGracePeriod = settings.HealthCheckGracePeriod;
             request.AutoScalingGroupName = groupName;
             await client.UpdateAutoScalingGroupAsync(request);
         }
