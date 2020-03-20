@@ -92,7 +92,6 @@ namespace SafeArrival.AdminTools.AwsUtilities
                 BucketName = BucketName,
                 Key = fullFileName,
                 InputStream = fileStream,
-
             };
 
             PutObjectResponse response = await client.PutObjectAsync(request);
@@ -208,7 +207,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
         public async Task PutNotification(string id = "", string functionArn = "", string s3Event = "")
         {
             LambdaFunctionConfiguration lambdaConfig = null;
-            if (id!="")
+            if (id != "")
             {
                 var events = new List<EventType>();
                 events.Add(new EventType(s3Event));
@@ -219,7 +218,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
                     Events = events
                 };
             }
-            
+
             var request = new PutBucketNotificationRequest()
             {
                 BucketName = BucketName,
@@ -228,15 +227,15 @@ namespace SafeArrival.AdminTools.AwsUtilities
             var response = await client.PutBucketNotificationAsync(request);
         }
 
-        public async Task<List<string>> GetBuckets()
+        public async Task<List<string>> GetBuckets(string fileter = null)
         {
-            var request = new ListBucketsRequest();
-            var response = await client.ListBucketsAsync();
+            var response = client.ListBuckets();
             var ret = new List<string>();
-            
+
             foreach (var bucket in response.Buckets)
             {
-                ret.Add(bucket.BucketName);
+                if (fileter == null || bucket.BucketName.ToLower().Contains(fileter.ToLower()))
+                    ret.Add(bucket.BucketName);
             }
             return ret;
         }

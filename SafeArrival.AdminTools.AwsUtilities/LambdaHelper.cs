@@ -2,6 +2,7 @@
 using Amazon.Lambda.Model;
 using SafeArrival.AdminTools.Model;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SafeArrival.AdminTools.AwsUtilities
@@ -35,6 +36,12 @@ namespace SafeArrival.AdminTools.AwsUtilities
             {
                 return null;
             }
+        }
+
+        public async Task<List<string>> GetFunctionList()
+        {
+            var response = await client.ListFunctionsAsync();
+            return null;
         }
 
         //Unfinished

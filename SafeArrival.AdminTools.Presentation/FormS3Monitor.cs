@@ -206,9 +206,16 @@ namespace SafeArrival.AdminTools.Presentation
             _envAwsS3ObjectList.Clear();
             tvS3Folders.Nodes.Clear();
             List<string> bucketList = new List<string>();
-            bucketList.Add(string.Join("-", "safe-arrival", GlobalVariables.Region, GlobalVariables.Enviroment, "artifact"));
-            bucketList.Add(string.Join("-", "safe-arrival", GlobalVariables.Region, GlobalVariables.Enviroment, "parameters"));
-            bucketList.Add(string.Join("-", "safe-arrival", GlobalVariables.Region, GlobalVariables.Enviroment, "sisbucket"));
+            //bucketList.Add(string.Join("-", "safe-arrival", GlobalVariables.Region, GlobalVariables.Enviroment, "artifact"));
+            //bucketList.Add(string.Join("-", "safe-arrival", GlobalVariables.Region, GlobalVariables.Enviroment, "parameters"));
+            //bucketList.Add(string.Join("-", "safe-arrival", GlobalVariables.Region, GlobalVariables.Enviroment, "sisbucket"));
+            S3Helper s3Helper = new S3Helper(
+                GlobalVariables.Enviroment,
+                GlobalVariables.Region,
+                GlobalVariables.Color,
+                ""
+                );
+            bucketList = s3Helper.GetBuckets(string.Join("-", "safe-arrival", GlobalVariables.Region, GlobalVariables.Enviroment)).Result;
 
             foreach (var s3BucketName in bucketList)
             {
