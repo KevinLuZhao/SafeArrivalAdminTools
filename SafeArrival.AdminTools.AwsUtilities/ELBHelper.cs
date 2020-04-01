@@ -53,8 +53,16 @@ namespace SafeArrival.AdminTools.AwsUtilities
             //LoadBalancer name like "awseb-e-c-AWSEBLoa-G25T4NILK22Q", need to get name from tag.
             foreach (var sourceELB in lstSourceELBs)
             {
-                var tagName = respTags.TagDescriptions.Find
+                string tagName = string.Empty;
+                try
+                {
+                    tagName = respTags.TagDescriptions.Find
                     (o => o.LoadBalancerName == sourceELB.LoadBalancerName).Tags.Find(o => o.Key == "Name").Value;
+                }
+                catch
+                {
+                    continue;
+                }
                 if (!(tagName.IndexOf($"{environment}-{color}")==0))   //check
                     continue;
                 var elb = ModelTransformer<LoadBalancerDescription, SA_LoadBalancer>.

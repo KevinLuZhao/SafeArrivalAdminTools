@@ -407,7 +407,8 @@ namespace SafeArrival.AdminTools.Presentation
         //-----------------------------------------------EC2 Instances Tab--------------------------------------------------------------
         private void PopulateEc2Regions()
         {
-            List<KeyValuePair<string, string>> lstRegions = Regions.GetRegionList();
+            var lstRegions = Regions.GetRegionList();
+            lstRegions.Add(new KeyValuePair<string, string>("All Regions", "All Regions"));
             ddlEC2Region.DataSource = lstRegions;
             ddlEC2Region.DisplayMember = "Value";
             ddlEC2Region.ValueMember = "Key";
@@ -426,7 +427,19 @@ namespace SafeArrival.AdminTools.Presentation
                 GlobalVariables.Enviroment,
                 GlobalVariables.Region,
                 GlobalVariables.Color);
-            gvEc2Instances.DataSource = await helper.GetEc2InsatancesList(((KeyValuePair<string, string>)ddlEC2Region.SelectedItem).Key);
+            var selectRegion = ((KeyValuePair<string, string>)ddlEC2Region.SelectedItem).Key;
+            if (selectRegion == "All Regions")
+            {
+                var lstRegions = Regions.GetRegionList();
+                var lstInstances = new List<SA_Ec2Instance>();
+                foreach (var region in lstRegions)
+                {
+                    lstInstances.AddRange(await helper.GetEc2InsatancesList(region.Key));
+                }
+                gvEc2Instances.DataSource = lstInstances;
+            }
+            else
+                gvEc2Instances.DataSource = await helper.GetEc2InsatancesList(((KeyValuePair<string, string>)ddlEC2Region.SelectedItem).Key);
             //gvEc2Instances.Sort(gvEc2InstancesColState, System.ComponentModel.ListSortDirection.Ascending);
         }
 

@@ -99,13 +99,6 @@
             this.btnEc2Stop = new System.Windows.Forms.Button();
             this.btnEc2Start = new System.Windows.Forms.Button();
             this.gvEc2Instances = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.VpcId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gvEc2InstancesColState = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ASGName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewCheckBoxColumn4 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tabAsg = new System.Windows.Forms.TabPage();
             this.pnlAsg = new System.Windows.Forms.Panel();
             this.label15 = new System.Windows.Forms.Label();
@@ -122,6 +115,13 @@
             this.HealthCheckType = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.HealthCheckGracePeriod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewCheckBoxColumn3 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VpcId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gvEc2InstancesColState = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.KeyName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewCheckBoxColumn4 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tabCtrlMain.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgScheduleStatus)).BeginInit();
@@ -872,65 +872,12 @@
             this.dataGridViewTextBoxColumn12,
             this.VpcId,
             this.gvEc2InstancesColState,
-            this.ASGName,
+            this.KeyName,
             this.dataGridViewCheckBoxColumn4});
             this.gvEc2Instances.Location = new System.Drawing.Point(6, 45);
             this.gvEc2Instances.Name = "gvEc2Instances";
             this.gvEc2Instances.Size = new System.Drawing.Size(1092, 471);
             this.gvEc2Instances.TabIndex = 5;
-            // 
-            // dataGridViewTextBoxColumn10
-            // 
-            this.dataGridViewTextBoxColumn10.DataPropertyName = "Name";
-            this.dataGridViewTextBoxColumn10.HeaderText = "Name";
-            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
-            this.dataGridViewTextBoxColumn10.ReadOnly = true;
-            this.dataGridViewTextBoxColumn10.Width = 250;
-            // 
-            // dataGridViewTextBoxColumn11
-            // 
-            this.dataGridViewTextBoxColumn11.DataPropertyName = "InstanceId";
-            this.dataGridViewTextBoxColumn11.HeaderText = "Instance ID";
-            this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
-            this.dataGridViewTextBoxColumn11.ReadOnly = true;
-            this.dataGridViewTextBoxColumn11.Width = 150;
-            // 
-            // dataGridViewTextBoxColumn12
-            // 
-            this.dataGridViewTextBoxColumn12.DataPropertyName = "InstanceType";
-            this.dataGridViewTextBoxColumn12.HeaderText = "Type";
-            this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
-            this.dataGridViewTextBoxColumn12.ReadOnly = true;
-            this.dataGridViewTextBoxColumn12.Width = 90;
-            // 
-            // VpcId
-            // 
-            this.VpcId.DataPropertyName = "VpcId";
-            this.VpcId.HeaderText = "VPC ID";
-            this.VpcId.Name = "VpcId";
-            this.VpcId.ReadOnly = true;
-            // 
-            // gvEc2InstancesColState
-            // 
-            this.gvEc2InstancesColState.DataPropertyName = "State";
-            this.gvEc2InstancesColState.HeaderText = "State";
-            this.gvEc2InstancesColState.Name = "gvEc2InstancesColState";
-            this.gvEc2InstancesColState.ReadOnly = true;
-            this.gvEc2InstancesColState.Width = 50;
-            // 
-            // ASGName
-            // 
-            this.ASGName.DataPropertyName = "AsgName";
-            this.ASGName.HeaderText = "Auto Scaling Group";
-            this.ASGName.Name = "ASGName";
-            this.ASGName.ReadOnly = true;
-            this.ASGName.Width = 350;
-            // 
-            // dataGridViewCheckBoxColumn4
-            // 
-            this.dataGridViewCheckBoxColumn4.HeaderText = "Select";
-            this.dataGridViewCheckBoxColumn4.Name = "dataGridViewCheckBoxColumn4";
-            this.dataGridViewCheckBoxColumn4.Width = 50;
             // 
             // tabAsg
             // 
@@ -1090,6 +1037,59 @@
             this.dataGridViewCheckBoxColumn3.Name = "dataGridViewCheckBoxColumn3";
             this.dataGridViewCheckBoxColumn3.Width = 50;
             // 
+            // dataGridViewTextBoxColumn10
+            // 
+            this.dataGridViewTextBoxColumn10.DataPropertyName = "Name";
+            this.dataGridViewTextBoxColumn10.HeaderText = "Name";
+            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
+            this.dataGridViewTextBoxColumn10.ReadOnly = true;
+            this.dataGridViewTextBoxColumn10.Width = 250;
+            // 
+            // dataGridViewTextBoxColumn11
+            // 
+            this.dataGridViewTextBoxColumn11.DataPropertyName = "InstanceId";
+            this.dataGridViewTextBoxColumn11.HeaderText = "Instance ID";
+            this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
+            this.dataGridViewTextBoxColumn11.ReadOnly = true;
+            this.dataGridViewTextBoxColumn11.Width = 150;
+            // 
+            // dataGridViewTextBoxColumn12
+            // 
+            this.dataGridViewTextBoxColumn12.DataPropertyName = "InstanceType";
+            this.dataGridViewTextBoxColumn12.HeaderText = "Type";
+            this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
+            this.dataGridViewTextBoxColumn12.ReadOnly = true;
+            this.dataGridViewTextBoxColumn12.Width = 90;
+            // 
+            // VpcId
+            // 
+            this.VpcId.DataPropertyName = "VpcId";
+            this.VpcId.HeaderText = "VPC ID";
+            this.VpcId.Name = "VpcId";
+            this.VpcId.ReadOnly = true;
+            // 
+            // gvEc2InstancesColState
+            // 
+            this.gvEc2InstancesColState.DataPropertyName = "State";
+            this.gvEc2InstancesColState.HeaderText = "State";
+            this.gvEc2InstancesColState.Name = "gvEc2InstancesColState";
+            this.gvEc2InstancesColState.ReadOnly = true;
+            this.gvEc2InstancesColState.Width = 50;
+            // 
+            // KeyName
+            // 
+            this.KeyName.DataPropertyName = "KeyName";
+            this.KeyName.HeaderText = "Key Name";
+            this.KeyName.Name = "KeyName";
+            this.KeyName.ReadOnly = true;
+            this.KeyName.Width = 350;
+            // 
+            // dataGridViewCheckBoxColumn4
+            // 
+            this.dataGridViewCheckBoxColumn4.HeaderText = "Select";
+            this.dataGridViewCheckBoxColumn4.Name = "dataGridViewCheckBoxColumn4";
+            this.dataGridViewCheckBoxColumn4.Width = 50;
+            // 
             // FormSystemManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1206,13 +1206,6 @@
         private System.Windows.Forms.Button btnAsgRefresh;
         private System.Windows.Forms.Button btnAsgUpdate;
         private System.Windows.Forms.DataGridView gvAsg;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
-        private System.Windows.Forms.DataGridViewTextBoxColumn VpcId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gvEc2InstancesColState;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ASGName;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
@@ -1222,5 +1215,12 @@
         private System.Windows.Forms.DataGridViewComboBoxColumn HealthCheckType;
         private System.Windows.Forms.DataGridViewTextBoxColumn HealthCheckGracePeriod;
         private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VpcId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gvEc2InstancesColState;
+        private System.Windows.Forms.DataGridViewTextBoxColumn KeyName;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn4;
     }
 }

@@ -44,7 +44,8 @@ namespace SafeArrival.AdminTools.AwsUtilities
                 {
                     var saInstance = new SA_Ec2Instance()
                     {
-                        Name = instance.KeyName,
+                        Name = instance.Tags.Find(o => o.Key == "Name") == null ? string.Empty : instance.Tags.Find(o => o.Key == "Name").Value,
+                        Keyname = instance.KeyName,
                         InstanceId = instance.InstanceId,
                         InstanceType = instance.InstanceType,
                         VpcId = instance.VpcId,
