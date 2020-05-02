@@ -232,6 +232,7 @@ namespace SafeArrival.AdminTools.BLL
                     $"{counter} ZIP application files are copied from " +
                     $"{s3ArtifactHelper.BucketName}/{appsSourceFolder} to " +
                     $"{s3ArtifactHelper.BucketName}/{appsDestinationFolder}");
+                Thread.Sleep(3000);
             }
             if (updateLambdaFiles || updateLambdaVersions)
             {

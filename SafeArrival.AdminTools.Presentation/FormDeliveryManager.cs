@@ -314,6 +314,10 @@ namespace SafeArrival.AdminTools.Presentation
                     File.Create(path);
                 }
                 File.AppendAllText(path, txtAppsProcess.Text);
+                var confirmResult = MessageBox.Show(
+                        $"Delivery logs have been saved to '{Path.GetFullPath(path)}'. " ,
+                        "Save logs",
+                        MessageBoxButtons.OK);
             }
             catch (Exception ex)
             {
@@ -331,7 +335,6 @@ namespace SafeArrival.AdminTools.Presentation
                 {
                     txtAppsProcess.AppendText(dataRow);
                 }
-                NotifyToMainStatus($"Delivery Logs are saved.", System.Drawing.Color.Green);
             }
             catch (Exception ex)
             {

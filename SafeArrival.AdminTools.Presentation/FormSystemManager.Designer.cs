@@ -99,6 +99,13 @@
             this.btnEc2Stop = new System.Windows.Forms.Button();
             this.btnEc2Start = new System.Windows.Forms.Button();
             this.gvEc2Instances = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VpcId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gvEc2InstancesColState = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.KeyName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewCheckBoxColumn4 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tabAsg = new System.Windows.Forms.TabPage();
             this.pnlAsg = new System.Windows.Forms.Panel();
             this.label15 = new System.Windows.Forms.Label();
@@ -115,13 +122,13 @@
             this.HealthCheckType = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.HealthCheckGracePeriod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewCheckBoxColumn3 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.VpcId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gvEc2InstancesColState = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.KeyName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewCheckBoxColumn4 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.tabSnapshot = new System.Windows.Forms.TabPage();
+            this.gvSnapshots = new System.Windows.Forms.DataGridView();
+            this.SnapshotID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OwnerID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.StartTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Volume = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.State = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabCtrlMain.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgScheduleStatus)).BeginInit();
@@ -140,6 +147,8 @@
             this.tabAsg.SuspendLayout();
             this.pnlAsg.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gvAsg)).BeginInit();
+            this.tabSnapshot.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gvSnapshots)).BeginInit();
             this.SuspendLayout();
             // 
             // checkBox2
@@ -155,14 +164,16 @@
             // 
             // tabCtrlMain
             // 
-            this.tabCtrlMain.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.tabCtrlMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabCtrlMain.Controls.Add(this.tabPage1);
             this.tabCtrlMain.Controls.Add(this.tabPage3);
             this.tabCtrlMain.Controls.Add(this.tabPage4);
             this.tabCtrlMain.Controls.Add(this.tabPage5);
             this.tabCtrlMain.Controls.Add(this.tabEc2);
             this.tabCtrlMain.Controls.Add(this.tabAsg);
+            this.tabCtrlMain.Controls.Add(this.tabSnapshot);
             this.tabCtrlMain.Location = new System.Drawing.Point(4, 4);
             this.tabCtrlMain.Name = "tabCtrlMain";
             this.tabCtrlMain.SelectedIndex = 0;
@@ -879,6 +890,59 @@
             this.gvEc2Instances.Size = new System.Drawing.Size(1092, 471);
             this.gvEc2Instances.TabIndex = 5;
             // 
+            // dataGridViewTextBoxColumn10
+            // 
+            this.dataGridViewTextBoxColumn10.DataPropertyName = "Name";
+            this.dataGridViewTextBoxColumn10.HeaderText = "Name";
+            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
+            this.dataGridViewTextBoxColumn10.ReadOnly = true;
+            this.dataGridViewTextBoxColumn10.Width = 250;
+            // 
+            // dataGridViewTextBoxColumn11
+            // 
+            this.dataGridViewTextBoxColumn11.DataPropertyName = "InstanceId";
+            this.dataGridViewTextBoxColumn11.HeaderText = "Instance ID";
+            this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
+            this.dataGridViewTextBoxColumn11.ReadOnly = true;
+            this.dataGridViewTextBoxColumn11.Width = 150;
+            // 
+            // dataGridViewTextBoxColumn12
+            // 
+            this.dataGridViewTextBoxColumn12.DataPropertyName = "InstanceType";
+            this.dataGridViewTextBoxColumn12.HeaderText = "Type";
+            this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
+            this.dataGridViewTextBoxColumn12.ReadOnly = true;
+            this.dataGridViewTextBoxColumn12.Width = 90;
+            // 
+            // VpcId
+            // 
+            this.VpcId.DataPropertyName = "VpcId";
+            this.VpcId.HeaderText = "VPC ID";
+            this.VpcId.Name = "VpcId";
+            this.VpcId.ReadOnly = true;
+            // 
+            // gvEc2InstancesColState
+            // 
+            this.gvEc2InstancesColState.DataPropertyName = "State";
+            this.gvEc2InstancesColState.HeaderText = "State";
+            this.gvEc2InstancesColState.Name = "gvEc2InstancesColState";
+            this.gvEc2InstancesColState.ReadOnly = true;
+            this.gvEc2InstancesColState.Width = 50;
+            // 
+            // KeyName
+            // 
+            this.KeyName.DataPropertyName = "KeyName";
+            this.KeyName.HeaderText = "Key Name";
+            this.KeyName.Name = "KeyName";
+            this.KeyName.ReadOnly = true;
+            this.KeyName.Width = 350;
+            // 
+            // dataGridViewCheckBoxColumn4
+            // 
+            this.dataGridViewCheckBoxColumn4.HeaderText = "Select";
+            this.dataGridViewCheckBoxColumn4.Name = "dataGridViewCheckBoxColumn4";
+            this.dataGridViewCheckBoxColumn4.Width = 50;
+            // 
             // tabAsg
             // 
             this.tabAsg.Controls.Add(this.pnlAsg);
@@ -1037,58 +1101,67 @@
             this.dataGridViewCheckBoxColumn3.Name = "dataGridViewCheckBoxColumn3";
             this.dataGridViewCheckBoxColumn3.Width = 50;
             // 
-            // dataGridViewTextBoxColumn10
+            // tabSnapshot
             // 
-            this.dataGridViewTextBoxColumn10.DataPropertyName = "Name";
-            this.dataGridViewTextBoxColumn10.HeaderText = "Name";
-            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
-            this.dataGridViewTextBoxColumn10.ReadOnly = true;
-            this.dataGridViewTextBoxColumn10.Width = 250;
+            this.tabSnapshot.Controls.Add(this.gvSnapshots);
+            this.tabSnapshot.Location = new System.Drawing.Point(4, 22);
+            this.tabSnapshot.Name = "tabSnapshot";
+            this.tabSnapshot.Padding = new System.Windows.Forms.Padding(3);
+            this.tabSnapshot.Size = new System.Drawing.Size(1105, 576);
+            this.tabSnapshot.TabIndex = 6;
+            this.tabSnapshot.Text = "Snapshots";
+            this.tabSnapshot.UseVisualStyleBackColor = true;
             // 
-            // dataGridViewTextBoxColumn11
+            // gvSnapshots
             // 
-            this.dataGridViewTextBoxColumn11.DataPropertyName = "InstanceId";
-            this.dataGridViewTextBoxColumn11.HeaderText = "Instance ID";
-            this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
-            this.dataGridViewTextBoxColumn11.ReadOnly = true;
-            this.dataGridViewTextBoxColumn11.Width = 150;
+            this.gvSnapshots.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gvSnapshots.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gvSnapshots.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.SnapshotID,
+            this.OwnerID,
+            this.StartTime,
+            this.Volume,
+            this.State});
+            this.gvSnapshots.Location = new System.Drawing.Point(5, 7);
+            this.gvSnapshots.Name = "gvSnapshots";
+            this.gvSnapshots.Size = new System.Drawing.Size(1095, 532);
+            this.gvSnapshots.TabIndex = 0;
             // 
-            // dataGridViewTextBoxColumn12
+            // SnapshotID
             // 
-            this.dataGridViewTextBoxColumn12.DataPropertyName = "InstanceType";
-            this.dataGridViewTextBoxColumn12.HeaderText = "Type";
-            this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
-            this.dataGridViewTextBoxColumn12.ReadOnly = true;
-            this.dataGridViewTextBoxColumn12.Width = 90;
+            this.SnapshotID.DataPropertyName = "SnapshotId";
+            this.SnapshotID.HeaderText = "Snapshot ID";
+            this.SnapshotID.Name = "SnapshotID";
+            this.SnapshotID.ReadOnly = true;
             // 
-            // VpcId
+            // OwnerID
             // 
-            this.VpcId.DataPropertyName = "VpcId";
-            this.VpcId.HeaderText = "VPC ID";
-            this.VpcId.Name = "VpcId";
-            this.VpcId.ReadOnly = true;
+            this.OwnerID.DataPropertyName = "OwnerId";
+            this.OwnerID.HeaderText = "Owner ID";
+            this.OwnerID.Name = "OwnerID";
+            this.OwnerID.ReadOnly = true;
             // 
-            // gvEc2InstancesColState
+            // StartTime
             // 
-            this.gvEc2InstancesColState.DataPropertyName = "State";
-            this.gvEc2InstancesColState.HeaderText = "State";
-            this.gvEc2InstancesColState.Name = "gvEc2InstancesColState";
-            this.gvEc2InstancesColState.ReadOnly = true;
-            this.gvEc2InstancesColState.Width = 50;
+            this.StartTime.DataPropertyName = "StartTime";
+            this.StartTime.HeaderText = "Start Time";
+            this.StartTime.Name = "StartTime";
+            this.StartTime.ReadOnly = true;
             // 
-            // KeyName
+            // Volume
             // 
-            this.KeyName.DataPropertyName = "KeyName";
-            this.KeyName.HeaderText = "Key Name";
-            this.KeyName.Name = "KeyName";
-            this.KeyName.ReadOnly = true;
-            this.KeyName.Width = 350;
+            this.Volume.DataPropertyName = "VolumeSize";
+            this.Volume.HeaderText = "Volume";
+            this.Volume.Name = "Volume";
             // 
-            // dataGridViewCheckBoxColumn4
+            // State
             // 
-            this.dataGridViewCheckBoxColumn4.HeaderText = "Select";
-            this.dataGridViewCheckBoxColumn4.Name = "dataGridViewCheckBoxColumn4";
-            this.dataGridViewCheckBoxColumn4.Width = 50;
+            this.State.DataPropertyName = "StateMessage";
+            this.State.HeaderText = "State";
+            this.State.Name = "State";
+            this.State.ReadOnly = true;
             // 
             // FormSystemManager
             // 
@@ -1124,6 +1197,8 @@
             this.pnlAsg.ResumeLayout(false);
             this.pnlAsg.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gvAsg)).EndInit();
+            this.tabSnapshot.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gvSnapshots)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1222,5 +1297,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn gvEc2InstancesColState;
         private System.Windows.Forms.DataGridViewTextBoxColumn KeyName;
         private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn4;
+        private System.Windows.Forms.TabPage tabSnapshot;
+        private System.Windows.Forms.DataGridView gvSnapshots;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SnapshotID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn OwnerID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn StartTime;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Volume;
+        private System.Windows.Forms.DataGridViewTextBoxColumn State;
     }
 }

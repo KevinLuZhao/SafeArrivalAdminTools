@@ -15,5 +15,6 @@ namespace SafeArrival.AdminTools.Model
         public string VpcId { get; set; }
         public string State { get; set; }
         public string AsgName { get; set; }
+        public string PrivateDnsName { get; set; }
     }
 }

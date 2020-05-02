@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SafeArrival.AdminTools.AwsUtilities;
 
 namespace SafeArrival.AdminTools.AwsUtilities
 {
@@ -49,7 +50,8 @@ namespace SafeArrival.AdminTools.AwsUtilities
                         InstanceId = instance.InstanceId,
                         InstanceType = instance.InstanceType,
                         VpcId = instance.VpcId,
-                        State = instance.State.Name
+                        State = instance.State.Name,
+                        PrivateDnsName = instance.PrivateDnsName
                     };
                     var searchedAsgEc2Map = asgEc2Maps.Find(o => o.InstanceId == instance.InstanceId);
                     if (searchedAsgEc2Map != null)
@@ -97,6 +99,27 @@ namespace SafeArrival.AdminTools.AwsUtilities
                 InstanceIds = InstanceIds
             };
             await client.StopInstancesAsync(request);
+        }
+
+        public async Task<List<SA_Snapshot>> GetAllSnapshots()
+        {
+            var ret = new List<SA_Snapshot>();
+            var request = new DescribeSnapshotsRequest();
+            request.OwnerIds = CredentiaslManager.GlobalAccountsCache;
+            var response = await client.DescribeSnapshotsAsync(request);
+            foreach (var snapshot in response.Snapshots)
+            {
+                ret.Add(new SA_Snapshot()
+                {
+                    Name = snapshot.Tags.Find(o => o.Key == "Name").Value,
+                    OwnerId = snapshot.OwnerId,
+                    SnapshotId = snapshot.SnapshotId,
+                    StartTime = snapshot.StartTime,
+                    VolumeSize = snapshot.VolumeSize,
+                    StateMessage = snapshot.StateMessage
+                });
+            }
+            return ret;
         }
         /****************************************** Scaling Group  ******************************************/
         public async Task<List<SA_Ec2Instance>> GetScalingGroupList(string region = null)

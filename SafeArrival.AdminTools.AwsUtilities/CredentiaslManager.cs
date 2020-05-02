@@ -11,6 +11,8 @@ namespace SafeArrival.AdminTools.AwsUtilities
     {
         public static Dictionary<string, AssumeRoleAWSCredentials> GlobalRoleCredentialsCache { get; set; }
         public static Dictionary<string, string> GlobalRoleArnCache { get; set; }
+        public static List<string> GlobalAccountsCache { get; set; }        //List of accounts like "125237747044"
+
         public static AssumeRoleAWSCredentials GetCredential(string env)
         {
             if (GlobalRoleCredentialsCache == null)
@@ -24,12 +26,17 @@ namespace SafeArrival.AdminTools.AwsUtilities
             if (GlobalRoleArnCache == null)
             {
                 GlobalRoleArnCache = new Dictionary<string, string>();
+                GlobalAccountsCache = new List<string>();
                 var client = new AmazonDynamoDBClient(GetDynamoDbCredential(), AwsCommon.GetRetionEndpoint("us-east-2"));
                 var request = new ScanRequest("sa_env_accounts");
                 var response = client.Scan(request);
                 foreach (var item in response.Items)
                 {
                     GlobalRoleArnCache.Add(item["Environment"].S, item["RoleArn"].S + "/" + ConfigurationSettings.AppSettings["Role"]);
+
+                    var account = item["Account"].S;
+                    if (!GlobalAccountsCache.Exists(o => o == account))
+                        GlobalAccountsCache.Add(account);
                 }
             }
 

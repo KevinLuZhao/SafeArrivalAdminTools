@@ -94,6 +94,7 @@ namespace SafeArrival.AdminTools.Presentation
             await PopulateRDSList();
             await PopulateEc2Instances();
             await PopulateAsgList();
+            await PopulateSnapshots();
         }
 
         //-----------------------------------------------Envroment Status--------------------------------------------------------------
@@ -706,6 +707,15 @@ namespace SafeArrival.AdminTools.Presentation
             //{
             //    row.DefaultCellStyle.BackColor = System.Drawing.Color.Green;
             //}
+        }
+
+        private async Task PopulateSnapshots()
+        {
+            var helper = new AwsUtilities.EC2Helper(
+                GlobalVariables.Enviroment,
+                GlobalVariables.Region,
+                GlobalVariables.Color);
+            gvSnapshots.DataSource = await helper.GetAllSnapshots();
         }
     }
 }
