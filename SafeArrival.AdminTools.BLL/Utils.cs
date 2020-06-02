@@ -23,20 +23,6 @@ namespace SafeArrival.AdminTools.BLL
             return doc.SelectSingleNode("github").Value;
         }
 
-        static public string GetLocalInfraRepositoryBranch()
-        {
-            string path = ConfigurationManager.AppSettings["InfraFileFolder"];
-            if (LibGit2Sharp.Repository.IsValid(path))
-            {
-                var repo = new Repository(path);
-                return repo.Head.FriendlyName;
-            }
-            else
-            {
-                return $"No repository is found from the path of {path}, please check your config file";
-            }
-        }
-
         static public TeamCityCredencial GetTeamcityCredential()
         {
             string xPathRoot = "SafeArrivalCredentials/teamcity";

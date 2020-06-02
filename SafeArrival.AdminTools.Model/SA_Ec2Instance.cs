@@ -16,5 +16,8 @@ namespace SafeArrival.AdminTools.Model
         public string State { get; set; }
         public string AsgName { get; set; }
         public string PrivateDnsName { get; set; }
+        public string ImageId { get; set; }
+        public string OS { get; set; }
+        public string Zone { get; set; }
     }
 }

@@ -26,45 +26,88 @@ namespace SafeArrival.AdminTools.AwsUtilities
         /****************************************** EC2  ******************************************/
         public async Task<List<SA_Ec2Instance>> GetEc2InsatancesList(string region = null)
         {
-            if (region != null)
+            var lstRegions = new List<string>();
+            var lstImages = new List<Image>();
+            var ret = new List<SA_Ec2Instance>();
+
+            if (region == null)
+            {
+                foreach (var objRegion in Regions.GetRegionList())
+                {
+                    lstRegions.Add(objRegion.Key);
+                }
+            }
+            else
+            {
+                lstRegions.Add(region);
+            }
+
+            foreach (var itemRegion in lstRegions)
             {
                 client = new AmazonEC2Client(
                 CredentiaslManager.GetCredential(profile),
-                AwsCommon.GetRetionEndpoint(region));
-            }
-            var request = new DescribeInstancesRequest();
-            var response = await client.DescribeInstancesAsync(request);
+                AwsCommon.GetRetionEndpoint(itemRegion));
 
-            var asgHelper = new AutoScalingHelper(profile, region, "green");
-            var asgEc2Maps = asgHelper.GetAsgEc2Maps(region);
 
-            var ret = new List<SA_Ec2Instance>();
-            foreach (var reservation in response.Reservations)
-            {
-                foreach (var instance in reservation.Instances)
+
+                //hello, world
+                var request = new DescribeInstancesRequest();
+                var response = await client.DescribeInstancesAsync(request);
+
+                var imageIds = new HashSet<string>();
+                var asgHelper = new AutoScalingHelper(profile, itemRegion, "green");
+                var asgEc2Maps = asgHelper.GetAsgEc2Maps(itemRegion);
+                foreach (var reservation in response.Reservations)
                 {
-                    var saInstance = new SA_Ec2Instance()
+                    foreach (var instance in reservation.Instances)
                     {
-                        Name = instance.Tags.Find(o => o.Key == "Name") == null ? string.Empty : instance.Tags.Find(o => o.Key == "Name").Value,
-                        Keyname = instance.KeyName,
-                        InstanceId = instance.InstanceId,
-                        InstanceType = instance.InstanceType,
-                        VpcId = instance.VpcId,
-                        State = instance.State.Name,
-                        PrivateDnsName = instance.PrivateDnsName
-                    };
-                    var searchedAsgEc2Map = asgEc2Maps.Find(o => o.InstanceId == instance.InstanceId);
-                    if (searchedAsgEc2Map != null)
-                    {
-                        saInstance.AsgName = searchedAsgEc2Map.AutoScalingGroupName;
+                        var saInstance = new SA_Ec2Instance()
+                        {
+                            Name = instance.Tags.Find(o => o.Key == "Name") == null ? string.Empty : instance.Tags.Find(o => o.Key == "Name").Value,
+                            Keyname = instance.KeyName,
+                            InstanceId = instance.InstanceId,
+                            InstanceType = instance.InstanceType,
+                            VpcId = instance.VpcId,
+                            State = instance.State.Name,
+                            PrivateDnsName = instance.PrivateDnsName,
+                            ImageId = instance.ImageId,
+                            Zone = instance.Placement.AvailabilityZone
+                        };
+                        //imageIds.Add(instance.ImageId);
+
+                        DescribeImagesRequest requestImage = new DescribeImagesRequest();
+                        requestImage.ImageIds.Add(instance.ImageId);
+                        //imageIds.Add(instance.ImageId);
+                        var responseImages = await client.DescribeImagesAsync(requestImage);
+                        if (responseImages.Images.Count > 0)
+                            saInstance.OS = responseImages.Images[0].ImageLocation;
+
+                        var searchedAsgEc2Map = asgEc2Maps.Find(o => o.InstanceId == instance.InstanceId);
+                        if (searchedAsgEc2Map != null)
+                        {
+                            saInstance.AsgName = searchedAsgEc2Map.AutoScalingGroupName;
+                        }
+                        else
+                        {
+                            saInstance.AsgName = string.Empty;
+                        }
+                        ret.Add(saInstance);
                     }
-                    else
-                    {
-                        saInstance.AsgName = string.Empty;
-                    }
-                    ret.Add(saInstance);
                 }
+
+                //Get all Images in EC2 instances
+                //DescribeImagesRequest requestImage = new DescribeImagesRequest();
+                //requestImage.ImageIds = imageIds.ToList();
+                //var responseImages = await client.DescribeImagesAsync(requestImage);
+                //lstImages.AddRange(responseImages.Images);
+                //foreach (var imageId in imageIds)
+                //{
+                //    DescribeImageAttributeRequest arq = new DescribeImageAttributeRequest();
+                //    arq.ImageId = imageId;
+                //    //var arp = client.DescribeImageAttribute(arq);
+                //}
             }
+
             var results = ret.OrderBy(o => o.State).ToList();
             return results;
         }

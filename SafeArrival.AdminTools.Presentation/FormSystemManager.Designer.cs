@@ -129,6 +129,7 @@
             this.StartTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Volume = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.State = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cboxStateFilter = new System.Windows.Forms.CheckBox();
             this.tabCtrlMain.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgScheduleStatus)).BeginInit();
@@ -806,6 +807,7 @@
             // 
             // tabEc2
             // 
+            this.tabEc2.Controls.Add(this.cboxStateFilter);
             this.tabEc2.Controls.Add(this.label35);
             this.tabEc2.Controls.Add(this.ddlEC2Region);
             this.tabEc2.Controls.Add(this.btnEc2Refresh);
@@ -1163,6 +1165,17 @@
             this.State.Name = "State";
             this.State.ReadOnly = true;
             // 
+            // cboxStateFilter
+            // 
+            this.cboxStateFilter.AutoSize = true;
+            this.cboxStateFilter.Location = new System.Drawing.Point(204, 14);
+            this.cboxStateFilter.Name = "cboxStateFilter";
+            this.cboxStateFilter.Size = new System.Drawing.Size(131, 17);
+            this.cboxStateFilter.TabIndex = 11;
+            this.cboxStateFilter.Text = "Running instance only";
+            this.cboxStateFilter.UseVisualStyleBackColor = true;
+            this.cboxStateFilter.CheckedChanged += new System.EventHandler(this.cboxStateFilter_CheckedChanged);
+            // 
             // FormSystemManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1304,5 +1317,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn StartTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn Volume;
         private System.Windows.Forms.DataGridViewTextBoxColumn State;
+        private System.Windows.Forms.CheckBox cboxStateFilter;
     }
 }

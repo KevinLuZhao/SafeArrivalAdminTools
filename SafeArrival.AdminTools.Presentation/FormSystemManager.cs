@@ -429,18 +429,23 @@ namespace SafeArrival.AdminTools.Presentation
                 GlobalVariables.Region,
                 GlobalVariables.Color);
             var selectRegion = ((KeyValuePair<string, string>)ddlEC2Region.SelectedItem).Key;
+            var lstInstances = new List<SA_Ec2Instance>();
             if (selectRegion == "All Regions")
             {
-                var lstRegions = Regions.GetRegionList();
-                var lstInstances = new List<SA_Ec2Instance>();
-                foreach (var region in lstRegions)
-                {
-                    lstInstances.AddRange(await helper.GetEc2InsatancesList(region.Key));
-                }
-                gvEc2Instances.DataSource = lstInstances;
+                //var lstRegions = Regions.GetRegionList();
+                //foreach (var region in lstRegions)
+                //{
+                //    lstInstances.AddRange(await helper.GetEc2InsatancesList(region.Key));
+                //}
+                lstInstances = await helper.GetEc2InsatancesList(null);
             }
             else
-                gvEc2Instances.DataSource = await helper.GetEc2InsatancesList(((KeyValuePair<string, string>)ddlEC2Region.SelectedItem).Key);
+                lstInstances = await helper.GetEc2InsatancesList(((KeyValuePair<string, string>)ddlEC2Region.SelectedItem).Key);
+
+            if (cboxStateFilter.Checked)
+                gvEc2Instances.DataSource = lstInstances.FindAll(o => o.State == "running");
+            else
+                gvEc2Instances.DataSource = lstInstances;
             //gvEc2Instances.Sort(gvEc2InstancesColState, System.ComponentModel.ListSortDirection.Ascending);
         }
 
@@ -716,6 +721,11 @@ namespace SafeArrival.AdminTools.Presentation
                 GlobalVariables.Region,
                 GlobalVariables.Color);
             gvSnapshots.DataSource = await helper.GetAllSnapshots();
+        }
+
+        private async void cboxStateFilter_CheckedChanged(object sender, EventArgs e)
+        {
+            await PopulateEc2Instances();
         }
     }
 }

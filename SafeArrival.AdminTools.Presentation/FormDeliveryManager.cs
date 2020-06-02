@@ -16,7 +16,8 @@ namespace SafeArrival.AdminTools.Presentation
         private string _parameterFolder = string.Empty;
         private SoftwareDeliveryService service;
         private static List<string> applicationExportingLogs;
-        //private string _s3bucket; 
+        private UtilsGitManager gitManager = new UtilsGitManager();
+
         public FormDeliveryManager()
         {
             InitializeComponent();
@@ -25,12 +26,12 @@ namespace SafeArrival.AdminTools.Presentation
         public override void OnEnvironmentChanged()
         {
             BindFolders();
+            lblBranchName.Text = gitManager.GetLocalRepositoryBranch();
         }
 
         private void FormParametersEditor_Load(object sender, EventArgs e)
         {
-            BindFolders();
-            lblBranchName.Text = Utils.GetLocalInfraRepositoryBranch();
+            OnEnvironmentChanged();
         }
 
         private void BindFolders()
@@ -203,11 +204,11 @@ namespace SafeArrival.AdminTools.Presentation
 
         private async void btnExportCF_Click(object sender, EventArgs e)
         {
-            if (lblBranchName.Text != GlobalVariables.Enviroment)
+            string message;
+            if (!gitManager.CheckGitRepository(out message))
             {
                 var confirmResult = MessageBox.Show(
-                        $"The selected environment is '{GlobalVariables.Enviroment}', but your current safearrival-infra local repository branch is '{lblBranchName.Text}'. " +
-                        $"Please either re-select current environment or check-out required branch",
+                        $"{message} This operation can't be completed.",
                         "Warn: Evironment And Repository Branch Doesn't Match",
                         MessageBoxButtons.OK);
                 return;
@@ -253,17 +254,20 @@ namespace SafeArrival.AdminTools.Presentation
                 timer1.Enabled = false;
 
                 var ret = $"Export applications to AWS. Operation includes: ";
+                var counter = 1;
                 if (cboxCopyApps.Checked)
                 {
-                    ret += $"Copy zip files to S3 bucket: {string.Join("-", "safe-arrival", GlobalVariables.Region, GlobalVariables.Enviroment, "artifact")}\application";
+                    ret += $"{Environment.NewLine}{counter}. Copy zip files to S3 bucket: {string.Join("-", "safe-arrival", GlobalVariables.Region, GlobalVariables.Enviroment, "artifact")}\\application. ";
+                    counter += 1;
                 }
                 if (cboxUpdateLambdas.Checked)
                 {
-                    ret += "Update lambda functions ";
+                    ret += $"{Environment.NewLine}{counter}. Update lambda functions. ";
+                    counter += 1;
                 }
                 if (cboxUpdateVersions.Checked)
                 {
-                    ret += "Update lambda function versions ";
+                    ret += $"{Environment.NewLine}{counter}. Update lambda function versions. ";
                 }
                 var confirmResult = MessageBox.Show(ret, "Export applications to AWS", MessageBoxButtons.OK);
                 WriteNotification(ret);

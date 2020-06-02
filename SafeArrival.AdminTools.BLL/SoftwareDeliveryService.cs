@@ -208,9 +208,19 @@ namespace SafeArrival.AdminTools.BLL
                 var version = await ReadAppVersion(appsSourceFolder);
                 ret.Add($"{version}{Environment.NewLine}");
 
-                ret.Add($"Current version:{Environment.NewLine}");
-                version = await ReadAppVersion(appsDestinationFolder);
-                ret.Add($"{version}{Environment.NewLine}");
+                try
+                {
+                    ret.Add($"Current version:{Environment.NewLine}");
+                    version = await ReadAppVersion(appsDestinationFolder);
+                    ret.Add($"{version}{Environment.NewLine}");
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message.Contains("The specified key does not exist."))
+                        ret.Add("'version.txt' does not exist in detination folder");
+                    else
+                        throw ex;
+                }
                 return ret;
             }
             catch (Exception ex)
@@ -232,7 +242,7 @@ namespace SafeArrival.AdminTools.BLL
                     $"{counter} ZIP application files are copied from " +
                     $"{s3ArtifactHelper.BucketName}/{appsSourceFolder} to " +
                     $"{s3ArtifactHelper.BucketName}/{appsDestinationFolder}");
-                Thread.Sleep(3000);
+                Thread.Sleep(1000);
             }
             if (updateLambdaFiles || updateLambdaVersions)
             {
@@ -336,7 +346,7 @@ namespace SafeArrival.AdminTools.BLL
             {
                 lambdaHelper.SetTag(lambda.FunctionArn, tagName, tagValue);
                 lambdaHelper.UpdateFunctionDescription(lambda.FunctionName, tagValue);
-                Thread.Sleep(500);
+                Thread.Sleep(1500);
                 var updatedVersion = lambdaHelper.ReadTag(lambda.FunctionArn, tagName);
                 if (tagValue != updatedVersion)
                 {

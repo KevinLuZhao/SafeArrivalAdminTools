@@ -18,6 +18,7 @@ namespace SafeArrival.AdminTools.Presentation
         private bool stopFlag = false;
         private List<SA_PipelineSummary> codePipelineList;
         private List<DeployDnsModel> availableDnsSets;
+        private UtilsGitManager gitManager = new UtilsGitManager();
 
         public FormInfraManager()
         {
@@ -29,6 +30,7 @@ namespace SafeArrival.AdminTools.Presentation
         {
             try
             {
+                lblBranchName.Text = gitManager.GetLocalRepositoryBranch();
                 await PopulateCodePipelineInfo();
                 await PopulateLiveColorEnv();
                 await PopulateCodePipelinesCICDStatus();
@@ -99,8 +101,13 @@ namespace SafeArrival.AdminTools.Presentation
 
         private async void btnCreate_Click(object sender, EventArgs e)
         {
-            if (!CheckGitRepository())
+            string message;
+            if (!gitManager.CheckGitRepository(out message))
             {
+                var confirmResult1 = MessageBox.Show(
+                        $"{message} This operation can't be completed.",
+                        "Warn: Evironment And Repository Branch Doesn't Match",
+                        MessageBoxButtons.OK);
                 return;
             }
             var radioLevels = new List<RadioButton>();
@@ -230,8 +237,13 @@ namespace SafeArrival.AdminTools.Presentation
 
         private async void btnCreateSisEvent_Click(object sender, EventArgs e)
         {
-            if (!CheckGitRepository())
+            string message;
+            if (!gitManager.CheckGitRepository(out message))
             {
+                var confirmResult = MessageBox.Show(
+                        $"{message} This operation can't be completed.",
+                        "Warn: Evironment And Repository Branch Doesn't Match",
+                        MessageBoxButtons.OK);
                 return;
             }
             try
@@ -257,8 +269,13 @@ namespace SafeArrival.AdminTools.Presentation
 
         private async void btnSetDns_Click(object sender, EventArgs e)
         {
-            if (!CheckGitRepository())
+            string message;
+            if (!gitManager.CheckGitRepository(out message))
             {
+                var confirmResult = MessageBox.Show(
+                        $"{message} This operation can't be completed.",
+                        "Warn: Evironment And Repository Branch Doesn't Match",
+                        MessageBoxButtons.OK);
                 return;
             }
             try
@@ -385,7 +402,6 @@ namespace SafeArrival.AdminTools.Presentation
         private async Task PopulateCodePipelineInfo()
         {
             codePipelineList = await service.GetCodePipelineList();
-            lblBranchName.Text = GetLocalRepositoryBranch();
             gvCodePiplines.AutoGenerateColumns = false;
             gvCodePiplines.DataSource = codePipelineList;
         }
@@ -411,36 +427,6 @@ namespace SafeArrival.AdminTools.Presentation
             lblAdmin.Text = string.Join(System.Environment.NewLine, dnsList);
             //lblAdmin.Text = dnsList.Find(o => o.ToLower().Contains("admin"));
             //lblSuper.Text = dnsList.Find(o => o.ToLower().Contains("super"));
-        }
-
-        private bool CheckGitRepository()
-        {
-            string githubTokenPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile), "gittoken");
-            if (!File.Exists(githubTokenPath))
-            {
-                MessageBox.Show($"Please set value to {githubTokenPath}.");
-                return false;
-            }
-
-            var gitBranch = GetLocalRepositoryBranch();
-            var ret = (GlobalVariables.Enviroment.ToString() == gitBranch);
-            if (!ret)
-                MessageBox.Show($"Current target environment is '{GlobalVariables.Enviroment.ToString().ToUpper()}', while the Github local branch is '{gitBranch.ToUpper()}'. Please check.");
-            return ret;
-        }
-
-        private string GetLocalRepositoryBranch()
-        {
-            string path = ConfigurationManager.AppSettings["InfraFileFolder"];
-            if (LibGit2Sharp.Repository.IsValid(path))
-            {
-                var repo = new Repository(path);
-                return repo.Head.FriendlyName;
-            }
-            else
-            {
-                return $"No repository is found from the path of {path}, please check your config file";
-            }
         }
     }
 }
