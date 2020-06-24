@@ -155,7 +155,8 @@ namespace SafeArrival.AdminTools.BLL
         public async Task<List<string>> GetCurrentPublicDnsList()
         {
             var list = await GetAvailableDnsList();
-            var lbHelper = new ALBHelper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
+            //var lbHelper = new ALBHelper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
+            var lbHelper = new ELBHelper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
             var lbs = await lbHelper.GetLoadBalancerList();
 
             string rootDns = GlobalVariables.EnvironmentAccounts[GlobalVariables.Enviroment].DNS + ".";
@@ -170,8 +171,9 @@ namespace SafeArrival.AdminTools.BLL
         {
             var availableDnsList = new List<DeployDnsModel>();
             List<SA_LoadBalancer> loadBalancers;
-            //For version compatable. When Blue/Green deploy is ready, only ALB is available.
-            if (isMultipleColorEnvsCreated())
+            //For version compatable. When Blue/Green deploy is ready, only ALB is available. 
+            //Previous comment is very old. I will consider this later
+            /*if (isMultipleColorEnvsCreated())
             {
                 var helper = new ALBHelper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
                 loadBalancers = await helper.GetLoadBalancerList();
@@ -180,14 +182,19 @@ namespace SafeArrival.AdminTools.BLL
             {
                 var helper = new ELBHelper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
                 loadBalancers = await helper.GetLoadBalancerList();
-            }
+            }*/
+
+            var helper = new ELBHelper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
+            loadBalancers = await helper.GetLoadBalancerList();
+
             var applicationList = new List<string>() { "Admin", "Super" };
             foreach (var application in applicationList)
             {
+                var loadBalancer = loadBalancers.Find(o => o.LoadBalancerName.Contains(application));
                 var dns = new DeployDnsModel()
                 {
                     Application = application,
-                    LiveEndpoint = loadBalancers.Find(o => o.LoadBalancerName.Contains(application)).DNSName,
+                    LiveEndpoint = (loadBalancer == null)? "Unknown": loadBalancer.DNSName,
                     MaintenanceEndpoint = GenerateMaintanenceEndpoint(application)
                 };
                 availableDnsList.Add(dns);

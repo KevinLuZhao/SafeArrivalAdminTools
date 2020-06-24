@@ -26,8 +26,8 @@ namespace SafeArrival.AdminTools.AwsUtilities
             var lstSaGroups = new List<SA_AutoScalingGroup>();
             var response = await client.DescribeAutoScalingGroupsAsync();
             var lstGroups = ignorColor ?
-                response.AutoScalingGroups.FindAll(o => o.Tags[0].Value.IndexOf(environment.ToString()) >= 0) :
-                response.AutoScalingGroups.FindAll(o => o.Tags[0].Value.IndexOf(environment + "-" + color) >= 0);
+                response.AutoScalingGroups.FindAll(o => o.Tags[0].Value.IndexOf(environment.ToString()) == 0) :
+                response.AutoScalingGroups.FindAll(o => o.Tags[0].Value.IndexOf(environment + "-" + color) == 0);
             //var lstGroups = response.AutoScalingGroups.FindAll(o => o.Tags[0].Value.Substring(0, o.Tags[0].Value.IndexOf("-")) == environment.ToString());
             var jumpBox = response.AutoScalingGroups.Find(
                 o => o.Tags[0].Value.IndexOf(environment.ToString()) >= 0 && o.Tags[0].Value.IndexOf("Jump") > 0);

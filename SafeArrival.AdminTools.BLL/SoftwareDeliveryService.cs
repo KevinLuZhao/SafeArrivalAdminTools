@@ -242,7 +242,7 @@ namespace SafeArrival.AdminTools.BLL
                     $"{counter} ZIP application files are copied from " +
                     $"{s3ArtifactHelper.BucketName}/{appsSourceFolder} to " +
                     $"{s3ArtifactHelper.BucketName}/{appsDestinationFolder}");
-                Thread.Sleep(1000);
+                Thread.Sleep(10000);
             }
             if (updateLambdaFiles || updateLambdaVersions)
             {
@@ -346,7 +346,7 @@ namespace SafeArrival.AdminTools.BLL
             {
                 lambdaHelper.SetTag(lambda.FunctionArn, tagName, tagValue);
                 lambdaHelper.UpdateFunctionDescription(lambda.FunctionName, tagValue);
-                Thread.Sleep(1500);
+                Thread.Sleep(1000);
                 var updatedVersion = lambdaHelper.ReadTag(lambda.FunctionArn, tagName);
                 if (tagValue != updatedVersion)
                 {

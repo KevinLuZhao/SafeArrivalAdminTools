@@ -176,7 +176,7 @@
             this.Controls.Add(this.gvLogs);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormLogs";
-            this.Text = "````````````````````````````````";
+            this.Text = "Logs";
             this.Load += new System.EventHandler(this.FormLogs_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gvLogs)).EndInit();
             this.ResumeLayout(false);

@@ -26,6 +26,7 @@ namespace SafeArrival.AdminTools.BLL
                 {
                     var response = await rdsHelper.GetRDSInstance();                  
                     await rdsHelper.StartRdsInstance(response.DBInstanceIdentifier, isRdsMultyAz);
+                    LogServices.WriteLog($"{GlobalVariables.Enviroment} was started.", LogType.Information, GlobalVariables.Enviroment.ToString());
                 }
                 catch (Exception ex)
                 {
@@ -75,6 +76,7 @@ namespace SafeArrival.AdminTools.BLL
             RDSHelper rdsHelper = new RDSHelper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
             var response = await rdsHelper.GetRDSInstance();
             await rdsHelper.StopRdsInstance(response.DBInstanceIdentifier);
+            LogServices.WriteLog($"{GlobalVariables.Enviroment} was shut down.", LogType.Information, GlobalVariables.Enviroment.ToString());
         }
 
         public async Task StartRdsInstances(List<SA_RdsInstance> lstInstances)
@@ -83,6 +85,7 @@ namespace SafeArrival.AdminTools.BLL
             foreach (var instance in lstInstances)
             {
                 await rdsHelper.StartRdsInstance(instance.DBInstanceIdentifier, instance.MultiAZ);
+                LogServices.WriteLog($"{GlobalVariables.Enviroment} RDS {instance.DBInstanceIdentifier} was started.", LogType.Information, GlobalVariables.Enviroment.ToString());
             }
         }
 
@@ -92,6 +95,7 @@ namespace SafeArrival.AdminTools.BLL
             foreach (var instance in lstInstances)
             {
                 await rdsHelper.StopRdsInstance(instance.DBInstanceIdentifier);
+                LogServices.WriteLog($"{GlobalVariables.Enviroment} RDS {instance.DBInstanceIdentifier} was shut down.", LogType.Information, GlobalVariables.Enviroment.ToString());
             }
         }
 
@@ -101,6 +105,7 @@ namespace SafeArrival.AdminTools.BLL
             {
                 db.Add(setting);
             }
+            LogServices.WriteLog($"{GlobalVariables.Enviroment} auto scaling group settings were started.", LogType.Information, GlobalVariables.Enviroment.ToString());
         }
 
         public void InitAutoScalingGroupSettings(string env)

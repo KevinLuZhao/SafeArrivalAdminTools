@@ -23,6 +23,21 @@ namespace SafeArrival.AdminTools.Presentation
             NotifyToMainStatus(message, System.Drawing.Color.ForestGreen);
         }
 
+        public virtual void DisableButtons(Control root)
+        {
+            foreach (Control control in root.Controls)
+            {
+                if (control.GetType().Name.Contains("Button"))
+                {
+                    control.Enabled = false;
+                }
+                if (control.Controls != null)
+                {
+                    DisableButtons(control);
+                }
+            }
+        }
+
         protected void NotifyToMainStatus(string message, System.Drawing.Color color)
         {
             try

@@ -27,6 +27,18 @@ namespace SafeArrival.AdminTools.Presentation
         {
             BindFolders();
             lblBranchName.Text = gitManager.GetLocalRepositoryBranch();
+
+            if (!Utils.IsSuperAdmin())
+            {
+                tabMain.SelectedTab = tabApplications;
+                DisableButtons(tabCloudFormation);
+                DisableButtons(tabParams);
+                if (GlobalVariables.Enviroment.Contains("production"))
+                {
+                    DisableButtons(tabApplications);
+                    txtAppsProcess.Text = "You do not have permission to publish apps on Production.";
+                }
+            }
         }
 
         private void FormParametersEditor_Load(object sender, EventArgs e)
@@ -110,7 +122,7 @@ namespace SafeArrival.AdminTools.Presentation
                 if (confirmResult == DialogResult.Yes)
                 {
                     var ret = await service.ExportParameters();
-                    confirmResult = MessageBox.Show(ret, "Export cloudformation file to AWS", MessageBoxButtons.OK);                    
+                    confirmResult = MessageBox.Show(ret, "Export cloudformation file to AWS", MessageBoxButtons.OK);
                     WriteNotification(ret);
                 }
             }
@@ -248,7 +260,7 @@ namespace SafeArrival.AdminTools.Presentation
                 //but the waiting will not block the main threa, to let the timer1_Tick keeps listening the applicationExportingLogs value changes.
                 await Task.Run(() =>
                 {
-                    Thread.Sleep(1000);
+                    Thread.Sleep(5000);
                 });
                 btnAppsExport.Enabled = true;
                 timer1.Enabled = false;
@@ -319,7 +331,7 @@ namespace SafeArrival.AdminTools.Presentation
                 }
                 File.AppendAllText(path, txtAppsProcess.Text);
                 var confirmResult = MessageBox.Show(
-                        $"Delivery logs have been saved to '{Path.GetFullPath(path)}'. " ,
+                        $"Delivery logs have been saved to '{Path.GetFullPath(path)}'. ",
                         "Save logs",
                         MessageBoxButtons.OK);
             }

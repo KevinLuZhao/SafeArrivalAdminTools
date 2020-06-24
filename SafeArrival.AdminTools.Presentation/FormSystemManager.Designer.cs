@@ -93,6 +93,7 @@
             this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.dataGridViewCheckBoxColumn2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tabEc2 = new System.Windows.Forms.TabPage();
+            this.cboxStateFilter = new System.Windows.Forms.CheckBox();
             this.label35 = new System.Windows.Forms.Label();
             this.ddlEC2Region = new System.Windows.Forms.ComboBox();
             this.btnEc2Refresh = new System.Windows.Forms.Button();
@@ -129,7 +130,6 @@
             this.StartTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Volume = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.State = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cboxStateFilter = new System.Windows.Forms.CheckBox();
             this.tabCtrlMain.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgScheduleStatus)).BeginInit();
@@ -301,7 +301,7 @@
             this.btnSystemRefresh.Size = new System.Drawing.Size(45, 42);
             this.btnSystemRefresh.TabIndex = 13;
             this.btnSystemRefresh.UseVisualStyleBackColor = true;
-            this.btnSystemRefresh.Click += new System.EventHandler(this.btnSystemStop_Click);
+            this.btnSystemRefresh.Click += new System.EventHandler(this.btnSystemRefresh_Click);
             // 
             // panel1
             // 
@@ -822,6 +822,17 @@
             this.tabEc2.Text = "EC2 Instances";
             this.tabEc2.UseVisualStyleBackColor = true;
             // 
+            // cboxStateFilter
+            // 
+            this.cboxStateFilter.AutoSize = true;
+            this.cboxStateFilter.Location = new System.Drawing.Point(204, 14);
+            this.cboxStateFilter.Name = "cboxStateFilter";
+            this.cboxStateFilter.Size = new System.Drawing.Size(131, 17);
+            this.cboxStateFilter.TabIndex = 11;
+            this.cboxStateFilter.Text = "Running instance only";
+            this.cboxStateFilter.UseVisualStyleBackColor = true;
+            this.cboxStateFilter.CheckedChanged += new System.EventHandler(this.cboxStateFilter_CheckedChanged);
+            // 
             // label35
             // 
             this.label35.AutoSize = true;
@@ -1164,17 +1175,6 @@
             this.State.HeaderText = "State";
             this.State.Name = "State";
             this.State.ReadOnly = true;
-            // 
-            // cboxStateFilter
-            // 
-            this.cboxStateFilter.AutoSize = true;
-            this.cboxStateFilter.Location = new System.Drawing.Point(204, 14);
-            this.cboxStateFilter.Name = "cboxStateFilter";
-            this.cboxStateFilter.Size = new System.Drawing.Size(131, 17);
-            this.cboxStateFilter.TabIndex = 11;
-            this.cboxStateFilter.Text = "Running instance only";
-            this.cboxStateFilter.UseVisualStyleBackColor = true;
-            this.cboxStateFilter.CheckedChanged += new System.EventHandler(this.cboxStateFilter_CheckedChanged);
             // 
             // FormSystemManager
             // 

@@ -54,15 +54,21 @@ namespace SafeArrival.AdminTools.AwsUtilities
             foreach (var sourceELB in lstSourceELBs)
             {
                 string tagName = string.Empty;
-                try
-                {
-                    tagName = respTags.TagDescriptions.Find
-                    (o => o.LoadBalancerName == sourceELB.LoadBalancerName).Tags.Find(o => o.Key == "Name").Value;
-                }
-                catch
-                {
-                    continue;
-                }
+                //try
+                //{
+                //    var tags = respTags.TagDescriptions.Find
+                //    (o => o.LoadBalancerName == sourceELB.LoadBalancerName).Tags.Find(o => o.Key == "Name").Value;
+                //}
+                //catch
+                //{
+                //    continue;
+                //}
+                var tags = respTags.TagDescriptions.Find
+                    (o => o.LoadBalancerName == sourceELB.LoadBalancerName).Tags;
+                var nameTag = tags.Find(o => o.Key == "Name");
+                if (nameTag == null) continue;
+
+                tagName = nameTag.Value;
                 if (!(tagName.IndexOf($"{environment}-{color}")==0))   //check
                     continue;
                 var elb = ModelTransformer<LoadBalancerDescription, SA_LoadBalancer>.

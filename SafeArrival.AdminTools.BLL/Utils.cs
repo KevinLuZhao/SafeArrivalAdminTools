@@ -45,5 +45,12 @@ namespace SafeArrival.AdminTools.BLL
             doc.Load(path);
             return doc;
         }
+
+        static public bool IsSuperAdmin()
+        {
+            return ConfigurationManager.AppSettings["Role"] == "SAFE-Admin_role" && 
+                (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData).Contains("Kevin.Lu") ||
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData).Contains("zlu"));
+        }
     }
 }

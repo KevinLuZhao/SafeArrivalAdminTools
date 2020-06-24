@@ -54,6 +54,7 @@
             this.tabParams = new System.Windows.Forms.TabPage();
             this.tabApplications = new System.Windows.Forms.TabPage();
             this.pnlApplications = new System.Windows.Forms.Panel();
+            this.btnPerview = new System.Windows.Forms.Button();
             this.btnDeliverySave = new System.Windows.Forms.Button();
             this.cboxUpdateVersions = new System.Windows.Forms.CheckBox();
             this.cboxUpdateLambdas = new System.Windows.Forms.CheckBox();
@@ -61,7 +62,6 @@
             this.txtAppsProcess = new System.Windows.Forms.RichTextBox();
             this.btnAppsExport = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.btnPerview = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerParams)).BeginInit();
             this.splitContainerParams.Panel1.SuspendLayout();
             this.splitContainerParams.Panel2.SuspendLayout();
@@ -324,7 +324,7 @@
             this.txtCFViewer.ReadOnly = true;
             this.txtCFViewer.Size = new System.Drawing.Size(737, 501);
             this.txtCFViewer.TabIndex = 0;
-            this.txtCFViewer.Text = "";
+            this.txtCFViewer.Text = "Delivery Manager";
             // 
             // tabParams
             // 
@@ -362,6 +362,17 @@
             this.pnlApplications.Name = "pnlApplications";
             this.pnlApplications.Size = new System.Drawing.Size(976, 537);
             this.pnlApplications.TabIndex = 0;
+            // 
+            // btnPerview
+            // 
+            this.btnPerview.Location = new System.Drawing.Point(118, 5);
+            this.btnPerview.Name = "btnPerview";
+            this.btnPerview.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.btnPerview.Size = new System.Drawing.Size(75, 23);
+            this.btnPerview.TabIndex = 6;
+            this.btnPerview.Text = "Preview";
+            this.btnPerview.UseVisualStyleBackColor = true;
+            this.btnPerview.Click += new System.EventHandler(this.btnPerview_Click);
             // 
             // btnDeliverySave
             // 
@@ -438,17 +449,6 @@
             // 
             this.timer1.Interval = 500;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // btnPerview
-            // 
-            this.btnPerview.Location = new System.Drawing.Point(118, 5);
-            this.btnPerview.Name = "btnPerview";
-            this.btnPerview.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnPerview.Size = new System.Drawing.Size(75, 23);
-            this.btnPerview.TabIndex = 6;
-            this.btnPerview.Text = "Preview";
-            this.btnPerview.UseVisualStyleBackColor = true;
-            this.btnPerview.Click += new System.EventHandler(this.btnPerview_Click);
             // 
             // FormDeliveryManager
             // 

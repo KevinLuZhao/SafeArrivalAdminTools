@@ -111,6 +111,7 @@
     <Compile Include="DynamoDBHelper.cs" />
     <Compile Include="EC2Helper.cs" />
     <Compile Include="ElasticBeanstalkHelper.cs" />
+    <Compile Include="IAMHelper.cs" />
     <Compile Include="LambdaHelper.cs" />
     <Compile Include="ALBHelper.cs" />
     <Compile Include="ModelTransformer.cs" />

@@ -1,4 +1,5 @@
-﻿using SafeArrival.AdminTools.BLL;
+﻿using SafeArrival.AdminTools.AwsUtilities;
+using SafeArrival.AdminTools.BLL;
 using SafeArrival.AdminTools.Model;
 using System;
 using System.Collections.Generic;
@@ -36,9 +37,13 @@ namespace SafeArrival.AdminTools.Presentation
 
             MainStatusStrip = toolStripStatusLabel1;
             var computer = Application.CompanyName;
-            if (ConfigurationManager.AppSettings["Role"] != "SAFE-Admin_role" && !Application.LocalUserAppDataPath.Contains("zlu"))
+            IAMHelper helper = new IAMHelper();
+            helper.GetCurrentUser();
+            if (!Utils.IsSuperAdmin())
             {
-                parameterEditToolStripMenuItem.Visible = false;
+                infrastructureManagerToolStripMenuItem.Visible = false;
+                greenBlueDeploymentToolStripMenuItem.Visible = false;
+                helpToolStripMenuItem.Visible = false;
             }
         }
 
@@ -70,7 +75,7 @@ namespace SafeArrival.AdminTools.Presentation
             FormMdiChildBase frm = null;
             switch (formName)
             {
-                case "parameterEditToolStripMenuItem":
+                case "deliveryManagerToolStripMenuItem":
                     if (!Directory.Exists(ConfigurationManager.AppSettings["ParammeterFilesFolder"]))
                     {
                         MainStatusStrip.Text = string.Format(

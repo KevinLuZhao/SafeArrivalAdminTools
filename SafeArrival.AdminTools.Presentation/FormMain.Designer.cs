@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.parameterEditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deliveryManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.s3MonitorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.systemManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.infrastructureManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,7 +58,7 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.parameterEditToolStripMenuItem,
+            this.deliveryManagerToolStripMenuItem,
             this.s3MonitorToolStripMenuItem,
             this.systemManagerToolStripMenuItem,
             this.infrastructureManagerToolStripMenuItem,
@@ -71,14 +71,14 @@
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // parameterEditToolStripMenuItem
+            // deliveryManagerToolStripMenuItem
             // 
-            this.parameterEditToolStripMenuItem.Name = "parameterEditToolStripMenuItem";
-            this.parameterEditToolStripMenuItem.RightToLeftAutoMirrorImage = true;
-            this.parameterEditToolStripMenuItem.Size = new System.Drawing.Size(111, 20);
-            this.parameterEditToolStripMenuItem.Tag = "FormDeliveryManager";
-            this.parameterEditToolStripMenuItem.Text = "Delivery Manager";
-            this.parameterEditToolStripMenuItem.Click += new System.EventHandler(this.OpenFormMenu_Click);
+            this.deliveryManagerToolStripMenuItem.Name = "deliveryManagerToolStripMenuItem";
+            this.deliveryManagerToolStripMenuItem.RightToLeftAutoMirrorImage = true;
+            this.deliveryManagerToolStripMenuItem.Size = new System.Drawing.Size(111, 20);
+            this.deliveryManagerToolStripMenuItem.Tag = "FormDeliveryManager";
+            this.deliveryManagerToolStripMenuItem.Text = "Delivery Manager";
+            this.deliveryManagerToolStripMenuItem.Click += new System.EventHandler(this.OpenFormMenu_Click);
             // 
             // s3MonitorToolStripMenuItem
             // 
@@ -241,7 +241,7 @@
         #endregion
 
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem parameterEditToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deliveryManagerToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.ToolStrip toolStrip1;
