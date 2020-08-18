@@ -132,6 +132,7 @@ namespace SafeArrival.AdminTools.BLL
             //string admin = await dnsHelper.GetRecorSetValue(hostZoneId, "admin." + rootDns);
             var recordSets = new List<KeyValuePair<string, string>>();
             var applicationList = new List<string>() { "Admin", "Super" };
+            //var applicationList = new List<string>() { "Admin", "API", "Super", "Customer" };
             foreach (var application in applicationList)
             {
                 KeyValuePair<string, string> recordSet;
@@ -163,6 +164,7 @@ namespace SafeArrival.AdminTools.BLL
             var dnsHelper = new Route53Helper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
             string hostZoneId = await dnsHelper.GetHostZoneId();
             var dnsList = await dnsHelper.GetRecorSetValues(hostZoneId, new List<string>() { $"admin.{rootDns}", $"super.{rootDns}" });
+            //var dnsList = await dnsHelper.GetRecorSetValues(hostZoneId, new List<string>() { $"admin.{rootDns}", $"api.{rootDns}", $"super.{rootDns}", $"customer.{rootDns}" });
             return dnsList;
         }
 
@@ -188,6 +190,7 @@ namespace SafeArrival.AdminTools.BLL
             loadBalancers = await helper.GetLoadBalancerList();
 
             var applicationList = new List<string>() { "Admin", "Super" };
+            //var applicationList = new List<string>() { "Admin", "API", "Super", "Customer" };
             foreach (var application in applicationList)
             {
                 var loadBalancer = loadBalancers.Find(o => o.LoadBalancerName.Contains(application));

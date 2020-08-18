@@ -17,10 +17,14 @@ namespace SafeArrival.AdminTools.Presentation
         private SoftwareDeliveryService service;
         private static List<string> applicationExportingLogs;
         private UtilsGitManager gitManager = new UtilsGitManager();
+        private FormDeliveryMgr_SeleFiles SelectAppFileForm;
+
+        public List<string> SelectedAppFiles { get; set; }
 
         public FormDeliveryManager()
         {
             InitializeComponent();
+            SelectedAppFiles = new List<string>();
         }
 
         public override void OnEnvironmentChanged()
@@ -51,6 +55,7 @@ namespace SafeArrival.AdminTools.Presentation
             BindFolder(GetJsonFilesFolder());
             BindInfraFolders();
             service = new SoftwareDeliveryService();
+            SelectedAppFiles = service.GetApplicationZipFiles();
         }
 
         private void BindFolder(string dir)
@@ -255,7 +260,7 @@ namespace SafeArrival.AdminTools.Presentation
                 btnAppsExport.Enabled = false;
                 applicationExportingLogs = new List<string>();
                 txtAppsProcess.Text = string.Empty;
-                await service.DeliverApplications(applicationExportingLogs, cboxCopyApps.Checked, cboxUpdateLambdas.Checked, cboxUpdateVersions.Checked);
+                await service.DeliverApplications(applicationExportingLogs, cboxCopyApps.Checked, SelectedAppFiles, cboxUpdateLambdas.Checked, cboxUpdateVersions.Checked);
                 //Wait 1 second to allow the DeliverApplications finish all tasks and write log to screen before the timer1 disabled, 
                 //but the waiting will not block the main threa, to let the timer1_Tick keeps listening the applicationExportingLogs value changes.
                 await Task.Run(() =>
@@ -357,6 +362,21 @@ namespace SafeArrival.AdminTools.Presentation
 
                 HandleException(ex);
             }
+        }
+
+        private void GenerateSelectedAppFilesForm()
+        {
+            var applicationFiles = service.GetApplicationZipFiles();
+            if (SelectAppFileForm == null)
+            {
+                SelectAppFileForm = new FormDeliveryMgr_SeleFiles(this, SelectedAppFiles, service.GetApplicationZipFiles());
+            }
+            SelectAppFileForm.ShowDialog();
+        }
+
+        private void linkLabel1_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            GenerateSelectedAppFilesForm();
         }
     }
 }

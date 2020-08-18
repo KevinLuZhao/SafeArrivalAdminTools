@@ -100,7 +100,7 @@ namespace SafeArrival.AdminTools.BLL
                 }
                 zipToOpen.Close();
             }
-            await s3ParamsHelper.UploadFile(paramsFilePath, new FileStream(paramsFilePath, FileMode.Open));
+            await s3ParamsHelper.UploadFile(Path.GetFileName(paramsFilePath), new FileStream(paramsFilePath, FileMode.Open));
             return $"File {paramsFilePath} has been upload to S3 bucket: {s3ParamsHelper.BucketName}. Please monitor the change on AWS Console";
         }
 
@@ -232,12 +232,19 @@ namespace SafeArrival.AdminTools.BLL
             }
         }
 
-        public async Task DeliverApplications(List<string> applicationExportingLogs, bool copyFiles, bool updateLambdaFiles, bool updateLambdaVersions)
+        public List<string> GetApplicationZipFiles()
+        { 
+            var files = s3ArtifactHelper.GetFolderFileKeys(s3ArtifactHelper.BucketName, appsSourceFolder);
+            files.Remove(appsSourceFolder);
+            return files;
+        }
+
+        public async Task DeliverApplications(List<string> applicationExportingLogs, bool copyFiles, List<string> selectedAppFiles, bool updateLambdaFiles, bool updateLambdaVersions)
         {
             if (copyFiles)
             {
                 UpdateApplicationExportingLogs(applicationExportingLogs, "---------------------- Copy application zip files ----------------------");
-                var counter = await CopyApplicationZipFiles(applicationExportingLogs);
+                var counter = await CopyApplicationZipFiles(selectedAppFiles, applicationExportingLogs);
                 UpdateApplicationExportingLogs(applicationExportingLogs,
                     $"{counter} ZIP application files are copied from " +
                     $"{s3ArtifactHelper.BucketName}/{appsSourceFolder} to " +
@@ -253,14 +260,15 @@ namespace SafeArrival.AdminTools.BLL
             UpdateApplicationExportingLogs(applicationExportingLogs, "---------------------- Applications delivery finished ----------------------");
         }
 
-        private async Task<int> CopyApplicationZipFiles(List<string> applicationExportingLogs)
+        private async Task<int> CopyApplicationZipFiles(List<string> selectedAppFiles, List<string> applicationExportingLogs)
         {
-            var sourceFiles = s3ArtifactHelper.GetFolderFileKeys(s3ArtifactHelper.BucketName, appsSourceFolder);
+            var sourceFiles = GetApplicationZipFiles();
             var counter = 0;
             foreach (var sourceKey in sourceFiles)
             {
-                if (sourceKey.Trim() == appsSourceFolder)
+                if (!selectedAppFiles.Contains(sourceKey))
                     continue;
+
                 var destinationKey = sourceKey.Replace(appsSourceFolder, appsDestinationFolder);
                 try
                 {
@@ -359,7 +367,6 @@ namespace SafeArrival.AdminTools.BLL
             });
             return result;
         }
-
 
         private string GetArtifactS3Bucket()
         {

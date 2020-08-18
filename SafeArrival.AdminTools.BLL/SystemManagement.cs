@@ -26,7 +26,6 @@ namespace SafeArrival.AdminTools.BLL
                 {
                     var response = await rdsHelper.GetRDSInstance();                  
                     await rdsHelper.StartRdsInstance(response.DBInstanceIdentifier, isRdsMultyAz);
-                    LogServices.WriteLog($"{GlobalVariables.Enviroment} was started.", LogType.Information, GlobalVariables.Enviroment.ToString());
                 }
                 catch (Exception ex)
                 {
@@ -40,6 +39,17 @@ namespace SafeArrival.AdminTools.BLL
                 //Start applications by changing the auto scaling group
                 var autoScalingHelper = new AutoScalingHelper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
                 var lstGroup = await autoScalingHelper.GetEnvironmentAutoScalingGroupList();
+                var jumpBox = lstGroup.Find(o => o.Name.IndexOf("Jump") >= 0);
+                if (jumpBox.MaxSize == 0)
+                {
+                    var settings = new AutoScalingGroupSettings()
+                    {
+                        MaxSize = 1,
+                        MinSize = 1,
+                        DesiredCapacity = 1
+                    };
+                    await autoScalingHelper.ChangeScalingGroup(jumpBox.AutoScalingGroupName, settings);
+                }
                 foreach (var group in lstGroup)
                 {
                     var settings = lstSettings.Find(o => group.Name.IndexOf(o.Environment.ToString()) == 0 &&
@@ -76,7 +86,6 @@ namespace SafeArrival.AdminTools.BLL
             RDSHelper rdsHelper = new RDSHelper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
             var response = await rdsHelper.GetRDSInstance();
             await rdsHelper.StopRdsInstance(response.DBInstanceIdentifier);
-            LogServices.WriteLog($"{GlobalVariables.Enviroment} was shut down.", LogType.Information, GlobalVariables.Enviroment.ToString());
         }
 
         public async Task StartRdsInstances(List<SA_RdsInstance> lstInstances)
@@ -119,7 +128,9 @@ namespace SafeArrival.AdminTools.BLL
                     Environment = env,
                     MaxSize = 1,
                     MinSize = 1,
-                    DesiredCapacity = 1
+                    DesiredCapacity = 1,
+                    HealthCheckGracePeriod = 600,
+                    HealthCheckType = "EC2"
                 };
                 db.Add(settings);
             }

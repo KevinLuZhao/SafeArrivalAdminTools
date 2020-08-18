@@ -54,6 +54,7 @@
             this.tabParams = new System.Windows.Forms.TabPage();
             this.tabApplications = new System.Windows.Forms.TabPage();
             this.pnlApplications = new System.Windows.Forms.Panel();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.btnPerview = new System.Windows.Forms.Button();
             this.btnDeliverySave = new System.Windows.Forms.Button();
             this.cboxUpdateVersions = new System.Windows.Forms.CheckBox();
@@ -350,6 +351,7 @@
             // 
             // pnlApplications
             // 
+            this.pnlApplications.Controls.Add(this.linkLabel1);
             this.pnlApplications.Controls.Add(this.btnPerview);
             this.pnlApplications.Controls.Add(this.btnDeliverySave);
             this.pnlApplications.Controls.Add(this.cboxUpdateVersions);
@@ -362,6 +364,17 @@
             this.pnlApplications.Name = "pnlApplications";
             this.pnlApplications.Size = new System.Drawing.Size(976, 537);
             this.pnlApplications.TabIndex = 0;
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(307, 9);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(83, 13);
+            this.linkLabel1.TabIndex = 7;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "Select App Files";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked_1);
             // 
             // btnPerview
             // 
@@ -390,7 +403,7 @@
             this.cboxUpdateVersions.AutoSize = true;
             this.cboxUpdateVersions.Checked = true;
             this.cboxUpdateVersions.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cboxUpdateVersions.Location = new System.Drawing.Point(454, 8);
+            this.cboxUpdateVersions.Location = new System.Drawing.Point(567, 8);
             this.cboxUpdateVersions.Name = "cboxUpdateVersions";
             this.cboxUpdateVersions.Size = new System.Drawing.Size(145, 17);
             this.cboxUpdateVersions.TabIndex = 4;
@@ -403,7 +416,7 @@
             this.cboxUpdateLambdas.AutoSize = true;
             this.cboxUpdateLambdas.Checked = true;
             this.cboxUpdateLambdas.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cboxUpdateLambdas.Location = new System.Drawing.Point(314, 8);
+            this.cboxUpdateLambdas.Location = new System.Drawing.Point(427, 8);
             this.cboxUpdateLambdas.Name = "cboxUpdateLambdas";
             this.cboxUpdateLambdas.Size = new System.Drawing.Size(126, 17);
             this.cboxUpdateLambdas.TabIndex = 3;
@@ -516,5 +529,6 @@
         private System.Windows.Forms.CheckBox cboxCopyApps;
         private System.Windows.Forms.Button btnDeliverySave;
         private System.Windows.Forms.Button btnPerview;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }

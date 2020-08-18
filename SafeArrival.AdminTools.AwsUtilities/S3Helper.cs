@@ -74,7 +74,7 @@ namespace SafeArrival.AdminTools.AwsUtilities
         /// <summary>
         /// Upload the File to AWS S3
         /// </summary>
-        /// <param name="fullFileName">File Name with Sub Path (if have)</param>
+        /// <param name="fullFileName">File Name with Sub Path (if have). Notice: it's S3 sub path, not local file sub path.</param>
         /// <param name="fileStream"></param>
         public async Task UploadFile(string fullFileName, Stream fileStream)
         {

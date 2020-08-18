@@ -95,6 +95,12 @@
     <Compile Include="Controls\CtrlApplicationLoadBalancer.Designer.cs">
       <DependentUpon>CtrlApplicationLoadBalancer.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormDeliveryMgr_SeleFiles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDeliveryMgr_SeleFiles.Designer.cs">
+      <DependentUpon>FormDeliveryMgr_SeleFiles.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormDeploymentSwitch.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -159,6 +165,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\CtrlApplicationLoadBalancer.resx">
       <DependentUpon>CtrlApplicationLoadBalancer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDeliveryMgr_SeleFiles.resx">
+      <DependentUpon>FormDeliveryMgr_SeleFiles.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormDeploymentSwitch.resx">
       <DependentUpon>FormDeploymentSwitch.cs</DependentUpon>

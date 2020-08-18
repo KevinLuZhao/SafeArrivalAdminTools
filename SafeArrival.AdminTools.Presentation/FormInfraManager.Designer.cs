@@ -53,6 +53,7 @@
             this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.btnCreate = new System.Windows.Forms.Button();
             this.gboxDnsSettings = new System.Windows.Forms.GroupBox();
+            this.btnSetMaintenanceDns = new System.Windows.Forms.Button();
             this.lblAdmin = new System.Windows.Forms.Label();
             this.lblDnsMode = new System.Windows.Forms.Label();
             this.btnSetRegularDns = new System.Windows.Forms.Button();
@@ -75,7 +76,6 @@
             this.StackName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnSuspend = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
-            this.btnSetMaintenanceDns = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.gboxInfraDeployment.SuspendLayout();
@@ -363,10 +363,21 @@
             this.gboxDnsSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gboxDnsSettings.Location = new System.Drawing.Point(9, 350);
             this.gboxDnsSettings.Name = "gboxDnsSettings";
-            this.gboxDnsSettings.Size = new System.Drawing.Size(1010, 113);
+            this.gboxDnsSettings.Size = new System.Drawing.Size(1010, 148);
             this.gboxDnsSettings.TabIndex = 20;
             this.gboxDnsSettings.TabStop = false;
             this.gboxDnsSettings.Text = "DNS Settings";
+            // 
+            // btnSetMaintenanceDns
+            // 
+            this.btnSetMaintenanceDns.Location = new System.Drawing.Point(162, 122);
+            this.btnSetMaintenanceDns.Name = "btnSetMaintenanceDns";
+            this.btnSetMaintenanceDns.Size = new System.Drawing.Size(165, 23);
+            this.btnSetMaintenanceDns.TabIndex = 25;
+            this.btnSetMaintenanceDns.Tag = "Maintenance";
+            this.btnSetMaintenanceDns.Text = "Switch to Maintenance DNS";
+            this.btnSetMaintenanceDns.UseVisualStyleBackColor = true;
+            this.btnSetMaintenanceDns.Click += new System.EventHandler(this.btnSwitchDnsTarget_Click);
             // 
             // lblAdmin
             // 
@@ -389,7 +400,7 @@
             // 
             // btnSetRegularDns
             // 
-            this.btnSetRegularDns.Location = new System.Drawing.Point(9, 83);
+            this.btnSetRegularDns.Location = new System.Drawing.Point(9, 121);
             this.btnSetRegularDns.Name = "btnSetRegularDns";
             this.btnSetRegularDns.Size = new System.Drawing.Size(147, 23);
             this.btnSetRegularDns.TabIndex = 22;
@@ -602,17 +613,6 @@
             this.btnDelete.Text = "Delete Stacks";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            // 
-            // btnSetMaintenanceDns
-            // 
-            this.btnSetMaintenanceDns.Location = new System.Drawing.Point(162, 84);
-            this.btnSetMaintenanceDns.Name = "btnSetMaintenanceDns";
-            this.btnSetMaintenanceDns.Size = new System.Drawing.Size(165, 23);
-            this.btnSetMaintenanceDns.TabIndex = 25;
-            this.btnSetMaintenanceDns.Tag = "Maintenance";
-            this.btnSetMaintenanceDns.Text = "Switch to Maintenance DNS";
-            this.btnSetMaintenanceDns.UseVisualStyleBackColor = true;
-            this.btnSetMaintenanceDns.Click += new System.EventHandler(this.btnSwitchDnsTarget_Click);
             // 
             // FormInfraManager
             // 
