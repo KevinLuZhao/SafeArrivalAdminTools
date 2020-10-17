@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Amazon.RDS;
 using Amazon.RDS.Model;
 using SafeArrival.AdminTools.Model;
+using Amazon.Lambda;
 
 namespace SafeArrival.AdminTools.AwsUtilities
 {
@@ -112,6 +113,20 @@ namespace SafeArrival.AdminTools.AwsUtilities
             //request.MultiAZ = isMultyAz;
             //request.DBInstanceIdentifier = instanceIdentifier;
             //var response = await client.ModifyDBInstanceAsync(request);
+        }
+
+        public async Task<string> TakeSnapshot()
+        {
+            var rdsInstance = await GetRDSInstance();
+            var instanceId = rdsInstance.DBInstanceIdentifier;
+            //don't wrap in using block or it will be disposed before you are done with it.
+            var rdsClient = new AmazonRDSClient(
+                CredentiaslManager.GetCredential(environment),
+                AwsCommon.GetRetionEndpoint(region));
+            var request = new CreateDBSnapshotRequest($"{environment}-{DateTime.Today.ToShortDateString()}", instanceId);
+            //don't await this long running task
+            var response = await rdsClient.CreateDBSnapshotAsync(request);
+            return response.DBSnapshot.DBInstanceIdentifier;
         }
     }
 }

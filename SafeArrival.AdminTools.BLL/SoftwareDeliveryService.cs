@@ -397,9 +397,51 @@ namespace SafeArrival.AdminTools.BLL
             applicationExportingLogs.Add($"{DateTime.Now}:  {input}");
         }
 
+        private void UpdateBackupExportingLogs(List<string> backupExportingLogs, string input)
+        {
+            backupExportingLogs.Add($"{DateTime.Now}:  {input}");
+        }
+
         private void UpdateApplicationException(List<string> applicationExportingLogs, Exception ex)
         {
             applicationExportingLogs.Add($"{DateTime.Now}:  Warn: {ex.Message}/n{ex.StackTrace}");
+        }
+
+        private void UpdateBackupException(List<string> backupExportingLogs, Exception ex)
+        {
+            backupExportingLogs.Add($"{DateTime.Now}:  Warn: {ex.Message}/n{ex.StackTrace}");
+        }
+
+        public async Task<string> TakeDBSnapshot()
+        {
+            var rdsHelper = new RDSHelper(GlobalVariables.Enviroment, GlobalVariables.Region, GlobalVariables.Color);
+            return await rdsHelper.TakeSnapshot();
+        }
+
+        public async Task BackupFiles(List<string> backupExportingLogs)
+        {
+            string targebucket = string.Join("-", "safe-arrival", GlobalVariables.Region, GlobalVariables.Enviroment, "backup");
+            var sourceFiles = s3ArtifactHelper.GetFolderFileKeys(s3ArtifactHelper.BucketName, appsDestinationFolder);
+            sourceFiles.Remove(appsSourceFolder);
+            foreach (var sourceKey in sourceFiles)
+            {
+                if (sourceKey == appsDestinationFolder)
+                    continue;
+                try
+                {
+                    //await s3ArtifactHelper.CopyFile(s3ArtifactHelper.BucketName, sourceKey, targebucket, sourceKey);
+                }
+                catch (Exception ex)
+                {
+                    UpdateBackupExportingLogs(backupExportingLogs, ex.Message);
+                    continue;
+                }
+                UpdateBackupExportingLogs(backupExportingLogs, $"{s3ArtifactHelper.BucketName}/{sourceKey} copied to {targebucket}");
+            }
+            //await s3CloudFormationHelper.CopyFile(cloudFormationBucket, "safearrival-infra.zip", targebucket, "safearrival-infra.zip");
+            UpdateBackupExportingLogs(backupExportingLogs, $"{s3ArtifactHelper.BucketName}/safearrival - infra.zip copied to {targebucket}");
+            //await s3ParamsHelper.CopyFile(parameterbucket, "parameter.zip", targebucket, "parameter.zip");
+            UpdateBackupExportingLogs(backupExportingLogs, $"{s3ArtifactHelper.BucketName}/parameter.zip copied to {targebucket}");
         }
     }
 }

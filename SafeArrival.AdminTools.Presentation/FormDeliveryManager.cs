@@ -16,6 +16,7 @@ namespace SafeArrival.AdminTools.Presentation
         private string _parameterFolder = string.Empty;
         private SoftwareDeliveryService service;
         private static List<string> applicationExportingLogs;
+        private static List<string> backupExportingLogs;
         private UtilsGitManager gitManager = new UtilsGitManager();
         private FormDeliveryMgr_SeleFiles SelectAppFileForm;
 
@@ -311,6 +312,23 @@ namespace SafeArrival.AdminTools.Presentation
                 txtAppsProcess.ScrollToCaret();
             }
             applicationExportingLogs.RemoveRange(0, copy.Length);
+
+            string[] copy2 = new string[backupExportingLogs.Count];
+            backupExportingLogs.CopyTo(copy2);
+            foreach (var text in copy2)
+            {
+                if (text.IndexOf("Warn:") >= 0)
+                {
+                    AppendText(txtBackup, System.Drawing.Color.Red, text + Environment.NewLine + Environment.NewLine);
+                }
+                else
+                {
+                    txtBackup.AppendText(text + Environment.NewLine + Environment.NewLine);
+                }
+                txtBackup.SelectionStart = txtBackup.Text.Length;
+                txtBackup.ScrollToCaret();
+            }
+            backupExportingLogs.RemoveRange(0, copy2.Length);
         }
 
         void AppendText(RichTextBox box, System.Drawing.Color color, string text)
@@ -377,6 +395,26 @@ namespace SafeArrival.AdminTools.Presentation
         private void linkLabel1_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
         {
             GenerateSelectedAppFilesForm();
+        }
+
+        private async void btnBackupDB_Click(object sender, EventArgs e)
+        {
+            txtBackup.AppendText($"Taking database snapshot begin...{Environment.NewLine}");
+            var deliverySvr = new SoftwareDeliveryService();
+            var response = await deliverySvr.TakeDBSnapshot();
+            txtBackup.AppendText($"Snapshot {response} is created.{Environment.NewLine}");
+        }
+
+        private async void btnBackupApplications_Click(object sender, EventArgs e)
+        {
+            txtBackup.AppendText($"Backup files begin...{Environment.NewLine}");
+            backupExportingLogs = new List<string>();
+            var deliverySvr = new SoftwareDeliveryService();
+            await deliverySvr.BackupFiles(backupExportingLogs);
+            foreach (var log in backupExportingLogs)
+            {
+                txtBackup.AppendText($"{log}{Environment.NewLine}");
+            }
         }
     }
 }

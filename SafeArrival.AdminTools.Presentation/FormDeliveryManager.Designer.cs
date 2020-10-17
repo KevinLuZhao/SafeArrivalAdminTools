@@ -63,6 +63,10 @@
             this.txtAppsProcess = new System.Windows.Forms.RichTextBox();
             this.btnAppsExport = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.tabBackup = new System.Windows.Forms.TabPage();
+            this.btnBackupFiles = new System.Windows.Forms.Button();
+            this.btnBackupApplications = new System.Windows.Forms.Button();
+            this.txtBackup = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerParams)).BeginInit();
             this.splitContainerParams.Panel1.SuspendLayout();
             this.splitContainerParams.Panel2.SuspendLayout();
@@ -76,6 +80,7 @@
             this.tabParams.SuspendLayout();
             this.tabApplications.SuspendLayout();
             this.pnlApplications.SuspendLayout();
+            this.tabBackup.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainerParams
@@ -198,6 +203,7 @@
             this.tabMain.Controls.Add(this.tabCloudFormation);
             this.tabMain.Controls.Add(this.tabParams);
             this.tabMain.Controls.Add(this.tabApplications);
+            this.tabMain.Controls.Add(this.tabBackup);
             this.tabMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabMain.Location = new System.Drawing.Point(0, 0);
             this.tabMain.Name = "tabMain";
@@ -463,6 +469,52 @@
             this.timer1.Interval = 500;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // tabBackup
+            // 
+            this.tabBackup.Controls.Add(this.txtBackup);
+            this.tabBackup.Controls.Add(this.btnBackupApplications);
+            this.tabBackup.Controls.Add(this.btnBackupFiles);
+            this.tabBackup.Location = new System.Drawing.Point(4, 22);
+            this.tabBackup.Name = "tabBackup";
+            this.tabBackup.Padding = new System.Windows.Forms.Padding(3);
+            this.tabBackup.Size = new System.Drawing.Size(982, 543);
+            this.tabBackup.TabIndex = 3;
+            this.tabBackup.Text = "Backup";
+            this.tabBackup.UseVisualStyleBackColor = true;
+            // 
+            // btnBackupFiles
+            // 
+            this.btnBackupFiles.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
+            this.btnBackupFiles.Location = new System.Drawing.Point(9, 17);
+            this.btnBackupFiles.Name = "btnBackupFiles";
+            this.btnBackupFiles.Size = new System.Drawing.Size(138, 23);
+            this.btnBackupFiles.TabIndex = 0;
+            this.btnBackupFiles.Text = "Take Database Snapshot";
+            this.btnBackupFiles.UseVisualStyleBackColor = true;
+            this.btnBackupFiles.Click += new System.EventHandler(this.btnBackupDB_Click);
+            // 
+            // btnBackupApplications
+            // 
+            this.btnBackupApplications.Location = new System.Drawing.Point(153, 17);
+            this.btnBackupApplications.Name = "btnBackupApplications";
+            this.btnBackupApplications.Size = new System.Drawing.Size(126, 23);
+            this.btnBackupApplications.TabIndex = 1;
+            this.btnBackupApplications.Text = "Backup Files";
+            this.btnBackupApplications.UseVisualStyleBackColor = true;
+            this.btnBackupApplications.Click += new System.EventHandler(this.btnBackupApplications_Click);
+            // 
+            // txtBackup
+            // 
+            this.txtBackup.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtBackup.Location = new System.Drawing.Point(9, 46);
+            this.txtBackup.Name = "txtBackup";
+            this.txtBackup.ReadOnly = true;
+            this.txtBackup.Size = new System.Drawing.Size(965, 489);
+            this.txtBackup.TabIndex = 2;
+            this.txtBackup.Text = "";
+            // 
             // FormDeliveryManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -491,6 +543,7 @@
             this.tabApplications.ResumeLayout(false);
             this.pnlApplications.ResumeLayout(false);
             this.pnlApplications.PerformLayout();
+            this.tabBackup.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -530,5 +583,9 @@
         private System.Windows.Forms.Button btnDeliverySave;
         private System.Windows.Forms.Button btnPerview;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.TabPage tabBackup;
+        private System.Windows.Forms.Button btnBackupFiles;
+        private System.Windows.Forms.RichTextBox txtBackup;
+        private System.Windows.Forms.Button btnBackupApplications;
     }
 }
